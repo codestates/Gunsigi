@@ -1,14 +1,11 @@
-const dotenv = require("dotenv");
-const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.dev";
-dotenv.config({path: envFile});
-var createError = require('http-errors');
+const dotenv = require('dotenv');
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
+dotenv.config({ path: envFile });
+
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const cors = require("cors");
 
 var app = express();
 
@@ -17,17 +14,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(
+  cors({
+    origin: [
+      "https://www.mellowboard.xyz",
+      "https://test.doldolma.com",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 
 // 로드밸런서 Health Check
 app.get("/healthcheck", (_, res) => res.send("Hi"));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+app.get("/*", (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -37,7 +38,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send('error');
 });
 
-app.listen(process.env.PORT, (req, res) => console.log(`Listening : ${process.env.PORT}`));
+app.listen(process.env.PORT, () => console.log(`Listening : ${process.env.PORT}`));
