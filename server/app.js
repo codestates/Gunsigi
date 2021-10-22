@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.dev";
+dotenv.config({path: envFile});
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -9,18 +12,17 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("public"));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// 로드밸런서 Health Check
+app.get("/healthcheck", (_, res) => res.send("Hi"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,4 +40,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+app.listen(process.env.PORT, (req, res) => console.log(`Listening : ${process.env.PORT}`));
