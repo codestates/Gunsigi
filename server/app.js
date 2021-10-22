@@ -1,7 +1,8 @@
 const dotenv = require('dotenv');
 
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
-dotenv.config({ path: envFile });
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: '.env.dev' });
+}
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -11,7 +12,6 @@ const cors = require('cors');
 const app = express();
 
 app.use(logger('dev'));
-app.use(express.compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -43,4 +43,5 @@ app.use((err, req, res, _) => {
   res.send(err);
 });
 
-app.listen(process.env.PORT, () => console.log(`Listening : ${process.env.PORT}`));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Listening : ${PORT}`));

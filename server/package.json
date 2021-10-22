@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "export NODE_ENV=production && node app.js",
+    "start": "./scripts/start.sh",
     "dev": "nodemon app.js",
     "test": ""
   },
