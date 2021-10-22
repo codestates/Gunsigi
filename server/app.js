@@ -1,8 +1,7 @@
 const dotenv = require('dotenv');
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({ path: '.env.dev' });
-}
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
+dotenv.config({ path: envFile });
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
