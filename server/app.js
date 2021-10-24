@@ -10,7 +10,8 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(logger('dev'));
+if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
+else app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -29,10 +30,10 @@ app.use(
 // 로드밸런서 Health Check
 app.get('/healthcheck', (_, res) => res.send('hi'));
 
-app.get('/*', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
+app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 // error handler
-app.use((err, req, res, _) => {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
