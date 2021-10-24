@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
+const envFile = process.env.NODE_ENV === 'production'
+  ? '.env.production' : '.env.dev';
 dotenv.config({ path: envFile });
 
 const express = require('express');
@@ -9,6 +10,7 @@ const logger = require('morgan');
 const cors = require('cors');
 
 const app = express();
+app.enable('trust proxy');
 
 if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
 else app.use(logger('dev'));
