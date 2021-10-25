@@ -1,0 +1,118 @@
+@import './constants';
+@import '../landing/responsive';
+@import '../landing/grid';
+
+.introThree {
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: $light-blue;
+  padding: $mid-margin $mid-margin * 2;
+
+  .introThree_text {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: $mid-margin * 2 0;
+  }
+
+  .review-box {
+    width: 100%;
+    min-height: 140px;
+    background-color: $white;
+    border-radius: 5px;
+    padding: $sm-margin;
+    display: flex;
+    justify-content: space-around;
+    font-size: 1rem;
+    .profile {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 30%;
+      text-align: center;
+      & > img {
+        width: 60px;
+        border-radius: 30px;
+        border: solid 1px $light-grey;
+      }
+      .nickname {
+        font-size: 1.2rem;
+      }
+      .createdAt {
+        font-size: 1rem;
+      }
+      .stars {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & img {
+          width: 10px;
+          filter: invert(86%) sepia(35%) saturate(624%) hue-rotate(3deg)
+            brightness(98%) contrast(93%);
+        }
+      }
+    }
+    .content {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .product {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        font-size: 1.2rem;
+
+        .desc {
+          margin-right: 10px;
+        }
+        .name {
+          font-size: 1.2rem;
+        }
+      }
+      .review {
+        font-size: 1rem;
+      }
+    }
+  }
+  @include responsive(T) {
+    .introThree_text {
+      font-size: 2rem;
+    }
+    .container {
+      .row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .col-sm-1 {
+        max-width: 600px;
+        &:first-child,
+        &:last-child {
+          align-self: center;
+        }
+      }
+    }
+  }
+  @include responsive(D) {
+    .introThree_text {
+      font-size: 2.3rem;
+      padding: 0;
+    }
+    .container {
+      .col-sm-1 {
+        &:first-child,
+        &:last-child {
+          align-self: center;
+        }
+      }
+    }
+  }
+}
