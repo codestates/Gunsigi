@@ -1,7 +1,19 @@
 import React from 'react';
+import '../styles/Mypage/Profile.scss';
 
 function Profile() {
-  return <div></div>;
+  return (
+    <div id="profile_container">
+      <div id="profile_info">
+        <img className="profile_img" src="/images/profile.png" alt="profile" />
+        <div id="nickname-email_container">
+          <span className="profile_nickname">KimCoding</span>
+          <span id="profile_email">kimcoding@codestates.com</span>
+        </div>
+      </div>
+      <img id="profile_set" src="/icons/icon_gear.svg" alt="gear" />
+    </div>
+  );
 }
 
 export default Profile;

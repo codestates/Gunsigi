@@ -8,8 +8,20 @@ $orange: #ebba9b;
 $white: rgb(250, 250, 250);
 
 $breakpoint-mobile: 375px;
-$breakpoint-tablet: 769px;
+$breakpoint-tablet: 768px;
 $breakpoint-desktop: 1440px;
+
+@mixin tablet {
+  @media screen and (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
 
 * {
   box-sizing: border-box;

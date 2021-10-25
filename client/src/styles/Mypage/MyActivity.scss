@@ -1,0 +1,44 @@
+@import '../../App.scss';
+
+#tab_menu {
+  margin: 2.5rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  list-style: none;
+  -webkit-padding-start: 0;
+  text-align: center;
+  position: sticky;
+  top: 3.5rem;
+  z-index: 1;
+  color: $light-grey;
+  font-size: 1.2rem;
+  border-bottom: 1px solid $light-grey;
+
+  li:nth-child(2) {
+    color: $black;
+  }
+
+  .submenu {
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  .focused {
+    transition: 0.5s ease;
+    font-weight: bold;
+    color: $black;
+  }
+}
+
+@include tablet {
+  #tab_menu {
+    font-size: 1.4rem;
+  }
+}
+
+@include desktop {
+  #tab_menu {
+    font-size: 1.6rem;
+  }
+}
