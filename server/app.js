@@ -48,8 +48,7 @@ app.use((err, req, res, next) => {
 
 if (process.env.NODE_ENV !== 'production') {
   // 개발모드에서 테이블생성 및 시드 데이터 넣기
-  // db.sequelize.sync({ force: true }).then(() => Seed());
-  db.sequelize.sync();
+  db.sequelize.sync().then(() => Seed());
 }
 
 const PORT = process.env.PORT || 4000;
