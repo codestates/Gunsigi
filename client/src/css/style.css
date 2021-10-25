@@ -1,13 +1,5 @@
-@import url("https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css");
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'NanumSquare', sans-serif; }
-
-html {
-  font-size: 10px; }
-
 .App {
-  color: #424242;
-  font-weight: bold; }
+  font-size: 10px;
+  color: #424242; }
+  .App div {
+    font-size: 1.6rem; }

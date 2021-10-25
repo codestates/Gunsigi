@@ -1,0 +1,20 @@
+// 사용예시 : @include responsive(D);
+
+@mixin responsive($screen) {
+  @if ($screen == 'T') {
+    @media (min-width: $mid-breakpoint) and (max-width: $lg-breakpoint - 1px) {
+      @content;
+    }
+  }
+  @if ($screen == 'D') {
+    @media screen and (min-width: $lg-breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin mobile-only() {
+  @media (min-width: $sm-baseWidth) and (max-width: $mid-breakpoint - 1px) {
+    @content;
+  }
+}

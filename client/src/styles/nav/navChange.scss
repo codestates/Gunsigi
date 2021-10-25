@@ -1,0 +1,129 @@
+@import '../landing/constants';
+@import '../landing/responsive';
+
+.navChange {
+  width: 100%;
+  position: absolute;
+  background-color: $white;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 1px $light-grey;
+  padding: $sm-margin * 3;
+
+  .nav_logo {
+    img {
+      height: 30px;
+      min-height: 30px;
+      position: center;
+      object-fit: cover;
+    }
+  }
+
+  .nav_mid {
+    width: 50%;
+    margin-left: $mid-margin;
+    position: relative;
+    input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    .search-input {
+      position: relative;
+      width: 100%;
+      height: 36px;
+      border: solid 1px $light-grey;
+      border-radius: 30px;
+      padding: 0 $sm-margin * 2;
+    }
+    .icon_search {
+      width: 18px;
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      
+      img {
+        filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
+          brightness(89%) contrast(93%);
+      }
+    }
+  }
+
+  .nav_right {
+    width: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    img {
+      filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
+        brightness(89%) contrast(93%);
+    }
+    .icon_search {
+      width: 20px;
+      height: 20px;
+      min-height: 20px;
+    }
+    .icon_my {
+      width: 25px;
+      height: 25px;
+      min-height: 25px;
+    }
+  }
+  @include mobile-only() {
+    .login,
+    .signup,
+    .mypage,
+    .logout {
+      display: none;
+    }
+  }
+}
+
+@include responsive(T) {
+  .navChange {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: $mid-margin;
+    justify-content: space-between;
+    .nav_logo {
+      width: 20%;
+    }
+    .nav_mid {
+      width: 46%;
+    }
+    .nav_right {
+      width: 26%;
+      .login,
+      .mypage {
+        margin-right: $mid-margin;
+      }
+    }
+  }
+  .icon_my {
+    display: none;
+  }
+}
+
+@include responsive(D) {
+  .navChange {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: $mid-margin;
+    .nav_mid {
+      width: 46%;
+      margin-left: $mid-margin * 4;
+    }
+    .nav_right {
+      width: 20%;
+      .login,
+      .mypage {
+        margin-right: 50px;
+      }
+    }
+  }
+  .icon_my {
+    display: none;
+  }
+}

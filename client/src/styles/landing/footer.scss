@@ -1,0 +1,78 @@
+@import './constants';
+@import '../landing/responsive';
+@import '../landing/grid';
+
+.footer {
+  width: 100%;
+  padding: $sm-margin * 2 $sm-margin;
+  .repository {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 $sm-margin;
+    margin-bottom: $sm-margin;
+
+    .title {
+      font-size: 1rem;
+      margin-right: $mid-margin;
+    }
+    a {
+      text-decoration: none;
+      text-decoration-line: underline;
+      &:link,
+      &:visited {
+        text-decoration: none;
+        color: $mid-grey;
+      }
+    }
+  }
+  .members {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    .github {
+      width: 24%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $mid-grey;
+      img {
+        width: 18%;
+      }
+    }
+
+    .github:link,
+    .github:visited {
+      text-decoration: none;
+    }
+    .member-name {
+      font-size: 1rem;
+      margin-left: 4px;
+    }
+  }
+  @include responsive(T) {
+    .repository {
+      margin-bottom: 0;
+    }
+  }
+  @include responsive(D) {
+    .repository {
+      margin-bottom: 0;
+      .title {
+        font-size: 1.2rem;
+      }
+    }
+    .members {
+      .github {
+        img {
+          width: 12%;
+        }
+        .member-name {
+          font-size: 1.2rem;
+          margin-left: $sm-margin;
+        }
+      }
+    }
+  }
+}

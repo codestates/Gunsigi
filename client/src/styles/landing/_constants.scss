@@ -1,0 +1,26 @@
+$sm-baseWidth: 375px;
+$mid-breakpoint: 769px;
+$lg-breakpoint: 1440px;
+
+$gutter: 20px;
+
+$sm-columns: 1;
+$sm-margin: 10px;
+
+$mid-columns: 2;
+$mid-margin: 30px;
+$mid-max-container: 800px + $mid-margin * 2;
+
+$lg-columns: 3;
+$lg-unit: 400px;
+$lg-max-container: ($lg-unit + $gutter) * $lg-columns;
+
+$grid-margin: 15px;
+
+$black: #424242;
+$deep-blue: #5d83b1;
+$mid-grey: #929292;
+$light-blue: #d8e5f4;
+$light-grey: #eeeeee;
+$orange: #ebba9b;
+$white: rgb(250, 250, 250);
