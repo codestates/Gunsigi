@@ -9,6 +9,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const db = require('./models');
 const Seed = require('./seeds');
+const router = require('./routes');
 
 const app = express();
 app.enable('trust proxy');
@@ -29,6 +30,11 @@ app.use(
     credentials: true,
   }),
 );
+app.use('/auth', router.auth);
+app.use('/users', router.users);
+app.use('/products', router.products);
+app.use('/reviews', router.reviews);
+app.use('/bookmarks', router.bookmarks);
 
 // 로드밸런서 Health Check
 app.get('/healthcheck', (_, res) => res.send('hi'));
