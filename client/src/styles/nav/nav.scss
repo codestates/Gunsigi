@@ -1,0 +1,81 @@
+@import '../landing/constants';
+@import '../landing/responsive';
+
+.nav {
+  width: 100%;
+  position: absolute;
+  background-color: transparent;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $sm-margin * 3;
+
+  .nav_logo {
+    img {
+      height: 30px;
+      min-height: 30px;
+      position: center;
+      object-fit: cover;
+    }
+  }
+  .nav_right {
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
+        brightness(89%) contrast(93%);
+    }
+    .icon_search {
+      width: 20px;
+      height: 20px;
+      min-height: 20px;
+    }
+    .icon_my {
+      width: 25px;
+      height: 25px;
+      min-height: 25px;
+    }
+  }
+  @include mobile-only() {
+    .login,
+    .signup,
+    .mypage,
+    .logout {
+      display: none;
+    }
+  }
+}
+
+@include responsive(T) {
+  .nav {
+    padding: $mid-margin;
+    .nav_right {
+      width: 20%;
+    }
+  }
+  .icon_my {
+    display: none;
+  }
+  .login,
+  .signup {
+    font-size: 1.4rem;
+    display: flex;
+  }
+}
+
+@include responsive(D) {
+  .nav {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: $mid-margin;
+    .nav_right {
+      width: 16%;
+    }
+  }
+  .icon_my {
+    display: none;
+  }
+}

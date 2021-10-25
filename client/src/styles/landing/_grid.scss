@@ -1,0 +1,48 @@
+// scss-lint:disable all
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  padding: 0 $sm-margin;
+  margin: 0 auto;
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  [class^='col-'] {
+    padding: $gutter / 2  $gutter / 2;
+  }
+
+  @for $i from 1 through $sm-columns {
+    .col-sm-#{$i} {
+      width: percentage($i / $sm-columns);
+    }
+  }
+
+  @include responsive(T) {
+    max-width: $mid-max-container;
+    padding: 0 $mid-margin;
+
+    @for $i from 1 through $mid-columns {
+      .col-md-#{$i} {
+        width: percentage($i / $mid-columns);
+      }
+    }
+  }
+
+  @include responsive(D) {
+    max-width: $lg-max-container;
+    padding: 0;
+
+    @for $i from 1 through $lg-columns {
+      .col-lg-#{$i} {
+        width: ($lg-unit + $gutter) * $i;
+      }
+    }
+  }
+}
