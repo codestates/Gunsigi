@@ -2,122 +2,317 @@ export const search = [
   {
     id: 1,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: false,
   },
   {
     id: 2,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 3,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: false,
   },
   {
     id: 4,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 5,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 6,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: false,
   },
   {
     id: 7,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 8,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 9,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 10,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 11,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 12,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: false,
   },
   {
     id: 13,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
   {
     id: 14,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: false,
   },
   {
     id: 15,
     name: '레모나',
-    img: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
-    heart: 'icons/heart_fill.svg',
-    star: 'icons/icon_star_fill.svg',
-    reviews: '32',
+    company: 'company',
+    image:
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    validNumber: '1234',
+    functional:
+      '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
+    expiration: '제조일로부터 24개월까지',
+    hotToEat: '1일 2회, 1회 1포를 물 250mL에 타서 잘 흔들어 섭취한다',
+    shape: '분말',
+    standard:
+      '(1) 성상 : 이미, 이취가 없고 고유의 향미가 있는 노랑하양색의 분말 \n(2) 납 : 1.0 mg/kg\n(3) 카드뮴 : 0.5 mg/kg\n(4) 수은 : 0.4 mg/kg\n(5) 비소 :1.0 mg/kg\n(6) 총(-)-Hydroxycitric acid : 표시량(850 mg / 6g)의 80~120% 이어야 한다.\n(7) 비타민C : 표시량(50 mg / 6g)의 80~150% 이어야 한다.\n(8) 대장균군 : 음성',
+    warning:
+      '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
+    bookmarksCount: 12,
+    reviewsCount: 3,
+    score: 4.6,
+    isBookmarked: true,
   },
 ];
 

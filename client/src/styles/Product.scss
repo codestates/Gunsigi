@@ -65,14 +65,14 @@
   }
 }
 
-.Product_heart {
+.Product_icon {
   filter: invert(96%) sepia(3%) saturate(131%) hue-rotate(132deg)
     brightness(116%) contrast(87%);
 }
 
-.Product_star {
-  filter: invert(96%) sepia(3%) saturate(131%) hue-rotate(132deg)
-    brightness(116%) contrast(87%);
+.Product_icon_change {
+  filter: invert(91%) sepia(73%) saturate(3041%) hue-rotate(297deg)
+    brightness(109%) contrast(84%);
 }
 
 @media (min-width: $breakpoint-mobile + 100px) and (max-width: $breakpoint-tablet - 1px) {

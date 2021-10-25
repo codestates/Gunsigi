@@ -1,8 +1,10 @@
 @import '../App';
 
 .SearchModal_container {
+  position: relative;
+  top: 97px;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 97px);
   background-color: rgba(0, 0, 0, 0.5);
 }
 

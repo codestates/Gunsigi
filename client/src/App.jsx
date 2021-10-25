@@ -13,6 +13,9 @@ import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
 import TopButton from './components/TopButton';
+import ProductDetail from './pages/ProductDetail';
+import SearchModal from './components/SearchModal';
+import Search from './pages/Search';
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -24,6 +27,7 @@ function App() {
     <div className="App">
       {scrollPosition > 60 ? <TopButton /> : null}
 
+<<<<<<< Updated upstream
       <Router>
         <Switch>
           <Route exact path="/">
@@ -40,6 +44,11 @@ function App() {
           </Route>
         </Switch>
       </Router>
+=======
+      {/* <SearchModal /> */}
+      <ProductDetail />
+      {/* <Search /> */}
+>>>>>>> Stashed changes
     </div>
   );
 }
