@@ -1,0 +1,61 @@
+@import '../App';
+
+.ReviewList_container {
+  width: 100%;
+}
+
+.ReviewList_in {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ReviewList_write {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 60px;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: $light-blue;
+  font-size: 1.4rem;
+  button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: white;
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+.ReviewList_list {
+  width: 100%;
+  padding: 60px;
+}
+
+@media (min-width: $breakpoint-mobile - 1px) and (max-width: $breakpoint-mobile) {
+  .ReviewList_write {
+    padding: 0 30px;
+    font-size: 1.2rem;
+    button {
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1.2rem;
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .ReviewList_list {
+    width: 100%;
+    padding: 30px;
+  }
+}
