@@ -9,8 +9,26 @@ $orange: #ebba9b;
 $white: rgb(250, 250, 250);
 
 $breakpoint-mobile: 375px;
-$breakpoint-tablet: 769px;
+$breakpoint-tablet: 768px;
 $breakpoint-desktop: 1440px;
+
+@mixin mobile {
+  @media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet - 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $breakpoint-tablet) and (max-width: $breakpoint-desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
 
 * {
   box-sizing: border-box;
@@ -23,8 +41,26 @@ html {
   font-size: 10px;
 }
 
-.App {
-  color: $black;
-  font-weight: bold;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  color: $black;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+  color: $black;
+}
