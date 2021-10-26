@@ -3,7 +3,7 @@ import '../styles/nav/navChange.scss';
 
 function NavChange() {
   // isLogin 리덕스 상태 설정필요
-  const isLogin = true;
+  const isLogin = false;
   return (
     <div className="navChange">
       <div className="nav_logo">
@@ -27,9 +27,6 @@ function NavChange() {
             <div className="logout">로그아웃</div>
           </>
         )}
-        <div className="icon_my">
-          <img src="/icons/icon_mypage.svg" alt="my page" />
-        </div>
       </div>
     </div>
   );

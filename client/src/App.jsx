@@ -3,6 +3,7 @@ import './App.scss';
 import Main from './pages/Main';
 import setAxios from './utils/ApiController';
 import TopButton from './components/TopButton';
+import NavChange from './components/NavChange';
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -13,7 +14,6 @@ function App() {
   return (
     <div className="App">
       {scrollPosition > 60 ? <TopButton /> : null}
-
       <Main />
     </div>
   );
