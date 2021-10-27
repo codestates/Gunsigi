@@ -24,7 +24,6 @@ yarn-error.log*
 
 node_modules
 server/.env.production
-server/seeds/data
 
-
-# css 컴파일링
+.DS_Store
+products.json
