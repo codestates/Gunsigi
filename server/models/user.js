@@ -1,4 +1,5 @@
 const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -16,6 +17,17 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       });
     }
+
+    json() {
+      const jsonUser = this.toJSON();
+      delete jsonUser.password;
+      return jsonUser;
+    }
+
+    async isRight(password) {
+      const check = await bcrypt.compare(password, this.password);
+      return check;
+    }
   }
   User.init(
     {
@@ -23,10 +35,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
       },
-      uuid: DataTypes.STRING,
-      profileImage: DataTypes.STRING,
-      nickname: DataTypes.STRING,
-      password: DataTypes.STRING,
+      uuid: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      nickname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        async set(value) {
+          this.setDataValue('password', await bcrypt.hash(value, 10));
+        },
+      },
       type: {
         type: DataTypes.ENUM,
         values: ['email', 'kakao', 'google'],

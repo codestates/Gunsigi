@@ -4,6 +4,7 @@ const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.en
 dotenv.config({ path: envFile });
 
 const express = require('express');
+const debug = require('debug')('app');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
@@ -30,6 +31,7 @@ app.use(
     credentials: true,
   }),
 );
+
 app.use('/auth', router.auth);
 app.use('/users', router.users);
 app.use('/products', router.products);
@@ -47,5 +49,7 @@ if (process.env.NODE_ENV !== 'production') {
   db.sequelize.sync().then(() => Seed());
 }
 
+debug('App initialized');
+
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Listening : ${PORT}`));
+app.listen(PORT, () => debug(`Listening : ${PORT}`));

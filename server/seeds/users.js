@@ -11,21 +11,25 @@ module.exports = async () => {
       {
         email: 'iidd0101@naver.com',
         nickname: 'doldolma',
+        password: '123123',
         type: 'google',
       },
       {
         email: 'iidd0102@naver.com',
         nickname: 'doldolme',
+        password: '123123',
         type: 'google',
       },
       {
         email: 'iidd0103@naver.com',
         nickname: 'doldolme',
+        password: '123123',
         type: 'google',
       },
       {
         email: 'iidd0104@naver.com',
         nickname: 'doldolme',
+        password: '123123',
         type: 'google',
       },
     ]);
