@@ -13,6 +13,7 @@ import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
 import TopButton from './components/TopButton';
+import NavChange from './components/NavChange';
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -23,7 +24,6 @@ function App() {
   return (
     <div className="App">
       {scrollPosition > 60 ? <TopButton /> : null}
-
       <Router>
         <Switch>
           <Route exact path="/">

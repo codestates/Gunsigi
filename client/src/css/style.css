@@ -1,26 +1,36 @@
 @import url("https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css");
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'NanumSquare', sans-serif; }
+  font-family: 'NanumSquare', sans-serif;
+}
 
 html {
-  font-size: 10px; }
+  font-size: 10px;
+}
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+  -moz-osx-font-smoothing: grayscale;
+}
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; }
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 
 .App {
-  color: #424242; }
+  color: #424242;
+}
 
 a,
 a:link,
 a:visited {
   text-decoration: none;
-  color: #424242; }
+  color: #424242;
+}

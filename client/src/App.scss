@@ -93,3 +93,9 @@ a:visited {
   text-decoration: none;
   color: $black;
 }
+
+button:hover,
+link:hover,
+a:hover {
+  cursor: pointer;
+}

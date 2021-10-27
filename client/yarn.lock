@@ -7913,7 +7913,7 @@
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-1.1.70.tgz"
   "version" "1.1.70"
 
-"node-sass@^4.0.0 || ^5.0.0", "node-sass@^6.0.1":
+"node-sass@^4.0.0 || ^5.0.0 || ^6.0.0", "node-sass@^6.0.1":
   "integrity" "sha512-f+Rbqt92Ful9gX0cGtdYwjTrWAaGURgaK5rZCWOgCNyGWusFYHhbqCCBoFBeat+HKETOU02AyTxNhJV0YZf2jQ=="
   "resolved" "https://registry.npmjs.org/node-sass/-/node-sass-6.0.1.tgz"
   "version" "6.0.1"
@@ -10323,9 +10323,9 @@
     "yargs" "^13.3.2"
 
 "sass-loader@^10.0.5":
-  "integrity" "sha512-W6gVDXAd5hR/WHsPicvZdjAWHBcEJ44UahgxcIE196fW2ong0ZHMPO1kZuI5q0VlvMQZh32gpv69PLWQm70qrw=="
-  "resolved" "https://registry.npmjs.org/sass-loader/-/sass-loader-10.1.1.tgz"
-  "version" "10.1.1"
+  "integrity" "sha512-kUceLzC1gIHz0zNJPpqRsJyisWatGYNFRmv2CKZK2/ngMJgLqxTbXwe/hJ85luyvZkgqU3VlJ33UVF2T/0g6mw=="
+  "resolved" "https://registry.npmjs.org/sass-loader/-/sass-loader-10.2.0.tgz"
+  "version" "10.2.0"
   dependencies:
     "klona" "^2.0.4"
     "loader-utils" "^2.0.0"
