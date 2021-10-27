@@ -15,7 +15,7 @@
   }
 
   [class^='col-'] {
-    padding: $gutter / 2  $gutter / 2;
+    padding: $gutter/2  $gutter / 2;
   }
 
   @for $i from 1 through $sm-columns {

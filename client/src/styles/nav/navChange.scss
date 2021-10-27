@@ -1,129 +1,114 @@
+@import '../../App.scss';
 @import '../landing/constants';
 @import '../landing/responsive';
 
 .navChange {
   width: 100%;
-  position: absolute;
+  min-width: $breakpoint-mobile;
+  height: 70px;
   background-color: $white;
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 1px $light-grey;
-  padding: $sm-margin * 3;
-
+  padding: $sm-margin $mid-margin;
+  // position: relative;
+  z-index: 10;
   .nav_logo {
     img {
-      height: 30px;
-      min-height: 30px;
+      height: 20px;
       position: center;
       object-fit: cover;
     }
   }
-
+  
   .nav_mid {
-    width: 50%;
-    margin-left: $mid-margin;
+    width: 40%;
     position: relative;
-    input {
+    input[type='text'] {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      &:focus,
+      &:active {
+        outline: solid 2px $deep-blue;
+      }
     }
     .search-input {
-      position: relative;
       width: 100%;
-      height: 36px;
+      height: 30px;
+      font-size: 1rem;
       border: solid 1px $light-grey;
-      border-radius: 30px;
+      border-radius: 15px;
+      position: relative;
       padding: 0 $sm-margin * 2;
     }
     .icon_search {
-      width: 18px;
+      width: 14px;
       position: absolute;
-      top: 8px;
+      top: 7px;
       right: 12px;
 
       img {
         filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
-          brightness(89%) contrast(93%);
+        brightness(89%) contrast(93%);
       }
     }
   }
-
+  
   .nav_right {
-    width: 80px;
+    width: 100px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    color: $black;
+    font-size: 1rem;
+    font-weight: 600;
+    
     img {
-      filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
-        brightness(89%) contrast(93%);
-    }
-    .icon_search {
-      width: 20px;
-      height: 20px;
-      min-height: 20px;
-    }
-    .icon_my {
-      width: 25px;
-      height: 25px;
-      min-height: 25px;
-    }
-  }
-  @include mobile-only() {
-    .login,
-    .signup,
-    .mypage,
-    .logout {
-      display: none;
+      filter: $f-black;
     }
   }
 }
 
-@include responsive(T) {
+@include tablet {
   .navChange {
-    width: 100%;
-    font-size: 1.4rem;
-    padding: $mid-margin;
-    justify-content: space-between;
+    height: 100px;
+    padding: $mid-margin $mid-margin * 2;
     .nav_logo {
-      width: 20%;
+      img {
+        height: 30px;
+      }
     }
     .nav_mid {
-      width: 46%;
+      width: 50%;
+      .search-input {
+        font-size: 1.4rem;
+        height: 40px;
+        border-radius: 20px;
+      }
+      .icon_search {
+        width: 20px;
+        top: 9px;
+      }
     }
     .nav_right {
-      width: 26%;
-      .login,
-      .mypage {
-        margin-right: $mid-margin;
-      }
+      width: 150px;
+      font-size: 1.4rem;
     }
-  }
-  .icon_my {
-    display: none;
   }
 }
 
-@include responsive(D) {
+@include desktop {
   .navChange {
-    width: 100%;
-    font-size: 1.4rem;
-    padding: $mid-margin;
+    padding: $mid-margin $mid-margin * 3;
     .nav_mid {
-      width: 46%;
+      width: 50%;
       margin-left: $mid-margin * 4;
     }
     .nav_right {
-      width: 20%;
-      .login,
-      .mypage {
-        margin-right: 50px;
-      }
+      width: 160px;
     }
-  }
-  .icon_my {
-    display: none;
   }
 }

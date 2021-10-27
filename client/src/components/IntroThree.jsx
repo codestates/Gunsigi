@@ -6,8 +6,13 @@ function IntroThree() {
     <div className="introThree">
       <div className="introThree_text">
         <h2>
-          저희 사이트를 이용하시는 고객들의 리뷰입니다
+          직접 경험한 건강기능식품에&nbsp;
+          <br />
+          리뷰를 남겨주세요!
         </h2>
+        <h6>
+          건식이는 언제나 여러분의 생생하고 솔직한 후기를 기다리고 있습니다
+        </h6>
       </div>
       <div className="container">
         <div className="row">
@@ -64,6 +69,7 @@ function IntroThree() {
                 </div>
               </div>
             </div>
+            <br />
             <br />
             <div className="review-box">
               <div className="profile">

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function NavChange() {
   // isLogin 리덕스 상태 설정필요
-  const isLogin = true;
+  const isLogin = false;
   return (
     <div className="navChange">
       <Link to="/">
@@ -32,9 +32,6 @@ function NavChange() {
             <div className="logout">로그아웃</div>
           </>
         )}
-        <div className="icon_my">
-          <img src="/icons/icon_mypage.svg" alt="my page" />
-        </div>
       </div>
     </div>
   );

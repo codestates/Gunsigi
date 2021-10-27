@@ -24,7 +24,6 @@ function App() {
   return (
     <div className="App">
       {scrollPosition > 60 ? <TopButton /> : null}
-
       <Router>
         <Switch>
           <Route exact path="/">

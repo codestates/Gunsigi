@@ -16,11 +16,6 @@ function Nav() {
         <div className="icon_search">
           <img src="/icons/icon_magnify.svg" alt="magnifier" />
         </div>
-        <Link to="/mypage">
-          <div className="icon_my">
-            <img src="/icons/icon_mypage.svg" alt="my page" />
-          </div>
-        </Link>
         {!isLogin ? (
           <>
             <div className="login">로그인</div>
