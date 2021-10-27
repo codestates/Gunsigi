@@ -11,8 +11,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: $sm-margin $mid-margin;
-  // position: relative;
+  padding: 0 25px;
+  position: relative;
   z-index: 0;
 
   .nav_logo {
@@ -22,8 +22,12 @@
       object-fit: cover;
     }
   }
+  .icon_search {
+    position: relative;
+    top: 2px;
+    margin-right: 25px;
+  }
   .nav_right {
-    width: 140px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,33 +38,37 @@
       width: 14px;
       filter: $f-black;
     }
+    .login {
+      margin-right: 20px;
+    }
+    .mypage {
+      margin-right: 20px;
+    }
   }
 }
 
 @include tablet {
   .nav {
     height: 100px;
-    padding: $mid-margin $mid-margin * 2;
+    padding: 0 40px;
     .nav_logo {
       img {
         height: 30px;
       }
     }
     .nav_right {
-      width: 200px;
       font-size: 1.4rem;
       .icon_search {
         width: 20px;
+        margin-right: 40px;
       }
-    }
-  }
-}
 
-@include desktop {
-  .nav {
-    padding: $mid-margin $mid-margin * 3;
-    .nav_right {
-      width: 240px;
+      .login {
+        margin-right: 40px;
+      }
+      .mypage {
+        margin-right: 40px;
+      }
     }
   }
 }
