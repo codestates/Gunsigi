@@ -1,0 +1,117 @@
+@import '../../App.scss';
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.introKick {
+  width: 100%;
+  height: 18%;
+  min-height: 500px;
+  // background-color: yellowgreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  .textBox {
+    height: 20%;
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    animation: slideIn 700ms ease-in-out;
+    animation-delay: 0, 5s;
+    // animation-iteration-count: infinite;
+    h3 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1.1rem;
+      white-space: pre-wrap;
+    }
+  }
+  .imageBox {
+    width: 100%;
+    height: 80%;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    .frameBox {
+      width: 70%;
+      height: 100%;
+      min-height: 400px;
+      position: relative;
+      padding: 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .frame {
+        width: 100%;
+        height: 100%;
+        background-image: url('../../images/phone.png');
+        background-repeat: no-repeat;
+        background-position: top;
+        background-size: cover;
+        position: relative;
+        bottom: 0;
+        z-index: 1;
+      }
+      .app {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 13% 13% 0 0;
+        position: relative;
+
+      }
+      .web {
+        display: none;
+      }
+    }
+  }
+
+  @include tablet {
+    flex-direction: row;
+    justify-content: center;
+    .textBox {
+      width: 36%;
+      background-color: sandybrown;
+    }
+    .imageBox {
+      background-color: salmon;
+      width: 60%;
+      .frameBox {
+        width: 100%;
+        background-color: royalblue;
+        .frame {
+          width: 100%;
+          background-image: url('../../images/macbook.png');
+          background-position: center;
+          background-size: contain;
+        }
+        .app {
+          display: none;
+        }
+        .web {
+          display: block;
+          width: 50%;
+          height: 50%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+  }
+}
