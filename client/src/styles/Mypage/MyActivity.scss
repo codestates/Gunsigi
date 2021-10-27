@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@import '../../App';
 
 #tab_menu {
   margin: 2.5rem;
@@ -20,21 +20,23 @@
 
   .focused {
     transition: 0.5s ease;
-    font-weight: bold;
+    font-weight: 800;
     color: $black;
   }
 }
 
 @include tablet {
   #tab_menu {
-    margin: 2.5rem 0 2.5rem 0;
+    margin: 2.5rem 2.5rem 2.5rem 0;
     font-size: 1.4rem;
-    min-width: 47.5rem;
+    min-width: 62vw;
   }
 }
 
 @include desktop {
   #tab_menu {
+    margin: 3rem 3.5rem 2.5rem 0;
     font-size: 1.6rem;
+    min-width: 74vw;
   }
 }

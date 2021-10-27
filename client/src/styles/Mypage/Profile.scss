@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@import '../../App';
 
 #profile_container {
   margin: 2.5rem;
@@ -27,7 +27,7 @@
 
   .profile_nickname {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 800;
     margin-bottom: 0.5rem;
   }
 
@@ -35,19 +35,19 @@
     width: 2rem;
     &:hover {
       cursor: pointer;
-      filter: invert(51%) sepia(6%) saturate(3364%) hue-rotate(173deg)
-        brightness(95%) contrast(79%);
+      filter: $f-deep-blue;
     }
   }
 }
 
 @include tablet {
   #profile_container {
-    margin: 3rem;
+    display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 3rem;
     height: 40rem;
-    width: 20rem;
+    min-width: 20rem;
     font-size: 1.2rem;
 
     .profile_img {
@@ -79,8 +79,7 @@
 @include desktop {
   #profile_container {
     margin: 4rem;
-
-    width: 27rem;
+    min-width: 27rem;
     height: 54rem;
     font-size: 1.5rem;
 
