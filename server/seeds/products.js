@@ -3,17 +3,40 @@
  */
 const path = require('path');
 const fs = require('fs').promises;
-const { Product } = require('../models');
+const {
+  Product,
+  Ingredient,
+  ProductIngredients,
+} = require('../models');
 
 module.exports = async () => {
   const count = await Product.count();
   if (count === 0) {
     // 제품이 없는 경우에만 데이터 넣기.
-    const products = JSON.parse(
-      await fs.readFile(path.join(__dirname, './products.json'), 'utf8'),
-    );
-    return Product.bulkCreate(products);
+    let products;
+    try {
+      products = JSON.parse(
+        await fs.readFile(path.join(__dirname, './data/products.json'), 'utf8'),
+      );
+    } catch {
+      return false;
+    }
+    return products.forEach(async (product) => {
+      const post = await Product.create(product);
+      // 성분표 매칭
+      product.ingredients.forEach(async (ingredient) => {
+        const [ing] = await Ingredient.findOrCreate({
+          where: { name: ingredient },
+          default: { name: ingredient },
+        });
+        try {
+          await ProductIngredients.create({
+            ProductId: post.id,
+            IngredientId: ing.id,
+          });
+        } catch {}
+      });
+    });
   }
-  // 데이터가 이미 있으면 성공처리
-  return Promise.resolve(true);
+  return true;
 };

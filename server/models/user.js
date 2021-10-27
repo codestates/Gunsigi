@@ -1,4 +1,5 @@
 const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -11,15 +12,51 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
       });
+      this.hasMany(models.reviewLike, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+      });
+    }
+
+    json() {
+      const jsonUser = this.toJSON();
+      delete jsonUser.password;
+      return jsonUser;
+    }
+
+    async isRight(password) {
+      const check = await bcrypt.compare(password, this.password);
+      return check;
     }
   }
   User.init(
     {
-      email: DataTypes.STRING,
-      profileImage: DataTypes.STRING,
-      nickname: DataTypes.STRING,
-      password: DataTypes.STRING,
-      type: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      uuid: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+      },
+      nickname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        async set(value) {
+          this.setDataValue('password', await bcrypt.hash(value, 10));
+        },
+      },
+      type: {
+        type: DataTypes.ENUM,
+        values: ['email', 'kakao', 'google'],
+      },
       reviewsCount: {
         type: DataTypes.INTEGER.UNSIGNED,
         defaultValue: 0,
