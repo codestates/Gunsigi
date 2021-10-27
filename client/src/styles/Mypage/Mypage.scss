@@ -1,0 +1,10 @@
+@import '../../App';
+
+@include tablet {
+  #mypage_container {
+    display: flex;
+  }
+}
+
+@include desktop {
+}

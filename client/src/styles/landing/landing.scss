@@ -1,0 +1,110 @@
+@import './_constants.scss';
+@import './_responsive.scss';
+
+.main {
+  .main_intro_zero {
+    .background {
+      width: 100%;
+      min-height: 700px;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: cover;
+      background-image: url('../../images/main_app.png');
+    }
+  }
+  @include mobile-only() {
+    position: relative;
+    // min-width: $sm-baseWidth;
+    .main_intro_zero {
+      .main_intro_text {
+        position: absolute;
+        top: 150px;
+        left: 10%;
+        text-align: left;
+        h1,
+        h3,
+        p {
+          margin-bottom: 20px;
+        }
+        h1 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+        p {
+          font-size: 1.1rem;
+          line-height: 1.5rem;
+        }
+      }
+    }
+  }
+
+  @include responsive(T) {
+    .main_intro_zero {
+      .background {
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url('../../images/main_web.png');
+      }
+    }
+
+    .main_intro_text {
+      position: absolute;
+      top: 220px;
+      left: 10%;
+      text-align: left;
+      h1,
+      h3,
+      p {
+        margin-bottom: 20px;
+        line-height: 4rem;
+      }
+      h1 {
+        font-size: 3rem;
+      }
+      h3 {
+        font-size: 2.2rem;
+      }
+      p {
+        font-size: 2rem;
+        line-height: 3.5rem;
+      }
+    }
+  }
+  @include responsive(D) {
+    .main_intro_zero {
+      .background {
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url('../../images/main_web.png');
+      }
+    }
+    .main_intro_text {
+      position: absolute;
+      top: 220px;
+      left: 10%;
+      text-align: left;
+      h1,
+      h3,
+      p {
+        
+        margin-bottom: 20px;
+        line-height: 4rem;
+      }
+      h1 {
+        font-size: 3rem;
+      }
+      h3 {
+        font-size: 2.2rem;
+      }
+      p {
+        font-size: 2rem;
+        line-height: 3.5rem;
+      }
+    }
+  }
+}

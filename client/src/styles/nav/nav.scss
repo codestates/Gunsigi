@@ -1,0 +1,66 @@
+@import '../../App.scss';
+@import '../landing/constants';
+@import '../landing/responsive';
+
+.nav {
+  width: 100%;
+  min-width: $breakpoint-mobile;
+  height: 70px;
+  background-color: transparent;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $sm-margin $mid-margin;
+  // position: relative;
+  z-index: 0;
+
+  .nav_logo {
+    img {
+      height: 20px;
+      position: center;
+      object-fit: cover;
+    }
+  }
+  .nav_right {
+    width: 140px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $black;
+    font-size: 1rem;
+    font-weight: 600;
+    .icon_search {
+      width: 14px;
+      filter: $f-black;
+    }
+  }
+}
+
+@include tablet {
+  .nav {
+    height: 100px;
+    padding: $mid-margin $mid-margin * 2;
+    .nav_logo {
+      img {
+        height: 30px;
+      }
+    }
+    .nav_right {
+      width: 200px;
+      font-size: 1.4rem;
+      .icon_search {
+        width: 20px;
+      }
+    }
+  }
+}
+
+@include desktop {
+  .nav {
+    padding: $mid-margin $mid-margin * 3;
+    .nav_right {
+      width: 240px;
+    }
+  }
+}
