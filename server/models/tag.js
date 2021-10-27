@@ -2,16 +2,20 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Tag extends Model {
-    static associate(models) {
-      this.belongsToMany(models.Product, { through: 'ProductTag' });
+    static associate() {
     }
   }
   Tag.init(
     {
-      tag: {
+      name: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
+      },
+      ingredients: {
+        type: DataTypes.JSON,
+        allowNull: false,
+        defaultValue: [],
       },
     },
     {

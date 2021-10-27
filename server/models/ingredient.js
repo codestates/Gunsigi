@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Ingredient extends Model {
     static associate(models) {
-      this.belongsToMany(models.Product, { through: 'ProductIngredient' });
+      this.belongsToMany(models.Product, { through: models.ProductIngredients });
     }
   }
   Ingredient.init(
@@ -13,7 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         allowNull: false,
       },
-      functional: DataTypes.TEXT,
+      good: {
+        type: DataTypes.JSON,
+        defaultValue: [],
+      },
+      bad: {
+        type: DataTypes.JSON,
+        defaultValue: [],
+      },
     },
     {
       sequelize,

@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'productId',
         onDelete: 'CASCADE',
       });
-      this.belongsToMany(models.Tag, { through: 'ProductTag' });
-      this.belongsToMany(models.Ingredient, { through: 'ProductIngredient' });
+      this.belongsToMany(models.Ingredient, {
+        through: models.ProductIngredients,
+      });
     }
   }
   Product.init(
@@ -29,14 +30,22 @@ module.exports = (sequelize, DataTypes) => {
       warning: DataTypes.TEXT,
       bookmarksCount: {
         type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
         defaultValue: 0,
       },
       reviewsCount: {
         type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
         defaultValue: 0,
       },
       reviewsSum: {
         type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      views: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
         defaultValue: 0,
       },
     },
