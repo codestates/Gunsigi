@@ -11,7 +11,6 @@ function Nav() {
           <img alt="gunsigi logo" src="/logo_gunsigi.png" />
         </div>
       </Link>
-
       <div className="nav_right">
         <div className="icon_search">
           <img src="/icons/icon_magnify.svg" alt="magnifier" />
