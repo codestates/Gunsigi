@@ -3,7 +3,7 @@ import '../styles/nav/nav.scss';
 import { Link } from 'react-router-dom';
 
 function Nav() {
-  const isLogin = true;
+  const isLogin = false;
   return (
     <div className="nav">
       <Link to="/">

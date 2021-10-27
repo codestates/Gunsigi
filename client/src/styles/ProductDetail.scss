@@ -1,16 +1,20 @@
 @import '../App';
 
+.ProductDetail {
+  min-width: $breakpoint-mobile;
+  background-color: $white;
+}
+
 .ProductDetail_container {
   white-space: pre-wrap;
   width: 100%;
-  height: 100vh;
-  background-color: $white;
-  padding: 60px 180px;
+  padding: 30px 30px;
 }
 
 .ProductDetail_in {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -20,20 +24,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
-  height: 600px;
+  width: 100%;
+  height: 60vh;
   border-radius: 10px;
   border: 1px solid $light-grey;
   img {
     &:nth-child(1) {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       position: absolute;
       right: 15px;
       top: 15px;
     }
     &:nth-child(2) {
       width: 60%;
+      height: 40%;
       object-fit: contain;
     }
   }
@@ -43,31 +48,40 @@
 }
 
 .ProductDetail_desc {
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  height: 600px;
-  padding: 20px 0 0 60px;
+  margin-top: 30px;
 }
 
 .ProductDetail_desc_top {
   div {
     margin-bottom: 10px;
-    font-size: 1.2rem;
-    font-weight: lighter;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .company {
+    font-size: 1rem;
+    font-weight: normal;
+    color: $deep-grey;
   }
   .name {
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 800;
     margin-bottom: 30px;
     span {
       &:nth-child(2) {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: normal;
         margin-left: 10px;
         color: $deep-grey;
       }
     }
+  }
+  .functional {
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 400;
   }
   .stars {
     margin-top: 30px;
@@ -81,20 +95,26 @@
       position: relative;
       top: 3px;
       margin-left: 10px;
-      font-size: 2.4rem;
-      color: $orange;
+      font-size: 2rem;
+      color: $yellow;
     }
   }
 }
 
-.ProductDetail_icon {
-  filter: invert(96%) sepia(3%) saturate(131%) hue-rotate(132deg)
-    brightness(116%) contrast(87%);
+.ProductDetail_heart {
+  filter: $f-light-grey;
 }
 
-.ProductDetail_icon_change {
-  filter: invert(91%) sepia(73%) saturate(3041%) hue-rotate(297deg)
-    brightness(109%) contrast(84%);
+.ProductDetail_heart_change {
+  filter: $f-orange;
+}
+
+.ProductDetail_star {
+  filter: $f-light-grey;
+}
+
+.ProductDetail_star_change {
+  filter: $f-yellow;
 }
 
 .line {
@@ -103,137 +123,222 @@
 }
 
 .ProductDetail_desc_bottom {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   div {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     display: flex;
-    span {
-      &:nth-child(1) {
-        width: 120px;
-        font-weight: 800;
+    font-weight: 600;
+    .name {
+      width: 30%;
+      line-height: 16px;
+    }
+    .desc {
+      width: 70%;
+      font-weight: 400;
+      line-height: 16px;
+    }
+  }
+
+  .ProductDetail_chemistry {
+    position: relative;
+    top: 13px;
+    .name {
+      position: relative;
+      top: 10px;
+      width: 30%;
+    }
+    div {
+      width: 70%;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      color: white;
+      .good {
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+        background-color: $green;
+        border-radius: 20px;
+        margin-right: 5px;
+        img {
+          width: 12px;
+          height: 12px;
+          filter: $f-white;
+          margin-right: 5px;
+        }
       }
-      &:nth-child(2) {
-        position: relative;
-        top: -3px;
-        font-weight: normal;
-        line-height: 20px;
-        width: 100%;
+
+      .bad {
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+        background-color: $red;
+        border-radius: 20px;
+        margin-right: 5px;
+        img {
+          width: 12px;
+          height: 12px;
+          filter: $f-white;
+          margin-right: 5px;
+        }
       }
     }
   }
 }
 
-@media (min-width: $breakpoint-tablet) and (max-width: $breakpoint-desktop) {
+@include tablet {
   .ProductDetail_container {
-    min-width: 1100px;
-    padding: 60px 60px;
-  }
-}
-
-@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
-  .ProductDetail_container {
-    padding: 50px 50px;
-  }
-  .ProductDetail_in {
+    white-space: pre-wrap;
     width: 100%;
-    // padding: 60px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 200px;
+    padding: 40px 40px;
   }
 
   .ProductDetail_img {
-    width: 100%;
     height: 60vh;
     img {
       &:nth-child(2) {
-        width: 50%;
+        width: 60%;
+        height: 60%;
         object-fit: contain;
       }
     }
-  }
-
-  .ProductDetail_desc {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 600px;
-    padding: 50px 0 0 0;
-  }
-}
-
-@media (min-width: $breakpoint-mobile - 1px) and (max-width: $breakpoint-mobile) {
-  .ProductDetail_container {
-    padding: 20px 20px;
-  }
-  .ProductDetail_in {
-    width: 100%;
-    // padding: 30px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 130px;
-  }
-
-  .ProductDetail_img {
-    width: 100%;
-    height: 50vh;
-    img {
-      &:nth-child(1) {
-        width: 35px;
-        height: 35px;
-      }
-      &:nth-child(2) {
-        width: 40%;
-        object-fit: contain;
-      }
-    }
-  }
-
-  .ProductDetail_desc {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 600px;
-    padding: 50px 0 0 0;
   }
 
   .ProductDetail_desc_top {
     div {
-      font-size: 1rem;
+      font-size: 1.2rem;
+    }
+    .company {
+      font-size: 1.2rem;
     }
     .name {
-      font-size: 2rem;
+      font-size: 2.4rem;
       span {
         &:nth-child(2) {
-          font-size: 1rem;
+          font-size: 1.2rem;
         }
       }
     }
+    .functional {
+      width: 100%;
+      height: 100px;
+      overflow-y: scroll;
+      font-size: 1.4rem;
+    }
     .stars {
       img {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
       }
       span {
-        top: 1px;
-        font-size: 2rem;
+        font-size: 2.4rem;
       }
-    }
-    .functional {
-      font-size: 1.1rem;
     }
   }
 
   .ProductDetail_desc_bottom {
-    font-size: 1rem;
+    font-size: 1.4rem;
     div {
-      span {
-        &:nth-child(1) {
-          width: 100px;
+      .name {
+        width: 30%;
+        line-height: 16px;
+      }
+      .desc {
+        width: 70%;
+        line-height: 20px;
+      }
+    }
+
+    .ProductDetail_chemistry {
+      .name {
+        width: 30%;
+      }
+      div {
+        width: 70%;
+        .good {
+          font-size: 1.2rem;
         }
-        &:nth-child(2) {
-          width: 100%;
+
+        .bad {
+          font-size: 1.2rem;
         }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .ProductDetail_in {
+    flex-direction: row;
+    // align-items: center;
+  }
+
+  .ProductDetail_img {
+    width: 40%;
+    height: 80vh;
+    img {
+      &:nth-child(2) {
+        width: 60%;
+        height: 60%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .ProductDetail_desc {
+    width: 60%;
+    flex-direction: column;
+    margin: 0 0 0 50px;
+  }
+
+  .ProductDetail_desc_bottom {
+    div {
+      .name {
+        width: 20%;
+      }
+      .desc {
+        width: 80%;
+      }
+    }
+
+    .ProductDetail_chemistry {
+      .name {
+        width: 20%;
+      }
+      div {
+        width: 80%;
+        .good {
+          font-size: 1.2rem;
+          padding: 7px 15px;
+        }
+
+        .bad {
+          font-size: 1.2rem;
+          padding: 7px 15px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .ProductDetail_container {
+    white-space: pre-wrap;
+    width: 100%;
+    padding: 40px 200px;
+  }
+
+  .ProductDetail_img {
+    height: 65vh;
+    img {
+      &:nth-child(2) {
+        width: 60%;
+        height: 60%;
+        object-fit: contain;
       }
     }
   }
