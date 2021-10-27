@@ -1,0 +1,42 @@
+@import '../../App';
+
+#tab_menu {
+  margin: 2.5rem;
+  display: flex;
+  list-style: none;
+  -webkit-padding-start: 0;
+  color: $light-grey;
+  font-size: 1.2rem;
+  border-bottom: 1px solid $light-grey;
+
+  li:nth-child(2) {
+    color: $black;
+  }
+
+  .submenu {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    cursor: pointer;
+  }
+
+  .focused {
+    transition: 0.5s ease;
+    font-weight: 800;
+    color: $black;
+  }
+}
+
+@include tablet {
+  #tab_menu {
+    margin: 2.5rem 2.5rem 2.5rem 0;
+    font-size: 1.4rem;
+    min-width: 62vw;
+  }
+}
+
+@include desktop {
+  #tab_menu {
+    margin: 3rem 3.5rem 2.5rem 0;
+    font-size: 1.6rem;
+    min-width: 74vw;
+  }
+}

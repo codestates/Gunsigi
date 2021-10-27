@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import './App.scss';
-import Main from './pages/Main';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import axios from 'axios';
 import setAxios from './utils/ApiController';
+import Main from './pages/Main';
+import Search from './pages/Search';
+import ProductDetail from './pages/ProductDetail';
+import Mypage from './pages/Mypage';
 import TopButton from './components/TopButton';
+import NavChange from './components/NavChange';
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -13,8 +24,22 @@ function App() {
   return (
     <div className="App">
       {scrollPosition > 60 ? <TopButton /> : null}
-
-      <Main />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
+          <Route path="/product-detail">
+            <ProductDetail />
+          </Route>
+          <Route path="/mypage">
+            <Mypage />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

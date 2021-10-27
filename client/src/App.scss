@@ -6,11 +6,58 @@ $light-blue: #d8e5f4;
 $light-grey: #eeeeee;
 $deep-grey: #a0a0a0;
 $orange: #ebba9b;
-$white: rgb(250, 250, 250);
+$white: #fafafa;
+$green: #508c5d;
+$red: #b15d5d;
+$yellow: #d39b0b;
+$brown: #9d8671;
+
+$f-black: invert(17%) sepia(94%) saturate(15%) hue-rotate(352deg)
+  brightness(101%) contrast(81%);
+$f-deep-blue: invert(52%) sepia(70%) saturate(304%) hue-rotate(173deg)
+  brightness(82%) contrast(85%);
+$f-light-blue: invert(86%) sepia(39%) saturate(571%) hue-rotate(184deg)
+  brightness(109%) contrast(91%);
+$f-light-grey: invert(100%) sepia(1%) saturate(6628%) hue-rotate(293deg)
+  brightness(118%) contrast(87%);
+$f-deep-grey: invert(78%) sepia(7%) saturate(5%) hue-rotate(331deg)
+  brightness(81%) contrast(89%);
+$f-orange: invert(81%) sepia(10%) saturate(1117%) hue-rotate(336deg)
+  brightness(95%) contrast(94%);
+$f-white: invert(100%) sepia(0%) saturate(7500%) hue-rotate(353deg)
+  brightness(109%) contrast(92%);
+$f-green: invert(50%) sepia(9%) saturate(1757%) hue-rotate(81deg)
+  brightness(95%) contrast(89%);
+$f-red: invert(40%) sepia(11%) saturate(2734%) hue-rotate(314deg)
+  brightness(101%) contrast(72%);
+$f-yellow: invert(66%) sepia(35%) saturate(4349%) hue-rotate(11deg)
+  brightness(98%) contrast(91%);
+$f-brown: invert(59%) sepia(33%) saturate(287%) hue-rotate(347deg)
+  brightness(86%) contrast(82%);
+$f-star: invert(86%) sepia(35%) saturate(624%) hue-rotate(3deg) brightness(98%)
+  contrast(93%);
 
 $breakpoint-mobile: 375px;
-$breakpoint-tablet: 769px;
+$breakpoint-tablet: 768px;
 $breakpoint-desktop: 1440px;
+
+@mixin mobile {
+  @media screen and (min-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
 
 * {
   box-sizing: border-box;
@@ -23,8 +70,32 @@ html {
   font-size: 10px;
 }
 
-.App {
-  color: $black;
-  font-weight: bold;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  color: $black;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+  color: $black;
+}
+
+button:hover,
+link:hover,
+a:hover {
+  cursor: pointer;
+}
