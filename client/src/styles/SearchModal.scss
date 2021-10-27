@@ -1,25 +1,27 @@
 @import '../App';
 
 .SearchModal_container {
+  min-width: $breakpoint-mobile;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 100px);
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .SearchModal_in {
   width: 100%;
+  height: 100%;
   background-color: $white;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 30px 0 30px 30px;
+  justify-content: flex-start;
+  padding: 30px 0 30px 20px;
 }
 
 .SearchModal_keyword {
   div {
     &:nth-child(1) {
       margin-bottom: 10px;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 800;
     }
   }
@@ -30,9 +32,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 150px;
-      height: 30px;
-      font-size: 1.6rem;
+      width: 100px;
+      height: 25px;
+      font-size: 1.1rem;
       background-color: $light-grey;
       border-radius: 20px;
       margin-right: 10px;
@@ -50,7 +52,7 @@
   margin-top: 50px;
   div {
     &:nth-child(1) {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 800;
       margin-bottom: 10px;
     }
@@ -63,12 +65,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
-      margin-right: 20px;
+      font-size: 1.1rem;
+      margin-right: 15px;
       margin-top: 10px;
       cursor: pointer;
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
       border-radius: 50px;
       &:hover {
         filter: brightness(70%);
@@ -82,7 +84,7 @@
       &:nth-child(3) {
         background-color: #b15d5d;
         img {
-          margin-top: 6px;
+          margin-top: 4px;
         }
         div {
           margin-top: 0;
@@ -98,8 +100,8 @@
         background-color: #9d8671;
       }
       img {
-        width: 50px;
-        height: 50px;
+        width: 35px;
+        height: 35px;
         filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
           brightness(102%) contrast(102%);
       }
@@ -112,28 +114,23 @@
   }
 }
 
-@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet - 1px) {
+@include tablet {
   .SearchModal_in {
-    width: 100%;
-    height: 100vh;
-    background-color: $white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 30px 0 0 20px;
+    height: auto;
+    padding: 30px 0 30px 30px;
   }
 
   .SearchModal_keyword {
     div {
       &:nth-child(1) {
-        font-size: 1.6rem;
+        font-size: 2rem;
       }
     }
     .SearchModal_hashtage {
       span {
-        width: 100px;
-        height: 25px;
-        font-size: 1.1rem;
+        width: 150px;
+        height: 30px;
+        font-size: 1.6rem;
       }
     }
   }
@@ -141,27 +138,24 @@
   .SearchModal_category {
     div {
       &:nth-child(1) {
-        font-size: 1.6rem;
+        font-size: 2rem;
       }
     }
     .SearchModal_category_icon {
       span {
-        margin-right: 15px;
-        font-size: 1.1rem;
-        width: 90px;
-        height: 90px;
+        font-size: 1.2rem;
+        margin-right: 20px;
+        width: 100px;
+        height: 100px;
         border-radius: 50px;
         &:nth-child(3) {
           img {
-            margin-top: 4px;
-          }
-          div {
-            margin-top: 0;
+            margin-top: 6px;
           }
         }
         img {
-          width: 35px;
-          height: 35px;
+          width: 50px;
+          height: 50px;
         }
       }
     }

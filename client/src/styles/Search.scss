@@ -1,18 +1,18 @@
 @import '../App';
 
 .Search_conatiner {
+  min-width: $breakpoint-mobile;
   width: 100%;
-  height: 100vh;
   background-color: $white;
 }
 
 .Search_in {
   .Search_img {
     width: 100%;
-    height: 400px;
-    background-image: url(../images/search_web.png);
+    height: 80vh;
+    background-image: url(../images/search_app.png);
     background-size: cover;
-    background-position: bottom;
+    background-position: top;
   }
 }
 
@@ -20,14 +20,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 0px 30px 30px;
+  padding: 20px;
 }
 
 .Search_title {
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 800;
   margin-bottom: 30px;
   span {
@@ -38,53 +38,65 @@
 }
 
 .Search_products {
-  display: flex;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, auto);
   flex-wrap: wrap;
-  flex: auto;
-  gap: 30px;
+  gap: 20px;
 }
 
-@media (min-width: $breakpoint-tablet) and (max-width: $breakpoint-desktop) {
+@media screen and (min-width: $breakpoint-mobile + 160px) {
+  .Search_products {
+    grid-template-columns: repeat(3, auto);
+  }
+}
+
+@media screen and (min-width: $breakpoint-mobile + 320px) {
+  .Search_products {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+
+@media screen and (min-width: $breakpoint-mobile + 320px) {
+  .Search_products {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+
+@media screen and (min-width: $breakpoint-mobile + 550px) {
+  .Search_products {
+    grid-template-columns: repeat(5, auto);
+  }
+}
+
+@include tablet {
   .Search_in {
     .Search_img {
-      width: 100%;
-      height: 300px;
+      height: 180px;
       background-image: url(../images/search_web.png);
-      background-size: cover;
       background-position: bottom;
     }
   }
+
   .Search_title {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+  }
+
+  .Search_bottom {
+    padding: 30px;
   }
 }
 
-@media (min-width: $breakpoint-mobile + 100px) and (max-width: $breakpoint-tablet - 1px) {
+@include desktop {
   .Search_in {
     .Search_img {
-      width: 100%;
-      height: 800px;
-      background-image: url(../images/search_app.png);
-      background-size: cover;
-      background-position: bottom;
+      height: 45vh;
+      background-image: url(../images/search_web.png);
     }
   }
-  .Search_title {
-    font-size: 1.6rem;
-  }
-}
 
-@media (min-width: $breakpoint-mobile - 100px) and (max-width: $breakpoint-mobile) {
-  .Search_in {
-    .Search_img {
-      width: 100%;
-      height: 400px;
-      background-image: url(../images/search_app.png);
-      background-size: cover;
-      background-position: bottom;
-    }
-  }
-  .Search_title {
-    font-size: 1.6rem;
+  .Search_products {
+    grid-template-columns: repeat(6, auto);
   }
 }
