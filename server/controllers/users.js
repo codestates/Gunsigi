@@ -1,5 +1,5 @@
 module.exports = {
   get: () => {},
-  put: () => {},
+  patch: () => {},
   delete: () => {},
 };

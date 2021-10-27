@@ -5,7 +5,7 @@ const router = express.Router();
 
 // // routes
 router.get('/', users.get);
-router.put('/', users.put);
+router.patch('/', users.patch);
 router.delete('/', users.delete);
 
 module.exports = router;

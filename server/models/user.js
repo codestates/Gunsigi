@@ -11,15 +11,26 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
       });
+      this.hasMany(models.reviewLike, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+      });
     }
   }
   User.init(
     {
-      email: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      uuid: DataTypes.STRING,
       profileImage: DataTypes.STRING,
       nickname: DataTypes.STRING,
       password: DataTypes.STRING,
-      type: DataTypes.STRING,
+      type: {
+        type: DataTypes.ENUM,
+        values: ['email', 'kakao', 'google'],
+      },
       reviewsCount: {
         type: DataTypes.INTEGER.UNSIGNED,
         defaultValue: 0,

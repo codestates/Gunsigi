@@ -41,17 +41,7 @@ app.get('/healthcheck', (_, res) => res.send('hi'));
 
 app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.send(err);
-});
-
+console.log(`running on ${process.env.NODE_ENV}`);
 if (process.env.NODE_ENV !== 'production') {
   // 개발모드에서 테이블생성 및 시드 데이터 넣기
   db.sequelize.sync().then(() => Seed());

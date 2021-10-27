@@ -26,4 +26,4 @@ node_modules
 server/.env.production
 
 .DS_Store
-products.json
+*/data/*.json
