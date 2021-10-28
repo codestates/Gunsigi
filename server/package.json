@@ -8,7 +8,9 @@
     "test": ""
   },
   "dependencies": {
+    "aws-sdk": "^2.1016.0",
     "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
