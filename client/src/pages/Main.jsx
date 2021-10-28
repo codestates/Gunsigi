@@ -6,6 +6,7 @@ import IntroOne from '../components/IntroOne';
 import IntroTwo from '../components/IntroTwo';
 import IntroThree from '../components/IntroThree';
 import Footer from '../components/Footer';
+import IntroKick from '../components/IntroKick';
 
 function Main() {
   return (
@@ -26,6 +27,7 @@ function Main() {
           </div>
         </div>
       </section>
+      <IntroKick />
       <IntroOne />
       <IntroTwo />
       <IntroThree />

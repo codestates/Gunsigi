@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../styles/landing/IntroOne.scss';
-import categoryContents from '../assets/IntroOne';
+import { categoryContents } from '../assets/Main';
 
 function IntroOne() {
   return (

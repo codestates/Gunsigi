@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/landing/IntroTwo.scss';
+import { keywordContents } from '../assets/Main';
 
 function IntroTwo() {
   return (
@@ -22,36 +23,14 @@ function IntroTwo() {
               건강기능식품을 보실 수 있습니다
             </p>
           </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_vitamin.png" alt="vitamin" />
-              <p className="text">비타민</p>
+          {keywordContents.map((el) => (
+            <div className="col-sm-1 col-md-1 col-lg-1" key={el.id}>
+              <div className="keyword">
+                <img src={el.src} alt="keyword" />
+                <p className="text">{el.title}</p>
+              </div>
             </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_propolis.png" alt="propolis" />
-              <p className="text">프로폴리스</p>
-            </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_folic.png" alt="folic acid" />
-              <p className="text">엽산</p>
-            </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_lactos.png" alt="lactos" />
-              <p className="text">유산균</p>
-            </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_lutein.png" alt="lutein" />
-              <p className="text">루테인</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

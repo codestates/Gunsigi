@@ -4,6 +4,7 @@
 .introOne {
   width: 100%;
   height: 18%;
+  min-height: 770px;
   .introOne_text {
     width: 100%;
     height: 120px;
@@ -47,6 +48,7 @@
           border: none;
           border-radius: 15px;
           background-color: $light-blue;
+          font-size: 1.2rem;
           &:hover {
             background-color: $orange;
           }
@@ -61,6 +63,7 @@
     }
   }
   @include tablet {
+    min-height: 500px;
     .introOne_text{
       height: 200px;
       h1 {

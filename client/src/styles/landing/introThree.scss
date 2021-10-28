@@ -11,13 +11,12 @@
   justify-content: center;
   align-items: center;
   background-color: $light-blue;
-  padding: $mid-margin $mid-margin * 2;
+  padding: $mid-margin;
 
   .introThree_text {
     text-align: center;
-    font-size: 1.5rem;
-    margin-top: $mid-margin;
-    margin-bottom: $mid-margin * 2;
+    font-size: 1.4rem;
+    margin: $mid-margin * 2 5px;
     h6 {
       margin-top: $mid-margin;
     }
