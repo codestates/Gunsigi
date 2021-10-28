@@ -46,5 +46,12 @@ module.exports = {
       userInfo: user.json(),
     });
   },
-  delete: () => {},
+  delete: async (req, res) => {
+    // 회원탈퇴
+    await User.destroy({ where: { id: res.locals.user.id } });
+    res.clearCookie('jwt');
+    return res.json({
+      message: 'delete user',
+    });
+  },
 };

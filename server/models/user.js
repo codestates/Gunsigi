@@ -25,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async isRight(password) {
+      console.log('pass', password);
       const check = await bcrypt.compare(password, this.password);
+      console.log('check ', check);
       return check;
     }
   }
@@ -49,9 +51,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        async set(value) {
-          this.setDataValue('password', await bcrypt.hash(value, 10));
+        set(value) {
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
         },
+        defaultValue: '',
       },
       type: {
         type: DataTypes.ENUM,

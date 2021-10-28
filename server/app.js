@@ -44,10 +44,9 @@ app.get('/healthcheck', (_, res) => res.send('hi'));
 app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 console.log(`running on ${process.env.NODE_ENV}`);
-if (process.env.NODE_ENV !== 'production') {
-  // 개발모드에서 테이블생성 및 시드 데이터 넣기
-  db.sequelize.sync().then(() => Seed());
-}
+
+// 테이블생성 및 시드 데이터 넣기
+db.sequelize.sync().then(() => Seed());
 
 debug('App initialized');
 
