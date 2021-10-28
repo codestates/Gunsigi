@@ -13,15 +13,71 @@ module.exports = async () => {
   const count = await Product.count();
   if (count === 0) {
     // 제품이 없는 경우에만 데이터 넣기.
-    let products;
+    let productsJson;
     try {
-      products = JSON.parse(
+      productsJson = JSON.parse(
         await fs.readFile(path.join(__dirname, './data/products.json'), 'utf8'),
       );
     } catch {
-      return false;
+      return Promise.reject(new Error('Fail to load file'));
     }
-    return products.forEach(async (product) => {
+    // 제품에 있는 성분들 뽑기
+    const ingredientsSet = new Set();
+    productsJson.forEach((pro) => {
+      pro.ingredients.forEach((ing) => ingredientsSet.add(ing));
+    });
+
+    // 제품 전부 DB에 넣기
+    const products = await Product.bulkCreate(productsJson, {
+      returning: true,
+    });
+
+    // DB에 있는 성분 정보 다 가져오기
+    const ingredientsDB = await Ingredient.findAll();
+    const ingredients = {};
+    ingredientsDB.forEach((ing) => {
+      ingredients[ing.name] = ing.id;
+    });
+
+    // 제품과 성분 연결테이블 row 만들기
+    const productIngredient = [];
+    products.forEach((product, idx) => {
+      productsJson[idx].ingredients.forEach(async (ing) => {
+        if (!ingredients[ing]) {
+          ingredients[ing] = await Ingredient.findOne({ where: { name: ing } });
+        }
+        productIngredient.push({
+          ProductId: product.id,
+          IngredientId: ingredients[ing],
+        });
+      });
+    });
+
+    // 연결테이블 삽입
+    await ProductIngredients.bulkCreate(productIngredient);
+    return true;
+
+    /*
+    return Promise.all(
+      products.map((product) => {
+        return Product.create(product).then(async (result) => {
+          return Promise.all(product.ingredients.map(async (ingredient) => {
+            const [ing] = await Ingredient.findOrCreate({
+              where: { name: ingredient },
+              default: { name: ingredient },
+            });
+            ProductIngredients.create({
+              ProductId: post.id,
+              IngredientId: ing.id,
+            }).catch(() => {});
+          }));
+        });
+      }),
+    );
+    */
+
+    /*
+    return productsJson.forEach(async (product) => {
       const post = await Product.create(product);
       // 성분표 매칭
       product.ingredients.forEach(async (ingredient) => {
@@ -29,14 +85,13 @@ module.exports = async () => {
           where: { name: ingredient },
           default: { name: ingredient },
         });
-        try {
-          await ProductIngredients.create({
-            ProductId: post.id,
-            IngredientId: ing.id,
-          });
-        } catch {}
+        ProductIngredients.create({
+          ProductId: post.id,
+          IngredientId: ing.id,
+        }).catch(() => {});
       });
     });
+    */
   }
   return true;
 };

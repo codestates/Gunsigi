@@ -5,6 +5,7 @@
   "scripts": {
     "start": "export NODE_ENV=production && node app.js",
     "dev": "DEBUG=express,app nodemon app.js",
+    "seed": "export SEED=true && DEBUG=express,app node app.js",
     "test": ""
   },
   "dependencies": {
