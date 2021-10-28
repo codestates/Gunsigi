@@ -1,3 +1,4 @@
+const debug = require('debug')('app');
 const productSeed = require('./products');
 const userSeed = require('./users');
 const reviewSeed = require('./reviews');
@@ -9,11 +10,11 @@ const reviewLikeSeed = require('./reviewLikes');
 
 module.exports = () => (
   Promise.all([userSeed(), tagSeed(), ingredientSeed()]).then(() => {
-    console.log('SuccessFully Users, Tags, Ingredients insert to DB');
+    debug('SuccessFully Users, Tags, Ingredients insert to DB');
     Promise.all([productSeed()]).then(() => {
-      console.log('Successfully insert Products');
+      debug('Successfully insert Products');
       Promise.all([reviewSeed(), bookmarkSeed()]).then(() => {
-        console.log('Successfully insert other datas');
+        debug('Successfully insert other datas');
       }).then(() => {
         Promise.all([reviewImageSeed(), reviewLikeSeed()]);
       });

@@ -1,11 +1,11 @@
 const express = require('express');
 const { body } = require('express-validator');
-const checkToken = require('../middlware/token');
+const { tokenRequired } = require('../middlware/token');
 const users = require('../controllers/users');
 const validationError = require('../middlware/error');
 
 const router = express.Router();
-router.use(checkToken);
+router.use(tokenRequired);
 
 // // routes
 router.get('/', users.get);

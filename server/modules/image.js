@@ -24,19 +24,18 @@ const s3 = new AWS.S3();
 module.exports = {
   save: async (path, image) => {
     // CDN서버에 이미지를 저장한다.
-    const base64Data = new Buffer.from(
-      image.replace(/^data:image\/\w+;base64,/, ''),
-      'base64',
-    );
-    const type = image.split(';')[0].split('/')[1];
+    const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (matches.length !== 3) return new Error('Invalid Base64 Image String');
+
+    const base64Data = new Buffer.from(matches[2], 'base64');
+    const type = matches[1];
     const uid = v4();
     const params = {
       Bucket: BUCKET,
-      Key: `${path}/${uid}.${type}`,
+      Key: `${path}/${uid}`,
       Body: base64Data,
-      ACL: 'public-read',
       ContentEncoding: 'base64',
-      ContentType: `image/${type}`,
+      ContentType: type,
     };
 
     let key = '';
@@ -55,4 +54,6 @@ module.exports = {
       else debug(data);
     });
   },
+  saveBySftp: () => {},
+  deleteBySftp: () => {},
 };

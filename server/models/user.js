@@ -1,5 +1,6 @@
 const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -25,9 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async isRight(password) {
-      console.log('pass', password);
       const check = await bcrypt.compare(password, this.password);
-      console.log('check ', check);
       return check;
     }
   }
@@ -44,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       profileImage: {
         type: DataTypes.STRING,
         defaultValue: '',
+        get() {
+          const image = this.getDataValue('profileImage');
+          if (image) return path.join(process.env.CDN_SERVER, image);
+          return '';
+        },
       },
       nickname: {
         type: DataTypes.STRING,
