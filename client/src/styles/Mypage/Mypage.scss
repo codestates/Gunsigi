@@ -1,9 +1,5 @@
 @import '../../App';
 
-#mypage_container {
-  margin-top: 10rem;
-}
-
 @include tablet {
   #mypage_container {
     display: flex;

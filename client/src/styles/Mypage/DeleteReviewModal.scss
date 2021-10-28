@@ -1,0 +1,32 @@
+@import '../../App';
+
+.modal_wrapper {
+  .delete_img_container {
+    display: none;
+  }
+}
+
+@include tablet {
+  .modal_wrapper {
+    .delete_img_container {
+      display: block;
+
+      background: url('../../images/delete_review_modal_web.png') no-repeat
+        center center/cover;
+      width: 38rem;
+      height: 50rem;
+
+      display: flex;
+      justify-content: center;
+
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+
+      img {
+        width: 10rem;
+        height: 3.5rem;
+        margin-top: 35%;
+      }
+    }
+  }
+}

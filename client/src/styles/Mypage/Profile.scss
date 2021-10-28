@@ -49,6 +49,8 @@
     height: 40rem;
     min-width: 20rem;
     font-size: 1.2rem;
+    position: sticky;
+    top: 2rem;
 
     .profile_img {
       width: 12rem;
@@ -82,6 +84,7 @@
     min-width: 27rem;
     height: 54rem;
     font-size: 1.5rem;
+    top: 3.5rem;
 
     .profile_img {
       width: 17rem;
