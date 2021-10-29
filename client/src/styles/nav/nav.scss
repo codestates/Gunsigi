@@ -38,6 +38,9 @@
     .icon_search {
       width: 14px;
       filter: $f-black;
+      &:hover {
+        filter: $f-deep-blue;
+      }
     }
     .login {
       margin-right: 20px;
@@ -52,6 +55,21 @@
     }
     .logout {
       cursor: pointer;
+    }
+    .icon_search,
+    .login,
+    .mypage,
+    .signup,
+    .logout {
+      background-color: transparent;
+      border: none;
+      &:hover {
+        font-weight: 800;
+        color: $deep-blue;
+      }
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
 }

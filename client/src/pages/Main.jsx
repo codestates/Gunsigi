@@ -13,6 +13,8 @@ function Main() {
     <div className="main">
       <section className="main_intro_zero">
         <div className="background">
+        <NavChange />
+
           <Nav />
           <div className="main_intro_text">
             <h1>우리 삶을 건강하게!</h1>

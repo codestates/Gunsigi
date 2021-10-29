@@ -41,7 +41,10 @@
     position: relative;
     &:hover {
       cursor: pointer;
-      filter: brightness(60%);
+      filter: brightness(70%);
+    }
+    &:active {
+      transform: scale(0.98);
     }
     img {
       width: 100%;

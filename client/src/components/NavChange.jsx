@@ -36,6 +36,7 @@ function NavChange() {
             <img src="/icons/icon_magnify.svg" alt="magnifier" />
           </div>
         </div>
+<<<<<<< HEAD
         <div className="nav_right">
           {!isLogin ? (
             <>
@@ -67,6 +68,39 @@ function NavChange() {
         </div>
       </div>
     </>
+=======
+      </Link>
+      <div className="nav_mid">
+        <input type="text" className="search-input" />
+        <button className="icon_search" type="button">
+          <img src="/icons/icon_magnify.svg" alt="magnifier" />
+        </button>
+      </div>
+      <div className="nav_right">
+        {!isLogin ? (
+          <>
+            <button className="login" type="button">
+              로그인
+            </button>
+            <button className="signup" type="button">
+              회원가입
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/mypage">
+              <button className="mypage" type="button">
+                마이페이지
+              </button>
+            </Link>
+            <button className="logout" type="button">
+              로그아웃
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+>>>>>>> 5a1bb3d (fix: introTwo,nav,navChange 버튼,효과 수정)
   );
 }
 
