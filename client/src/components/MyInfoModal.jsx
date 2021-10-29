@@ -24,14 +24,15 @@ function MyInfoModal({ openModalHandler, userImgSrc }) {
           <span className="title">회원정보 수정</span>
           <div className="img_info">
             <img className="profile_img" src={userImgSrc} alt="profile" />
-            <span>
-              프로필 이미지 수정
+            <span>프로필 이미지 수정</span>
+            <label htmlFor="clip">
               <img
                 className="clip_icon"
                 src="/icons/icon_clip.svg"
                 alt="clip"
               />
-            </span>
+              <input type="file" id="clip" />
+            </label>
           </div>
           <div className="nickname_modify">
             <label htmlFor="nickname">
@@ -42,7 +43,12 @@ function MyInfoModal({ openModalHandler, userImgSrc }) {
           <div className="password_modify">
             <label htmlFor="password">
               비밀번호 수정
-              <input id="password" type="password" placeholder="비밀번호" />
+              <input
+                id="password"
+                type="password"
+                placeholder="비밀번호"
+                name="password"
+              />
             </label>
             <input type="password" placeholder="비밀번호 확인" />
             <span className="password_notice">

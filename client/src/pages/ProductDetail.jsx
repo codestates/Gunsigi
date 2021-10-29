@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProductInfo } from '../assets/Search';
 import NavChange from '../components/NavChange';
 import ReviewList from '../components/ReviewList';
 import Write from '../components/Write';
+import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
 
 function ProductDetail() {
+  const [isOpenReview, setisOpenReview] = useState(false);
+
+  const openReviewHandler = () => {
+    setisOpenReview(!isOpenReview);
+  };
+
   return (
     <div className="ProductDetail">
-      <Write />
+      <Write openReviewHandler={openReviewHandler} />
       <NavChange />
 
       <div className="ProductDetail_container">
@@ -128,6 +135,13 @@ function ProductDetail() {
         name={ProductInfo.name}
         reviewsCount={ProductInfo.reviewsCount}
       />
+      {isOpenReview && (
+        <ReviewModal
+          openReviewHandler={openReviewHandler}
+          productImg={ProductInfo.image}
+          productName={ProductInfo.name}
+        />
+      )}
     </div>
   );
 }

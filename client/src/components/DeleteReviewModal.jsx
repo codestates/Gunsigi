@@ -34,9 +34,7 @@ function DeleteReviewModal({ openDeleteHandler }) {
           </button>
         </div>
       </div>
-      <div className="delete_img_container">
-        <img src="logo_gunsigi.png" alt="logo" />
-      </div>
+      <div className="delete_img_container" />
     </div>
   );
 }

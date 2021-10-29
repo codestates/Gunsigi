@@ -1,12 +1,12 @@
 import React from 'react';
-import { ProductInfo } from '../assets/Search';
+import { reviews, ProductInfo } from '../assets/Search';
 import Review from './Review';
 import '../styles/Mypage/MyReviews.scss';
 
 function MyReviews() {
   return (
     <div className="my-reviews">
-      {ProductInfo.reviews.map((review) => (
+      {reviews.items.map((review) => (
         <Review
           key={review.id}
           name={ProductInfo.name}
@@ -14,7 +14,7 @@ function MyReviews() {
           nickname={review.nickname}
           productId={review.productId}
           content={review.content}
-          date={review.date}
+          date={review.date.slice(0, 10)}
           score={review.score}
           isMine={review.isMine}
           images={review.images}

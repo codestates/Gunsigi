@@ -48,6 +48,10 @@
         height: 3.5rem;
         background-color: $light-blue;
         border-radius: 3rem;
+        &:hover {
+          background-color: $deep-blue;
+          color: $white;
+        }
       }
     }
   }
@@ -62,15 +66,25 @@
       width: 38rem;
       height: 50rem;
       gap: 5rem;
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 0.5rem;
 
       span {
         font-size: 2rem;
       }
       p {
+        margin-top: -2rem;
+        margin-bottom: 1rem;
         font-size: 1.2rem;
+        line-height: 2rem;
       }
+    }
+  }
+}
+
+@include laptop {
+  .modal_wrapper {
+    .modal_contents {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     .withdrawl_img_container {

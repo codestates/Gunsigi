@@ -10,10 +10,10 @@ function MyProducts() {
         <Product
           key={item.id}
           name={item.name}
-          heart={item.heart}
-          star={item.star}
-          reviews={item.reviews}
-          img={item.img}
+          reviews={item.reviewsCount}
+          img={item.image}
+          score={item.score}
+          bookmark={item.isBookmarked}
         />
       ))}
     </div>
