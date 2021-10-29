@@ -1,4 +1,6 @@
+const debug = require('debug')('app:db');
 const { Model } = require('sequelize');
+const s3 = require('../modules/image');
 
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
@@ -14,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.reviewImage, {
         foreignKey: 'reviewId',
         onDelete: 'CASCADE',
+        as: 'images',
       });
       this.hasMany(models.reviewLike, {
         foreignKey: 'reviewId',
@@ -25,12 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       userId: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         allowNull: false,
       },
       productId: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         allowNull: false,
       },
       content: {
@@ -54,6 +55,22 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Review',
+      indexes: [
+        {
+          fields: ['productId', 'period', 'createdAt'],
+        },
+        { fields: ['productId', 'period', 'likesCount'] },
+      ],
+      hooks: {
+        afterDestroy: (review, options) => {
+          if (options.transaction) {
+            options.transaction.afterCommit(async () => {
+              debug('삭제 커밋 완료. 이미지 삭제시작');
+              await s3.deleteFolder(`reviews/${review.id}`);
+            });
+          }
+        },
+      },
     },
   );
   return Review;

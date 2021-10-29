@@ -1,5 +1,7 @@
 const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
+const path = require('path');
+const s3 = require('../modules/image');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -42,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
       profileImage: {
         type: DataTypes.STRING,
         defaultValue: '',
+        get() {
+          const image = this.getDataValue('profileImage');
+          if (image) return path.join(process.env.CDN_SERVER, image);
+          return '';
+        },
       },
       nickname: {
         type: DataTypes.STRING,
@@ -49,9 +56,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        async set(value) {
-          this.setDataValue('password', await bcrypt.hash(value, 10));
+        set(value) {
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
         },
+        defaultValue: '',
       },
       type: {
         type: DataTypes.ENUM,
@@ -69,6 +77,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      hooks: {
+        afterDestroy: async (user) => {
+          const image = user.getDataValue('profileImage');
+          if (image) {
+            await s3.delete(image);
+          }
+        },
+      },
     },
   );
   return User;

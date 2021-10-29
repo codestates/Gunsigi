@@ -14,6 +14,7 @@ module.exports = async () => {
         content: '약빨 너무 좋아요!!!! 최고',
         period: '1개월 이하',
         score: 4,
+        likesCount: 2,
       },
       {
         userId: 1,
@@ -21,6 +22,7 @@ module.exports = async () => {
         content: '먹고 젊음을 되찾았습니다.',
         period: '1개월 이하',
         score: 5,
+        likesCount: 2,
       },
       {
         userId: 1,

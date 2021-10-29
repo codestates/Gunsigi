@@ -1,4 +1,5 @@
-const productSeed = require('./products');
+const debug = require('debug')('app:seed');
+const { productsSeed, addFulltextIndex } = require('./products');
 const userSeed = require('./users');
 const reviewSeed = require('./reviews');
 const bookmarkSeed = require('./bookmarks');
@@ -7,19 +8,24 @@ const ingredientSeed = require('./ingredients');
 const reviewImageSeed = require('./reviewImages');
 const reviewLikeSeed = require('./reviewLikes');
 
-module.exports = () => (
-  Promise.all([userSeed(), tagSeed(), ingredientSeed()]).then(() => {
-    console.log('SuccessFully Users, Tags, Ingredients insert to DB');
-    Promise.all([productSeed()]).then(() => {
-      console.log('Successfully insert Products');
-      Promise.all([reviewSeed(), bookmarkSeed()]).then(() => {
-        console.log('Successfully insert other datas');
-      }).then(() => {
-        Promise.all([reviewImageSeed(), reviewLikeSeed()]);
+module.exports = async function Seed() {
+  return Promise.all([userSeed(), tagSeed(), ingredientSeed()])
+    .then(async () => {
+      debug('Users, Tags, Ingredients 시드 데이터 삽입 완료');
+      await Promise.all([productsSeed(), addFulltextIndex()]).then(async () => {
+        debug('제품 시드 데이터 삽입, Full Text Index 생성 완료');
+        await Promise.all([reviewSeed(), bookmarkSeed()])
+          .then(() => debug('리뷰, 북마크 시드 데이터 삽입 완료'))
+          .then(async () => {
+            await Promise.all([reviewImageSeed(), reviewLikeSeed()]);
+          }).then(() => debug('리뷰이미지, 리뷰좋아요 시드 데이터 삽입 완료'));
       });
+    })
+    .then(() => {
+      debug('모든 시드 데이터 삽입 완료');
+    })
+    .catch((err) => {
+      if (process.env.NODE_ENV !== 'production') debug(err);
+      debug('시드 데이터 삽입에 실패했습니다.');
     });
-  }).catch((err) => {
-    if (process.env.NODE_ENV !== 'production') console.log(err);
-    console.log('Fail to data seeding');
-  })
-);
+};
