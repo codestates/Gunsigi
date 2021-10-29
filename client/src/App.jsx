@@ -18,7 +18,7 @@ import Loading from './components/Loading';
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="App">
