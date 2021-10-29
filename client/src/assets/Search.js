@@ -369,7 +369,7 @@ export const ProductInfo = {
   name: '레모나',
   company: '고려은단 헬스케어(주)',
   image:
-    'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+    'https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20200209_66%2F15811752497032UaBO_JPEG%2F18537583267483047_166029954.jpg&type=a340',
   validNumber: '2016000600558',
   functional:
     '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요\n\n가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요\n\n가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
@@ -379,7 +379,7 @@ export const ProductInfo = {
   warning:
     '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.\n(3) 이상 사례 발생 시 섭취를 중단하고 전문가와 상담하십시오. \n(4) 제품이 변질 및 변색된 경우에는 섭취하지 마시고 소비자 상담실로 문의 하시기 바랍니다.',
   bookmarksCount: 12,
-  reviewsCount: 3,
+  reviewsCount: 4,
   score: 4.6,
   isBookmarked: true,
   chemistry: {
@@ -395,13 +395,14 @@ export const reviews = {
       profileImage: 'dummy/girl.jpeg',
       nickname: 'gunsigi',
       productId: 4,
-      content: '좋은 효과를 보았습니다',
+      content:
+        '좋은 효과를 보았습니다 좋은 효과를 보았습니다 좋은 효과를 보았습니다 좋은 효과를 보았습니다 좋은 효과를 보았습니다 좋은 효과를 보았습니다 좋은 효과를 보았습니다 좋은 효과를 보았습니다',
       date: '2020-05-04Z22:24:11',
       likesCount: 10,
       score: 4,
       isLike: true,
       period: '1개월 이하',
-      images: ['dummy/medicine1', 'dummy/medicine2', 'dummy/medicine3'],
+      images: [''],
     },
     {
       id: 2,
@@ -412,9 +413,13 @@ export const reviews = {
       date: '2020-05-04Z22:24:11',
       likesCount: 15,
       score: 5,
-      isLike: true,
+      isLike: false,
       period: '1개월 이하',
-      images: ['dummy/medicine1', 'dummy/medicine2', 'dummy/medicine3'],
+      images: [
+        'dummy/medicine1.jpeg',
+        'dummy/medicine2.jpeg',
+        'dummy/medicine3.jpeg',
+      ],
     },
     {
       id: 3,
@@ -425,9 +430,14 @@ export const reviews = {
       date: '2020-05-04Z22:24:11',
       likesCount: 30,
       score: 4,
-      isLike: true,
+      isLike: false,
       period: '1개월 이하',
-      images: ['dummy/medicine1', 'dummy/medicine2', 'dummy/medicine3'],
+      images: [
+        'dummy/medicine1.jpeg',
+        'dummy/medicine2.jpeg',
+        'dummy/medicine3.jpeg',
+        'dummy/medicine3.jpeg',
+      ],
     },
     {
       id: 4,
@@ -440,7 +450,11 @@ export const reviews = {
       score: 5,
       isLike: false,
       period: '1개월 이하',
-      images: ['dummy/medicine1', 'dummy/medicine2', 'dummy/medicine3'],
+      images: [
+        'dummy/medicine1.jpeg',
+        'dummy/medicine2.jpeg',
+        'dummy/medicine3.jpeg',
+      ],
     },
   ],
   pages: {

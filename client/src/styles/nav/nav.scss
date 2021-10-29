@@ -26,6 +26,7 @@
     position: relative;
     top: 2px;
     margin-right: 25px;
+    cursor: pointer;
   }
   .nav_right {
     display: flex;
@@ -40,9 +41,17 @@
     }
     .login {
       margin-right: 20px;
+      cursor: pointer;
     }
     .mypage {
       margin-right: 20px;
+      cursor: pointer;
+    }
+    .signup {
+      cursor: pointer;
+    }
+    .logout {
+      cursor: pointer;
     }
   }
 }

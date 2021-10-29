@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import '../styles/Product.scss';
 
@@ -11,7 +10,7 @@ function Product({ name, reviews, img, score, bookmark }) {
       <div className="title">
         <span>{name}</span>
         <img
-          className={bookmark ? 'Product_icon_change' : 'Product_icon'}
+          className={bookmark ? 'Product_heart_change' : 'Product_heart'}
           src="icons/icon_bookmark.svg"
           alt="heart"
         />

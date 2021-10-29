@@ -18,18 +18,18 @@ function ReviewList({ name, reviewsCount }) {
               >
                 최신순
               </span>
-              <span className="color">|</span>
+              <span className="color_change">|</span>
               <span
                 className={sequence ? 'color_change button' : 'color button'}
               >
-                리뷰순
+                좋아요순
               </span>
             </div>
           </div>
           <div className="ReviewList_tag">
             <span>1개월 이하</span>
             <span>3개월 이상</span>
-            <span>6개월 이싱</span>
+            <span>6개월 이상</span>
             <span>1년 이상</span>
           </div>
         </div>
@@ -46,6 +46,9 @@ function ReviewList({ name, reviewsCount }) {
               score={review.score}
               isMine={review.isMine}
               images={review.images}
+              likesCount={review.likesCount}
+              isLike={review.isLike}
+              period={review.period}
             />
           ))}
         </div>

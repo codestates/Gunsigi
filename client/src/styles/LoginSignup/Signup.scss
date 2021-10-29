@@ -1,0 +1,117 @@
+@import '../../App';
+
+.Signup_container {
+  width: 100%;
+  height: 100%;
+  padding: 80px 50px;
+}
+
+.Signup_in {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 2.2rem;
+    font-weight: 800;
+  }
+
+  .input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+      width: 280px;
+      height: 34px;
+      border-radius: 20px;
+      border: 1px solid $deep-grey;
+      padding-left: 15px;
+      &:focus {
+        outline: 2px solid $deep-blue;
+      }
+    }
+    .email {
+      div {
+        margin-top: 7px;
+        margin-left: 15px;
+        font-size: 1.2rem;
+        color: $red;
+        font-weight: 600;
+      }
+    }
+
+    .nickname {
+      margin-top: 15px;
+      div {
+        margin-top: 7px;
+        margin-left: 15px;
+        font-size: 1.2rem;
+        color: $red;
+        font-weight: 600;
+      }
+    }
+
+    .password {
+      margin-top: 15px;
+      .check {
+        margin-top: 15px;
+        div {
+          margin-top: 7px;
+          margin-left: 15px;
+          font-size: 1.2rem;
+          color: $red;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .icon {
+    width: 100;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      cursor: pointer;
+      &:nth-child(1) {
+        margin-right: 30px;
+      }
+    }
+  }
+
+  button {
+    width: 260px;
+    height: 34px;
+    border-radius: 20px;
+    border: none;
+    background-color: $light-blue;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    &:hover {
+      background-color: $deep-blue;
+      color: $white;
+    }
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+@include tablet {
+  .Signup_container {
+    padding: 60px 50px;
+  }
+}
+
+@include laptop {
+  .Signup_container {
+    padding: 45px 50px;
+  }
+}

@@ -6,184 +6,271 @@
 }
 
 .Reviews_in {
+  position: relative;
   display: flex;
+  flex-direction: column;
   border-radius: 10px;
   border: 1px solid $light-grey;
   background-color: white;
+  padding: 25px;
+}
+
+.Reviews_trashOrHeart {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  display: flex;
+  .like {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .heart_icon {
+      filter: $f-deep-grey;
+    }
+    .heart_icon_change {
+      filter: $f-orange;
+    }
+    span {
+      margin-left: 3px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $deep-grey;
+    }
+  }
+  .delete {
+    cursor: pointer;
+    margin-left: 10px;
+    filter: $f-deep-grey;
+  }
+  img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
 }
 
 .Reviews_left {
-  width: 20%;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  flex-direction: column;
+}
+
+.Reviews_Profile_info {
+  display: flex;
   .profile {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border-radius: 40px;
-    margin-bottom: 10px;
+    margin-right: 20px;
   }
-  .nameOrDate {
+
+  .nameOrDateOrstar {
     display: flex;
     flex-direction: column;
-    align-items: center;
-  }
-  .nickname {
-    font-size: 1.4rem;
-    margin-bottom: 5px;
-  }
-  .date {
-    color: $deep-grey;
-    margin-bottom: 5px;
-  }
-  .stars {
-    display: flex;
-    img {
-      width: 12px;
-      height: 12px;
-    }
-  }
-  .delete_left {
-    display: none;
-  }
-}
-
-.Reviews_right {
-  position: relative;
-  width: 80%;
-  padding: 30px 0;
-  .delete {
-    position: absolute;
-    right: 30px;
-    width: 20px;
-    height: 20px;
-    filter: invert(65%) sepia(7%) saturate(19%) hue-rotate(48deg)
-      brightness(98%) contrast(92%);
-    cursor: pointer;
-  }
-  .name {
-    span {
-      font-size: 1.4rem;
-      &:nth-child(2) {
-        margin-left: 10px;
-        font-weight: normal;
-      }
-    }
-  }
-  .images {
-    margin-top: 20px;
-    img {
-      width: 80px;
-      height: 80px;
-      cursor: pointer;
-      object-fit: cover;
-      margin-right: 10px;
-      margin-bottom: 20px;
-    }
-  }
-  .content {
-    font-size: 1.4rem;
-    font-weight: normal;
-  }
-}
-
-@media (min-width: $breakpoint-tablet) and (max-width: $breakpoint-desktop) {
-}
-
-@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet - 1px) {
-  .Reviews_left {
-    width: 30%;
-  }
-
-  .Reviews_right {
-    width: 70%;
-  }
-}
-
-@media (min-width: $breakpoint-mobile - 1px) and (max-width: $breakpoint-mobile) {
-  .Reviews_in {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .Reviews_left {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-    .profile {
-      width: 60px;
-      height: 60px;
-    }
-    .nameOrDate {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-left: 20px;
-      margin-right: 20px;
+    .date {
+      color: $deep-grey;
+      margin-bottom: 3px;
+      margin-top: 3px;
     }
     .nickname {
       font-size: 1.4rem;
+      font-weight: 800;
       margin-bottom: 5px;
     }
-    .date {
-      margin-bottom: 0px;
-    }
     .stars {
+      display: flex;
       img {
         width: 12px;
         height: 12px;
       }
     }
-    .delete_left {
-      display: inline-block;
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      width: 20px;
-      height: 20px;
-      filter: invert(65%) sepia(7%) saturate(19%) hue-rotate(48deg)
-        brightness(98%) contrast(92%);
-      cursor: pointer;
+  }
+}
+
+.ProductDetail_icon {
+  filter: $f-light-grey;
+}
+
+.ProductDetail_icon_change {
+  filter: $f-star;
+}
+
+.Reviews_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 0 0 0;
+  .name {
+    display: flex;
+    align-items: center;
+    .product_name {
+      span {
+        font-size: 1.4rem;
+        font-weight: 600;
+        &:nth-child(2) {
+          margin-left: 10px;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .period {
+      display: flex;
+      align-items: center;
+      margin-left: 30px;
+      img {
+        position: relative;
+        top: -1px;
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+        filter: $f-deep-blue;
+      }
+      span {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: $deep-blue;
+      }
+    }
+  }
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+    img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+  }
+  .content {
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+}
+
+@include tablet {
+  .Reviews_in {
+    flex-direction: row;
+    padding: 30px 0;
+  }
+
+  .Reviews_trashOrHeart {
+    .like {
+      span {
+        margin-left: 5px;
+        font-size: 1.6rem;
+      }
+    }
+    .delete {
+      margin-left: 14px;
+      filter: $f-deep-grey;
+    }
+    img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+  }
+
+  .Reviews_left {
+    width: 30%;
+    justify-content: center;
+  }
+
+  .Reviews_Profile_info {
+    flex-direction: column;
+    align-items: center;
+    .profile {
+      width: 90px;
+      height: 90px;
+      margin-right: 0;
+      border-radius: 45px;
+    }
+
+    .nameOrDateOrstar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+      .date {
+        font-size: 1.1rem;
+      }
+      .nickname {
+        font-size: 1.6rem;
+      }
+      .stars {
+        img {
+          width: 14px;
+          height: 14px;
+        }
+      }
     }
   }
 
   .Reviews_right {
-    position: relative;
-    width: 100%;
-    padding: 20px 0 0 0;
-    .delete {
-      display: none;
-    }
+    width: 70%;
+    padding: 20px 30px 20px 0;
     .name {
-      span {
-        font-size: 1.2rem;
-        &:nth-child(2) {
-          margin-left: 10px;
-          font-weight: normal;
+      .product_name {
+        span {
+          font-size: 1.6rem;
+          font-weight: 800;
+        }
+      }
+
+      .period {
+        position: relative;
+        top: 1px;
+        img {
+          top: -2px;
+          width: 20px;
+          height: 20px;
+        }
+        span {
+          font-size: 1.4rem;
         }
       }
     }
     .images {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-top: 20px;
+      margin: 20px 0;
+      width: 100%;
       img {
-        width: 125px;
-        height: 125px;
-        margin-right: 10px;
-        margin-bottom: 20px;
+        width: 140px;
+        height: 140px;
       }
     }
     .content {
-      font-size: 1.1rem;
-      font-weight: normal;
+      font-size: 1.6rem;
     }
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .Reviews_left {
+    width: 20%;
+    justify-content: center;
+  }
+  .Reviews_right {
+    width: 80%;
+    .content {
+      width: 75%;
+    }
+  }
+}
+
+// @include desktop {
+//   .Reviews_left {
+//     width: 20%;
+//     justify-content: center;
+//   }
+
+//   .Reviews_right {
+//     width: 80%;
+//   }
+// }

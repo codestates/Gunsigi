@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../styles/SearchModal.scss';
 import { searchHashtag, searchCategory } from '../assets/Search';
-import NavChange from './NavChange';
 
-function SearchModal() {
+function SearchModal({ setOpenSearchModal }) {
+  const SearchModalCloseEl = useRef(null);
+
+  const SearchModalCloseButton = (e) => {
+    if (e.target === SearchModalCloseEl.current) {
+      setOpenSearchModal(false);
+    }
+  };
   return (
     <div className="SearchModal">
-      <NavChange />
       <div className="SearchModal_container">
         <div className="SearchModal_in">
           <div className="SearchModal_keyword">
@@ -29,6 +34,17 @@ function SearchModal() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="SearchModal_close">
+        <button
+          onClick={(e) => {
+            SearchModalCloseButton(e);
+          }}
+          ref={SearchModalCloseEl}
+          type="button"
+        >
+          x
+        </button>
       </div>
     </div>
   );
