@@ -1,0 +1,49 @@
+@import '../App.scss';
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--white--color);
+  z-index: 980;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+}
+
+//4try
+.gunsigi_logo {
+  width: 30%;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 150px;
+
+}
+
+//water-fill
+.water-fill {
+  animation: wave 0.7s infinite linear, 
+  fill-up 5s infinite ease-in alternate;
+}
+
+@keyframes wave {
+  0% {
+    x: -400px;
+  }
+  100% {
+    x: 0;
+  }
+}
+
+@keyframes fill-up {
+  0% {
+    height: 0;
+    y: 90px;
+  }
+  100% {
+    height: 120px;
+    y: -30px;
+  }
+}

@@ -25,13 +25,12 @@
         color: $mid-grey;
       }
     }
-    
   }
   .members {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    
+
     .github {
       width: 24%;
       display: flex;
@@ -58,20 +57,30 @@
     }
   }
   @include responsive(D) {
-    .repository {
-      margin-bottom: 0;
-      .title {
-        font-size: 1.2rem;
-      }
-    }
-    .members {
-      .github {
-        img {
-          width: 12%;
-        }
-        .member-name {
+    display: flex;
+    justify-content: space-between;
+    padding: $sm-margin * 2 $mid-margin;
+    .row {
+      justify-content: space-between;
+      .repository {
+        width: 28%;
+        margin-bottom: 0;
+        .title {
           font-size: 1.2rem;
-          margin-left: $sm-margin;
+        }
+      }
+      .members {
+        width: 71%;
+        .github {
+          justify-content: flex-end;
+          img {
+            width: 12%;
+          }
+          .member-name {
+            font-size: 1.2rem;
+            text-align: right;
+            margin-left: 10px;
+          }
         }
       }
     }

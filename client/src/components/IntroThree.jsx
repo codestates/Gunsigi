@@ -14,7 +14,7 @@ function IntroThree() {
           건식이는 언제나 여러분의 생생하고 솔직한 후기를 기다리고 있습니다
         </h6>
       </div>
-      <div className="container">
+      <div className="container scroll">
         <div className="row">
           <div className="col-sm-1 col-md-2 col-lg-1">
             <div className="review-box">
@@ -101,7 +101,7 @@ function IntroThree() {
           <div className="col-sm-1 col-md-2 col-lg-1">
             <div className="review-box">
               <div className="profile">
-                <img src="/images/doldolma.png" alt="profile" />
+                <img src="/images/hoony.png" alt="profile" />
                 <div className="nickname">hoony</div>
                 <div className="createdAt">2021.10.31</div>
                 <div className="stars">
