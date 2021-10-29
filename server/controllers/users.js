@@ -1,5 +1,3 @@
-const fs = require('fs');
-const debug = require('debug')('app');
 const { User } = require('../models');
 const s3 = require('../modules/image');
 
@@ -43,8 +41,15 @@ module.exports = {
   },
   delete: async (req, res) => {
     // 회원탈퇴
-    await User.destroy({ where: { id: res.locals.user.id } });
     res.clearCookie('jwt');
+    const user = await User.findByPk(res.locals.user.id);
+    // await User.destroy({ where: { id: res.locals.user.id } });
+    if (!user) {
+      return res.status(401).json({
+        message: 'Invalid Token',
+      });
+    }
+    await user.destroy();
     return res.json({
       message: 'delete user',
     });

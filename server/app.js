@@ -43,12 +43,14 @@ app.get('/healthcheck', (_, res) => res.send('hi'));
 
 app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-console.log(`running on ${process.env.NODE_ENV}`);
+debug(`running on ${process.env.NODE_ENV || 'development'}`);
 
 // 테이블생성 및 시드 데이터 넣기
-db.sequelize.sync().then(() => Seed());
+db.sequelize.sync(process.env.SEED ? { force: true } : {}).then(async () => {
+  await Seed();
+});
 
-debug('App initialized');
+debug('App 초기화완료');
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => debug(`Listening : ${PORT}`));
+app.listen(PORT, () => debug(`리스닝 : ${PORT}`));

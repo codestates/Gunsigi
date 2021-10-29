@@ -1,4 +1,4 @@
-const debug = require('debug')('app');
+const debug = require('debug')('app:auth');
 const { User } = require('../models');
 const {
   generateAccessToken,

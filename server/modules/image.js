@@ -24,7 +24,7 @@ const s3 = new AWS.S3();
 module.exports = {
   save: async (path, image) => {
     // CDN서버에 이미지를 저장한다.
-    const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
     if (matches.length !== 3) return new Error('Invalid Base64 Image String');
 
     const base64Data = Buffer.from(matches[2], 'base64');
@@ -43,16 +43,13 @@ module.exports = {
       const { Key } = await s3.upload(params).promise();
       key = Key;
     } catch (error) {
-      debug(error);
+      debug('error', error);
     }
     return key;
   },
   delete: async (Key) => {
     // CDN서버에 있는 이미지를 삭제한다.
-    await s3.deleteObject({ Bucket: BUCKET, Key }, (err, data) => {
-      if (err) debug('err', err);
-      else debug(data);
-    }).promise();
+    await s3.deleteObject({ Bucket: BUCKET, Key }).promise();
   },
   deleteFolder: async function deleteObjects(dir) {
     // Objects 조회
