@@ -108,13 +108,19 @@ a:hover {
   cursor: pointer;
 }
 
-input[type='password'] {
-  font-family: 'Malgun gothic', dotum, sans-serif;
+.scroll {
+  transition: transform 1s, opacity 1s;
 }
+
 button {
+  border: none;
+  background: inherit;
+}
+
+input {
   border: none;
 }
 
-.scroll {
-  transition: transform 1s, opacity 1s;
+input[type='password'] {
+  font-family: 'Malgun gothic', dotum, sans-serif;
 }

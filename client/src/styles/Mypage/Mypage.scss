@@ -1,10 +1,9 @@
 @import '../../App';
 
-@include tablet {
+@include laptop {
   #mypage_container {
     display: flex;
+    padding: 30px;
+    height: calc(100vh - 100px);
   }
-}
-
-@include desktop {
 }

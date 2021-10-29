@@ -20,7 +20,7 @@ function MyActivity() {
   };
 
   return (
-    <div>
+    <div className="my-activity_container">
       <ul id="tab_menu">
         {menuArr.map((el, index) => (
           <li
@@ -34,7 +34,7 @@ function MyActivity() {
         ))}
       </ul>
 
-      <ul>{menuArr[currentTab].content}</ul>
+      <ul className="my-contents">{menuArr[currentTab].content}</ul>
     </div>
   );
 }

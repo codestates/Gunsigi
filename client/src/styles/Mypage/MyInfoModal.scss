@@ -20,7 +20,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 5rem;
     width: 100%;
     height: 100%;
 
@@ -30,26 +30,35 @@
     }
 
     .img_info {
+      margin-left: -2rem;
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 3rem;
 
       .profile_img {
-        width: 9rem;
+        width: 8rem;
         border-radius: 6rem;
         border: 1px solid $light-grey;
       }
 
       span {
-        margin-right: 4rem;
         display: flex;
         align-items: center;
         font-weight: 800;
         font-size: 1.2rem;
+      }
 
+      label {
+        margin-left: -2rem;
         .clip_icon {
           width: 2rem;
           cursor: pointer;
+          &:hover {
+            filter: $f-deep-blue;
+          }
+        }
+        input {
+          display: none;
         }
       }
     }
@@ -61,6 +70,8 @@
 
     .password_notice {
       color: $red;
+      padding-left: 1.3rem;
+      font-weight: 800;
     }
 
     button {
@@ -68,6 +79,9 @@
       background: inherit;
     }
     .btns_container {
+      display: flex;
+      align-items: center;
+
       .modify_btn {
         font-weight: 800;
         font-size: 1.6rem;
@@ -75,10 +89,20 @@
         border-radius: 3rem;
         min-width: 25rem;
         min-height: 3.5rem;
+        &:hover {
+          background-color: $deep-blue;
+          color: $white;
+        }
       }
       .withdrawal_btn {
+        width: 5rem;
+        margin-top: 1rem;
         font-size: 1rem;
         color: $deep-grey;
+        &:hover {
+          color: $red;
+          font-weight: 600;
+        }
       }
       gap: 1rem;
     }
@@ -90,6 +114,10 @@
       border-radius: 3rem;
       border: 1px solid $light-grey;
       padding-left: 1rem;
+      &:focus,
+      &:active {
+        outline: solid 2px $deep-blue;
+      }
     }
 
     .password_modify,
@@ -111,32 +139,48 @@
     .modal_view {
       width: 38rem;
       height: 50rem;
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 0.5rem;
+      border-radius: 0.5rem;
       gap: 2rem;
+      padding-bottom: 1rem;
 
       .title {
-        margin: 2rem 0 0 -11rem;
+        margin: 1.5rem 0 -0.5rem -14.5rem;
+        font-size: 2rem;
+      }
+
+      .btns_container {
+        .withdrawal_btn {
+          margin-top: 0;
+        }
       }
     }
+  }
 
-    .modify_img_container {
-      display: block;
-      background: url('../../images/my_info_modal_web.png') no-repeat center
-        center/cover;
-      width: 38rem;
-      height: 50rem;
+  @include laptop {
+    .modal_container {
+      .modal_view {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
 
-      display: flex;
-      justify-content: center;
+      .modify_img_container {
+        display: block;
+        background: url('../../images/my_info_modal_web.png') no-repeat center
+          center/cover;
+        width: 38rem;
+        height: 50rem;
 
-      border-top-right-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
+        display: flex;
+        justify-content: center;
 
-      img {
-        width: 10rem;
-        height: 3.5rem;
-        margin-top: 35%;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+
+        img {
+          width: 10rem;
+          height: 3.5rem;
+          margin-top: 35%;
+        }
       }
     }
   }

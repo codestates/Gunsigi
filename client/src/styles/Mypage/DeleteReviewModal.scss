@@ -6,7 +6,7 @@
   }
 }
 
-@include tablet {
+@include laptop {
   .modal_wrapper {
     .delete_img_container {
       display: block;
@@ -21,12 +21,6 @@
 
       border-top-right-radius: 0.5rem;
       border-bottom-right-radius: 0.5rem;
-
-      img {
-        width: 10rem;
-        height: 3.5rem;
-        margin-top: 35%;
-      }
     }
   }
 }

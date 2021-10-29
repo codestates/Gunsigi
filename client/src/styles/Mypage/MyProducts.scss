@@ -1,34 +1,27 @@
 @import '../../App';
 
 .my-products {
-  display: flex;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, auto);
   flex-wrap: wrap;
-  margin: 0 2.5rem 0 2.5rem;
-
-  .Product_container {
-    width: 16rem;
-    height: 16rem;
-  }
+  // gap: 20px;
 }
 
 @include tablet {
   .my-products {
-    margin: 0 2.5rem 0 0;
-
-    .Product_container {
-      width: 18rem;
-      height: 18rem;
-    }
+    grid-template-columns: repeat(4, auto);
   }
 }
 
+@include laptop {
+  .my-products {
+    height: 100%;
+  }
+}
 @include desktop {
   .my-products {
-    margin: 0 3.5rem 0 0;
-
-    .Product_container {
-      width: 27rem;
-      height: 27rem;
-    }
+    grid-template-columns: repeat(5, auto);
   }
 }
