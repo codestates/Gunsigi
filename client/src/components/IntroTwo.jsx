@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/landing/IntroTwo.scss';
+import '../styles/landing/introTwo.scss';
 import { keywordContents } from '../assets/Main';
 
 function IntroTwo() {

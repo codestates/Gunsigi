@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/landing/IntroThree.scss';
+import '../styles/landing/introThree.scss';
 
 function IntroThree() {
   return (
