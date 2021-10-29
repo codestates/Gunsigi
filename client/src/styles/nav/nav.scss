@@ -53,6 +53,14 @@
     .logout {
       cursor: pointer;
     }
+    .icon_search,
+    .login,
+    .mypage,
+    .signup,
+    .logout {
+      background-color: transparent;
+      border: none;
+    }
   }
 }
 

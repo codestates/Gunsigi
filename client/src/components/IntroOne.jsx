@@ -1,8 +1,8 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import '../styles/landing/introOne.scss';
-import categoryContents from '../assets/IntroOne';
+import '../styles/landing/IntroOne.scss';
+import { categoryContents } from '../assets/Main';
 
 function IntroOne() {
   return (
@@ -29,7 +29,7 @@ function IntroOne() {
                 <h3>{el.title}</h3>
                 <p>{el.desc}</p>
                 <button type="button" className="goToSearch">
-                  상품 둘러보기
+                  식품 목록 보기
                 </button>
               </div>
               <div className="imageBox">

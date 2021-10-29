@@ -1,116 +1,218 @@
 @import '../../App.scss';
 
-@keyframes slideIn {
-  0% {
+// animation
+@keyframes slide-bottom {
+  0%,
+  10% {
     opacity: 0;
-    transform: translateX(-60%);
+    transform: translateY(10%);
   }
+  20%,
+  85% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  90%,
   100% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+}
+
+@keyframes slide-left {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  20%,
+  85% {
     opacity: 1;
     transform: translateX(0%);
   }
+  100% {
+    opacity: 0;
+    transform: translateX(10%);
+  }
 }
+
+@-webkit-keyframes slide-bottom {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  20%,
+  85% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+}
+@-moz-keyframes slide-bottom {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  20%,
+  85% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+}
+
+// introKick css
 
 .introKick {
   width: 100%;
   height: 18%;
   min-height: 500px;
-  // background-color: yellowgreen;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   .textBox {
     height: 20%;
-    min-height: 170px;
+    min-height: 250px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     text-align: center;
-    animation: slideIn 700ms ease-in-out;
-    animation-delay: 0, 5s;
-    // animation-iteration-count: infinite;
+    animation: slide-bottom 5s;
+    animation-iteration-count: infinite;
+    -webkit-animation: slide-bottom 5s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation: slide-bottom 5s;
+    -moz-animation-iteration-count: infinite;
     h3 {
       font-size: 2rem;
+      margin-bottom: 30px;
     }
     p {
       font-size: 1.1rem;
       white-space: pre-wrap;
+      line-height: 1.8rem;
     }
   }
+
   .imageBox {
     width: 100%;
     height: 80%;
-    min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     .frameBox {
-      width: 70%;
+      width: 80%;
       height: 100%;
-      min-height: 400px;
-      position: relative;
-      padding: 0 10px;
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
       .frame {
         width: 100%;
         height: 100%;
-        background-image: url('../../images/phone.png');
+        min-width: 300px;
+        min-height: 400px;
+        background-image: url('../../images/iphone.png');
         background-repeat: no-repeat;
         background-position: top;
-        background-size: cover;
+        background-size: contain;
         position: relative;
-        bottom: 0;
-        z-index: 1;
-      }
-      .app {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 13% 13% 0 0;
-        position: relative;
-
-      }
-      .web {
-        display: none;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        .app {
+          width: 240px;
+          height: 354px;
+          object-fit: cover;
+          object-position: top;
+        }
+        .web {
+          display: none;
+        }
       }
     }
   }
+}
 
-  @include tablet {
+@include tablet {
+  .introKick {
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
+    height: 700px;
     .textBox {
       width: 36%;
-      background-color: sandybrown;
+      height: 100%;
+      animation: slide-left 5s;
+      animation-iteration-count: infinite;
+      padding: 0 10px;
+      h3 {
+        font-size: 2rem;
+      }
+      p {
+        line-height: 2.4rem;
+      }
     }
     .imageBox {
-      background-color: salmon;
       width: 60%;
+      height: 100%;
       .frameBox {
         width: 100%;
-        background-color: royalblue;
         .frame {
-          width: 100%;
+          min-width: 600px;
           background-image: url('../../images/macbook.png');
           background-position: center;
           background-size: contain;
+          align-items: center;
+          .app {
+            display: none;
+          }
+          .web {
+            display: block;
+            width: 77%;
+            margin-bottom: 33px;
+          }
         }
-        .app {
-          display: none;
-        }
-        .web {
-          display: block;
-          width: 50%;
-          height: 50%;
-          object-fit: cover;
-          object-position: center;
-        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .introKick {
+    .textBox {
+      h3 {
+        font-size: 2.4rem;
+      }
+      p {
+        font-size: 1.6rem;
+        line-height: 3rem;
+      }
+    }
+  }
+}
+
+@include desktop {
+  .introKick {
+    .textBox {
+      h3 {
+        font-size: 2.4rem;
+      }
+      p {
+        font-size: 1.6rem;
+        line-height: 3rem;
       }
     }
   }

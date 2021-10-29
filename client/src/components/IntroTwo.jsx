@@ -1,5 +1,6 @@
 import React from 'react';
-import '../styles/landing/introTwo.scss';
+import '../styles/landing/IntroTwo.scss';
+import { keywordContents } from '../assets/Main';
 
 function IntroTwo() {
   return (
@@ -15,43 +16,19 @@ function IntroTwo() {
             <p>
               건식이가 대표 건강기능식품을 모아서
               <br />
-              여러분에게 제공해드립니다
+              여러분에게 소개해 드립니다
               <br />
-              클릭하시는 순간 한눈에 여러분이 찾고계시는
-              <br />
-              건강기능식품을 보실 수 있습니다
+              클릭하면 해당 건강기능식품 리스트로 이동합니다
             </p>
           </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_vitamin.png" alt="vitamin" />
-              <p className="text">비타민</p>
+          {keywordContents.map((el) => (
+            <div className="col-sm-1 col-md-1 col-lg-1" key={el.id}>
+              <div className="keyword">
+                <img src={el.src} alt="keyword" />
+                <p className="text">{el.title}</p>
+              </div>
             </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_propolis.png" alt="propolis" />
-              <p className="text">프로폴리스</p>
-            </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_folic.png" alt="folic acid" />
-              <p className="text">엽산</p>
-            </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_lactos.png" alt="lactos" />
-              <p className="text">유산균</p>
-            </div>
-          </div>
-          <div className="col-sm-1 col-md-1 col-lg-1">
-            <div className="category">
-              <img src="/images/best_lutein.png" alt="lutein" />
-              <p className="text">루테인</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

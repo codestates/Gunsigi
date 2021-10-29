@@ -1,15 +1,25 @@
-import React from 'react';
-import '../styles/landing/introKick.scss';
+import React, { useEffect, useState } from 'react';
+import '../styles/landing/IntroKick.scss';
 import { kickContents } from '../assets/Main';
 
 function IntroKick() {
-  const handlerTextForGif = () => {};
+  const [textIdx, setTextIdx] = useState(0);
+  useEffect(() => {
+    const idx = setInterval(() => {
+      if (textIdx === 2) {
+        setTextIdx(0);
+      } else {
+        setTextIdx(textIdx + 1);
+      }
+    }, 5000);
+    return () => clearInterval(idx);
+  }, [textIdx]);
 
   return (
     <div className="introKick">
       <div className="textBox">
-        <h3>{kickContents[0].title}</h3>
-        <p>{kickContents[0].desc}</p>
+        <h3>{kickContents[textIdx].title}</h3>
+        <p>{kickContents[textIdx].desc}</p>
       </div>
       <div className="imageBox">
         <div className="frameBox">

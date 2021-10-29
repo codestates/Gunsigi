@@ -5,6 +5,9 @@
 .introTwo {
   width: 100%;
   padding: $mid-margin * 3 $mid-margin;
+  .container {
+    margin: auto;
+  }
   .text-area {
     display: flex;
     flex-direction: column;
@@ -34,11 +37,11 @@
     }
   }
 
-  .category {
+  .keyword {
     position: relative;
     &:hover {
       cursor: pointer;
-      filter: brightness(60%);
+      filter: brightness(70%);
     }
     img {
       width: 100%;
@@ -50,7 +53,12 @@
       left: 14%;
       color: $white;
       font-size: 3rem;
+      font-weight: 800;
       text-align: center;
     }
+  }
+
+  @include responsive(T) {
+    min-height: 500px;
   }
 }

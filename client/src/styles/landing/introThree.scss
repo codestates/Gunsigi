@@ -11,13 +11,12 @@
   justify-content: center;
   align-items: center;
   background-color: $light-blue;
-  padding: $mid-margin $mid-margin * 2;
+  padding: $mid-margin;
 
   .introThree_text {
     text-align: center;
-    font-size: 1.5rem;
-    margin-top: $mid-margin;
-    margin-bottom: $mid-margin * 2;
+    font-size: 1.4rem;
+    margin: $mid-margin * 2 5px;
     h6 {
       margin-top: $mid-margin;
     }
@@ -25,28 +24,30 @@
 
   .review-box {
     width: 100%;
-    min-height: 140px;
+    min-height: 150px;
     background-color: $white;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     border-radius: 5px;
-    padding: $sm-margin;
+    padding: $sm-margin * 2 $mid-margin;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     font-size: 1rem;
     .profile {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       align-items: center;
-      width: 30%;
+      width: 20%;
       text-align: center;
       & > img {
         width: 60px;
         border-radius: 30px;
         border: solid 1px $light-grey;
+        margin-bottom: 8px;
       }
       .nickname {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        font-weight: 600;
       }
       .createdAt {
         font-size: 1rem;
@@ -64,21 +65,17 @@
       }
     }
     .content {
-      width: 60%;
+      width: 70%;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-evenly;
       .product {
         display: flex;
         justify-content: left;
         align-items: center;
         font-size: 1.2rem;
-
         .desc {
           margin-right: 10px;
-        }
-        .name {
-          font-size: 1.2rem;
         }
       }
       .review {
@@ -114,6 +111,16 @@
         }
       }
     }
+    .review-box {
+      .content {
+        .product {
+          font-size: 1.4rem;
+        }
+        .review {
+          font-size: 1.2rem;
+        }
+      }
+    }
   }
   @include responsive(D) {
     min-height: 800px;
@@ -137,4 +144,41 @@
       }
     }
   }
+}
+
+
+// animation
+.hovering {
+  -webkit-animation-name: hovering;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-name: hovering;
+  -moz-animation-duration: 3s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease-in-out;
+  animation-name: hovering;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+
+@-webkit-keyframes hovering {
+  from {-webkit-transform:translate(0, 0px);}
+  50% {-webkit-transform:translate(0, -25px);}
+  to {-webkit-transform: translate(0, -0px);}
+}
+
+
+@-moz-keyframes hovering {
+  from {-moz-transform:translate(0, 0px);}
+  50% {-moz-transform:translate(0, -25px);}
+  to {-moz-transform: translate(0, -0px);}
+}
+
+@keyframes hovering {
+  from {transform:translate(0, 0px);}
+  50% {transform:translate(0, -25px);}
+  to {transform: translate(0, -0px);}
 }

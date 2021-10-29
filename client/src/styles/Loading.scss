@@ -1,0 +1,97 @@
+@import '../App.scss';
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $white;
+  z-index: 980;
+  display: flex;
+  justify-content: center;
+}
+
+.gunsigi_logo {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .g {
+    width: 15%;
+  }
+  .unsigi {
+    width: 30%;
+    margin-left: 3px;
+  }
+}
+
+// bounce drop animation
+.bounce {
+  -webkit-animation: bounce 1500ms;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation: bounce 1500ms;
+  -moz-animation-iteration-count: infinite;
+  animation: bounce 1500ms;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(30px) rotate(-38deg);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+  60% {
+    transform: translateY(-10px) rotate(-20deg);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+}
+
+@-webkit-keyframes bounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(30px) rotate(-38deg);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+  60% {
+    transform: translateY(-10px) rotate(-20deg);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+}
+
+@-moz-keyframes bounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(30px) rotate(-38deg);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+  60% {
+    transform: translateY(-10px) rotate(-20deg);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+    animation-timing-function: var(--EASE_OUT_QUAD);
+  }
+}

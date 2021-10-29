@@ -60,7 +60,8 @@
       top: 7px;
       right: 12px;
       cursor: pointer;
-
+      border: none;
+      background-color: transparent;
       img {
         filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
           brightness(89%) contrast(93%);
@@ -86,11 +87,12 @@
     .mypage {
       margin-right: 20px;
     }
-    .signup {
-      cursor: pointer;
-    }
+    .login,
+    .mypage,
+    .signup,
     .logout {
-      cursor: pointer;
+      background-color: transparent;
+      border: none;
     }
   }
 }

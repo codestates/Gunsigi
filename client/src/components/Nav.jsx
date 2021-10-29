@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/nav/nav.scss';
+import '../styles/nav/Nav.scss';
 import { Link } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
@@ -38,7 +38,8 @@ function Nav() {
           </Link>
           {!isLogin ? (
             <>
-              <div
+              <button
+                type="button"
                 aria-hidden="true"
                 onClick={() => {
                   setOpenLogin(true);
@@ -46,21 +47,26 @@ function Nav() {
                 className="login"
               >
                 로그인
-              </div>
-              <div
+              </button>
+              <button
+                type="button"
                 aria-hidden="true"
                 onClick={() => setOpenSignup(true)}
                 className="signup"
               >
                 회원가입
-              </div>
+              </button>
             </>
           ) : (
             <>
               <Link to="/mypage">
-                <div className="mypage">마이페이지</div>
+                <button className="mypage" type="button">
+                  마이페이지
+                </button>
               </Link>
-              <div className="logout">로그아웃</div>
+              <button className="logout" type="button">
+                로그아웃
+              </button>
             </>
           )}
         </div>

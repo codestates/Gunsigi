@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/landing/footer.scss';
+import '../styles/landing/Footer.scss';
 
 function Footer() {
   return (
@@ -8,7 +8,7 @@ function Footer() {
         <div className="row">
           <div className="repository col-sm-1 col-md-1 col-lg-1">
             <p className="title">Our Repository</p>
-            <a className="title" href="https://github.com/codestates/Gunsigi.git">
+            <a className="title" href="https://github.com/codestates/Gunsigi.git" target="_blank" rel="noreferrer">
               github.com/codestates/Gunsigi.git
             </a>
           </div>
