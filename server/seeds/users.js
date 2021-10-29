@@ -13,12 +13,14 @@ module.exports = async () => {
         nickname: 'doldolma',
         password: '123123',
         type: 'google',
+        reviewsCount: 3,
       },
       {
         email: 'iidd0102@naver.com',
         nickname: 'doldolme',
         password: '123123',
         type: 'google',
+        reviewsCount: 1,
       },
       {
         email: 'iidd0103@naver.com',

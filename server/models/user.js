@@ -1,6 +1,7 @@
 const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const s3 = require('../modules/image');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -76,6 +77,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      hooks: {
+        afterDestroy: async (user) => {
+          const image = user.getDataValue('profileImage');
+          if (image) {
+            await s3.delete(image);
+          }
+        },
+      },
     },
   );
   return User;

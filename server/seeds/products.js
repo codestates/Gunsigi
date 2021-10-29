@@ -7,11 +7,14 @@ const {
   Product,
   Ingredient,
   ProductIngredients,
+  sequelize,
 } = require('../models');
 
-module.exports = async () => {
-  const count = await Product.count();
-  if (count === 0) {
+module.exports = {
+  productsSeed: async () => {
+    const count = await Product.count();
+    if (count > 0) return true;
+
     // 제품이 없는 경우에만 데이터 넣기.
     let productsJson;
     try {
@@ -21,6 +24,14 @@ module.exports = async () => {
     } catch {
       return Promise.reject(new Error('Fail to load file'));
     }
+    // 리뷰갯수
+    productsJson[0].reviewsCount = 1;
+    productsJson[0].reviewsSum = 4;
+    productsJson[1].reviewsCount = 1;
+    productsJson[1].reviewsSum = 5;
+    productsJson[2].reviewsCount = 2;
+    productsJson[2].reviewsSum = 10;
+
     // 제품에 있는 성분들 뽑기
     const ingredientsSet = new Set();
     productsJson.forEach((pro) => {
@@ -92,6 +103,15 @@ module.exports = async () => {
       });
     });
     */
-  }
-  return true;
+  },
+  addFulltextIndex: async () => {
+    let result;
+    try {
+      result = await sequelize.query(
+        'CREATE FULLTEXT INDEX products_search_views ON products(name,company,functional) WITH PARSER ngram;',
+      );
+    // eslint-disable-next-line no-empty
+    } catch { }
+    return result;
+  },
 };

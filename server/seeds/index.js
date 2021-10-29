@@ -1,5 +1,5 @@
-const debug = require('debug')('app');
-const productSeed = require('./products');
+const debug = require('debug')('app:seed');
+const { productsSeed, addFulltextIndex } = require('./products');
 const userSeed = require('./users');
 const reviewSeed = require('./reviews');
 const bookmarkSeed = require('./bookmarks');
@@ -8,12 +8,12 @@ const ingredientSeed = require('./ingredients');
 const reviewImageSeed = require('./reviewImages');
 const reviewLikeSeed = require('./reviewLikes');
 
-module.exports = function () {
+module.exports = async function Seed() {
   return Promise.all([userSeed(), tagSeed(), ingredientSeed()])
     .then(async () => {
       debug('Users, Tags, Ingredients 시드 데이터 삽입 완료');
-      await Promise.all([productSeed()]).then(async () => {
-        debug('제품 시드 데이터 삽입 완료');
+      await Promise.all([productsSeed(), addFulltextIndex()]).then(async () => {
+        debug('제품 시드 데이터 삽입, Full Text Index 생성 완료');
         await Promise.all([reviewSeed(), bookmarkSeed()])
           .then(() => debug('리뷰, 북마크 시드 데이터 삽입 완료'))
           .then(async () => {
