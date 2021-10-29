@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { search } from '../assets/Search';
 import NavChange from '../components/NavChange';
 import Product from '../components/Product';
 import '../styles/Search.scss';
 
 function Search() {
+  const [searchSequence, setSearchSequence] = useState(true);
   return (
     <>
       <NavChange />
@@ -13,8 +14,23 @@ function Search() {
           <div className="Search_img" />
           <div className="Search_bottom">
             <div className="Search_title">
-              전체 건강기능식품
-              <span>{`(${search.length})`}</span>
+              <div>
+                전체 건강기능식품
+                <span>{`(${search.length})`}</span>
+              </div>
+              <div className="Sequence">
+                <span
+                  className={searchSequence ? 'textColor_change' : 'textColor'}
+                >
+                  조회순
+                </span>
+                <span className="textColor_change">|</span>
+                <span
+                  className={searchSequence ? 'textColor' : 'textColor_change'}
+                >
+                  리뷰순
+                </span>
+              </div>
             </div>
             <div className="Search_products">
               {search.map((item) => (

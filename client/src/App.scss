@@ -11,6 +11,7 @@ $green: #508c5d;
 $red: #b15d5d;
 $yellow: #d39b0b;
 $brown: #9d8671;
+$star: #f4c30b;
 
 $f-black: invert(17%) sepia(94%) saturate(15%) hue-rotate(352deg)
   brightness(101%) contrast(81%);
@@ -34,11 +35,12 @@ $f-yellow: invert(66%) sepia(35%) saturate(4349%) hue-rotate(11deg)
   brightness(98%) contrast(91%);
 $f-brown: invert(59%) sepia(33%) saturate(287%) hue-rotate(347deg)
   brightness(86%) contrast(82%);
-$f-star: invert(86%) sepia(35%) saturate(624%) hue-rotate(3deg) brightness(98%)
-  contrast(93%);
+$f-star: invert(87%) sepia(25%) saturate(4531%) hue-rotate(358deg)
+  brightness(100%) contrast(93%);
 
 $breakpoint-mobile: 375px;
 $breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
 $breakpoint-desktop: 1440px;
 
 @mixin mobile {
@@ -49,6 +51,12 @@ $breakpoint-desktop: 1440px;
 
 @mixin tablet {
   @media screen and (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media screen and (min-width: $breakpoint-laptop) {
     @content;
   }
 }
@@ -98,4 +106,8 @@ button:hover,
 link:hover,
 a:hover {
   cursor: pointer;
+}
+
+input[type='password'] {
+  font-family: 'Malgun gothic', dotum, sans-serif;
 }

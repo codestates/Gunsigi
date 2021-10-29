@@ -2,11 +2,13 @@ import React from 'react';
 import { ProductInfo } from '../assets/Search';
 import NavChange from '../components/NavChange';
 import ReviewList from '../components/ReviewList';
+import Write from '../components/Write';
 import '../styles/ProductDetail.scss';
 
 function ProductDetail() {
   return (
     <div className="ProductDetail">
+      <Write />
       <NavChange />
 
       <div className="ProductDetail_container">

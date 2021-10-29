@@ -2,7 +2,7 @@
 
 .Product_items {
   width: 100%;
-  height: 30vh;
+  height: 200px;
   display: flex;
   border-radius: 5px;
   position: relative;
@@ -62,14 +62,20 @@
   }
 }
 
+.Product_heart {
+  filter: $f-light-grey;
+}
+
+.Product_heart_change {
+  filter: $f-orange;
+}
+
 .Product_icon {
-  filter: invert(96%) sepia(3%) saturate(131%) hue-rotate(132deg)
-    brightness(116%) contrast(87%);
+  filter: $f-light-grey;
 }
 
 .Product_icon_change {
-  filter: invert(91%) sepia(73%) saturate(3041%) hue-rotate(297deg)
-    brightness(109%) contrast(84%);
+  filter: $f-star;
 }
 
 @include desktop {

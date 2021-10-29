@@ -3,6 +3,7 @@
 @import '../landing/responsive';
 
 .navChange {
+  position: sticky;
   width: 100%;
   min-width: $breakpoint-mobile;
   height: 70px;
@@ -13,8 +14,7 @@
   align-items: center;
   border-bottom: solid 1px $light-grey;
   padding: 0 25px;
-  position: relative;
-  z-index: 10;
+  z-index: 400;
   .nav_logo {
     img {
       height: 20px;
@@ -26,10 +26,12 @@
   .nav_mid {
     width: 40%;
     position: relative;
+
     input[type='text'] {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+
       &:focus,
       &:active {
         outline: solid 2px $deep-blue;
@@ -43,12 +45,21 @@
       border-radius: 15px;
       position: relative;
       padding: 0 15px;
+      // & + .navChange_searchmodal {
+      //   visibility: hidden;
+      // }
+      // &:focus {
+      //   & + .navChange_searchmodal {
+      //     visibility: visible;
+      //   }
+      // }
     }
     .icon_search {
       width: 14px;
       position: absolute;
       top: 7px;
       right: 12px;
+      cursor: pointer;
 
       img {
         filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
@@ -70,9 +81,16 @@
     }
     .login {
       margin-right: 20px;
+      cursor: pointer;
     }
     .mypage {
       margin-right: 20px;
+    }
+    .signup {
+      cursor: pointer;
+    }
+    .logout {
+      cursor: pointer;
     }
   }
 }
