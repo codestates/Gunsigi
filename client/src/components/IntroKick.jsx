@@ -11,7 +11,7 @@ function IntroKick() {
       } else {
         setTextIdx(textIdx + 1);
       }
-    }, 2000);
+    }, 5000);
     return () => clearInterval(idx);
   }, [textIdx]);
 

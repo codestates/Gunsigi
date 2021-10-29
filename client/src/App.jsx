@@ -13,10 +13,6 @@ import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
 import TopButton from './components/TopButton';
-<<<<<<< HEAD
-=======
-import SearchModal from './components/SearchModal';
->>>>>>> 5a1bb3d (fix: introTwo,nav,navChange 버튼,효과 수정)
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);

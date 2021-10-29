@@ -59,19 +59,9 @@
       position: absolute;
       top: 7px;
       right: 12px;
-<<<<<<< HEAD
       cursor: pointer;
-
-=======
       border: none;
       background-color: transparent;
-      &:hover {
-        filter: $f-deep-blue;
-      }
-      &:active {
-        transform: scale(0.95);
-      }
->>>>>>> 5a1bb3d (fix: introTwo,nav,navChange 버튼,효과 수정)
       img {
         filter: invert(39%) sepia(35%) saturate(180%) hue-rotate(187deg)
           brightness(89%) contrast(93%);
@@ -97,27 +87,12 @@
     .mypage {
       margin-right: 20px;
     }
-<<<<<<< HEAD
-    .signup {
-      cursor: pointer;
-    }
-    .logout {
-      cursor: pointer;
-=======
     .login,
     .mypage,
     .signup,
     .logout {
       background-color: transparent;
       border: none;
-      &:hover {
-        font-weight: 800;
-        color: $deep-blue;
-      }
-      &:active {
-        transform: scale(0.95);
-      }
->>>>>>> 5a1bb3d (fix: introTwo,nav,navChange 버튼,효과 수정)
     }
   }
 }

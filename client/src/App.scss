@@ -111,3 +111,10 @@ a:hover {
 input[type='password'] {
   font-family: 'Malgun gothic', dotum, sans-serif;
 }
+button {
+  border: none;
+}
+
+.scroll {
+  transition: transform 1s, opacity 1s;
+}

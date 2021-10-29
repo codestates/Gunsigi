@@ -16,7 +16,6 @@ function Nav() {
   };
 
   return (
-<<<<<<< HEAD
     <>
       {isOpenSearchModal ? <SearchModal /> : null}
       {openLogin ? <LoginModal setOpenLogin={setOpenLogin} /> : null}
@@ -65,39 +64,6 @@ function Nav() {
             </>
           )}
         </div>
-=======
-    <div className="nav">
-      <Link to="/">
-        <div className="nav_logo">
-          <img alt="gunsigi logo" src="/logo_gunsigi.png" />
-        </div>
-      </Link>
-      <div className="nav_right">
-        <button className="icon_search" type="button">
-          <img src="/icons/icon_magnify.svg" alt="magnifier" />
-        </button>
-        {!isLogin ? (
-          <>
-            <button className="login" type="button">
-              로그인
-            </button>
-            <button className="signup" type="button">
-              회원가입
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/mypage">
-              <button className="mypage" type="button">
-                마이페이지
-              </button>
-            </Link>
-            <button className="logout" type="button">
-              로그아웃
-            </button>
-          </>
-        )}
->>>>>>> 5a1bb3d (fix: introTwo,nav,navChange 버튼,효과 수정)
       </div>
     </>
   );

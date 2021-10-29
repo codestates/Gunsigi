@@ -5,16 +5,14 @@ function TopButton() {
   const handlerTopButton = () => window.scrollTo({ top: 0 });
 
   return (
-    <div className="topButton">
-      <div
-        onClick={handlerTopButton}
-        role="button"
-        tabIndex={0}
-        onKeyPress={handlerTopButton}
-      >
-        <img alt="Top Button" src="/icons/icon_top_btn.svg" />
-      </div>
-    </div>
+    <button
+      className="topButton"
+      type="button"
+      onClick={handlerTopButton}
+      onKeyPress={handlerTopButton}
+    >
+      <img alt="Top Button" src="/icons/icon_arrow_up.svg" />
+    </button>
   );
 }
 
