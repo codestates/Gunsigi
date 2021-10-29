@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/nav/navChange.scss';
+import '../styles/nav/NavChange.scss';
 import { Link } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';

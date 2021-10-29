@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/landing/introTwo.scss';
+import '../styles/landing/IntroTwo.scss';
 
 function IntroTwo() {
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/TopButton.scss';
 
 function TopButton() {
   const handlerTopButton = () => window.scrollTo({ top: 0 });

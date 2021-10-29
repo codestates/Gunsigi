@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/landing/landing.scss';
+import '../styles/landing/Landing.scss';
 import Nav from '../components/Nav';
 import NavChange from '../components/NavChange';
 import IntroOne from '../components/IntroOne';

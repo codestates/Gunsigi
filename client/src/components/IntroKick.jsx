@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/landing/introKick.scss';
+import '../styles/landing/IntroKick.scss';
 import { kickContents } from '../assets/Main';
 
 function IntroKick() {
