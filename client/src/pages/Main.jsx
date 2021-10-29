@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/landing/Landing.scss';
+import '../styles/landing/landing.scss';
 import Nav from '../components/Nav';
 import IntroOne from '../components/IntroOne';
 import IntroTwo from '../components/IntroTwo';

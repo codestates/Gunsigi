@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/landing/IntroKick.scss';
+import '../styles/landing/introKick.scss';
 import { kickContents } from '../assets/Main';
 
 function IntroKick() {
