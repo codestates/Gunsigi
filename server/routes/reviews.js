@@ -49,8 +49,8 @@ router.post(
     .withMessage('content는 필수 입력값입니다.')
     .isString()
     .withMessage('content는 문자열 형식입니다.')
-    .isLength({ min: 1, max: 120 })
-    .withMessage('content는 1자이상 100자 이하로 입력해주세요'),
+    .isLength({ min: 1, max: 220 })
+    .withMessage('content는 1자이상 200자 이하로 입력해주세요'),
   body('score')
     .notEmpty()
     .withMessage('score는 필수 입력값입니다.')

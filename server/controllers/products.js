@@ -26,7 +26,6 @@ module.exports = {
       include: [
         {
           model: Bookmark,
-          attributes: ['id'],
           where: { userId: res.locals.user.id },
           required: false,
         },
@@ -49,7 +48,6 @@ module.exports = {
       }
     }
     const { count, rows } = await Product.findAndCountAll(params);
-    const total = parseInt(count / size, 10) + (count % size ? 1 : 0);
     return res.json({
       message: 'Success to search products list',
       items: rows.map((row) => {
@@ -77,7 +75,6 @@ module.exports = {
       include: [
         {
           model: Bookmark,
-          attributes: ['id'],
           where: { userId: res.locals.user.id },
           required: false,
         },

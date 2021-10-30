@@ -15,11 +15,17 @@ module.exports = {
       where: { userId: res.locals.user.id },
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
-      include: {
+      include: [{
         model: reviewImage,
         as: 'images',
         attributes: ['image'],
       },
+      {
+        model: User,
+        as: 'userInfo',
+        attributes: ['id', 'profileImage', 'nickname'],
+      },
+      ],
     });
     return res.json({
       message: 'success to get reviews list',
@@ -55,6 +61,11 @@ module.exports = {
           attributes: ['image'],
           model: reviewImage,
           as: 'images',
+        },
+        {
+          attributes: ['id', 'nickname', 'profileImage'],
+          model: User,
+          as: 'userInfo',
         },
       ],
     };
@@ -93,7 +104,7 @@ module.exports = {
     const { images } = req.body;
     delete req.body.images;
     let review;
-    let reviewImages;
+    // let reviewImages;
     const transaction = await sequelize.transaction();
     try {
       let changeScore;
@@ -137,7 +148,9 @@ module.exports = {
       const imageKeys = await Promise.all(images.map((image) => s3.save(`reviews/${review.id}`, image)));
 
       // await review.addImages(await Promise.all(
-      //   imageKeys.map(async (image) => reviewImage.create({ reviewId: review.id, image }, { transaction })),
+      //   imageKeys.map(async (image) => reviewImage.create({
+      //      reviewId: review.id, image,
+      //   }, { transaction })),
       // ));
 
       // reviewImages = await review.getImages({ transaction });

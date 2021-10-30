@@ -1,5 +1,4 @@
 const { Model } = require('sequelize');
-const path = require('path');
 
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
@@ -25,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         get() {
           const image = this.getDataValue('image');
-          if (image) return path.join('https://cdn.doldolma.com', image);
+          if (image) return `https://cdn.doldolma.com/${image}`;
           return '';
         },
       },

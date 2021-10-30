@@ -32,6 +32,13 @@ module.exports = {
     productsJson[2].reviewsCount = 2;
     productsJson[2].reviewsSum = 10;
 
+    // 이미지가 있으면 조회수 +10
+    productsJson = productsJson.map((product) => {
+      // eslint-disable-next-line no-param-reassign
+      if (product.image) product.views = 10;
+      return product;
+    });
+
     // 제품에 있는 성분들 뽑기
     const ingredientsSet = new Set();
     productsJson.forEach((pro) => {
@@ -108,7 +115,7 @@ module.exports = {
     let result;
     try {
       result = await sequelize.query(
-        'CREATE FULLTEXT INDEX products_search_views ON products(name,company,functional) WITH PARSER ngram;',
+        'CREATE FULLTEXT INDEX Products_search_views ON Products(name,company,functional) WITH PARSER ngram;',
       );
     // eslint-disable-next-line no-empty
     } catch { }

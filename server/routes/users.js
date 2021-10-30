@@ -7,7 +7,7 @@ const validationError = require('../middlware/error');
 const router = express.Router();
 router.use(tokenRequired);
 
-// // routes
+// routes
 router.get('/', users.get);
 router.patch(
   '/',

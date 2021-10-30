@@ -36,6 +36,7 @@ app.use('/auth', router.auth);
 app.use('/users', router.users);
 app.use('/products', router.products);
 app.use('/reviews', router.reviews);
+app.use('/review/like', router.reviewLikes);
 app.use('/bookmarks', router.bookmarks);
 
 // 로드밸런서 Health Check
@@ -47,10 +48,14 @@ debug(`running on ${process.env.NODE_ENV || 'development'}`);
 
 // 테이블생성 및 시드 데이터 넣기
 db.sequelize.sync(process.env.SEED ? { force: true } : {}).then(async () => {
-  await Seed();
+  try {
+    return await Seed();
+  } catch {
+    return false;
+  }
+}).finally(() => {
+  if (process.env.SEED) process.exit(1);
+  debug('App 초기화완료');
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => debug(`리스닝 : ${PORT}`));
 });
-
-debug('App 초기화완료');
-
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => debug(`리스닝 : ${PORT}`));
