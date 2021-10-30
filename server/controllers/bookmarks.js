@@ -50,7 +50,9 @@ module.exports = {
       await transaction.commit();
     } catch (err) {
       transaction.rollback();
+      // 전에 좋아요 누른적 있음.
       if (err.name === 'SequelizeUniqueConstraintError') {
+        // DB에 변화없이 그냥 성공처리
         return res.json({ message: 'success to bookmark' });
       }
       return res.status(404).json({ message: 'Invalid ProductId' });
@@ -58,24 +60,22 @@ module.exports = {
     return res.json({ message: 'success to bookmark' });
   },
   delete: async (req, res) => {
-    // 북마크 한적있나?
-    const bookmark = await Bookmark.findOne({
-      where: {
-        userId: res.locals.user.id,
-        productId: req.body.productId,
-      },
-    });
-    if (!bookmark) {
-      return res.status(404).json({ message: 'Invalid productId' });
-    }
     const transaction = await sequelize.transaction();
     try {
-      await bookmark.destroy();
-      await Product.decrement('bookmarksCount', { by: 1, where: { id: req.body.productId }, transaction });
+      const result = await Bookmark.destroy({
+        where: {
+          userId: res.locals.user.id,
+          productId: req.body.productId,
+        },
+        transaction,
+      });
+      if (result) {
+        await Product.decrement('bookmarksCount', { by: 1, where: { id: req.body.productId }, transaction });
+      }
       await transaction.commit();
     } catch (err) {
       await transaction.rollback();
-      throw Error(err);
+      return res.status(400).json({ message: 'Invalid productId' });
     }
     return res.json({ message: 'success' });
   },
