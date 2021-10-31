@@ -6,16 +6,25 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: $white;
   z-index: 500;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.LoginModal_in {
+.LoginModal {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
+}
+
+.LoginModal_in {
+  width: 380px;
+  height: 600px;
   background-color: $white;
   display: flex;
   justify-content: center;
@@ -34,10 +43,24 @@
 }
 
 @include tablet {
+  .LoginModal_container {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .LoginModal {
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+    height: 0;
+  }
+
   .LoginModal_in {
     width: 380px;
     height: 600px;
     border-radius: 6px;
+    padding: 0;
   }
 }
 
@@ -53,7 +76,7 @@
       position: absolute;
       z-index: 50;
       right: 0;
-      width: 380px;
+      width: 370px;
       height: 100%;
       background-image: url('../../images/login_signup_modal_web.png');
       background-size: cover;

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import '../styles/nav/navChange.scss';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function NavChange() {
   // isLogin 리덕스 상태 설정필요
-  const isLogin = false;
+  const states = useSelector((state) => state.userReducer);
+  const { isLogin } = states;
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
@@ -39,29 +41,33 @@ function NavChange() {
         <div className="nav_right">
           {!isLogin ? (
             <>
-              <div
-                aria-hidden="true"
+              <button
+                type="button"
                 onClick={() => {
                   setOpenLogin(true);
                 }}
                 className="login"
               >
                 로그인
-              </div>
-              <div
-                aria-hidden="true"
+              </button>
+              <button
+                type="button"
                 onClick={() => setOpenSignup(true)}
                 className="signup"
               >
                 회원가입
-              </div>
+              </button>
             </>
           ) : (
             <>
               <Link to="/mypage">
-                <div className="mypage">마이페이지</div>
+                <button type="button" className="mypage">
+                  마이페이지
+                </button>
               </Link>
-              <div className="logout">로그아웃</div>
+              <button type="button" className="logout">
+                로그아웃
+              </button>
             </>
           )}
         </div>

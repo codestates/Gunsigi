@@ -74,7 +74,7 @@ export const search = [
     name: '레모나',
     company: 'company',
     image:
-      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSCIVmF6NBIbzBDySNP3p5WrN66DOyFKp4LrW0vXoeyE45MTwWn_tr981-Esk_ftL7kqjBL1zOeXQ&usqp=CAc',
+      'https://shopping-phinf.pstatic.net/main_2479524/24795247523.20201111101732.jpg?type=f640',
     validNumber: '1234',
     functional:
       '가르시니아캄보지아 추출물 : 탄수화물이 지방으로 합성되는 것을 억제하여 체지방 감소에 도움을 줄 수 있음\n\n비타민C : ① 결합조직 형성과 기능유지에 필요 ② 철의 흡수에 필요 ③ 항산화 작용을 하여 유해산소로부터 세포를 보호하는데 필요',
