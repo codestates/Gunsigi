@@ -3,7 +3,7 @@
 .Login_container {
   width: 100%;
   height: 100%;
-  padding: 80px 50px;
+  padding: 60px 50px;
 }
 
 .Login_in {
@@ -50,6 +50,8 @@
   }
 
   .icon {
+    position: relative;
+    top: 30px;
     width: 100;
     display: flex;
     justify-content: center;
@@ -87,13 +89,6 @@
 @include tablet {
   .Login_container {
     padding: 60px 50px;
-  }
-
-  .Login_in {
-    .icon {
-      position: relative;
-      top: 30px;
-    }
   }
 }
 
