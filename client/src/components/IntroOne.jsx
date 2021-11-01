@@ -10,7 +10,7 @@ function IntroOne() {
       <div className="introOne_text">
         <h1>관심사별로 건강기능식품을 찾아보세요!</h1>
         <p>
-          아래의 슬라이드를 이용하면 여러가지 관심사별로 제품들을 제공해드려요
+          아래의 슬라이드를 통해 관심사별 건강기능식품 목록을 볼 수 있어요
         </p>
       </div>
       <div className="slider">

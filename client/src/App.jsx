@@ -15,11 +15,15 @@ import Mypage from './pages/Mypage';
 import TopButton from './components/TopButton';
 import Loading from './components/Loading';
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(false);
-
+  window.addEventListener('load', () => {
+    setIsLoading(false);
+  });
   useEffect(async () => {
     /**
      * 리액트가 처음 렌더링 될 때 실행됩니다.
