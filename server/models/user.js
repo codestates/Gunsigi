@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     json() {
       const jsonUser = this.toJSON();
       delete jsonUser.password;
+      delete jsonUser.uuid;
       return jsonUser;
     }
 

@@ -122,7 +122,7 @@ module.exports = {
     });
   },
   all: async (req, res) => {
-    const { page, size } = req.query;
+    const { page, size, order } = req.query;
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',
@@ -134,7 +134,7 @@ module.exports = {
       ],
       limit: size,
       offset: (page - 1) * size,
-      order: [['views', 'DESC']],
+      order: [[order, 'DESC']],
       include: [
         {
           model: Bookmark,

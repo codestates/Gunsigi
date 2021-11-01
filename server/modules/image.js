@@ -4,7 +4,7 @@ const debug = require('debug')('app:image');
 const fs = require('fs').promises;
 const { Client } = require('node-scp');
 
-const v4 = () => uuid().replace(/-/g, '').slice(0, 15);
+const v4 = () => uuid().replace(/-/g, '');
 
 const {
   ACCESS_KEY_ID,

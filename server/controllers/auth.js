@@ -40,7 +40,6 @@ module.exports = {
       if (!user) throw new Error('UserNotFound');
       if (!await user.isRight(req.body.password)) throw new Error('Invalid Password');
     } catch (error) {
-      debug(error);
       return res.status(403).json({
         message: 'Fail to login',
       });
@@ -63,7 +62,6 @@ module.exports = {
       user = await User.findByPk(userId);
       if (!user) throw new Error('user not found');
     } catch (err) {
-      debug(err);
       return res.status(403).json({ message: 'Forbidden' });
     }
     const accessToken = generateAccessToken(user.json());

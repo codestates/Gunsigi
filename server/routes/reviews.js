@@ -1,7 +1,7 @@
 const express = require('express');
 const { param, query, body } = require('express-validator');
 const reviews = require('../controllers/reviews');
-const { tokenRequired, tokenCheck } = require('../middlware/token');
+const token = require('../middlware/token');
 const validationError = require('../middlware/error');
 
 const router = express.Router();
@@ -10,14 +10,14 @@ router.get(
   '/',
   query('page').default(1).isInt().withMessage('page에 숫자를 입력해주세요'),
   query('size').default(30).isInt().withMessage('size에 숫자를 입력해주세요'),
-  tokenRequired,
+  token.required,
   reviews.mine,
 );
 router.get(
   '/:productId',
   param('productId').notEmpty().bail().withMessage('productId는 필수입니다.'),
   query('page').default(1).isInt().withMessage('page에 숫자를 입력해주세요'),
-  query('size').default(30).isInt().withMessage('size에 숫자를 입력해주세요'),
+  query('size').default(10).isInt().withMessage('size에 숫자를 입력해주세요'),
   query('order')
     .default('recent')
     .isIn(['recent', 'like'])
@@ -34,7 +34,7 @@ router.get(
       ]} 중 하나의 값을 넣어주세요`,
     ),
   validationError,
-  tokenCheck,
+  token.check,
   reviews.get,
 );
 router.post(
@@ -73,7 +73,7 @@ router.post(
     .isArray()
     .withMessage('images는 base64로 이루어진 배열형식입니다.'),
   validationError,
-  tokenRequired,
+  token.required,
   reviews.post,
 );
 router.delete(
@@ -84,7 +84,7 @@ router.delete(
     .isInt()
     .withMessage('reviewId 형식이 맞지 않습니다.'),
   validationError,
-  tokenRequired,
+  token.required,
   reviews.delete,
 );
 
