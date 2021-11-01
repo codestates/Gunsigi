@@ -125,8 +125,8 @@ module.exports = {
       }
 
       review = await Review.create({
-        ...req.body, userId: res.locals.user.id,
-      }, { include: { model: reviewImage, as: 'images' }, transaction });
+        ...req.body, userId: parseInt(res.locals.user.id, 10),
+      }, { transaction });
 
       // 리뷰카운트, 총점 증가
       await Product.increment('reviewsCount', {
@@ -147,17 +147,6 @@ module.exports = {
       // 이미지가 있다면 s3에 저장 reviews/리뷰ID 폴더 안에 전부 집어 넣는다
       const imageKeys = await Promise.all(images.map((image) => s3.save(`reviews/${review.id}`, image)));
 
-      // await review.addImages(await Promise.all(
-      //   imageKeys.map(async (image) => reviewImage.create({
-      //      reviewId: review.id, image,
-      //   }, { transaction })),
-      // ));
-
-      // reviewImages = await review.getImages({ transaction });
-      // console.log('images : ', reviewImages);
-
-      // review.save({ transaction });
-
       await reviewImage.bulkCreate(imageKeys.map((image) => ({
         reviewId: review.id, image,
       })), { transaction });
@@ -174,8 +163,8 @@ module.exports = {
     } catch (err) {
       debug(err);
       await transaction.rollback();
-      if (review.id && images) await s3.deleteFolder(`reviews/${review.id}`);
-      throw err;
+      if (review?.id && images) await s3.deleteFolder(`reviews/${review.id}`);
+      return res.status(403).json({ message: 'Invalid UserID' });
     }
     return res.json({
       message: 'Success to write review',

@@ -48,6 +48,10 @@ router.get(
   '/all/items',
   query('page').default(1).isInt().withMessage('page는 숫자로 입력해주세요'),
   query('size').default(30).isInt().withMessage('size는 숫자로 입력해주세요'),
+  query('order')
+    .default('views')
+    .isIn(['views', 'reviews'])
+    .withMessage('정렬값은 views , reviews 중에 하나를 입력해주세요'),
   validationError,
   products.all,
 );

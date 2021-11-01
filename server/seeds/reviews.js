@@ -7,7 +7,7 @@ module.exports = async () => {
   const count = await Review.count();
   if (count === 0) {
     // 없는 경우에만 데이터 넣기.
-    return Review.bulkCreate([
+    const reviews = [
       {
         userId: 1,
         productId: 1,
@@ -38,7 +38,20 @@ module.exports = async () => {
         period: '6개월 이상',
         score: 5,
       },
-    ]);
+    ];
+    // 샘플 리뷰 잔뜩 생성
+    Array(50).fill(0).forEach((n, idx) => {
+      const userId = 5 + idx;
+      reviews.push({
+        userId,
+        productId: 1,
+        content: `${idx}. 진짜 약빨이 엄청나서 어제 몸져누웠다가 한입 먹고 원기충전 제대로 했습니다. 인생 홍삼이에요 응어이 응어응어`,
+        period: '1개월 이하',
+        score: 3,
+      });
+    });
+
+    return Review.bulkCreate(reviews);
   }
   // 데이터가 이미 있으면 성공처리
   return true;
