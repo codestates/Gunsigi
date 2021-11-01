@@ -51,14 +51,22 @@ function ProductDetail({ match }) {
       .catch((err) => console.log(err));
   }, [productId]);
 
-  const openWriteHandler = () => {
-    setisOpenWrite(!isOpenWrite);
+  const openWriteHandler = (trueOrFalse) => {
+    setisOpenWrite(trueOrFalse);
   };
 
   return (
     <>
+      {isOpenWrite ? (
+        <ReviewModal
+          productId={ProductInfo.id}
+          setisOpenWrite={setisOpenWrite}
+          productImg={ProductInfo.image}
+          productName={ProductInfo.name}
+        />
+      ) : null}
+      <Write openWriteHandler={openWriteHandler} />
       <div className="ProductDetail">
-        <Write openReviewHandler={openWriteHandler} />
         <NavChange />
 
         <div className="ProductDetail_container">
@@ -73,7 +81,11 @@ function ProductDetail({ match }) {
                 src="/icons/icon_bookmark.svg"
                 alt="북마크"
               />
-              <img src={ProductInfo.image} alt="약 이미지" />
+              {ProductInfo.image ? (
+                <img src={ProductInfo.image} alt="약 이미지" />
+              ) : (
+                <span>이미지를 준비중입니다</span>
+              )}
             </div>
 
             <div className="ProductDetail_desc">
@@ -163,35 +175,33 @@ function ProductDetail({ match }) {
                   <span className="name">유통기한</span>
                   <span className="desc">{ProductInfo.expiration}</span>
                 </div>
-                <div className="hotToeat">
-                  <span className="name">섭취방법</span>
-                  <span className="desc">{ProductInfo.hotToEat}</span>
-                </div>
-                <div className="shape">
-                  <span className="name">제품형태</span>
-                  <span className="desc">{ProductInfo.shape}</span>
-                </div>
-                <div className="warning">
-                  <span className="name">섭취시 주의사항</span>
-                  <span className="desc">{ProductInfo.warning}</span>
-                </div>
+                {ProductInfo.hotToEat ? (
+                  <div className="hotToeat">
+                    <span className="name">섭취방법</span>
+                    <span className="desc">{ProductInfo.hotToEat}</span>
+                  </div>
+                ) : null}
+                {ProductInfo.shape ? (
+                  <div className="shape">
+                    <span className="name">제품형태</span>
+                    <span className="desc">{ProductInfo.shape}</span>
+                  </div>
+                ) : null}
+                {ProductInfo.warning ? (
+                  <div className="warning">
+                    <span className="name">섭취시 주의사항</span>
+                    <span className="desc">{ProductInfo.warning}</span>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
         </div>
         <ReviewList
-          // reviews={reviews}
           productId={productId}
           name={ProductInfo.name}
           reviewsCount={ProductInfo.reviewsCount}
         />
-        {isOpenWrite && (
-          <ReviewModal
-            openWriteHandler={openWriteHandler}
-            productImg={ProductInfo.image}
-            productName={ProductInfo.name}
-          />
-        )}
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import '../styles/Review.scss';
 import DeleteReviewModal from './DeleteReviewModal';
 
@@ -16,7 +17,7 @@ function Review({
   isLike,
   period,
 }) {
-  const [isOpenMypage, setIsOpenMypage] = useState(true);
+  const isOpenMypage = useSelector((state) => state.addMinusNum);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   const openDeleteHandler = () => {
@@ -49,7 +50,15 @@ function Review({
 
           <div className="Reviews_left">
             <div className="Reviews_Profile_info">
-              <img className="profile" src={profile} alt="profile_img" />
+              {profile ? (
+                <img className="profile" src={profile} alt="profile_img" />
+              ) : (
+                <img
+                  className="profile"
+                  src="/images/profile-min.jpg"
+                  alt="profile_img"
+                />
+              )}
               <div className="nameOrDateOrstar">
                 <div className="date">{date}</div>
                 <div className="nickname">{nickname}</div>
