@@ -20,19 +20,26 @@ export const updateToken = async () => {
   return Promise.resolve(result);
 };
 
-export default async function setAxios(setToken) {
+export default async function setAxios(setToken, setIsLoading) {
   // 리액트 바로 사용시 App.js최상단으로 올려주세요
   axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-
   axios.defaults.withCredentials = true;
+  axios.interceptors.request.use((config) => {
+    setIsLoading(true);
+    return config;
+  });
   axios.interceptors.response.use(
     /**
      * axios 인터럽트 설정
      * 401일 경우 App내의 상태를 변경해야 해서 여기서 적용...
      */
 
-    (config) => config,
+    (config) => {
+      setIsLoading(false);
+      return config;
+    },
     async (err) => {
+      setIsLoading(false);
       if (err.response?.status === 401) {
         /**
          * 토큰이 더 이상 유효하지 않음..

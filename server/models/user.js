@@ -1,4 +1,5 @@
 const { Model } = require('sequelize');
+const debug = require('debug')('app:db');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const s3 = require('../modules/image');
@@ -36,10 +37,12 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         unique: true,
+        allowNull: true,
       },
       uuid: {
         type: DataTypes.STRING,
-        defaultValue: '',
+        unique: true,
+        allowNull: true,
       },
       profileImage: {
         type: DataTypes.STRING,
@@ -78,10 +81,15 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'User',
       hooks: {
-        afterDestroy: async (user) => {
-          const image = user.getDataValue('profileImage');
-          if (image) {
-            await s3.delete(image);
+        afterDestroy: async (user, options) => {
+          if (options.transaction) {
+            options.transaction.afterCommit(async () => {
+              debug('회원탈퇴 커밋 완료. 이미지 삭제시작');
+              const image = user.getDataValue('profileImage');
+              if (image) {
+                await s3.delete(image);
+              }
+            });
           }
         },
       },

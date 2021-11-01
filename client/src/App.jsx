@@ -26,7 +26,7 @@ function App() {
      * 리액트가 처음 렌더링 될 때 실행됩니다.
      * axios세팅후 토큰갱신을 시도합니다.
      */
-    await setAxios(setToken);
+    await setAxios(setToken, setIsLoading);
     let newToken;
     try {
       newToken = await updateToken();

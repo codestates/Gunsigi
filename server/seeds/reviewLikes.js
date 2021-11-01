@@ -24,5 +24,5 @@ module.exports = async () => {
     ]);
   }
   // 데이터가 이미 있으면 성공처리
-  return Promise.resolve(true);
+  return true;
 };

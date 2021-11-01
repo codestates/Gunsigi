@@ -5,7 +5,7 @@ const {
   generateRefreshToken,
   sendToCookie,
   isAuthorized,
-} = require('./token_functions');
+} = require('./token');
 
 module.exports = {
   logout: (req, res) => {

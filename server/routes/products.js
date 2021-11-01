@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use(tokenCheck);
 
-// // routes
+// routes
 router.get(
   '/',
   query('query')
@@ -42,6 +42,14 @@ router.get(
   param('productId').isInt().withMessage('올바른 제품ID를 입력해주세요'),
   validationError,
   products.detail,
+);
+
+router.get(
+  '/all/items',
+  query('page').default(1).isInt().withMessage('page는 숫자로 입력해주세요'),
+  query('size').default(30).isInt().withMessage('size는 숫자로 입력해주세요'),
+  validationError,
+  products.all,
 );
 
 module.exports = router;

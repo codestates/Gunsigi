@@ -10,8 +10,5 @@ module.exports = {
   sendToCookie: (res, accessToken) => (
     res.cookie('jwt', accessToken, { httpOnly: true, secure: false })
   ),
-  isAuthorized: (req) => {
-    console.log("jwt : ", req.cookies.jwt)
-    return verify(req.cookies.jwt, process.env.REFRESH_SECRET)
-  },
+  isAuthorized: (req) => verify(req.cookies.jwt, process.env.REFRESH_SECRET),
 };
