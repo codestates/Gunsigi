@@ -21,7 +21,6 @@ module.exports = {
       return res.status(403).json({ message: 'Fail to kakao login' });
     }
     userInfo = userInfo.data;
-    console.log(userInfo);
 
     let user;
     let created;

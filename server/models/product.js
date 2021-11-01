@@ -59,6 +59,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Product',
+      indexes: [
+        {
+          fields: ['views'],
+        },
+      ],
     },
   );
   return Product;
