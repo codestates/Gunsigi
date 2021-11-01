@@ -1,6 +1,4 @@
-const {
-  Product, Bookmark, Ingredient, Sequelize, Tag,
-} = require('../models');
+const { Product, Bookmark, Ingredient, Sequelize, Tag } = require('../models');
 const paging = require('../modules/page');
 
 module.exports = {
@@ -8,9 +6,7 @@ module.exports = {
     /**
      * 검색 API
      */
-    const {
-      page, size, query, type, order,
-    } = req.query;
+    const { page, size, query, type, order } = req.query;
     const params = {
       attributes: [
         'id',
@@ -42,7 +38,9 @@ module.exports = {
       });
       if (type === 'category') {
         const tag = await Tag.findOne({ where: { name: query } });
-        params.include.where = { name: { [Sequelize.Op.in]: tag?.ingredients || [] } };
+        params.include.where = {
+          name: { [Sequelize.Op.in]: tag?.ingredients || [] },
+        };
       } else {
         params.include.where = { name: query };
       }

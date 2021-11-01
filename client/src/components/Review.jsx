@@ -31,7 +31,7 @@ function Review({
             <div className="like">
               <img
                 className={isLike ? 'heart_icon_change' : 'heart_icon'}
-                src="icons/heart_fill.svg"
+                src="/icons/heart_fill.svg"
                 alt="heart"
               />
               <span>{likesCount}</span>
@@ -39,7 +39,7 @@ function Review({
             {isOpenMypage ? (
               <img
                 className="delete"
-                src="icons/icon_bin.svg"
+                src="/icons/icon_bin.svg"
                 alt="review_delete"
                 onClick={openDeleteHandler}
                 aria-hidden="true"
@@ -60,7 +60,7 @@ function Review({
                         ? 'ProductDetail_icon_change'
                         : 'ProductDetail_icon'
                     }
-                    src="icons/icon_star_fill.svg"
+                    src="/icons/icon_star_fill.svg"
                     alt="star"
                   />
                   <img
@@ -69,7 +69,7 @@ function Review({
                         ? 'ProductDetail_icon_change'
                         : 'ProductDetail_icon'
                     }
-                    src="icons/icon_star_fill.svg"
+                    src="/icons/icon_star_fill.svg"
                     alt="star"
                   />
                   <img
@@ -78,7 +78,7 @@ function Review({
                         ? 'ProductDetail_icon_change'
                         : 'ProductDetail_icon'
                     }
-                    src="icons/icon_star_fill.svg"
+                    src="/icons/icon_star_fill.svg"
                     alt="star"
                   />
                   <img
@@ -87,7 +87,7 @@ function Review({
                         ? 'ProductDetail_icon_change'
                         : 'ProductDetail_icon'
                     }
-                    src="icons/icon_star_fill.svg"
+                    src="/icons/icon_star_fill.svg"
                     alt="star"
                   />
                   <img
@@ -96,7 +96,7 @@ function Review({
                         ? 'ProductDetail_icon_change'
                         : 'ProductDetail_icon'
                     }
-                    src="icons/icon_star_fill.svg"
+                    src="/icons/icon_star_fill.svg"
                     alt="star"
                   />
                 </div>
@@ -111,7 +111,7 @@ function Review({
                 <span>{name}</span>
               </div>
               <div className="period">
-                <img src="icons/icon_take_period.svg" alt="period" />
+                <img src="/icons/icon_take_period.svg" alt="period" />
                 <span>{period}</span>
               </div>
             </div>

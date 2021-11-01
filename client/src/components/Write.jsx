@@ -24,7 +24,7 @@ function Write({ openReviewHandler }) {
           onClick={() => scrollTo({ top: 0 })}
           className="top_button"
         >
-          <img src="icons/icon_arrow_left.svg" alt="top" />
+          <img src="/icons/icon_arrow_left.svg" alt="top" />
         </div>
       ) : null}
       <div
@@ -32,7 +32,7 @@ function Write({ openReviewHandler }) {
         onClick={openReviewHandler}
         aria-hidden="true"
       >
-        <img src="icons/icon_write.svg" alt="write" />
+        <img src="/icons/icon_write.svg" alt="write" />
       </div>
     </div>
   );

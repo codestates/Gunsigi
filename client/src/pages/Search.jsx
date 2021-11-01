@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { search } from '../assets/Search';
 import NavChange from '../components/NavChange';
 import Product from '../components/Product';
@@ -6,6 +8,7 @@ import '../styles/Search.scss';
 
 function Search() {
   const [searchSequence, setSearchSequence] = useState(true);
+
   return (
     <>
       <NavChange />
@@ -34,14 +37,16 @@ function Search() {
             </div>
             <div className="Search_products">
               {search.map((item) => (
-                <Product
-                  key={item.id}
-                  name={item.name}
-                  reviews={item.reviewsCount}
-                  img={item.image}
-                  score={item.score}
-                  bookmark={item.isBookmarked}
-                />
+                <Link to={`product-detail/${item.id}`}>
+                  <Product
+                    key={item.id}
+                    name={item.name}
+                    reviews={item.reviewsCount}
+                    img={item.image}
+                    score={item.score}
+                    bookmark={item.isBookmarked}
+                  />
+                </Link>
               ))}
             </div>
           </div>

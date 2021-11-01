@@ -13,7 +13,6 @@ import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
 import TopButton from './components/TopButton';
-import SearchModal from './components/SearchModal';
 import Loading from './components/Loading';
 
 function App() {
@@ -56,15 +55,13 @@ function App() {
           <Route exact path="/">
             <Main />
           </Route>
-          <Route path="/search">
+          <Route path="/search" component={Search}>
             <Search />
-          </Route>
-          <Route path="/product-detail">
-            <ProductDetail />
           </Route>
           <Route path="/mypage">
             <Mypage />
           </Route>
+          <Route exact path="/product-detail/:id" component={ProductDetail} />
         </Switch>
       </Router>
     </div>
