@@ -3,7 +3,7 @@ import '../styles/nav/nav.scss';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { logout } from '../actions/userActions';
+import { logout } from '../actions/userAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -12,7 +12,7 @@ function Nav() {
   // const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
-  const { isLogin } = userState.isLogin;
+  const { isLogin } = userState;
   const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);

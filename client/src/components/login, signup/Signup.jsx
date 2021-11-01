@@ -24,8 +24,8 @@ function Signup() {
           </div>
         </div>
         <div className="icon">
-          <img src="google_Logo.png" alt="google" />
-          <img src="kakao_Logo.png" alt="kakao" />
+          <img src="/google_Logo.png" alt="google" />
+          <img src="/kakao_Logo.png" alt="kakao" />
         </div>
         <button type="button">회원가입</button>
       </div>

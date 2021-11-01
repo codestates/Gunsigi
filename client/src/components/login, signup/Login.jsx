@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { login } from '../../actions/userActions';
+import { login } from '../../actions/userAction';
 import '../../styles/LoginSignup/Login.scss';
 
 function Login({ setOpenLogin }) {
@@ -70,8 +70,8 @@ function Login({ setOpenLogin }) {
           </div>
         </div>
         <div className="icon">
-          <img src="google_Logo.png" alt="google" />
-          <img src="kakao_Logo.png" alt="kakao" />
+          <img src="/google_Logo.png" alt="google" />
+          <img src="/kakao_Logo.png" alt="kakao" />
         </div>
         <button type="button" onClick={handleLogin}>
           로그인

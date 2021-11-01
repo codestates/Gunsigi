@@ -8,7 +8,7 @@ import {
   updateSearchedWord,
   resetSearchedWord,
 } from '../actions/searchAction';
-import { logout } from '../actions/userActions';
+import { logout } from '../actions/userAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -21,7 +21,6 @@ function NavChange() {
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   // const [inputValue, setInputValue] = useState('');
-  const dispatch = useDispatch();
   const searchState = useSelector((state) => state.searchReducer);
   const { searchedWord } = searchState;
   const handleSearchInput = (event) => {
@@ -53,12 +52,6 @@ function NavChange() {
       console.log('엔터 후 서치리퀘스트실행');
       searchRequest();
     }
-  };
-
-  const logoutHandler = () => {
-    axios.get('/auth/logout').then(() => {
-      dispatch(logout(false));
-    });
   };
 
   const logoutHandler = () => {

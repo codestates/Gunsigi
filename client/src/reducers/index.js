@@ -4,7 +4,6 @@ import storage from 'redux-persist/lib/storage';
 import userReducer from './userReducer';
 import inoutMypage from './inoutMypage';
 import searchReducer from './searchReducer';
-import productDetailReducer from './productDetailReducer';
 
 const persistConfig = {
   key: 'root',

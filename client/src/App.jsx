@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from './actions/userAction';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -18,6 +20,8 @@ import Loading from './components/Loading';
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function App() {
+  const dispatch = useDispatch();
+
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(false);
@@ -39,8 +43,7 @@ function App() {
     }
     // 새로 받은 토큰상태를 변경합니다.
     setToken(newToken);
-
-    // 리덕스 isLogin 설정필요.
+    dispatch(login(true));
   }, []);
 
   useEffect(() => {
