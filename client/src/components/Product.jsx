@@ -11,7 +11,7 @@ function Product({ name, reviews, img, score, bookmark }) {
         <span>{name}</span>
         <img
           className={bookmark ? 'Product_heart_change' : 'Product_heart'}
-          src="icons/icon_bookmark.svg"
+          src="/icons/icon_bookmark.svg"
           alt="heart"
         />
       </div>
@@ -19,27 +19,27 @@ function Product({ name, reviews, img, score, bookmark }) {
         <span>
           <img
             className={score >= 1 ? 'Product_icon_change' : 'Product_icon'}
-            src="icons/icon_star_fill.svg"
+            src="/icons/icon_star_fill.svg"
             alt="star"
           />
           <img
             className={score >= 2 ? 'Product_icon_change' : 'Product_icon'}
-            src="icons/icon_star_fill.svg"
+            src="/icons/icon_star_fill.svg"
             alt="star"
           />
           <img
             className={score >= 3 ? 'Product_icon_change' : 'Product_icon'}
-            src="icons/icon_star_fill.svg"
+            src="/icons/icon_star_fill.svg"
             alt="star"
           />
           <img
             className={score >= 4 ? 'Product_icon_change' : 'Product_icon'}
-            src="icons/icon_star_fill.svg"
+            src="/icons/icon_star_fill.svg"
             alt="star"
           />
           <img
             className={score >= 5 ? 'Product_icon_change' : 'Product_icon'}
-            src="icons/icon_star_fill.svg"
+            src="/icons/icon_star_fill.svg"
             alt="star"
           />
         </span>

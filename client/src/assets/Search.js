@@ -11,37 +11,37 @@ export const searchHashtag = [
 export const searchCategory = [
   {
     id: 1,
-    icon: 'icons/icon_immunity.svg',
+    icon: '/icons/icon_immunity.svg',
     eng_name: 'Immunity',
     kor_name: '면역력 증진',
   },
   {
     id: 2,
-    icon: 'icons/icon_energy.svg',
+    icon: '/icons/icon_energy.svg',
     eng_name: 'energy',
     kor_name: '에너지',
   },
   {
     id: 3,
-    icon: 'icons/heart_beat.svg',
+    icon: '/icons/heart_beat.svg',
     eng_name: 'heart_beat',
     kor_name: '혈관',
   },
   {
     id: 4,
-    icon: 'icons/icon_eye.svg',
+    icon: '/icons/icon_eye.svg',
     eng_name: 'eye',
     kor_name: '눈',
   },
   {
     id: 5,
-    icon: 'icons/icon_joint.svg',
+    icon: '/icons/icon_joint.svg',
     eng_name: 'joint',
     kor_name: '관절, 뼈',
   },
   {
     id: 6,
-    icon: 'icons/icon_liver.svg',
+    icon: '/icons/icon_liver.svg',
     eng_name: 'liver',
     kor_name: '간',
   },
