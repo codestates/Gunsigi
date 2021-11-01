@@ -61,6 +61,12 @@ function NavChange() {
     });
   };
 
+  const logoutHandler = () => {
+    axios.get('/auth/logout').then(() => {
+      dispatch(logout(false));
+    });
+  };
+
   return (
     <>
       <div className="navChange">
