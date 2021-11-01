@@ -37,9 +37,11 @@
           font-weight: 800;
         }
       }
+
       .product_star {
         display: flex;
         justify-content: flex-start;
+
         .product_img {
           width: 7rem;
           border: 2px solid $light-grey;
@@ -47,65 +49,36 @@
           padding: 0.5rem;
         }
 
-        div {
+        .rating-group {
+          margin: 1.5rem 0 0.5rem 1.5rem;
           display: flex;
-          flex-direction: column;
+          justify-content: space-evenly;
           align-items: center;
           width: 100%;
+          flex-direction: row-reverse;
 
-          .rating-group {
-            margin: 1.5rem 0 0.5rem 1.5rem;
-            display: inline-flex;
-            justify-content: space-evenly;
-            align-items: center;
-            width: 100%;
-          }
-
-          /* make hover effect work properly in IE */
-          .rating__icon {
-            pointer-events: none;
-          }
-
-          /* hide radio inputs */
-          .rating__input {
-            position: absolute !important;
-            left: -9999px !important;
-          }
-
-          /* hide 'none' input from screenreaders */
-          .rating__input--none {
+          input {
             display: none;
           }
 
-          /* set icon padding and size */
-          .rating__label {
-            cursor: pointer;
+          img {
+            filter: $f-light-grey;
             width: 3rem;
+            cursor: pointer;
           }
 
-          /* set default star color */
-          .rating__icon--star {
-            filter: $f-star;
+          :checked ~ label {
+            img {
+              filter: $f-star;
+            }
           }
 
-          /* if any input is checked, make its following siblings grey */
-          .rating__input:checked ~ .rating__label .rating__icon--star {
-            filter: $f-light-grey;
-          }
-
-          /* make all stars orange on rating group hover */
-          .rating-group:hover .rating__label .rating__icon--star {
-            filter: $f-star;
-          }
-
-          /* make hovered input's following siblings grey on hover */
-          .rating__input:hover ~ .rating__label .rating__icon--star {
-            filter: $f-light-grey;
-          }
-
-          :last-child {
-            color: $deep-blue;
-            font-weight: 800;
+          label:hover,
+          label:hover ~ label {
+            img {
+              filter: invert(66%) sepia(62%) saturate(1811%) hue-rotate(354deg)
+                brightness(99%) contrast(93%);
+            }
           }
         }
       }
@@ -255,9 +228,9 @@
   .modal_outside {
     .modal_form {
       width: 70rem;
-      height: 56rem;
+      height: 60rem;
       padding: 5rem;
-      gap: 2rem;
+      gap: 3rem;
 
       .review_top {
         flex-direction: row;
@@ -270,7 +243,7 @@
         }
 
         .product_star {
-          width: 80%;
+          width: 65%;
         }
       }
 
@@ -299,6 +272,7 @@
 
         textarea {
           width: 85%;
+          max-height: 14.6rem;
         }
       }
 

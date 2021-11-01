@@ -17,7 +17,6 @@ function ProductDetail() {
     <div className="ProductDetail">
       <Write openReviewHandler={openWriteHandler} />
       <NavChange />
-
       <div className="ProductDetail_container">
         <div className="ProductDetail_in">
           <div className="ProductDetail_img">

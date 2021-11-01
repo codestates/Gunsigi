@@ -436,7 +436,6 @@ export const reviews = {
         'dummy/medicine1.jpeg',
         'dummy/medicine2.jpeg',
         'dummy/medicine3.jpeg',
-        'dummy/medicine3.jpeg',
       ],
     },
     {

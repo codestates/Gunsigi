@@ -20,110 +20,28 @@ function ReviewModal({ openWriteHandler, productImg, productName }) {
           </div>
           <div className="product_star">
             <img className="product_img" src={productImg} alt="product" />
-            <div>
-              <span className="rating-group">
-                <input
-                  disabled
-                  checked
-                  className="rating__input rating__input--none"
-                  name="rating3"
-                  id="rating3-none"
-                  value="0"
-                  type="radio"
-                />
-                <label
-                  aria-label="1 star"
-                  className="rating__label"
-                  htmlFor="rating3-1"
-                >
-                  <img
-                    className="rating__icon rating__icon--star fa fa-star"
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                </label>
-                <input
-                  className="rating__input"
-                  name="rating3"
-                  id="rating3-1"
-                  value="1"
-                  type="radio"
-                />
-                <label
-                  aria-label="2 stars"
-                  className="rating__label"
-                  htmlFor="rating3-2"
-                >
-                  <img
-                    className="rating__icon rating__icon--star fa fa-star"
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                </label>
-                <input
-                  className="rating__input"
-                  name="rating3"
-                  id="rating3-2"
-                  value="2"
-                  type="radio"
-                />
-                <label
-                  aria-label="3 stars"
-                  className="rating__label"
-                  htmlFor="rating3-3"
-                >
-                  <img
-                    className="rating__icon rating__icon--star fa fa-star"
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                </label>
-                <input
-                  className="rating__input"
-                  name="rating3"
-                  id="rating3-3"
-                  value="3"
-                  type="radio"
-                />
-                <label
-                  aria-label="4 stars"
-                  className="rating__label"
-                  htmlFor="rating3-4"
-                >
-                  <img
-                    className="rating__icon rating__icon--star fa fa-star"
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                </label>
-                <input
-                  className="rating__input"
-                  name="rating3"
-                  id="rating3-4"
-                  value="4"
-                  type="radio"
-                />
-                <label
-                  aria-label="5 stars"
-                  className="rating__label"
-                  for="rating3-5"
-                >
-                  <img
-                    className="rating__icon rating__icon--star fa fa-star"
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                </label>
-                <input
-                  className="rating__input"
-                  name="rating3"
-                  id="rating3-5"
-                  value="5"
-                  type="radio"
-                />
-              </span>
-              <span>※ 별점은 더블 클릭 해주세요</span>
-            </div>
+            <span className="rating-group">
+              <input type="radio" id="star5" name="rating" value="5" />
+              <label htmlFor="star5" className="star">
+                <img src="/icons/icon_star_fill.svg" alt="star" />
+              </label>
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label htmlFor="star4" className="star">
+                <img src="/icons/icon_star_fill.svg" alt="star" />
+              </label>
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label htmlFor="star3" className="star">
+                <img src="/icons/icon_star_fill.svg" alt="star" />
+              </label>
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label htmlFor="star2" className="star">
+                <img src="/icons/icon_star_fill.svg" alt="star" />
+              </label>
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label htmlFor="star1" className="star">
+                <img src="/icons/icon_star_fill.svg" alt="star" />
+              </label>
+            </span>
           </div>
         </div>
         <div className="period">

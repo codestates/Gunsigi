@@ -29,7 +29,7 @@
   }
 
   .my-contents {
-    padding-top: 2rem;
+    padding-top: 2.5rem;
   }
 }
 
@@ -54,6 +54,8 @@
     }
 
     .my-contents {
+      padding: 2.5rem 0.5rem 0 0.5rem;
+
       height: 95%;
       overflow-y: scroll;
       -ms-overflow-style: none; /* IE and Edge */
@@ -70,6 +72,10 @@
   .my-activity_container {
     #tab_menu {
       font-size: 1.6rem;
+    }
+
+    .my-contents {
+      padding-top: 2rem;
     }
   }
 }
