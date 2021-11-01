@@ -7,17 +7,16 @@ import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
 
 function ProductDetail() {
-  const [isOpenReview, setisOpenReview] = useState(false);
+  const [isOpenWrite, setisOpenWrite] = useState(false);
 
-  const openReviewHandler = () => {
-    setisOpenReview(!isOpenReview);
+  const openWriteHandler = () => {
+    setisOpenWrite(!isOpenWrite);
   };
 
   return (
     <div className="ProductDetail">
-      <Write openReviewHandler={openReviewHandler} />
+      <Write openReviewHandler={openWriteHandler} />
       <NavChange />
-
       <div className="ProductDetail_container">
         <div className="ProductDetail_in">
           <div className="ProductDetail_img">
@@ -135,9 +134,9 @@ function ProductDetail() {
         name={ProductInfo.name}
         reviewsCount={ProductInfo.reviewsCount}
       />
-      {isOpenReview && (
+      {isOpenWrite && (
         <ReviewModal
-          openReviewHandler={openReviewHandler}
+          openWriteHandler={openWriteHandler}
           productImg={ProductInfo.image}
           productName={ProductInfo.name}
         />

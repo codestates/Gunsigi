@@ -18,6 +18,8 @@ function MyReviews() {
           score={review.score}
           isMine={review.isMine}
           images={review.images}
+          period={review.period}
+          likesCount={review.likesCount}
         />
       ))}
     </div>

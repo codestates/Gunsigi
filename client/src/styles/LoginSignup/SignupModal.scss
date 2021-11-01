@@ -6,16 +6,26 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: $black;
   z-index: 500;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.SignupModal_in {
+.SignupModal {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
+}
+
+.SignupModal_in {
+  width: 100vw;
+  width: 380px;
+  height: 600px;
   background-color: $white;
   display: flex;
   justify-content: center;
@@ -34,6 +44,19 @@
 }
 
 @include tablet {
+  .SignupModal_container {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .SignupModal {
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 0;
+    height: 0;
+  }
+
   .SignupModal_in {
     width: 380px;
     height: 600px;
@@ -53,7 +76,7 @@
       position: absolute;
       z-index: 50;
       left: 0;
-      width: 380px;
+      width: 370px;
       height: 100%;
       background-image: url('../../images/login_signup_modal_web.png');
       background-size: cover;

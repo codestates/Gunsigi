@@ -14,9 +14,14 @@ function Review({
   images,
   likesCount,
   isLike,
-  period = { period },
+  period,
 }) {
   const [isOpenMypage, setIsOpenMypage] = useState(true);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+
+  const openDeleteHandler = () => {
+    setIsOpenDelete(!isOpenDelete);
+  };
 
   return (
     <>
@@ -36,6 +41,8 @@ function Review({
                 className="delete"
                 src="icons/icon_bin.svg"
                 alt="review_delete"
+                onClick={openDeleteHandler}
+                aria-hidden="true"
               />
             ) : null}
           </div>
@@ -117,6 +124,9 @@ function Review({
           </div>
         </div>
       </div>
+      {isOpenDelete && (
+        <DeleteReviewModal openDeleteHandler={openDeleteHandler} />
+      )}
     </>
   );
 }
