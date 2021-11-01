@@ -7,18 +7,15 @@ const { Ingredient } = require('../models');
 
 module.exports = async () => {
   const count = await Ingredient.count();
-  if (count === 0) {
-    // 없는 경우에만 데이터 넣기.
-    let ingredients;
-    try {
-      ingredients = JSON.parse(
-        await fs.readFile(path.join(__dirname, './data/ingredients.json'), 'utf8'),
-      );
-    } catch {
-      return false;
-    }
-    return Ingredient.bulkCreate(ingredients, { ignoreDuplicates: true });
+  if (count > 0) return false;
+  // 없는 경우에만 데이터 넣기.
+  let ingredients;
+  try {
+    ingredients = JSON.parse(
+      await fs.readFile(path.join(__dirname, './data/ingredients.json'), 'utf8'),
+    );
+  } catch {
+    return false;
   }
-  // 데이터가 이미 있으면 성공처리
-  return Promise.resolve(true);
+  return Ingredient.bulkCreate(ingredients, { ignoreDuplicates: true });
 };

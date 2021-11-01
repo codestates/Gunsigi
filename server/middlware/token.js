@@ -1,7 +1,7 @@
 const { verify } = require('jsonwebtoken');
 
 module.exports = {
-  tokenRequired: async (req, res, next) => {
+  required: async (req, res, next) => {
     /*
      * access token이 서버에서 발급한 것인지 확인한다.
      * user를 기록한다.
@@ -20,7 +20,7 @@ module.exports = {
     res.locals.user = user;
     return next();
   },
-  tokenCheck: async (req, res, next) => {
+  check: async (req, res, next) => {
     /**
      * 토큰을 조회해서 유저정보를 기록한다.
      * 토큰이 없으면 넘어간다.

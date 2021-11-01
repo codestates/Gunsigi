@@ -13,7 +13,7 @@ const {
 module.exports = {
   productsSeed: async () => {
     const count = await Product.count();
-    if (count > 0) return true;
+    if (count > 0) return false;
 
     // 제품이 없는 경우에만 데이터 넣기.
     let productsJson;

@@ -1,12 +1,12 @@
 const express = require('express');
 const { param, query } = require('express-validator');
 const products = require('../controllers/products');
-const { tokenCheck } = require('../middlware/token');
+const token = require('../middlware/token');
 const validationError = require('../middlware/error');
 
 const router = express.Router();
 
-router.use(tokenCheck);
+router.use(token.check);
 
 // routes
 router.get(
