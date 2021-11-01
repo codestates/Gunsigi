@@ -22,7 +22,7 @@ export const updateToken = async () => {
 
 export default async function setAxios(setToken, setIsLoading) {
   // 리액트 바로 사용시 App.js최상단으로 올려주세요
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+  // axios.defaults.baseURL = process.env.REACT_APP_API_URL;
   axios.defaults.withCredentials = true;
   axios.interceptors.request.use((config) => {
     setIsLoading(true);

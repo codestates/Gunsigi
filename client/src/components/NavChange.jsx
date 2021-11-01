@@ -1,19 +1,57 @@
 import React, { useState } from 'react';
 import '../styles/nav/navChange.scss';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getSearchedProductList,
+  updateSearchedWord,
+  resetSearchedWord,
+} from '../actions/searchAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function NavChange() {
-  // isLogin 리덕스 상태 설정필요
-  const states = useSelector((state) => state.userReducer);
-  const { isLogin } = states;
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
-
+  // const [inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
+  const searchState = useSelector((state) => state.searchReducer);
+  const { searchedWord } = searchState;
+  const handleSearchInput = (event) => {
+    // setInputValue(event.target.value);
+    console.log('서치워드 디스패치 하기 전', event.target.value);
+    dispatch(updateSearchedWord(event.target.value));
+    console.log('인풋창변화 후 searchedWord', searchState.searchedWord);
+  };
+  const searchRequest = () => {
+    console.log('서치리퀘스트 함수 안 searchedWord', searchedWord);
+    if (searchedWord !== '') {
+      // handleSearchRequest();
+      // setSearchedWord(inputValue);
+      console.log('안으로 들어오나? searchedWord는', searchedWord);
+      axios
+        .get('/products', { params: { query: `${searchedWord}` } })
+        .then((res) => {
+          const { items, pages } = res.data;
+          dispatch(getSearchedProductList(items, pages.itemCount));
+          dispatch(resetSearchedWord());
+          console.log('searchedWord', searchedWord);
+          setOpenSearchModal(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  const handleInputPress = (event) => {
+    if (event.key === 'Enter') {
+      console.log('엔터 후 서치리퀘스트실행');
+      searchRequest();
+    }
+  };
   return (
     <>
       <div className="navChange">
@@ -30,11 +68,19 @@ function NavChange() {
         <div className="nav_mid">
           <input
             onClick={() => setOpenSearchModal(true)}
+            onChange={(e) => handleSearchInput(e)}
+            onKeyPress={(e) => handleInputPress(e)}
             type="text"
             className="search-input"
           />
 
-          <div className="icon_search">
+          <div
+            className="icon_search"
+            onClick={searchRequest}
+            onKeyPress={searchRequest}
+            role="button"
+            tabIndex={0}
+          >
             <img src="/icons/icon_magnify.svg" alt="magnifier" />
           </div>
         </div>
