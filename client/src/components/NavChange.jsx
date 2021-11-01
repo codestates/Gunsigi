@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import '../styles/nav/navChange.scss';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { logout } from '../actions/userActions';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function NavChange() {
-  // isLogin 리덕스 상태 설정필요
-  const states = useSelector((state) => state.userReducer);
-  const { isLogin } = states;
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
+
+  const logoutHandler = () => {
+    axios.get('/auth/logout').then(() => {
+      dispatch(logout(false));
+    });
+  };
 
   return (
     <>
@@ -65,7 +73,7 @@ function NavChange() {
                   마이페이지
                 </button>
               </Link>
-              <button type="button" className="logout">
+              <button type="button" className="logout" onClick={logoutHandler}>
                 로그아웃
               </button>
             </>

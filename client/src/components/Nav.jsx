@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
 import '../styles/nav/nav.scss';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { logout } from '../actions/userActions';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function Nav() {
-  const isLogin = false;
+  // const history = useHistory();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState.isLogin;
   const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
 
   const openSearchModalHandler = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
+  };
+
+  const logoutHandler = () => {
+    axios.get('/auth/logout').then(() => {
+      dispatch(logout(false));
+    });
   };
 
   return (
@@ -64,7 +76,7 @@ function Nav() {
                   마이페이지
                 </button>
               </Link>
-              <button className="logout" type="button">
+              <button className="logout" type="button" onClick={logoutHandler}>
                 로그아웃
               </button>
             </>
