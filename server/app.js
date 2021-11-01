@@ -26,16 +26,18 @@ app.use(
     origin: [
       'https://www.gunsigi.com',
       'https://test.doldolma.com',
-      'http://localhost:4000',
+      'http://localhost:3000',
     ],
     credentials: true,
   }),
 );
 
 app.use('/auth', router.auth);
+app.use('/callback', router.oauth);
 app.use('/users', router.users);
 app.use('/products', router.products);
 app.use('/reviews', router.reviews);
+app.use('/review/like', router.reviewLikes);
 app.use('/bookmarks', router.bookmarks);
 
 // 로드밸런서 Health Check
@@ -43,14 +45,13 @@ app.get('/healthcheck', (_, res) => res.send('hi'));
 
 app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-debug(`running on ${process.env.NODE_ENV || 'development'}`);
+debug(`현재 노드환경 : ${process.env.NODE_ENV || 'development'}`);
 
 // 테이블생성 및 시드 데이터 넣기
-db.sequelize.sync(process.env.SEED ? { force: true } : {}).then(async () => {
-  await Seed();
-});
-
-debug('App 초기화완료');
-
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => debug(`리스닝 : ${PORT}`));
+db.sequelize.sync(process.env.SEED ? { force: true } : {}).then(async () => Seed())
+  .finally(() => {
+    if (process.env.SEED) process.exit(1);
+    debug('Express 초기화완료');
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`리스닝 : ${PORT}`));
+  });

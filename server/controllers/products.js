@@ -26,7 +26,6 @@ module.exports = {
       include: [
         {
           model: Bookmark,
-          attributes: ['id'],
           where: { userId: res.locals.user.id },
           required: false,
         },
@@ -49,7 +48,6 @@ module.exports = {
       }
     }
     const { count, rows } = await Product.findAndCountAll(params);
-    const total = parseInt(count / size, 10) + (count % size ? 1 : 0);
     return res.json({
       message: 'Success to search products list',
       items: rows.map((row) => {
@@ -77,7 +75,6 @@ module.exports = {
       include: [
         {
           model: Bookmark,
-          attributes: ['id'],
           where: { userId: res.locals.user.id },
           required: false,
         },
@@ -123,6 +120,48 @@ module.exports = {
           good: [...goods],
           bad: [...bads],
         },
+      },
+    });
+  },
+  all: async (req, res) => {
+    const { page, size } = req.query;
+    const { count, rows } = await Product.findAndCountAll({
+      attributes: [
+        'id',
+        'name',
+        'image',
+        'reviewsSum',
+        'reviewsCount',
+        'views',
+      ],
+      limit: size,
+      offset: (page - 1) * size,
+      order: [['views', 'DESC']],
+      include: [
+        {
+          model: Bookmark,
+          where: { userId: res.locals.user.id },
+          required: false,
+        },
+      ],
+    });
+    return res.json({
+      message: 'Success to search products list',
+      items: rows.map((row) => {
+        const product = row.toJSON();
+        product.score = parseFloat(
+          (product.reviewsSum / product.reviewsCount || 0).toFixed(1),
+        );
+        // 북마크 한적 있는지?
+        if (product.Bookmarks.length === 0) product.isBookmarked = false;
+        else product.isBookmarked = true;
+        delete product.Bookmarks;
+        delete product.reviewsSum;
+        return product;
+      }),
+      pages: {
+        ...paging({ page, size, count }),
+        itemCount: count,
       },
     });
   },

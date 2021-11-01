@@ -1,4 +1,5 @@
-const { User } = require('../models');
+const debug = require('debug')('app:user');
+const { User, sequelize } = require('../models');
 const s3 = require('../modules/image');
 
 module.exports = {
@@ -25,7 +26,7 @@ module.exports = {
       const imageName = await s3.save('profile', req.body.profileImage);
       if (user.profileImage) {
         // 기존 이미지 삭제
-        s3.delete(user.profileImage);
+        await s3.delete(user.profileImage);
       }
       user.profileImage = imageName;
       delete req.body.profileImage;
@@ -43,13 +44,22 @@ module.exports = {
     // 회원탈퇴
     res.clearCookie('jwt');
     const user = await User.findByPk(res.locals.user.id);
-    // await User.destroy({ where: { id: res.locals.user.id } });
     if (!user) {
       return res.status(401).json({
         message: 'Invalid Token',
       });
     }
-    await user.destroy();
+    // 삭제 커밋이 확실하게 수행되고 나서 프로필 이미지를 삭제하기 위해 트랜잭션생성
+    // 프로필 이미지 삭제 훅은 모델파일에 정의
+    const transaction = await sequelize.transaction();
+    try {
+      await user.destroy({ transaction });
+      await transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+      debug(err);
+      throw err;
+    }
     return res.json({
       message: 'delete user',
     });
