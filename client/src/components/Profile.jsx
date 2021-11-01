@@ -4,7 +4,7 @@ import MyInfoModal from './MyInfoModal';
 
 function Profile() {
   const [isOpenMyInfo, setIsOpenMyInfo] = useState(false);
-  const [userImgSrc, setUserImgSrc] = useState('/images/profile.png');
+  const [userImgSrc, setUserImgSrc] = useState('/images/profile-min.jpg');
 
   const openModalHandler = () => {
     setIsOpenMyInfo(!isOpenMyInfo);
