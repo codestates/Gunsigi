@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import '../styles/nav/navChange.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getSearchedProductList,
   updateSearchedWord,
   resetSearchedWord,
 } from '../actions/searchAction';
-import { logout } from '../actions/userAction';
+import loginState from '../actions/userAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function NavChange() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
@@ -54,9 +55,12 @@ function NavChange() {
     }
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = (event) => {
+    event.preventDefault();
+
     axios.get('/auth/logout').then(() => {
-      dispatch(logout(false));
+      dispatch(loginState(false));
+      history.push('/');
     });
   };
 

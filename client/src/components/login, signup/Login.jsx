@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { login } from '../../actions/userAction';
+import loginState from '../../actions/userAction';
 import '../../styles/LoginSignup/Login.scss';
 
 function Login({ setOpenLogin }) {
@@ -26,8 +26,8 @@ function Login({ setOpenLogin }) {
     event.preventDefault();
     axios
       .post('/auth/signin', loginForm)
-      .then((res) => {
-        dispatch(login(true, res.data.accessToken, res.data.userInfo));
+      .then(() => {
+        dispatch(loginState(true));
         setOpenLogin(false);
       })
       .catch((err) => {
