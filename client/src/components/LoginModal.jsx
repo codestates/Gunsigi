@@ -62,7 +62,7 @@ function LoginModal({ setOpenLogin }) {
           </div>
 
           <div className="LoginModal_Login">
-            <Login />
+            <Login setOpenLogin={setOpenLogin} />
           </div>
           <div className="LoginModal_Signup">
             <Signup />
