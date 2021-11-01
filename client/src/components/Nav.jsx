@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import '../styles/nav/nav.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { logout } from '../actions/userAction';
+import loginState from '../actions/userAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function Nav() {
-  // const history = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
@@ -21,9 +21,12 @@ function Nav() {
     setIsOpenSearchModal(!isOpenSearchModal);
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = (event) => {
+    event.preventDefault();
+
     axios.get('/auth/logout').then(() => {
-      dispatch(logout(false));
+      dispatch(loginState(false));
+      history.push('/');
     });
   };
 

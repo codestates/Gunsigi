@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from './actions/userAction';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -9,6 +8,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import axios from 'axios';
+import loginState from './actions/userAction';
 import setAxios, { updateToken } from './utils/ApiController';
 import Main from './pages/Main';
 import Search from './pages/Search';
@@ -43,7 +43,7 @@ function App() {
     }
     // 새로 받은 토큰상태를 변경합니다.
     setToken(newToken);
-    dispatch(login(true));
+    dispatch(loginState(true));
   }, []);
 
   useEffect(() => {
