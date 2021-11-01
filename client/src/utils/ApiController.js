@@ -1,31 +1,26 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 
 const refreshInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   withCredentials: true,
 });
+const authUrl = ['/auth/signin', '/auth/signup'];
 
 export const updateToken = async () => {
   /**
    * 리프레쉬토큰을 이용해 억세스 토큰을 다시 발급받는다.
    */
-  let res;
-  let result;
-  try {
-    res = await refreshInstance.post('/auth/refresh');
-  } catch (err) {
-    return Promise.reject(err);
-  }
-  if (res.data?.result) result = res.data.accessToken;
-  return Promise.resolve(result);
+  const res = await refreshInstance.post('/auth/refresh');
+  return res.data?.accessToken;
 };
 
 export default async function setAxios(setToken, setIsLoading) {
-  // 리액트 바로 사용시 App.js최상단으로 올려주세요
-  // axios.defaults.baseURL = process.env.REACT_APP_API_URL;
   axios.defaults.withCredentials = true;
   axios.interceptors.request.use((config) => {
     setIsLoading(true);
+    if (authUrl.includes(config.url)) config.auth = true;
+    else if (config.url === '/auth/logout') config.logout = true;
     return config;
   });
   axios.interceptors.response.use(
@@ -34,9 +29,11 @@ export default async function setAxios(setToken, setIsLoading) {
      * 401일 경우 App내의 상태를 변경해야 해서 여기서 적용...
      */
 
-    (config) => {
+    (response) => {
+      if (response.config.auth) setToken(response.data.accessToken);
+      else if (response.config.logout) setToken(false);
       setIsLoading(false);
-      return config;
+      return response;
     },
     async (err) => {
       setIsLoading(false);
