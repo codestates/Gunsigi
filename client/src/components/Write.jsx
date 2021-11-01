@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Write.scss';
 
-function Write({ openReviewHandler }) {
+function Write({ openWriteHandler }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   //! scroll 위치 알려주는 함수
@@ -29,7 +29,7 @@ function Write({ openReviewHandler }) {
       ) : null}
       <div
         className="write_button"
-        onClick={openReviewHandler}
+        onClick={() => openWriteHandler(true)}
         aria-hidden="true"
       >
         <img src="/icons/icon_write.svg" alt="write" />

@@ -61,7 +61,7 @@ function App() {
           <Route path="/mypage">
             <Mypage />
           </Route>
-          <Route exact path="/product-detail/:id" component={ProductDetail} />
+          <Route path="/product-detail/:id" component={ProductDetail} />
         </Switch>
       </Router>
     </div>

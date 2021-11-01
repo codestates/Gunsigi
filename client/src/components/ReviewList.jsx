@@ -26,17 +26,17 @@ function ReviewList({ name, reviewsCount, productId }) {
     },
   ]);
 
-  // useEffect(async () => {
-  //   await axios({
-  //     url: `${process.env.REACT_APP_API_URL}/reviews/${productId}`,
-  //     withCredentials: true,
-  //     headers: { 'Content-Type': 'application/json' },
-  //   })
-  //     .then((res) => {
-  //       setReviews(res.data.items);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [productId]);
+  useEffect(async () => {
+    await axios({
+      url: `${process.env.REACT_APP_API_URL}/reviews/${productId}`,
+      withCredentials: true,
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => {
+        setReviews(res.data.items);
+      })
+      .catch((err) => console.log(err));
+  }, [productId]);
 
   return (
     <div className="ReviewList_container">
@@ -77,6 +77,7 @@ function ReviewList({ name, reviewsCount, productId }) {
               date={review.updatedAt.slice(0, 10)}
               score={review.score}
               images={review.images}
+              isLike={review.isLike}
               likesCount={review.likesCount}
               period={review.period}
             />

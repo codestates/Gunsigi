@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { outMypage } from '../actions/inoutMypageAction';
 import axios from 'axios';
 import { search } from '../assets/Search';
 import NavChange from '../components/NavChange';
@@ -7,6 +9,7 @@ import Product from '../components/Product';
 import '../styles/Search.scss';
 
 function Search() {
+  const dispactch = useDispatch();
   const [searchSequence, setSearchSequence] = useState(true);
   const [productList, setProductList] = useState([]);
   // todo: 처음 전체 제품리스트를 받아온다 - 조회순 (조회순 class명 체인지)
@@ -54,7 +57,10 @@ function Search() {
             </div>
             <div className="Search_products">
               {search.map((item) => (
-                <Link to={`product-detail/${item.id}`}>
+                <Link
+                  onClick={() => dispactch(outMypage())}
+                  to={`product-detail/${item.id}`}
+                >
                   <Product
                     key={item.id}
                     name={item.name}

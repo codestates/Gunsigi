@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './userReducer';
-import productDetailReducer from './productDetailReducer';
+import inoutMypage from './inoutMypage';
 
 const persistConfig = {
   key: 'root',
@@ -11,6 +11,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   userReducer,
+  inoutMypage,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
