@@ -47,7 +47,7 @@ module.exports = {
       );
       params.order = [
         [sequelize.literal('rating'), 'DESC'],
-        [order === 'reivews' ? 'reviewsCount' : 'views', 'DESC'],
+        [order, 'DESC'],
       ];
     } else {
       const ingredientsInclude = {
@@ -62,13 +62,12 @@ module.exports = {
           attributes: ['ingredients'],
           where: { name: { [Sequelize.Op.like]: `${query}%` } },
         });
-        console.log(tag);
         ingredientsInclude.where = {
           name: { [Sequelize.Op.in]: tag?.ingredients || [] },
         };
       } else {
         ingredientsInclude.where = {
-          name: { [Sequelize.Op.like]: `${query}%` },
+          name: { [Sequelize.Op.like]: `%${query}%` },
         };
       }
       params.include.push(ingredientsInclude);
@@ -120,7 +119,7 @@ module.exports = {
 
     // 평균점수
     product = product.toJSON();
-    product.score = Math.round(product.reviewsSum / product.reviewsCount) || 0;
+    product.score = parseFloat((product.reviewsSum / product.reviewsCount).toFixed(1)) || 0;
     delete product.reviewsSum;
 
     // 북마크 한적 있는지?
@@ -154,9 +153,7 @@ module.exports = {
 
   all: async (req, res) => {
     const { page, size } = req.query;
-    let order;
-    if (req.query.order === 'reviews') order = 'reviewsCount';
-    else order = 'views';
+    const order = req.query.order === 'reviews' ? 'reviewsCount' : 'views';
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',
