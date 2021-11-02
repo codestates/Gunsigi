@@ -16,7 +16,7 @@ router.get(
     .withMessage('query는 필수 입력값입니다.')
     .isString()
     .withMessage('쿼리는 문자열로 입력해주세요')
-    .isLength({ min: 2, max: 20 })
+    .isLength({ min: 1, max: 20 })
     .withMessage('검색어는 2자 이상 20자 이하로 입력해주세요.'),
   query('type')
     .default('search')

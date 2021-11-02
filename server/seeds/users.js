@@ -10,14 +10,16 @@ module.exports = async () => {
   const users = [
     {
       nickname: 'doldolma',
+      email: 'iidd0101@naver.com',
       password: '123123',
-      type: 'google',
+      type: 'email',
       reviewsCount: 3,
     },
     {
       nickname: 'doldolme',
+      email: 'iidd0102@naver.com',
       password: '123123',
-      type: 'google',
+      type: 'email',
       reviewsCount: 1,
     },
     {

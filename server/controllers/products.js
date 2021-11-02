@@ -6,7 +6,10 @@ module.exports = {
     /**
      * 검색 API
      */
-    const { page, size, query, type, order } = req.query;
+    let order;
+    const { page, size, query, type } = req.query;
+    if (req.query.order === 'reviews') order = 'reviewsCount';
+    else order = 'views';
     const params = {
       attributes: [
         'id',
@@ -28,22 +31,33 @@ module.exports = {
       ],
     };
     if (type === 'search') {
+      // let newQuery = `+${query.split(' ').join(' +')}`;
+      // newQuery = '+' + newQuery;
+      // console.log(newQuery);
+      // const newQuery = query.replace(' ', '');
+      // params.attributes.push(
+      //   [`MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)`, 'rank'],
+      // );
       params.where = Sequelize.literal(
         `MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)`,
       );
     } else {
-      params.include.push({
+      const ingredientsInclude = {
         model: Ingredient,
         attributes: ['id'],
-      });
+      };
       if (type === 'category') {
-        const tag = await Tag.findOne({ where: { name: query } });
-        params.include.where = {
+        const tag = await Tag.findOne({
+          attributes: ['ingredients'],
+          where: { name: { [Sequelize.Op.like]: `${query}%` } },
+        });
+        ingredientsInclude.where = {
           name: { [Sequelize.Op.in]: tag?.ingredients || [] },
         };
       } else {
-        params.include.where = { name: query };
+        ingredientsInclude.where = { name: query };
       }
+      params.include.push(ingredientsInclude);
     }
     const { count, rows } = await Product.findAndCountAll(params);
     return res.json({
@@ -56,6 +70,7 @@ module.exports = {
         // 북마크 한적 있는지?
         if (product.Bookmarks.length === 0) product.isBookmarked = false;
         else product.isBookmarked = true;
+        product.isBookmarked = false;
         delete product.Bookmarks;
         delete product.reviewsSum;
         delete product.Ingredients;
@@ -122,7 +137,10 @@ module.exports = {
     });
   },
   all: async (req, res) => {
-    const { page, size, order } = req.query;
+    const { page, size } = req.query;
+    let order;
+    if (req.query.order === 'reviews') order = 'reviewsCount';
+    else order = 'views';
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',

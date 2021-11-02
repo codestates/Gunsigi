@@ -58,6 +58,7 @@ module.exports = {
       userInfo: user.json(),
     });
   },
+
   google: async (req, res) => {
     let result;
     try {
