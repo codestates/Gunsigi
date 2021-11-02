@@ -40,7 +40,7 @@ app.use(
   }),
 );
 
-// 카카오톡 공유하기 이용시 메타태그를 서버에서 미리 렌더링하기 위한 커스텀 템플릿 엔진
+// 커스텀 템플릿 엔진
 app.engine('html', (filepath, options, next) => {
   fs.readFile(filepath, (err, content) => {
     if (err) return next(err);

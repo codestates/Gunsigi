@@ -1,4 +1,3 @@
-const debug = require('debug')('app:auth');
 const { User } = require('../models');
 const {
   generateAccessToken,
@@ -8,6 +7,15 @@ const {
 } = require('./token');
 
 module.exports = {
+  overlap: async (req, res) => {
+    const { email } = req.query;
+    const user = await User.findOne({
+      attributes: ['id'],
+      where: { email },
+    });
+    if (user) return res.json({ message: '중복된 이메일입니다.', result: false });
+    return res.json({ message: '사용가능한 이메일입니다.', result: true });
+  },
   logout: (req, res) => {
     res.clearCookie('jwt');
     return res.json({ message: 'logout success' });
@@ -17,8 +25,14 @@ module.exports = {
     let user;
     try {
       user = await User.create(req.body);
-    } catch {
-      return res.status(400).json({ message: 'Fail to signup' });
+    } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(403).json({ message: '이미 사용중인 이메일입니다.' });
+      }
+      return res.status(400).json({
+        message: 'Fail to signup',
+        result: false,
+      });
     }
 
     // 토큰 생성
