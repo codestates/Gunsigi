@@ -1,4 +1,6 @@
-const { Product, Bookmark, Ingredient, Sequelize, Tag, sequelize } = require('../models');
+const {
+  Product, Bookmark, Ingredient, Sequelize, Tag, sequelize,
+} = require('../models');
 const paging = require('../modules/page');
 
 module.exports = {
@@ -7,9 +9,11 @@ module.exports = {
      * 검색 API
      */
     let order;
-    const { page, size, query, type } = req.query;
-    if (req.query.order === 'reviews') order = 'reviewsCount';
-    else order = 'views';
+    const {
+      page, size, query, type,
+    } = req.query;
+    if (req.query.order === 'reviews') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
+    else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
     const params = {
       attributes: [
         'id',
@@ -51,7 +55,7 @@ module.exports = {
         model: Ingredient,
         attributes: ['id'],
       };
-      params.order = [[order, 'DESC']];
+      params.order = order;
       if (type === 'category') {
         const tag = await Tag.findOne({
           attributes: ['ingredients'],

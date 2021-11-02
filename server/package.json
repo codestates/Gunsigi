@@ -6,7 +6,7 @@
     "start": "node app.js",
     "dev": "DEBUG=app* nodemon app.js",
     "seed": "export SEED=true && DEBUG=app* node app.js",
-    "test": "NODE_ENV=test mocha 'test/server.test.js' --reporter @mochajs/json-file-reporter"
+    "test": "NODE_ENV=test jest test/"
   },
   "dependencies": {
     "aws-sdk": "^2.1016.0",

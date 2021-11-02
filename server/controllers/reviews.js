@@ -70,8 +70,8 @@ module.exports = {
       ],
     };
     if (filter) params.where.period = filter;
-    if (order === 'recent') params.order = [['createdAt', 'DESC']];
-    else params.order = [['likesCount', 'DESC']];
+    if (order === 'recent') params.order = [['createdAt', 'DESC'], ['likesCount', 'DESC']];
+    else params.order = [['likesCount', 'DESC'], ['createdAt', 'DESC']];
 
     const { count, rows } = await Review.findAndCountAll(params);
     return res.json({
