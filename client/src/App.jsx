@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -21,7 +21,8 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function App() {
   const dispatch = useDispatch();
-
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(false);
@@ -68,7 +69,7 @@ function App() {
             <Search />
           </Route>
           <Route path="/mypage">
-            <Mypage />
+            {isLogin ? <Mypage /> : <Redirect to="/" />}
           </Route>
           <Route path="/product-detail/:id" component={ProductDetail} />
         </Switch>

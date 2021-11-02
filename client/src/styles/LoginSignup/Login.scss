@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    input {
+    .Login_input {
       width: 260px;
       height: 34px;
       border-radius: 20px;
@@ -37,6 +37,31 @@
         color: $black;
       }
     }
+    .input_change {
+      border: none;
+      box-shadow: 0 0 0 2px rgb(184, 1, 1);
+      outline: none;
+      animation: shake 0.2s ease-in-out 0s 2;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    @keyframes shake {
+      0% {
+        margin-left: 0rem;
+      }
+      25% {
+        margin-left: 0.5rem;
+      }
+      75% {
+        margin-left: -0.5rem;
+      }
+      100% {
+        margin-left: 0rem;
+      }
+    }
+
     .password {
       margin-top: 15px;
       div {
