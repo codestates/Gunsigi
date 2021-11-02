@@ -6,9 +6,10 @@
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding: 0 28px;
   min-width: 32rem;
-  min-height: 10rem;
+  min-height: 12rem;
 
   #profile_info {
     display: flex;
@@ -42,13 +43,14 @@
 
 @include tablet {
   #profile_container {
+    padding: 0 65px;
     font-size: 1.2rem;
-    min-height: 17rem;
+    min-height: 20rem;
     gap: 250px;
 
     #profile_info {
       .profile_img {
-        width: 12rem;
+        width: 10rem;
         border-radius: 6rem;
       }
 

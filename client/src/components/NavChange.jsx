@@ -1,56 +1,68 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../styles/nav/navChange.scss';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getSearchedProductList,
-  updateSearchedWord,
+  setSearchedProductList,
+  resetSearchedProductList,
+  setSearchedWord,
   resetSearchedWord,
 } from '../actions/searchAction';
 import loginState from '../actions/userAction';
+import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
+import { inMypage } from '../actions/inoutMypageAction';
 
 function NavChange() {
+  const inputEl = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
+  const modalState = useSelector((state) => state.modalReducer);
+  const { isOpenLogin, isOpenSingup } = modalState;
   const [openSearchModal, setOpenSearchModal] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
-  // const [inputValue, setInputValue] = useState('');
   const searchState = useSelector((state) => state.searchReducer);
   const { searchedWord } = searchState;
+
+  // 인풋창에서 특정값을 입력하고 엔터를 치거나 검색아이콘을 누르면,
+  //   검색결과리스트가 있을때, 검색페이지로 이동, 검색된 목록을 보여준다
+  //   검색 리스트가 [] 거나, 서버 응답이 400대, 에러일때, 시각적 피드백
+  // 인풋창을 비운채로 엔터를 누르면, 전체 목록 조회순 (기본)이 보이도록
+  // 어느페이지에서든 스크롤이 항상 위로 오도록
+  // 다른 페이지에 갔다가 서치페이지에 오면 서치리스트는 초기화되어야하지만, 네브체인지에서 서치페이지로갈때 초기화되어서는 안됨
+  //
   const handleSearchInput = (event) => {
-    // setInputValue(event.target.value);
-    console.log('서치워드 디스패치 하기 전', event.target.value);
-    dispatch(updateSearchedWord(event.target.value));
-    console.log('인풋창변화 후 searchedWord', searchState.searchedWord);
+    dispatch(setSearchedWord(event.target.value));
   };
   const searchRequest = () => {
-    console.log('서치리퀘스트 함수 안 searchedWord', searchedWord);
     if (searchedWord !== '') {
-      // handleSearchRequest();
-      // setSearchedWord(inputValue);
-      console.log('안으로 들어오나? searchedWord는', searchedWord);
       axios
         .get('/products', { params: { query: `${searchedWord}` } })
         .then((res) => {
           const { items, pages } = res.data;
-          dispatch(getSearchedProductList(items, pages.itemCount));
-          dispatch(resetSearchedWord());
-          console.log('searchedWord', searchedWord);
+          dispatch(setSearchedProductList(items, pages.itemCount));
           setOpenSearchModal(false);
+          history.push('/search');
+          window.scrollTo(0, 0);
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          alert('찾으시는 제품이 없습니다');
+        });
+    } else {
+      console.log('리셋하고싶음');
+      dispatch(resetSearchedWord());
+      dispatch(resetSearchedProductList());
+      inputEl.current.blur();
+      history.push('/search');
+      window.scrollTo(0, 0);
     }
   };
   const handleInputPress = (event) => {
     if (event.key === 'Enter') {
-      console.log('엔터 후 서치리퀘스트실행');
       searchRequest();
     }
   };
@@ -67,8 +79,8 @@ function NavChange() {
   return (
     <>
       <div className="navChange">
-        {openLogin ? <LoginModal setOpenLogin={setOpenLogin} /> : null}
-        {openSignup ? <SignupModal setOpenSignup={setOpenSignup} /> : null}
+        {isOpenLogin ? <LoginModal /> : null}
+        {isOpenSingup ? <SignupModal /> : null}
         {openSearchModal ? (
           <SearchModal setOpenSearchModal={setOpenSearchModal} />
         ) : null}
@@ -79,6 +91,7 @@ function NavChange() {
         </Link>
         <div className="nav_mid">
           <input
+            ref={inputEl}
             onClick={() => setOpenSearchModal(true)}
             onChange={(e) => handleSearchInput(e)}
             onKeyPress={(e) => handleInputPress(e)}
@@ -101,16 +114,14 @@ function NavChange() {
             <>
               <button
                 type="button"
-                onClick={() => {
-                  setOpenLogin(true);
-                }}
+                onClick={() => dispatch(setLoginModal(true))}
                 className="login"
               >
                 로그인
               </button>
               <button
                 type="button"
-                onClick={() => setOpenSignup(true)}
+                onClick={() => dispatch(setSignupModal(true))}
                 className="signup"
               >
                 회원가입
@@ -118,7 +129,7 @@ function NavChange() {
             </>
           ) : (
             <>
-              <Link to="/mypage">
+              <Link onClick={() => dispatch(inMypage())} to="/mypage">
                 <button type="button" className="mypage">
                   마이페이지
                 </button>

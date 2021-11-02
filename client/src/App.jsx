@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import setAxios, { updateToken } from './utils/ApiController';
 import loginState from './actions/userAction';
@@ -14,20 +9,20 @@ import Main from './pages/Main';
 import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
-import TopButton from './components/TopButton';
 import Loading from './components/Loading';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function App() {
   const dispatch = useDispatch();
-
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(null);
   window.addEventListener('load', () => {
     setIsLoading(false);
   });
+
   useEffect(async () => {
     await setAxios(setToken, setIsLoading);
     let newToken;
@@ -55,21 +50,19 @@ function App() {
   return (
     <div className="App">
       {isLoading ? <Loading /> : null}
-      {scrollPosition > 60 ? <TopButton /> : null}
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/search" component={Search}>
-            <Search />
-          </Route>
-          <Route path="/mypage">
-            <Mypage />
-          </Route>
-          <Route path="/product-detail/:id" component={ProductDetail} />
-        </Switch>
-      </Router>
+
+      <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <Route path="/search" component={Search}>
+          <Search />
+        </Route>
+        <Route path="/mypage">
+          {isLogin ? <Mypage /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/product-detail/:id" component={ProductDetail} />
+      </Switch>
     </div>
   );
 }

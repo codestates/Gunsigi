@@ -1,39 +1,52 @@
 import {
-  PRODUCT_LIST,
+  ALL_PRODUCT_LIST,
+  SEARCHED_PRODUCT_LIST,
+  RESET_SEARCHED_PRODUCT_LIST,
+  SET_SEARCHED_WORD,
   RESET_SEARCHED_WORD,
-  SEARCHED_WORD,
-  SEARCH_PRODUCT_LIST,
+  SET_SEARCH_TYPE,
+  RESET_SEARCH_TYPE,
 } from '../actions/types';
 
 const searchInit = {
   productList: [],
   productCount: 0,
-  searchedProductList: [],
+  searchedProductList: false,
   searchedProductCount: 0,
   searchedWord: '',
+  searchType: 'search',
 };
 
 const searchReducer = (state = searchInit, action) => {
   switch (action.type) {
-    case PRODUCT_LIST:
-      return Object.assign(state, {
+    case ALL_PRODUCT_LIST:
+      return {
+        ...state,
         productList: action.payload.productList,
         productCount: action.payload.productCount,
-      });
+      };
 
-    case SEARCH_PRODUCT_LIST:
-      return Object.assign(state, {
+    case SEARCHED_PRODUCT_LIST:
+      return {
+        ...state,
         searchedProductList: action.payload.productList,
         searchedProductCount: action.payload.productCount,
-      });
+      };
 
-    case SEARCHED_WORD:
-      return Object.assign(state, {
-        searchedWord: action.payload.word,
-      });
+    case RESET_SEARCHED_PRODUCT_LIST:
+      return { ...state, searchedProductList: false };
+
+    case SET_SEARCHED_WORD:
+      return { ...state, searchedWord: action.payload.word };
 
     case RESET_SEARCHED_WORD:
-      return Object.assign(state, { searchedWord: '' });
+      return { ...state, searchedWord: '' };
+
+    case SET_SEARCH_TYPE:
+      return { ...state, searchType: action.payload.type };
+
+    case RESET_SEARCH_TYPE:
+      return { ...state, searchType: 'search' };
 
     default:
       return state;

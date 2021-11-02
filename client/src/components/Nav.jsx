@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import loginState from '../actions/userAction';
+import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -13,9 +14,9 @@ function Nav() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
+  const modalState = useSelector((state) => state.modalReducer);
+  const { isOpenLogin, isOpenSingup } = modalState;
   const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
 
   const openSearchModalHandler = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
@@ -33,8 +34,8 @@ function Nav() {
   return (
     <>
       {isOpenSearchModal ? <SearchModal /> : null}
-      {openLogin ? <LoginModal setOpenLogin={setOpenLogin} /> : null}
-      {openSignup ? <SignupModal setOpenSignup={setOpenSignup} /> : null}
+      {isOpenLogin ? <LoginModal /> : null}
+      {isOpenSingup ? <SignupModal /> : null}
       <div className="nav">
         <Link to="/">
           <div className="nav_logo">
@@ -56,9 +57,7 @@ function Nav() {
               <button
                 type="button"
                 aria-hidden="true"
-                onClick={() => {
-                  setOpenLogin(true);
-                }}
+                onClick={() => dispatch(setLoginModal(true))}
                 className="login"
               >
                 로그인
@@ -66,7 +65,7 @@ function Nav() {
               <button
                 type="button"
                 aria-hidden="true"
-                onClick={() => setOpenSignup(true)}
+                onClick={() => dispatch(setSignupModal(true))}
                 className="signup"
               >
                 회원가입

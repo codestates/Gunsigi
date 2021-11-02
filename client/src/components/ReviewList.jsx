@@ -4,39 +4,8 @@ import React, { useEffect, useState } from 'react';
 import '../styles/ReviewList.scss';
 import Review from './Review';
 
-function ReviewList({ name, reviewsCount, productId }) {
+function ReviewList({ name, reviewsCount, productId, reviews }) {
   const [sequence, setSequence] = useState(true);
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      userId: 1,
-      productId: 1,
-      content: '약빨 너무 좋아요!!!! 최고',
-      score: 4,
-      likesCount: 2,
-      period: '1개월 이하',
-      createdAt: '2021-10-29T12:33:31.000Z',
-      updatedAt: '2021-10-29T12:33:31.000Z',
-      images: [],
-      userInfo: {
-        profileImage: '',
-        id: 1,
-        nickname: 'doldolma',
-      },
-    },
-  ]);
-
-  useEffect(async () => {
-    await axios({
-      url: `${process.env.REACT_APP_API_URL}/reviews/${productId}`,
-      withCredentials: true,
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((res) => {
-        setReviews(res.data.items);
-      })
-      .catch((err) => console.log(err));
-  }, [productId]);
 
   return (
     <div className="ReviewList_container">

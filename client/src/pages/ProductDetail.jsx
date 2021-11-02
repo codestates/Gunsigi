@@ -1,16 +1,38 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable object-shorthand */
+/* eslint-disable operator-linebreak */
+/* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
-// import { ProductInfo } from '../assets/Search';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import NavChange from '../components/NavChange';
 import ReviewList from '../components/ReviewList';
 import Write from '../components/Write';
 import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
-import Loading from '../components/Loading';
+import IsLogin from '../components/IsLogin';
 
 function ProductDetail({ match }) {
   const [isOpenWrite, setisOpenWrite] = useState(false);
-
+  const [reviews, setReviews] = useState([
+    {
+      id: 1,
+      userId: 1,
+      productId: 1,
+      content: '약빨 너무 좋아요!!!! 최고',
+      score: 4,
+      likesCount: 2,
+      period: '1개월 이하',
+      createdAt: '2021-10-29T12:33:31.000Z',
+      updatedAt: '2021-10-29T12:33:31.000Z',
+      images: [],
+      userInfo: {
+        profileImage: '',
+        id: 1,
+        nickname: 'doldolma',
+      },
+    },
+  ]);
   const [ProductInfo, setProductInfo] = useState({
     id: 0,
     name: '정관장',
@@ -35,30 +57,107 @@ function ProductDetail({ match }) {
       bad: ['칼슘', '항생제', '혈액응고억제제'],
     },
   });
+  const [isBookmark, setIsBookmark] = useState(ProductInfo.isBookmarked);
+  const loginState = useSelector((state) => state.userReducer);
 
   const productId = match.params.id;
 
-  useEffect(async () => {
-    await axios({
-      url: `${process.env.REACT_APP_API_URL}/products/${productId}`,
+  //! 새로고침시 제품정보 요청
+  window.addEventListener('load', () => {
+    axios({
+      url: `/products/${productId}`,
       withCredentials: true,
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => {
         const info = res.data.itemInfo;
         setProductInfo(info);
+        setIsBookmark(info.isBookmarked);
+      })
+      .catch((err) => console.log(err));
+  });
+
+  //! 제품 상세정보 요청, 리뷰요청
+  useEffect(async () => {
+    console.log('요청들어옴');
+    await axios({
+      url: `/products/${productId}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        const info = res.data.itemInfo;
+        setProductInfo(info);
+        setIsBookmark(info.isBookmarked);
+      })
+      .catch((err) => console.log(err));
+
+    await axios({
+      url: `${process.env.REACT_APP_API_URL}/reviews/${productId}`,
+      withCredentials: true,
+      // headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => {
+        setReviews(res.data.items);
       })
       .catch((err) => console.log(err));
   }, [productId]);
 
+  // //! 리뷰요청
+  // useEffect(async () => {
+  //   await
+  // }, [productId]);
+
+  //! 북마크 기능
+  const isBookmarkedHandler = async () => {
+    const isLoginModal = document.getElementById('IsLogin_container');
+
+    if (!loginState.isLogin) {
+      isLoginModal.style.right = '20px';
+      setTimeout(() => {
+        isLoginModal.style.right = '-250px';
+      }, 1500);
+    } else {
+      if (!isBookmark) {
+        await axios({
+          method: 'POST',
+          url: '/bookmarks',
+          data: { productId },
+          loading: false,
+        }).then(() => {
+          setIsBookmark(true);
+        });
+      }
+      if (isBookmark) {
+        await axios({
+          method: 'DELETE',
+          url: '/bookmarks',
+          data: { productId },
+          loading: false,
+        }).then(() => {
+          setIsBookmark(false);
+        });
+      }
+    }
+  };
+
   const openWriteHandler = (trueOrFalse) => {
-    setisOpenWrite(trueOrFalse);
+    const isLoginModal = document.getElementById('IsLogin_container');
+
+    if (!loginState.isLogin) {
+      isLoginModal.style.right = '20px';
+      setTimeout(() => {
+        isLoginModal.style.right = '-250px';
+      }, 1500);
+    } else {
+      setisOpenWrite(trueOrFalse);
+    }
   };
 
   return (
     <>
+      <IsLogin />
       {isOpenWrite ? (
         <ReviewModal
+          setReviews={setReviews}
           productId={ProductInfo.id}
           setisOpenWrite={setisOpenWrite}
           productImg={ProductInfo.image}
@@ -73,8 +172,10 @@ function ProductDetail({ match }) {
           <div className="ProductDetail_in">
             <div className="ProductDetail_img">
               <img
+                aria-hidden="true"
+                onClick={() => isBookmarkedHandler()}
                 className={
-                  ProductInfo.isBookmarked
+                  isBookmark
                     ? 'ProductDetail_heart_change heart'
                     : 'ProductDetail_heart heart'
                 }
@@ -198,6 +299,7 @@ function ProductDetail({ match }) {
           </div>
         </div>
         <ReviewList
+          reviews={reviews}
           productId={productId}
           name={ProductInfo.name}
           reviewsCount={ProductInfo.reviewsCount}
