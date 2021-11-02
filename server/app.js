@@ -18,8 +18,15 @@ app.enable('trust proxy');
 
 if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
 else app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({
+  limit: '100mb',
+}));
+app.use(
+  express.urlencoded({
+    limit: '100mb',
+    extended: false,
+  }),
+);
 app.use(cookieParser());
 app.use(express.static('public'));
 app.use(
