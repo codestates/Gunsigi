@@ -171,7 +171,8 @@
       .frameBox {
         width: 100%;
         .frame {
-          min-width: 600px;
+          min-width: 550px;
+          max-width: 850px;
           background-image: url('../../images/macbook.png');
           background-position: center;
           background-size: contain;

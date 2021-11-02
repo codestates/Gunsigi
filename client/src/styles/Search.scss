@@ -38,20 +38,22 @@
   }
   .Sequence {
     font-size: 1.4rem;
-    span {
+    button {
       &:nth-child(1) {
         margin-right: 7px;
         cursor: pointer;
       }
       &:nth-child(2) {
         margin-right: 7px;
+        cursor: auto;
       }
       &:nth-child(3) {
         cursor: pointer;
       }
     }
-
+    
     .textColor_change {
+      font-weight: 600;
       color: $black;
     }
 
@@ -116,7 +118,7 @@
   .Search_title {
     .Sequence {
       font-size: 1.4rem;
-      span {
+      button {
         &:nth-child(1) {
           margin-right: 10px;
         }

@@ -31,7 +31,7 @@
   .SearchModal_hashtage {
     display: flex;
     flex-wrap: wrap;
-    span {
+    .tag {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -63,7 +63,7 @@
   .SearchModal_category_icon {
     display: flex;
     flex-wrap: wrap;
-    span {
+    .category {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -157,7 +157,7 @@
       }
     }
     .SearchModal_hashtage {
-      span {
+      .tag {
         width: 150px;
         height: 30px;
         font-size: 1.6rem;
@@ -172,7 +172,7 @@
       }
     }
     .SearchModal_category_icon {
-      span {
+      .category {
         font-size: 1.2rem;
         margin-right: 20px;
         width: 100px;
