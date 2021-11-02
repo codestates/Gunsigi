@@ -8,12 +8,11 @@ module.exports = {
     /**
      * 검색 API
      */
-    let order;
     const {
       page, size, query, type,
     } = req.query;
-    if (req.query.order === 'reviews') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
-    else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
+    let order = req.query.order === 'reivews' ? 'reviewsCount' : 'views';
+
     const params = {
       attributes: [
         'id',
@@ -23,7 +22,7 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
-      limit: size,
+      limit: parseInt(size, 10),
       offset: (page - 1) * size,
       // order: [[sequelize.literal('rating'), 'DESC'], [order, 'DESC']],
       include: [
@@ -48,19 +47,22 @@ module.exports = {
       );
       params.order = [
         [sequelize.literal('rating'), 'DESC'],
-        [order, 'DESC'],
+        [order === 'reivews' ? 'reviewsCount' : 'views', 'DESC'],
       ];
     } else {
       const ingredientsInclude = {
         model: Ingredient,
         attributes: ['id'],
       };
+      if (req.query.order === 'reviewsCount') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
+      else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
       params.order = order;
       if (type === 'category') {
         const tag = await Tag.findOne({
           attributes: ['ingredients'],
           where: { name: { [Sequelize.Op.like]: `${query}%` } },
         });
+        console.log(tag);
         ingredientsInclude.where = {
           name: { [Sequelize.Op.in]: tag?.ingredients || [] },
         };
@@ -164,7 +166,7 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
-      limit: size,
+      limit: parseInt(size, 10),
       offset: (page - 1) * size,
       order: [[order, 'DESC']],
       include: [
