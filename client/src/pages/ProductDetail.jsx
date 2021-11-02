@@ -91,7 +91,7 @@ function ProductDetail({ match }) {
       .catch((err) => console.log(err));
 
     await axios({
-      url: `${process.env.REACT_APP_API_URL}/reviews/${productId}`,
+      url: `/reviews/${productId}`,
       withCredentials: true,
       // headers: { 'Content-Type': 'application/json' },
     })
