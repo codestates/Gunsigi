@@ -21,7 +21,7 @@ module.exports = {
       ],
       limit: size,
       offset: (page - 1) * size,
-      order: [[sequelize.literal('rating'), 'DESC'], [order, 'DESC']],
+      // order: [[sequelize.literal('rating'), 'DESC'], [order, 'DESC']],
       include: [
         {
           model: Bookmark,
@@ -42,11 +42,16 @@ module.exports = {
       params.where = Sequelize.literal(
         `MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)`,
       );
+      params.order = [
+        [sequelize.literal('rating'), 'DESC'],
+        [order, 'DESC'],
+      ];
     } else {
       const ingredientsInclude = {
         model: Ingredient,
         attributes: ['id'],
       };
+      params.order = [[order, 'DESC']];
       if (type === 'category') {
         const tag = await Tag.findOne({
           attributes: ['ingredients'],
@@ -56,7 +61,9 @@ module.exports = {
           name: { [Sequelize.Op.in]: tag?.ingredients || [] },
         };
       } else {
-        ingredientsInclude.where = { name: query };
+        ingredientsInclude.where = {
+          name: { [Sequelize.Op.like]: `${query}%` },
+        };
       }
       params.include.push(ingredientsInclude);
     }
