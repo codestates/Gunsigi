@@ -39,6 +39,8 @@ function App() {
       newToken = await updateToken();
     } catch {
       // 토큰 갱신에 실패했습니다.
+      dispatch(loginState(false));
+      setToken(false);
       return;
     }
     // 새로 받은 토큰상태를 변경합니다.
