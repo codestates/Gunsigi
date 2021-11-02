@@ -8,7 +8,6 @@ const userReducer = (state = userInit, action) => {
   switch (action.type) {
     case SET_LOGIN_STATE:
       return { ...state, isLogin: action.payload.isLogin };
-
     default:
       return state;
   }

@@ -73,13 +73,18 @@
         display: flex;
         justify-content: left;
         align-items: center;
-        font-size: 1.2rem;
+        font-size: 1rem;
+        margin-bottom: 4px;
         .desc {
           margin-right: 10px;
+        }
+        .name {
+          font-weight: 600;
         }
       }
       .review {
         font-size: 1rem;
+        line-height: 1.5rem;
       }
     }
   }
@@ -146,7 +151,6 @@
   }
 }
 
-
 // animation
 .hovering {
   -webkit-animation-name: hovering;
@@ -163,22 +167,38 @@
   animation-timing-function: ease-in-out;
 }
 
-
 @-webkit-keyframes hovering {
-  from {-webkit-transform:translate(0, 0px);}
-  50% {-webkit-transform:translate(0, -25px);}
-  to {-webkit-transform: translate(0, -0px);}
+  from {
+    -webkit-transform: translate(0, 0px);
+  }
+  50% {
+    -webkit-transform: translate(0, -25px);
+  }
+  to {
+    -webkit-transform: translate(0, -0px);
+  }
 }
 
-
 @-moz-keyframes hovering {
-  from {-moz-transform:translate(0, 0px);}
-  50% {-moz-transform:translate(0, -25px);}
-  to {-moz-transform: translate(0, -0px);}
+  from {
+    -moz-transform: translate(0, 0px);
+  }
+  50% {
+    -moz-transform: translate(0, -25px);
+  }
+  to {
+    -moz-transform: translate(0, -0px);
+  }
 }
 
 @keyframes hovering {
-  from {transform:translate(0, 0px);}
-  50% {transform:translate(0, -25px);}
-  to {transform: translate(0, -0px);}
+  from {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, -25px);
+  }
+  to {
+    transform: translate(0, -0px);
+  }
 }

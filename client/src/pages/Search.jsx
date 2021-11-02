@@ -1,22 +1,24 @@
 /* eslint-disable no-restricted-globals */
+/* eslint-disable indent */
+/* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { outMypage } from '../actions/inoutMypageAction';
-import { getProductList } from '../actions/searchAction';
-// import { search } from '../assets/Search';
+import {
+  resetSearchedWord,
+  setProductList,
+  setSearchedProductList,
+  setSearchType,
+} from '../actions/searchAction';
 import NavChange from '../components/NavChange';
 import Product from '../components/Product';
 import '../styles/Search.scss';
 
 function Search() {
-  const dispactch = useDispatch();
-  const [searchSequence, setSearchSequence] = useState(true);
-  // const [productList, setProductList] = useState([]);
-  // const [countProducts, setCountProducts] = useState(0);
-  // const [searchedWord, setSearchedWord] = useState('');
   const dispatch = useDispatch();
+  const [searchOrder, setSearchOrder] = useState('views');
   const searchState = useSelector((state) => state.searchReducer);
   const {
     productList,
@@ -24,6 +26,7 @@ function Search() {
     searchedProductList,
     searchedProductCount,
     searchedWord,
+    searchType,
   } = searchState;
   // todo: 처음 전체 제품리스트를 받아온다 - 조회순 (조회순 class명 체인지)
   // todo: 인풋창에 검색을 하면 해당 인풋대로 서버에 요청 query=
@@ -37,25 +40,44 @@ function Search() {
       })
       .then((res) => {
         const { items, pages } = res.data;
-        dispatch(getProductList(items, pages.itemCount));
-      })
-      .catch((err) => console.log('전체제품조회 err----', err));
+        dispatch(setProductList(items, pages.itemCount));
+      });
   }, []);
 
-  // const handleSearchRequest = () => {
-  //   console.log('search의 handleSearchRequest 실행')
-  //   axios
-  //     .get('/products', { params: { query: `${searchedWord}` } })
-  //     .then((res) => {
-  //       const { items, pages } = res.data;
-  //       dispatch(searchedProductList(items, pages.itemCount));
-  //     });
-  // };
-  // useEffect(() => {
-  //   console.log('searchedWord 잘변경되나--', searchedWord);
+  useEffect(
+    () => () => {
+      window.scrollTo(0, 0);
+      dispatch(resetSearchedWord());
+    },
+    [],
+  );
 
-  //     .catch((err) => console.log(err));
-  // }, [products]);
+  const handleOrderBtn = (e) => {
+    // 조건 1 : !searchedProductList
+    // 조건 2 : target.value
+    const order = e.target.value;
+    if (!searchedProductList) {
+      axios
+        .get('/products/all/items', {
+          params: { order },
+        })
+        .then((res) => {
+          const { items, pages } = res.data;
+          dispatch(setProductList(items, pages.itemCount));
+          setSearchOrder(order);
+        });
+    } else {
+      axios
+        .get('/products', {
+          params: { query: searchedWord, type: searchType, order },
+        })
+        .then((res) => {
+          const { items, pages } = res.data;
+          dispatch(setSearchedProductList(items, pages.itemCount));
+          setSearchOrder(order);
+        });
+    }
+  };
 
   return (
     <>
@@ -66,45 +88,43 @@ function Search() {
           <div className="Search_bottom">
             <div className="Search_title">
               <div>
-                {!searchedWord ? '전체 건강기능식품' : '검색된 건강기능식품'}
+                {!searchedProductList
+                  ? '전체 건강기능식품'
+                  : '검색된 건강기능식품'}
                 <span>
-                  {!searchedWord
+                  {!searchedProductList
                     ? `(${productCount})`
                     : `(${searchedProductCount})`}
                 </span>
               </div>
               <div className="Sequence">
-                <span
-                  className={searchSequence ? 'textColor_change' : 'textColor'}
+                <button
+                  className={
+                    searchOrder === 'views' ? 'textColor_change' : 'textColor'
+                  }
+                  onClick={handleOrderBtn}
+                  type="button"
+                  value="views"
                 >
                   조회순
-                </span>
-                <span className="textColor_change">|</span>
-                <span
-                  className={searchSequence ? 'textColor' : 'textColor_change'}
+                </button>
+                <button type="button" className="textColor_change">
+                  |
+                </button>
+                <button
+                  className={
+                    searchOrder === 'views' ? 'textColor' : 'textColor_change'
+                  }
+                  onClick={handleOrderBtn}
+                  type="button"
+                  value="reviews"
                 >
                   리뷰순
-                </span>
+                </button>
               </div>
             </div>
             <div className="Search_products">
-              {productList.map((item) => (
-                <Link
-                  to={`product-detail/${item.id}`}
-                  onClick={() => dispactch(outMypage())}
-                >
-                  <Product
-                    key={item.id}
-                    name={item.name}
-                    reviews={item.reviewsCount}
-                    img={item.image}
-                    score={item.score}
-                    bookmark={item.isBookmarked}
-                  />
-                </Link>
-              ))}
-
-              {/* {!searchedWord
+              {!searchedProductList
                 ? productList.map((item) => (
                     <Link to={`product-detail/${item.id}`}>
                       <Product
@@ -128,7 +148,7 @@ function Search() {
                         bookmark={item.isBookmarked}
                       />
                     </Link>
-                  ))} */}
+                  ))}
             </div>
           </div>
         </div>
