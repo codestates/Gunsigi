@@ -52,27 +52,25 @@ function App() {
     };
   }, [token]);
   if (token === null) return '';
-  else {
-    return (
-      <div className="App">
-        {isLoading ? <Loading /> : null}
-        {scrollPosition > 60 ? <TopButton /> : null}
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Main />
-            </Route>
-            <Route path="/search" component={Search}>
-              <Search />
-            </Route>
-            <Route path="/mypage">
-              <Mypage />
-            </Route>
-            <Route path="/product-detail/:id" component={ProductDetail} />
-          </Switch>
-        </Router>
-      </div>
-    );
-    }
+  return (
+    <div className="App">
+      {isLoading ? <Loading /> : null}
+      {scrollPosition > 60 ? <TopButton /> : null}
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/search" component={Search}>
+            <Search />
+          </Route>
+          <Route path="/mypage">
+            <Mypage />
+          </Route>
+          <Route path="/product-detail/:id" component={ProductDetail} />
+        </Switch>
+      </Router>
+    </div>
+  );
 }
 export default App;
