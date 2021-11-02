@@ -5,7 +5,11 @@ function Product({ name, reviews, img, score, bookmark }) {
   return (
     <div className="Product_items">
       <div className="Product_img">
-        <img src={img} alt={name} />
+        {img ? (
+          <img src={img} alt={name} />
+        ) : (
+          <div className="img_none">이미지를 준비중입니다</div>
+        )}
       </div>
       <div className="title">
         <span>{name}</span>
