@@ -12,7 +12,7 @@
     height: 60vh;
     background-image: url(../images/search_app.png);
     background-size: cover;
-    background-position: top;
+    background-position: center;
   }
 }
 
@@ -65,32 +65,20 @@
   width: 100%;
   display: grid;
   align-items: center;
+  justify-content: space-between;
   grid-template-columns: repeat(2, auto);
-  flex-wrap: wrap;
   gap: 20px;
 }
 
-@media screen and (min-width: $breakpoint-mobile + 160px) {
+@media screen and (min-width: 500px) {
   .Search_products {
     grid-template-columns: repeat(3, auto);
   }
 }
 
-@media screen and (min-width: $breakpoint-mobile + 320px) {
+@media screen and (min-width: 650px) {
   .Search_products {
     grid-template-columns: repeat(4, auto);
-  }
-}
-
-@media screen and (min-width: $breakpoint-mobile + 320px) {
-  .Search_products {
-    grid-template-columns: repeat(4, auto);
-  }
-}
-
-@media screen and (min-width: $breakpoint-mobile + 550px) {
-  .Search_products {
-    grid-template-columns: repeat(5, auto);
   }
 }
 
@@ -99,7 +87,7 @@
     .Search_img {
       height: 270px;
       background-image: url(../images/search_tablet.png);
-      background-position: bottom;
+      // background-position: bottom;
     }
   }
 
@@ -117,8 +105,12 @@
     .Search_img {
       height: 260px;
       background-image: url(../images/search_web.png);
-      background-position: bottom;
+      // background-position: top;
     }
+  }
+
+  .Search_products {
+    grid-template-columns: repeat(4, auto);
   }
 
   .Search_title {
@@ -136,15 +128,30 @@
   }
 }
 
+@media screen and (min-width: 1150px) {
+  .Search_products {
+    grid-template-columns: repeat(5, auto);
+  }
+}
+
 @include desktop {
   .Search_in {
     .Search_img {
       height: 45vh;
       background-image: url(../images/search_web.png);
+      // background-position: top;
     }
   }
 
   .Search_products {
     grid-template-columns: repeat(6, auto);
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .Search_in {
+    .Search_img {
+      height: 50vh;
+    }
   }
 }

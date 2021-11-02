@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import loginState from './actions/userAction';
 import setAxios, { updateToken } from './utils/ApiController';
@@ -14,7 +9,6 @@ import Main from './pages/Main';
 import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
-import TopButton from './components/TopButton';
 import Loading from './components/Loading';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -23,12 +17,13 @@ function App() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(false);
+
   window.addEventListener('load', () => {
     setIsLoading(false);
   });
+
   useEffect(async () => {
     /**
      * 리액트가 처음 렌더링 될 때 실행됩니다.
@@ -59,21 +54,19 @@ function App() {
   return (
     <div className="App">
       {isLoading ? <Loading /> : null}
-      {scrollPosition > 60 ? <TopButton /> : null}
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/search" component={Search}>
-            <Search />
-          </Route>
-          <Route path="/mypage">
-            {isLogin ? <Mypage /> : <Redirect to="/" />}
-          </Route>
-          <Route path="/product-detail/:id" component={ProductDetail} />
-        </Switch>
-      </Router>
+
+      <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <Route path="/search" component={Search}>
+          <Search />
+        </Route>
+        <Route path="/mypage">
+          {isLogin ? <Mypage /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/product-detail/:id" component={ProductDetail} />
+      </Switch>
     </div>
   );
 }

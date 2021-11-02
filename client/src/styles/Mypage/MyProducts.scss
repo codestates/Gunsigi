@@ -9,6 +9,12 @@
   gap: 20px;
 }
 
+@media screen and (min-width: 500px) {
+  .my-products {
+    grid-template-columns: repeat(3, auto);
+  }
+}
+
 @include tablet {
   .my-products {
     grid-template-columns: repeat(4, auto);

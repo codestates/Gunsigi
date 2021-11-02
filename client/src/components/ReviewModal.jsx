@@ -2,7 +2,13 @@ import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
 
-function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
+function ReviewModal({
+  setisOpenWrite,
+  productImg,
+  productName,
+  productId,
+  setReviews,
+}) {
   const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
   const [reviewWrite, setReviewWrite] = useState({
@@ -18,9 +24,6 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
       [name]: value,
     });
   };
-
-  console.log('imgBase64', imgBase64);
-  console.log('length', imgBase64.length);
 
   //!이미지 업로드
   const reviewImageHandler = (e) => {
@@ -61,6 +64,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     }
     setImgBase64(copyArr);
   };
+  console.log(reviewWrite);
 
   //! 리뷰요청
   const reviewRequest = () => {
@@ -78,11 +82,12 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           period,
           images: imgBase64,
         },
-        url: `${process.env.REACT_APP_API_URL}/reviews`,
+        url: '/reviews',
         withCredentials: true,
-        headers: { 'Content-Type': 'application/json' },
       }).then(() => {
         console.log('성공');
+        setisOpenWrite(false);
+        window.location.reload(`/product-detail/${productId}`);
       });
     }
   };
@@ -121,7 +126,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 onClick={(e) => reviewWirteHandler(e)}
                 type="radio"
                 id="star5"
-                name="rating"
+                name="score"
                 value="5"
               />
               <label htmlFor="star5" className="star">
@@ -131,7 +136,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 onClick={(e) => reviewWirteHandler(e)}
                 type="radio"
                 id="star4"
-                name="rating"
+                name="score"
                 value="4"
               />
               <label htmlFor="star4" className="star">
@@ -141,7 +146,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 onClick={(e) => reviewWirteHandler(e)}
                 type="radio"
                 id="star3"
-                name="rating"
+                name="score"
                 value="3"
               />
               <label htmlFor="star3" className="star">
@@ -151,7 +156,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 onClick={(e) => reviewWirteHandler(e)}
                 type="radio"
                 id="star2"
-                name="rating"
+                name="score"
                 value="2"
               />
               <label htmlFor="star2" className="star">
@@ -161,7 +166,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 onClick={(e) => reviewWirteHandler(e)}
                 type="radio"
                 id="star1"
-                name="rating"
+                name="score"
                 value="1"
               />
               <label htmlFor="star1" className="star">

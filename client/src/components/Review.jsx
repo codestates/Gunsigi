@@ -17,7 +17,7 @@ function Review({
   isLike,
   period,
 }) {
-  const isOpenMypage = useSelector((state) => state.addMinusNum);
+  const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   const openDeleteHandler = () => {
