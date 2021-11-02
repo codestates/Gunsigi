@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import loginState from './actions/userAction';
 import setAxios, { updateToken } from './utils/ApiController';
+import loginState from './actions/userAction';
 import Main from './pages/Main';
 import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
@@ -18,22 +18,18 @@ function App() {
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
   const [isLoading, setIsLoading] = useState(true);
-  const [token, setToken] = useState(false);
-
+  const [token, setToken] = useState(null);
   window.addEventListener('load', () => {
     setIsLoading(false);
   });
 
   useEffect(async () => {
-    /**
-     * 리액트가 처음 렌더링 될 때 실행됩니다.
-     * axios세팅후 토큰갱신을 시도합니다.
-     */
     await setAxios(setToken, setIsLoading);
     let newToken;
     try {
       newToken = await updateToken();
-    } catch {
+    } catch (err) {
+      console.log('err', err);
       // 토큰 갱신에 실패했습니다.
       dispatch(loginState(false));
       setToken(false);
@@ -50,7 +46,7 @@ function App() {
       Authorization: `Bearer ${token}`,
     };
   }, [token]);
-
+  if (token === null) return '';
   return (
     <div className="App">
       {isLoading ? <Loading /> : null}
@@ -70,5 +66,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

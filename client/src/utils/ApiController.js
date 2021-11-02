@@ -12,13 +12,16 @@ export const updateToken = async () => {
    * 리프레쉬토큰을 이용해 억세스 토큰을 다시 발급받는다.
    */
   const res = await refreshInstance.post('/auth/refresh');
+  axios.defaults.headers.common = {
+    Authorization: `Bearer ${res.data?.accessToken}`,
+  };
   return res.data?.accessToken;
 };
 
 export default async function setAxios(setToken, setIsLoading) {
   axios.defaults.withCredentials = true;
   axios.interceptors.request.use((config) => {
-    setIsLoading(true);
+    if (config.loading !== false) setIsLoading(true);
     if (authUrl.includes(config.url)) config.auth = true;
     else if (config.url === '/auth/logout') config.logout = true;
     return config;
