@@ -1,4 +1,4 @@
-const { Product, Bookmark, Ingredient, Sequelize, Tag } = require('../models');
+const { Product, Bookmark, Ingredient, Sequelize, Tag, sequelize } = require('../models');
 const paging = require('../modules/page');
 
 module.exports = {
@@ -6,7 +6,10 @@ module.exports = {
     /**
      * 검색 API
      */
-    const { page, size, query, type, order } = req.query;
+    let order;
+    const { page, size, query, type } = req.query;
+    if (req.query.order === 'reviews') order = 'reviewsCount';
+    else order = 'views';
     const params = {
       attributes: [
         'id',
@@ -18,32 +21,44 @@ module.exports = {
       ],
       limit: size,
       offset: (page - 1) * size,
-      order: [[order, 'DESC']],
+      order: [[sequelize.literal('rating'), 'DESC'], [order, 'DESC']],
       include: [
         {
           model: Bookmark,
           where: { userId: res.locals.user.id },
           required: false,
+          duplicating: false,
         },
       ],
     };
     if (type === 'search') {
+      // 검색 가중치부여
+      let score;
+      if (order === 'views') score = 2;
+      else score = 5;
+      params.attributes.push([
+        `MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)+Product.${order}*${score}`, 'rating',
+      ]);
       params.where = Sequelize.literal(
         `MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)`,
       );
     } else {
-      params.include.push({
+      const ingredientsInclude = {
         model: Ingredient,
         attributes: ['id'],
-      });
+      };
       if (type === 'category') {
-        const tag = await Tag.findOne({ where: { name: query } });
-        params.include.where = {
+        const tag = await Tag.findOne({
+          attributes: ['ingredients'],
+          where: { name: { [Sequelize.Op.like]: `${query}%` } },
+        });
+        ingredientsInclude.where = {
           name: { [Sequelize.Op.in]: tag?.ingredients || [] },
         };
       } else {
-        params.include.where = { name: query };
+        ingredientsInclude.where = { name: query };
       }
+      params.include.push(ingredientsInclude);
     }
     const { count, rows } = await Product.findAndCountAll(params);
     return res.json({
@@ -59,6 +74,7 @@ module.exports = {
         delete product.Bookmarks;
         delete product.reviewsSum;
         delete product.Ingredients;
+        delete product.rating;
         return product;
       }),
       pages: {
@@ -67,6 +83,7 @@ module.exports = {
       },
     });
   },
+
   detail: async (req, res) => {
     let product = await Product.findOne({
       where: { id: req.params.productId },
@@ -121,8 +138,12 @@ module.exports = {
       },
     });
   },
+
   all: async (req, res) => {
-    const { page, size, order } = req.query;
+    const { page, size } = req.query;
+    let order;
+    if (req.query.order === 'reviews') order = 'reviewsCount';
+    else order = 'views';
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',

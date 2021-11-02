@@ -61,7 +61,7 @@ module.exports = {
       const userId = isAuthorized(req).id;
       user = await User.findByPk(userId);
       if (!user) throw new Error('user not found');
-    } catch (err) {
+    } catch {
       return res.status(403).json({ message: 'Forbidden' });
     }
     const accessToken = generateAccessToken(user.json());

@@ -63,6 +63,9 @@ module.exports = (sequelize, DataTypes) => {
         {
           fields: ['views'],
         },
+        {
+          fields: ['reviewsCount'],
+        },
       ],
     },
   );
