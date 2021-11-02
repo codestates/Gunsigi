@@ -70,7 +70,6 @@ module.exports = {
         // 북마크 한적 있는지?
         if (product.Bookmarks.length === 0) product.isBookmarked = false;
         else product.isBookmarked = true;
-        product.isBookmarked = false;
         delete product.Bookmarks;
         delete product.reviewsSum;
         delete product.Ingredients;
