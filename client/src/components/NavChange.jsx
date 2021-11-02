@@ -9,6 +9,7 @@ import {
   resetSearchedWord,
 } from '../actions/searchAction';
 import loginState from '../actions/userAction';
+import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -18,9 +19,9 @@ function NavChange() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
+  const modalState = useSelector((state) => state.modalReducer);
+  const { isOpenLogin, isOpenSingup } = modalState;
   const [openSearchModal, setOpenSearchModal] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
   // const [inputValue, setInputValue] = useState('');
   const searchState = useSelector((state) => state.searchReducer);
   const { searchedWord } = searchState;
@@ -67,8 +68,8 @@ function NavChange() {
   return (
     <>
       <div className="navChange">
-        {openLogin ? <LoginModal setOpenLogin={setOpenLogin} /> : null}
-        {openSignup ? <SignupModal setOpenSignup={setOpenSignup} /> : null}
+        {isOpenLogin ? <LoginModal /> : null}
+        {isOpenSingup ? <SignupModal /> : null}
         {openSearchModal ? (
           <SearchModal setOpenSearchModal={setOpenSearchModal} />
         ) : null}
@@ -101,16 +102,14 @@ function NavChange() {
             <>
               <button
                 type="button"
-                onClick={() => {
-                  setOpenLogin(true);
-                }}
+                onClick={() => dispatch(setLoginModal(true))}
                 className="login"
               >
                 로그인
               </button>
               <button
                 type="button"
-                onClick={() => setOpenSignup(true)}
+                onClick={() => dispatch(setSignupModal(true))}
                 className="signup"
               >
                 회원가입
