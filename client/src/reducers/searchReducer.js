@@ -6,6 +6,8 @@ import {
   RESET_SEARCHED_WORD,
   SET_SEARCH_TYPE,
   RESET_SEARCH_TYPE,
+  SET_SEARCH_PAGE,
+  RESET_SEARCH_PAGE,
 } from '../actions/types';
 
 const searchInit = {
@@ -15,6 +17,7 @@ const searchInit = {
   searchedProductCount: 0,
   searchedWord: '',
   searchType: 'search',
+  searchPage: 1,
 };
 
 const searchReducer = (state = searchInit, action) => {
@@ -47,6 +50,12 @@ const searchReducer = (state = searchInit, action) => {
 
     case RESET_SEARCH_TYPE:
       return { ...state, searchType: 'search' };
+
+    case SET_SEARCH_PAGE:
+      return { ...state, searchPage: action.payload.page };
+
+    case RESET_SEARCH_PAGE:
+      return { ...state, searchPage: 1 };
 
     default:
       return state;

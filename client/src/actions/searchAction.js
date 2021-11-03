@@ -6,6 +6,8 @@ import {
   RESET_SEARCHED_WORD,
   SET_SEARCH_TYPE,
   RESET_SEARCH_TYPE,
+  SET_SEARCH_PAGE,
+  RESET_SEARCH_PAGE,
 } from './types';
 
 export const setProductList = (productList, productCount) => ({
@@ -45,3 +47,10 @@ export const setSearchType = (type) => ({
 export const resetSearchType = () => ({
   type: RESET_SEARCH_TYPE,
 });
+
+export const setSearchPage = (page) => ({
+  type: SET_SEARCH_PAGE,
+  payload: { page },
+});
+
+export const resetSearchPage = () => ({ type: RESET_SEARCH_PAGE });
