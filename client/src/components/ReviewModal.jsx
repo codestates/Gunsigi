@@ -64,7 +64,6 @@ function ReviewModal({
     }
     setImgBase64(copyArr);
   };
-  console.log(reviewWrite);
 
   //! 리뷰요청
   const reviewRequest = () => {
