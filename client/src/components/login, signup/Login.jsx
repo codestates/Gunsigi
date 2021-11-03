@@ -19,6 +19,7 @@ function Login() {
 
   const [isLoginErr, setIsLoginErr] = useState(false);
 
+  // * onChange 변화 감지 핸들러
   const handleFormChange = (event) => {
     setLoginForm({
       ...loginForm,
@@ -27,6 +28,7 @@ function Login() {
     setErrorMsg('');
   };
 
+  // * 로그인 요청 핸들러
   const handleLogin = (event) => {
     event.preventDefault();
     axios
@@ -48,22 +50,15 @@ function Login() {
             setTimeout(() => setErrorMsg(''), 5000);
           } else {
             setErrorMsg('통신에 문제가 발생했습니다');
-            setIsLoginErr(true);
-            setTimeout(() => {
-              setIsLoginErr(false);
-            }, 800);
           }
         } catch (error) {
           setErrorMsg('통신에 문제가 발생했습니다');
-          setIsLoginErr(true);
-          setTimeout(() => {
-            setIsLoginErr(false);
-          }, 800);
           console.log(error);
         }
       });
   };
 
+  // * input 엔터키 누르면 요청해주는 핸들러
   const handeleEnterForm = (event) => {
     if (event.key === 'Enter') {
       handleLogin(event);
