@@ -27,21 +27,19 @@ module.exports = {
   delete: async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-      const result = await reviewLike.destroy({
+      await reviewLike.destroy({
         where: {
           userId: res.locals.user.id,
           reviewId: req.body.reviewId,
         },
         transaction,
       });
-      if (result) {
-        // 삭제가 되었을때만 숫자 감소
-        await Review.decrement('likesCount', {
-          by: 1,
-          where: { id: req.body.reviewId },
-          transaction,
-        });
-      }
+      // 숫자 감소
+      await Review.decrement('likesCount', {
+        by: 1,
+        where: { id: req.body.reviewId },
+        transaction,
+      });
       await transaction.commit();
     } catch (err) {
       await transaction.rollback();

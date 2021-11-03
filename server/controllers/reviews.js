@@ -129,21 +129,25 @@ module.exports = {
       }, { transaction });
 
       // 리뷰카운트, 총점 증가
-      await Product.increment('reviewsCount', {
-        by: incrementCount,
-        where: { id: review.productId },
-        transaction,
-      });
-      await Product.increment('reviewsSum', {
-        by: changeScore,
-        where: { id: review.productId },
-        transaction,
-      });
-      await User.increment('reviewsCount', {
-        by: incrementCount,
-        where: { id: res.locals.user.id },
-        transaction,
-      });
+      if (incrementCount) {
+        await Product.increment('reviewsCount', {
+          by: 1,
+          where: { id: review.productId },
+          transaction,
+        });
+        await User.increment('reviewsCount', {
+          by: 1,
+          where: { id: res.locals.user.id },
+          transaction,
+        });
+      }
+      if (changeScore) {
+        await Product.increment('reviewsSum', {
+          by: changeScore,
+          where: { id: review.productId },
+          transaction,
+        });
+      }
       // 이미지가 있다면 s3에 저장 reviews/리뷰ID 폴더 안에 전부 집어 넣는다
       const imageKeys = await Promise.all(images.map((image) => s3.save(`reviews/${review.id}`, image)));
 
@@ -186,7 +190,32 @@ module.exports = {
       return res.status(403).json({ message: 'Forbidden' });
     }
 
-    await sequelize.transaction((transaction) => review.destroy({ transaction }));
+    // 리뷰 삭제 및 리뷰카운트 감소
+    const transaction = await sequelize.transaction();
+    try {
+      // 리뷰카운트, 총점 증가
+      await Product.decrement('reviewsCount', {
+        by: 1,
+        where: { id: review.productId },
+        transaction,
+      });
+      await Product.decrement('reviewsSum', {
+        by: review.score,
+        where: { id: review.productId },
+        transaction,
+      });
+      await User.decrement('reviewsCount', {
+        by: 1,
+        where: { id: res.locals.user.id },
+        transaction,
+      });
+      await review.destroy({ transaction });
+      await transaction.commit();
+    } catch (err) {
+      debug(err);
+      await transaction.rollback();
+      throw Error('delete review error');
+    }
     return res.json({
       message: 'success to delete',
     });
