@@ -12,20 +12,12 @@ export default function Google() {
     const idToken = response.tokenObj.id_token;
     axios
       .post('/callback/google', { idToken })
-      .then((res) => {
+      .then(() => {
         // 가입 or 로그인완료
-        console.log(res.data);
         dispatch(loginState(true));
         dispatch(setLoginModal(false));
         dispatch(setSignupModal(false));
-      })
-      .catch((err) => {
-        console.log(err);
       });
-  };
-
-  const failureGoogle = (error) => {
-    console.log(error);
   };
 
   return (
@@ -40,7 +32,6 @@ export default function Google() {
         />
       )}
       onSuccess={responseGoogle}
-      onFailure={failureGoogle}
     />
   );
 }

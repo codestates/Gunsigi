@@ -13,15 +13,11 @@ export default function Kakao() {
     // 서버에 카카오에서 받은 토큰 검증요청
     axios
       .post('/callback/kakao', { accessToken })
-      .then((res) => {
+      .then(() => {
         // 검증 및 로그인 or 회원가입 성공
-        console.log(res.data);
         dispatch(loginState(true));
         dispatch(setLoginModal(false));
         dispatch(setSignupModal(false));
-      })
-      .catch((err) => {
-        console.log('err : ', err);
       });
   };
 
@@ -29,8 +25,6 @@ export default function Kakao() {
     <KakaoLoin
       token="c8a6918d2c0f5b723a99684e56229596"
       onSuccess={responseKakao}
-      onFail={console.log}
-      onLogout={console.log}
       render={(renderProps) => (
         <img
           src="/kakao_Logo.png"
