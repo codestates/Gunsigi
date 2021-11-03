@@ -1,8 +1,37 @@
 import React from 'react';
+import axios from 'axios';
 import '../styles/landing/introTwo.scss';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+  setSearchedProductList,
+  setSearchType,
+  setSearchedWord,
+} from '../actions/searchAction';
 import { keywordContents } from '../assets/Main';
 
 function IntroTwo() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleSearchKeyword = (e) => {
+    const keyword = e.currentTarget.value;
+    axios
+      .get('/products', {
+        params: {
+          query: keyword,
+          type: 'keyword',
+        },
+      })
+      .then((res) => {
+        const { items, pages } = res.data;
+        dispatch(setSearchedWord(keyword));
+        dispatch(setSearchedProductList(items, pages.itemCount));
+        dispatch(setSearchType('keyword'));
+        history.push('/search');
+        window.scrollTo(0, 0);
+      });
+  };
+
   return (
     <div className="introTwo">
       <div className="container">
@@ -23,10 +52,15 @@ function IntroTwo() {
           </div>
           {keywordContents.map((el) => (
             <div className="col-sm-1 col-md-1 col-lg-1" key={el.id}>
-              <div className="keyword">
-                <img src={el.src} alt="keyword" />
+              <button
+                className="keyword"
+                onClick={handleSearchKeyword}
+                value={el.title}
+                type="button"
+              >
                 <p className="text">{el.title}</p>
-              </div>
+                <img src={el.src} alt="keyword" />
+              </button>
             </div>
           ))}
         </div>

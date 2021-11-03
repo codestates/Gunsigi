@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
@@ -17,6 +18,7 @@ import Product from '../components/Product';
 import '../styles/Search.scss';
 
 function Search() {
+  // const scrollArea = useRef(null);
   const dispatch = useDispatch();
   const [searchOrder, setSearchOrder] = useState('views');
   const searchState = useSelector((state) => state.searchReducer);
@@ -28,12 +30,17 @@ function Search() {
     searchedWord,
     searchType,
   } = searchState;
+  // const [scrollPage, setScrollPage] = useState({ prev: 0, products: 0 });
+  const [target, setTarget] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [queryPage, setQueryPage] = useState(1);
   // todo: 처음 전체 제품리스트를 받아온다 - 조회순 (조회순 class명 체인지)
   // todo: 인풋창에 검색을 하면 해당 인풋대로 서버에 요청 query=
   // todo: 리뷰순 클릭시, 리뷰순으로 재요청
   // todo: 100개 이후에는 무한 스크롤 구현 page,size
   // todo: 탑버튼 구현
   useEffect(() => {
+    setSearchOrder('views');
     axios
       .get('/products/all/items', {
         params: { order: 'views' },
@@ -47,10 +54,47 @@ function Search() {
   useEffect(
     () => () => {
       window.scrollTo(0, 0);
-      dispatch(resetSearchedWord());
+      setSearchOrder('views');
     },
     [],
   );
+
+  const getMoreItem = async () => {
+    // 조건 !searchedProductList - productList바꿀건지, searchedProductList
+    // if (!searchedProductList) {
+    //   setIsLoading(true);
+    //   return axios
+    //     .get('/products/all/items', {
+    //       params: {
+    //         order: searchOrder,
+    //         page: queryPage + 1,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log('전체 검색 무한스크롤 요청 응답 data', res.data);
+    //       // dispatch(setProductList());
+    //       setIsLoading(false);
+    //     });
+    // }
+  };
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoading) {
+      observer.unobserve(entry.target);
+      await getMoreItem();
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.4,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
 
   const handleOrderBtn = (e) => {
     // 조건 1 : !searchedProductList
@@ -78,6 +122,24 @@ function Search() {
         });
     }
   };
+
+  // const handleInfiniteScroll = () => {
+  //   let scrollHeight = Math.max(
+  //     document.documentElement.scrollHeight,
+  //     document.body.scrollHeight,
+  //   );
+  //   let scrollTop = Math.max(
+  //     document.documentElement.scrollTop,
+  //     document.body.scrollTop,
+  //   );
+  //   let clientHeight = document.body.clientHeight;
+  //   if (scrollTop + clientHeight === scrollHeight) {
+  //     setScrollPage({
+  //       prev: scrollPage.products,
+  //       products: scrollPage.products + 30,
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -124,37 +186,40 @@ function Search() {
               </div>
             </div>
             <div className="Search_products">
-              {!searchedProductList
-                ? productList.map((item) => (
-                    <Link
-                      onClick={() => dispatch(outMypage())}
-                      to={`product-detail/${item.id}`}
-                    >
-                      <Product
-                        key={item.id}
-                        name={item.name}
-                        reviews={item.reviewsCount}
-                        img={item.image}
-                        score={item.score}
-                        bookmark={item.isBookmarked}
-                      />
-                    </Link>
-                  ))
-                : searchedProductList.map((item) => (
-                    <Link
-                      onClick={() => dispatch(outMypage())}
-                      to={`product-detail/${item.id}`}
-                    >
-                      <Product
-                        key={item.id}
-                        name={item.name}
-                        reviews={item.reviewsCount}
-                        img={item.image}
-                        score={item.score}
-                        bookmark={item.isBookmarked}
-                      />
-                    </Link>
-                  ))}
+              {!searchedProductList ? (
+                productList.map((item) => (
+                  <Link to={`product-detail/${item.id}`}>
+                    <Product
+                      key={item.id}
+                      name={item.name}
+                      reviews={item.reviewsCount}
+                      img={item.image}
+                      score={item.score}
+                      bookmark={item.isBookmarked}
+                    />
+                  </Link>
+                ))
+              ) : !searchedProductList.length ? (
+                <div className="noSearchList">
+                  <img alt="!" src="/icons/icon_warn.svg" />
+                  <p>일치하는 검색 결과가 없습니다</p>
+                  <p>Sorry, No Results found</p>
+                </div>
+              ) : (
+                searchedProductList.map((item) => (
+                  <Link to={`product-detail/${item.id}`}>
+                    <Product
+                      key={item.id}
+                      name={item.name}
+                      reviews={item.reviewsCount}
+                      img={item.image}
+                      score={item.score}
+                      bookmark={item.isBookmarked}
+                    />
+                  </Link>
+                ))
+              )}
+              <div ref={setTarget} className="targetEl" />
             </div>
           </div>
         </div>
