@@ -8,6 +8,7 @@ import {
   resetSearchedProductList,
   setSearchedWord,
   resetSearchedWord,
+  setSearchType,
 } from '../actions/searchAction';
 import loginState from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
@@ -45,17 +46,19 @@ function NavChange() {
         .then((res) => {
           const { items, pages } = res.data;
           dispatch(setSearchedProductList(items, pages.itemCount));
+          dispatch(setSearchType('search'));
+          dispatch(resetSearchedWord());
           setOpenSearchModal(false);
           history.push('/search');
           window.scrollTo(0, 0);
         })
         .catch(() => {
-          alert('찾으시는 제품이 없습니다');
+          // alert('찾으시는 제품이 없습니다');
         });
     } else {
-      console.log('리셋하고싶음');
-      dispatch(resetSearchedWord());
       dispatch(resetSearchedProductList());
+      dispatch(resetSearchedWord());
+      setOpenSearchModal(false);
       inputEl.current.blur();
       history.push('/search');
       window.scrollTo(0, 0);

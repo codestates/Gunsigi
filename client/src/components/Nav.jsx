@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import loginState from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
+import { resetSearchedProductList, resetSearchedWord } from '../actions/searchAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -20,6 +21,8 @@ function Nav() {
 
   const openSearchModalHandler = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
+    dispatch(resetSearchedWord());
+    dispatch(resetSearchedProductList());
   };
 
   const logoutHandler = (event) => {

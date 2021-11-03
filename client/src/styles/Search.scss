@@ -70,6 +70,28 @@
   justify-content: space-between;
   grid-template-columns: repeat(2, auto);
   gap: 20px;
+  .noSearchList {
+    min-width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    grid-column-start: 1;
+    grid-column-end: 7;
+    img {
+      width: 130px;
+      filter: $f-light-grey;
+    }
+    p {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: $deep-grey;
+    }
+    p:last-child {
+      font-size: 1.2rem;
+    }
+  }
 }
 
 @media screen and (min-width: 500px) {

@@ -3,7 +3,11 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/SearchModal.scss';
 import { useDispatch } from 'react-redux';
-import { setSearchedProductList, setSearchType } from '../actions/searchAction';
+import {
+  setSearchedProductList,
+  setSearchedWord,
+  setSearchType,
+} from '../actions/searchAction';
 import {
   searchHashtag,
   searchCategory,
@@ -20,23 +24,47 @@ function SearchModal({ setOpenSearchModal }) {
     }
   };
   const handleTagBtn = (e) => {
-    const tag = e.target.value.slice(2);
-    axios
-      .get('/products', {
-        params: {
-          query: tag,
-          type: 'keyword',
-          order: 'views',
-        },
-      })
-      .then((res) => {
-        const { items, pages } = res.data;
-        dispatch(setSearchedProductList(items, pages.itemCount));
-        dispatch(setSearchType('keyword'));
-        setOpenSearchModal(false);
-        history.push('/search');
-        window.scrollTo(0, 0);
-      });
+    // 키즈 어린이만 type=search요청
+    const idx = e.target.value - 1;
+    const tag = searchHashtag[idx].name.slice(2);
+
+    if (idx === 6) {
+      axios
+        .get('/products', {
+          params: {
+            query: '키즈,어린이',
+            type: 'search',
+            order: 'views',
+          },
+        })
+        .then((res) => {
+          const { items, pages } = res.data;
+          dispatch(setSearchedProductList(items, pages.itemCount));
+          dispatch(setSearchType('search'));
+          dispatch(setSearchedWord('키즈,어린이'));
+          setOpenSearchModal(false);
+          history.push('/search');
+          window.scrollTo(0, 0);
+        });
+    } else {
+      axios
+        .get('/products', {
+          params: {
+            query: tag,
+            type: 'keyword',
+            order: 'views',
+          },
+        })
+        .then((res) => {
+          const { items, pages } = res.data;
+          dispatch(setSearchedProductList(items, pages.itemCount));
+          dispatch(setSearchType('keyword'));
+          dispatch(setSearchedWord(tag));
+          setOpenSearchModal(false);
+          history.push('/search');
+          window.scrollTo(0, 0);
+        });
+    }
   };
   const handleCategoryBtn = (categoryId) => {
     // 아이디 따라 해당 카테고리로 서버요청,
@@ -53,6 +81,7 @@ function SearchModal({ setOpenSearchModal }) {
       .then((res) => {
         const { items, pages } = res.data;
         dispatch(setSearchedProductList(items, pages.itemCount));
+        dispatch(setSearchedWord(categoryForRequest[categoryId]));
         dispatch(setSearchType('category'));
         setOpenSearchModal(false);
         history.push('/search');
@@ -71,7 +100,7 @@ function SearchModal({ setOpenSearchModal }) {
                   className="tag"
                   type="button"
                   key={tag.id}
-                  value={tag.name}
+                  value={tag.id}
                   onClick={handleTagBtn}
                 >
                   {tag.name}
