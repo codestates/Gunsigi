@@ -126,7 +126,10 @@ function Search() {
             <div className="Search_products">
               {!searchedProductList
                 ? productList.map((item) => (
-                    <Link to={`product-detail/${item.id}`}>
+                    <Link
+                      onClick={() => dispatch(outMypage())}
+                      to={`product-detail/${item.id}`}
+                    >
                       <Product
                         key={item.id}
                         name={item.name}
@@ -138,7 +141,10 @@ function Search() {
                     </Link>
                   ))
                 : searchedProductList.map((item) => (
-                    <Link to={`product-detail/${item.id}`}>
+                    <Link
+                      onClick={() => dispatch(outMypage())}
+                      to={`product-detail/${item.id}`}
+                    >
                       <Product
                         key={item.id}
                         name={item.name}

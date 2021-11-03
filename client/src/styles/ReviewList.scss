@@ -70,12 +70,28 @@
         color: $white;
       }
     }
+
+    .ReviewList_month_change {
+      background-color: $deep-blue;
+      color: $white;
+    }
   }
 }
 
 .ReviewList_list {
   width: 100%;
   padding: 30px 30px 10px 30px;
+  .review_none {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $deep-grey;
+    margin-bottom: 40px;
+  }
 }
 
 @include tablet {
@@ -119,6 +135,9 @@
   .ReviewList_list {
     width: 100%;
     padding: 40px 40px 20px 40px;
+    .review_none {
+      font-size: 1.6rem;
+    }
   }
 }
 

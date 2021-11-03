@@ -1,8 +1,9 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable object-shorthand */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import NavChange from '../components/NavChange';
@@ -57,28 +58,14 @@ function ProductDetail({ match }) {
       bad: ['칼슘', '항생제', '혈액응고억제제'],
     },
   });
+
   const [isBookmark, setIsBookmark] = useState(ProductInfo.isBookmarked);
   const loginState = useSelector((state) => state.userReducer);
 
   const productId = match.params.id;
 
-  //! 새로고침시 제품정보 요청
-  window.addEventListener('load', () => {
-    axios({
-      url: `/products/${productId}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        const info = res.data.itemInfo;
-        setProductInfo(info);
-        setIsBookmark(info.isBookmarked);
-      })
-      .catch((err) => console.log(err));
-  });
-
   //! 제품 상세정보 요청, 리뷰요청
   useEffect(async () => {
-    console.log('요청들어옴');
     await axios({
       url: `/products/${productId}`,
       withCredentials: true,
@@ -100,11 +87,6 @@ function ProductDetail({ match }) {
       })
       .catch((err) => console.log(err));
   }, [productId]);
-
-  // //! 리뷰요청
-  // useEffect(async () => {
-  //   await
-  // }, [productId]);
 
   //! 북마크 기능
   const isBookmarkedHandler = async () => {
@@ -139,6 +121,7 @@ function ProductDetail({ match }) {
     }
   };
 
+  //! ReviewModal 창 키고 끄는 함수
   const openWriteHandler = (trueOrFalse) => {
     const isLoginModal = document.getElementById('IsLogin_container');
 
@@ -151,6 +134,36 @@ function ProductDetail({ match }) {
       setisOpenWrite(trueOrFalse);
     }
   };
+
+  // //! 리뷰 더보기
+  // const moreReviewView = useCallback(async () => {
+  //   console.log('왜돼지?');
+  //   const scrollHeight = Math.max(
+  //     document.documentElement.scrollHeight,
+  //     document.body.scrollHeight,
+  //   );
+  //   const scrollTop = Math.max(
+  //     document.documentElement.scrollTop,
+  //     document.body.scrollTop,
+  //   );
+  //   const clientHeight = document.documentElement.clientHeight;
+
+  //   if (scrollTop + clientHeight === scrollHeight) {
+  //     await axios({
+  //       url: `/reviews/${productId}?size=${reviews.length + 5}`,
+  //       loading: false,
+  //     }).then((res) => {
+  //       setReviews(res.data.items);
+  //       console.log('요청완료');
+  //     });
+  //   }
+  // }, [reviews]);
+
+  // useEffect(() => {
+  //   console.log('스크롤됌?');
+  //   window.addEventListener('scroll', moreReviewView, true);
+  //   return () => window.removeEventListener('scroll', moreReviewView, true);
+  // }, [moreReviewView]);
 
   return (
     <>
@@ -299,6 +312,7 @@ function ProductDetail({ match }) {
           </div>
         </div>
         <ReviewList
+          setReviews={setReviews}
           reviews={reviews}
           productId={productId}
           name={ProductInfo.name}
