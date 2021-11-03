@@ -1,3 +1,4 @@
+const debug = require('debug')('app.auth');
 const { User } = require('../models');
 const {
   generateAccessToken,
@@ -29,6 +30,7 @@ module.exports = {
       if (err.name === 'SequelizeUniqueConstraintError') {
         return res.status(403).json({ message: '이미 사용중인 이메일입니다.' });
       }
+      debug(err);
       return res.status(400).json({
         message: 'Fail to signup',
         result: false,

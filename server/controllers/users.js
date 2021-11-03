@@ -1,5 +1,15 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 const debug = require('debug')('app:user');
-const { User, Review, Product, sequelize } = require('../models');
+const {
+  User,
+  Review,
+  Product,
+  sequelize,
+  Bookmark,
+  Sequelize,
+  reviewLike,
+} = require('../models');
 const s3 = require('../modules/image');
 
 module.exports = {
@@ -21,7 +31,7 @@ module.exports = {
       return res.status(400).json({ Message: 'Invalid Token' });
     }
 
-    if (Object.prototype.hasOwnProperty.call(req.body, 'profileImage')) {
+    if (req.body.profileImage) {
       // 프로필 이미지저장, 이미 있으면 기존꺼 삭제, 안에 값이 비어있으면 삭제만
       const imageName = await s3.save('profile', req.body.profileImage);
       if (user.profileImage) {
@@ -30,6 +40,12 @@ module.exports = {
       }
       user.profileImage = imageName;
       delete req.body.profileImage;
+    } else if (req.body.profileImage === '') {
+      // 프사삭제
+      if (user.profileImage) {
+        // 기존 이미지 삭제
+        await s3.delete(user.profileImage);
+      }
     }
     Object.keys(req.body).forEach(async (key) => {
       if (req.body[key]) user[key] = req.body[key];
@@ -43,34 +59,48 @@ module.exports = {
   delete: async (req, res) => {
     // 회원탈퇴
     res.clearCookie('jwt');
-    const user = await User.findByPk(res.locals.user.id);
+    const user = await User.findByPk(res.locals.user.id, {
+      include: [{ model: Review }, { model: Bookmark }, { model: reviewLike }],
+    });
     if (!user) {
       return res.status(401).json({
         message: 'Invalid Token',
       });
     }
+
     // 삭제 커밋이 확실하게 수행되고 나서 프로필 이미지를 삭제하기 위해 트랜잭션생성
     // 프로필 이미지 삭제 훅은 모델파일에 정의
     const transaction = await sequelize.transaction();
     try {
-      // 유저가 남긴 리뷰
-      const reviews = await Review.findAll({
-        attributes: ['id', 'userId', 'productId', 'score'],
-        where: { userId: res.locals.user.id },
-      });
-
       // 리뷰수 감소
       await Product.decrement('reviewsCount', {
         by: 1,
-        where: { id: req.body.productId },
+        where: { id: { [Sequelize.Op.in]: user.Reviews.map((r) => r.productId) } },
+        transaction,
+      });
+
+      // 북마크 수 감소
+      await Product.decrement('bookmarksCount', {
+        by: 1,
+        where: { id: { [Sequelize.Op.in]: user.Bookmarks.map((r) => r.productId) } },
+        transaction,
+      });
+
+      // 리뷰에 좋아요 수 감소
+      await Review.decrement('likesCount', {
+        by: 1,
+        where: { id: { [Sequelize.Op.in]: user.reviewLikes.map((r) => r.reviewId) } },
         transaction,
       });
 
       // 리뷰 총점 감소
-
-      // 북마크 수 감소
-
-      // 리뷰에 좋아요 수 감소
+      for (const review of user.Reviews) {
+        await Product.decrement('reviewsSum', {
+          by: review.score,
+          where: { id: review.productId },
+          transaction,
+        });
+      }
 
       await user.destroy({ transaction });
       await transaction.commit();

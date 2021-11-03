@@ -56,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Review',
+      updatedAt: false,
       indexes: [
         {
           fields: ['productId', 'period', 'createdAt'],
@@ -66,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
         afterDestroy: (review, options) => {
           if (options.transaction) {
             options.transaction.afterCommit(async () => {
-              debug('삭제 커밋 완료. 이미지 삭제시작');
+              debug('리뷰 삭제 커밋 완료. 이미지 삭제시작');
               await s3.deleteFolder(`reviews/${review.id}`);
             });
           }

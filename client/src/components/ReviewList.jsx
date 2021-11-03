@@ -199,7 +199,7 @@ function ReviewList({
                 nickname={review.userInfo.nickname}
                 productId={review.productId}
                 content={review.content}
-                date={review.updatedAt.slice(0, 10)}
+                date={review.createdAt.slice(0, 10)}
                 score={review.score}
                 images={review.images}
                 period={review.period}
