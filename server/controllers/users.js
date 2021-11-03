@@ -40,6 +40,12 @@ module.exports = {
       }
       user.profileImage = imageName;
       delete req.body.profileImage;
+    } else if (req.body.profileImage === '') {
+      // 프사삭제
+      if (user.profileImage) {
+        // 기존 이미지 삭제
+        await s3.delete(user.profileImage);
+      }
     }
     Object.keys(req.body).forEach(async (key) => {
       if (req.body[key]) user[key] = req.body[key];
