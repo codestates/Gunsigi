@@ -24,7 +24,7 @@ module.exports = {
   signup: async (req, res) => {
     let user;
     try {
-      user = await User.create(req.body);
+      user = await User.create({ ...req.body, type: 'email' });
     } catch (err) {
       if (err.name === 'SequelizeUniqueConstraintError') {
         return res.status(403).json({ message: '이미 사용중인 이메일입니다.' });
