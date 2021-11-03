@@ -1,41 +1,101 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import '../styles/Review.scss';
 import DeleteReviewModal from './DeleteReviewModal';
+import IsLogin from './IsLogin';
 
 function Review({
   name,
   profile,
   nickname,
-  // productId,
   content,
   date,
   score,
-  // isMine,
   images,
-  likesCount,
-  isLike,
   period,
+  reviewId,
+  reviews,
+  reviewIdx,
 }) {
   const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [reviewsLike, setReviewsLike] = useState([]);
+  const [likeCount, setLikeCount] = useState([]);
+  const loginState = useSelector((state) => state.userReducer);
 
   const openDeleteHandler = () => {
     setIsOpenDelete(!isOpenDelete);
   };
 
+  //! 리뷰 하트 요청
+  const reviewLikeRequest = (e) => {
+    if (loginState.isLogin) {
+      setReviewsLike(
+        reviewsLike.map((el, idx) => (reviewIdx === idx ? !el : el)),
+      );
+      if (e.target.className === 'heart_icon_change') {
+        axios({
+          method: 'DELETE',
+          url: '/review/like',
+          data: { reviewId },
+          loading: false,
+        }).then(() => {
+          setLikeCount(
+            likeCount.map((el, idx) => (reviewIdx === idx ? el - 1 : null)),
+          );
+        });
+      }
+      if (e.target.className === 'heart_icon') {
+        axios({
+          method: 'POST',
+          url: '/review/like',
+          data: { reviewId },
+          loading: false,
+        }).then(() => {
+          setLikeCount(
+            likeCount.map((el, idx) => (reviewIdx === idx ? el + 1 : null)),
+          );
+        });
+      }
+    } else {
+      const isLoginModal = document.getElementById('IsLogin_container');
+
+      isLoginModal.style.right = '20px';
+      setTimeout(() => {
+        isLoginModal.style.right = '-250px';
+      }, 1500);
+    }
+  };
+
+  useEffect(() => {
+    const reviewLikeCount = [];
+    const reviewHeart = [];
+    for (let i = 0; i < reviews.length; i += 1) {
+      reviewLikeCount.push(reviews[i].likesCount);
+      reviewHeart.push(reviews[i].isLike);
+    }
+    setLikeCount(reviewLikeCount);
+    setReviewsLike(reviewHeart);
+  }, [reviews]);
+
   return (
     <>
+      <IsLogin />
       <div className="Reviews_container">
         <div className="Reviews_in">
           <div className="Reviews_trashOrHeart">
             <div className="like">
               <img
-                className={isLike ? 'heart_icon_change' : 'heart_icon'}
+                aria-hidden="true"
+                onClick={(e) => reviewLikeRequest(e)}
+                className={
+                  reviewsLike[reviewIdx] ? 'heart_icon_change' : 'heart_icon'
+                }
                 src="/icons/heart_fill.svg"
                 alt="heart"
               />
-              <span>{likesCount}</span>
+              <span>{likeCount[reviewIdx]}</span>
             </div>
             {isOpenMypage ? (
               <img

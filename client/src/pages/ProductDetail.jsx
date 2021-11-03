@@ -3,7 +3,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import NavChange from '../components/NavChange';
@@ -12,9 +12,11 @@ import Write from '../components/Write';
 import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
 import IsLogin from '../components/IsLogin';
+import ProductDetailStar from '../components/ProductDeatailStar';
 
 function ProductDetail({ match }) {
   const [isOpenWrite, setisOpenWrite] = useState(false);
+  const [reviewPage, setReviewPage] = useState(1);
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -79,12 +81,13 @@ function ProductDetail({ match }) {
       .catch((err) => console.log(err));
 
     await axios({
-      url: `/reviews/${productId}`,
+      url: `/reviews/${productId}?order=recent&page=1`,
       withCredentials: true,
       // headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => {
         setReviews(res.data.items);
+        setReviewPage(res.data.pages.page);
       })
       .catch((err) => console.log(err));
   }, [productId]);
@@ -212,52 +215,8 @@ function ProductDetail({ match }) {
                 </div>
                 <div className="functional">{ProductInfo.functional}</div>
                 <div className="stars">
-                  <img
-                    className={
-                      ProductInfo.score >= 1
-                        ? 'ProductDetail_star_change'
-                        : 'ProductDetail_star'
-                    }
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                  <img
-                    className={
-                      ProductInfo.score >= 2
-                        ? 'ProductDetail_star_change'
-                        : 'ProductDetail_star'
-                    }
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                  <img
-                    className={
-                      ProductInfo.score >= 3
-                        ? 'ProductDetail_star_change'
-                        : 'ProductDetail_star'
-                    }
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                  <img
-                    className={
-                      ProductInfo.score >= 4
-                        ? 'ProductDetail_star_change'
-                        : 'ProductDetail_star'
-                    }
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                  <img
-                    className={
-                      ProductInfo.score === 5
-                        ? 'ProductDetail_star_change'
-                        : 'ProductDetail_star'
-                    }
-                    src="/icons/icon_star_fill.svg"
-                    alt="star"
-                  />
-                  <span>{ProductInfo.score}</span>
+                  <ProductDetailStar score={ProductInfo.score} />
+                  <span className="score">{ProductInfo.score}</span>
                 </div>
               </div>
 
@@ -270,14 +229,14 @@ function ProductDetail({ match }) {
                     <span className="name">제품궁합</span>
 
                     <div>
-                      {ProductInfo.chemistry.good.map((good) => (
-                        <span className="good">
+                      {ProductInfo.chemistry.good.map((good, idx) => (
+                        <span key={idx} className="good">
                           <img src="/icons/icon_thumbs.svg" alt="thums-up" />
                           <span>{good}</span>
                         </span>
                       ))}
-                      {ProductInfo.chemistry.bad.map((bad) => (
-                        <span className="bad">
+                      {ProductInfo.chemistry.bad.map((bad, idx) => (
+                        <span key={idx} className="bad">
                           <img src="/icons/icon_thumbs.svg" alt="thums-down" />
                           <span>{bad}</span>
                         </span>
@@ -313,6 +272,8 @@ function ProductDetail({ match }) {
           </div>
         </div>
         <ReviewList
+          setReviewPage={setReviewPage}
+          reviewPage={reviewPage}
           setReviews={setReviews}
           reviews={reviews}
           productId={productId}
@@ -324,4 +285,4 @@ function ProductDetail({ match }) {
   );
 }
 
-export default ProductDetail;
+export default memo(ProductDetail);
