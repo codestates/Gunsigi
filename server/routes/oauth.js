@@ -1,5 +1,5 @@
 const express = require('express');
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 const validationError = require('../middlware/error');
 const oauth = require('../controllers/oauth');
 
@@ -16,6 +16,10 @@ router.post('/google',
   oauth.google);
 
 router.get('/kakao/delete',
+  query('app_id').notEmpty(),
+  query('user_id').notEmpty(),
+  query('referrer_type').notEmpty(),
+  validationError,
   oauth.kakaoDelete);
 
 module.exports = router;

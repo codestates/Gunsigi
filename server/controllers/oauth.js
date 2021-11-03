@@ -1,4 +1,5 @@
 const axios = require('axios');
+const debug = require('debug')('app:oauth');
 const { User } = require('../models');
 const s3 = require('../modules/image');
 const {
@@ -97,5 +98,18 @@ module.exports = {
       userInfo: user.json(),
     });
   },
-  kakaoDelete: () => {},
+  kakaoDelete: async (req, res) => {
+    // 헤더 KAKAO_ADMIN_KEY 확인
+    try {
+      const adminKey = req.headers.Authorization.split(' ')[1];
+      if (adminKey !== process.env.KAKAO_ADMIN_KEY) throw Error('not match kakao admin key');
+    } catch {
+      return res.status(403).send('invalid admin key');
+    }
+    const userId = req.query.user_id;
+    try {
+      await User.destroy({ where: { uuid: userId, type: 'kakao' } });
+    } catch (err) { debug(err); }
+    return res.send('success');
+  },
 };
