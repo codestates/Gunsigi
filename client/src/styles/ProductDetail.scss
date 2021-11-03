@@ -92,13 +92,8 @@
     margin-top: 30px;
     display: flex;
     align-items: center;
-    img {
-      width: 25px;
-      height: 25px;
-    }
-    span {
-      position: relative;
-      top: 3px;
+    height: 30px;
+    .score {
       margin-left: 10px;
       font-size: 2rem;
       color: $star;

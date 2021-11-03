@@ -1,0 +1,76 @@
+@import '../App';
+
+.Star_container {
+  position: relative;
+  left: -1px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: -2px;
+  height: 14px;
+  div {
+    span {
+      width: 14px;
+      height: 14px;
+      display: flex;
+      justify-content: flex-start;
+      img {
+        width: 14px;
+        height: 14px;
+        object-fit: contain;
+        filter: $f-light-grey;
+      }
+    }
+  }
+
+  .Star_yellow_half {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    span {
+      img {
+        width: 7px;
+        filter: $f-star;
+        object-fit: cover;
+        object-position: left;
+      }
+    }
+  }
+
+  .Star_yellow {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    img {
+      filter: $f-star;
+    }
+  }
+
+  .Star_grey {
+    display: flex;
+  }
+}
+
+@include laptop {
+  .Star_container {
+    height: 16px;
+    div {
+      span {
+        width: 16px;
+        height: 16px;
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+
+    .Star_yellow_half {
+      span {
+        img {
+          width: 8px;
+        }
+      }
+    }
+  }
+}

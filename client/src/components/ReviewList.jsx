@@ -1,10 +1,18 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-// import { reviews } from '../assets/Search';
+import IsLoadingSmall from './IsLoadingSmall';
 import '../styles/ReviewList.scss';
 import Review from './Review';
 
-function ReviewList({ name, reviewsCount, reviews, productId, setReviews }) {
+function ReviewList({
+  setReviewPage,
+  reviewPage,
+  name,
+  reviewsCount,
+  reviews,
+  productId,
+  setReviews,
+}) {
   const [sequence, setSequence] = useState('recent');
   const [month, setMonth] = useState([false, false, false, false]);
   const [monthName] = useState([
@@ -13,9 +21,8 @@ function ReviewList({ name, reviewsCount, reviews, productId, setReviews }) {
     '6개월 이상',
     '1년 이상',
   ]);
-
-  // event.preventDefault();
-  // event.stopPropagation();
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   //! 필터링 요청
   useEffect(async () => {
@@ -35,32 +42,80 @@ function ReviewList({ name, reviewsCount, reviews, productId, setReviews }) {
         setReviews(res.data.items);
       });
     }
-  }, [sequence]);
+  }, [sequence, month]);
 
-  useEffect(async () => {
-    const monthIdx = month.indexOf(true);
-    await axios({
-      url: `/reviews/${productId}?order=${sequence}&filter=${monthName[monthIdx]}`,
-      loading: false,
-    }).then((res) => {
-      setReviews(res.data.items);
-    });
-  }, [month]);
-
-  //!state 변경
+  //! state 변경
   const reviewFilterHandler = (e, num) => {
-    if (num >= 0) {
+    const monthIdx = month.indexOf(true);
+
+    if (monthIdx === num) {
+      const monthDummy = [false, false, false, false];
+      monthDummy[num] = false;
+      setMonth(monthDummy);
+    }
+
+    if (monthIdx !== num || monthIdx === -1) {
       const monthDummy = [false, false, false, false];
       monthDummy[num] = true;
       setMonth(monthDummy);
     }
+
     if (e.target.innerText === '최신순') {
       setSequence('recent');
     }
+
     if (e.target.innerText === '좋아요순') {
       setSequence('like');
     }
   };
+
+  //! 리뷰 더보기
+  const getMoreItem = async () => {
+    setIsLoaded(true);
+    await axios({
+      url: `/reviews/${productId}?size=10&page=${reviewPage + 1}`,
+      loading: false,
+    }).then((res) => {
+      setReviews((review) => review.concat(res.data.items));
+      setReviewPage(() => reviewPage + 1);
+      setIsLoaded(false);
+      console.log('요청완료');
+
+      console.log('reviewPage', reviewPage);
+    });
+  };
+
+  // useEffect(async () => {
+  //   setIsLoaded(true);
+  //   // await new Promise((resolve) => setTimeout(resolve, 1500));
+  //   await axios({
+  //     url: `/reviews/${productId}?size=5&page=${reviewPage + 1}`,
+  //     loading: false,
+  //   }).then((res) => {
+  //     setReviews((review) => review.concat(res.data.items));
+  //     setIsLoaded(false);
+  //     console.log('요청완료');
+  //   });
+  // }, [reviewPage]);
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      await getMoreItem();
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.4,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
 
   return (
     <div className="ReviewList_container">
@@ -129,11 +184,16 @@ function ReviewList({ name, reviewsCount, reviews, productId, setReviews }) {
             </span>
           </div>
         </div>
+
         {reviews.length !== 0 ? (
           <div className="ReviewList_list">
-            {reviews.map((review) => (
+            {reviews.map((review, reviewIdx) => (
               <Review
+                reviews={reviews}
+                reviewIdx={reviewIdx}
+                setReviews={setReviews}
                 key={review.id}
+                reviewId={review.id}
                 name={name}
                 profile={review.userInfo.profileImage}
                 nickname={review.userInfo.nickname}
@@ -142,15 +202,17 @@ function ReviewList({ name, reviewsCount, reviews, productId, setReviews }) {
                 date={review.updatedAt.slice(0, 10)}
                 score={review.score}
                 images={review.images}
-                isLike={review.isLike}
-                likesCount={review.likesCount}
                 period={review.period}
               />
             ))}
+            <div ref={setTarget}>{isLoaded && <IsLoadingSmall />}</div>
           </div>
         ) : (
-          <div className="ReviewList_list">
-            <div className="review_none">리뷰가 존재하지 않습니다</div>
+          <div className="ReviewList_list_none">
+            <div className="review_none">
+              <img src="/icons/icon_warn.svg" alt="warn" />
+              <span>리뷰가 존재하지 않습니다</span>
+            </div>
           </div>
         )}
       </div>
