@@ -41,9 +41,8 @@ module.exports = {
         transaction,
       });
       await transaction.commit();
-    } catch (err) {
+    } catch {
       await transaction.rollback();
-      return res.status(400).json({ message: 'Invalid reviewId' });
     }
     return res.json({ message: 'success' });
   },

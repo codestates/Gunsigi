@@ -81,6 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      updatedAt: false,
       hooks: {
         afterDestroy: async (user, options) => {
           if (options.transaction) {
