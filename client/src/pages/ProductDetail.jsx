@@ -69,6 +69,7 @@ function ProductDetail({ match }) {
     await axios({
       url: `/products/${productId}`,
       withCredentials: true,
+      loading: false,
     })
       .then((res) => {
         const info = res.data.itemInfo;

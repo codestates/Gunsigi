@@ -16,7 +16,7 @@ function Product({ name, reviews, img, score, bookmark }) {
         <img
           className={bookmark ? 'Product_heart_change' : 'Product_heart'}
           src="/icons/icon_bookmark.svg"
-          alt="heart"
+          alt="bookmark"
         />
       </div>
       <div className="stars">

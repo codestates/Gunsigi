@@ -71,7 +71,7 @@
   grid-template-columns: repeat(2, auto);
   gap: 20px;
   .noSearchList {
-    min-width: 300px;
+    min-width: 360px;
     min-height: 200px;
     display: flex;
     flex-direction: column;
@@ -91,6 +91,13 @@
     p:last-child {
       font-size: 1.2rem;
     }
+  }
+  .targetEl {
+    min-width: 360px;
+    height: 100px;
+    background-color: red;
+    grid-column-start: 1;
+    grid-column-end: 7;
   }
 }
 

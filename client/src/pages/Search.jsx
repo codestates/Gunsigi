@@ -3,7 +3,7 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { outMypage } from '../actions/inoutMypageAction';
@@ -11,16 +11,21 @@ import {
   resetSearchedWord,
   setProductList,
   setSearchedProductList,
-  setSearchType,
+  setSearchPage,
 } from '../actions/searchAction';
+import { setLoginModal } from '../actions/modalAction';
 import NavChange from '../components/NavChange';
 import Product from '../components/Product';
 import '../styles/Search.scss';
+import IsLogin from '../components/IsLogin';
 
 function Search() {
   // const scrollArea = useRef(null);
+  const history = useHistory();
   const dispatch = useDispatch();
   const [searchOrder, setSearchOrder] = useState('views');
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
   const searchState = useSelector((state) => state.searchReducer);
   const {
     productList,
@@ -29,6 +34,7 @@ function Search() {
     searchedProductCount,
     searchedWord,
     searchType,
+    searchPage,
   } = searchState;
   // const [scrollPage, setScrollPage] = useState({ prev: 0, products: 0 });
   const [target, setTarget] = useState(null);
@@ -55,28 +61,86 @@ function Search() {
     () => () => {
       window.scrollTo(0, 0);
       setSearchOrder('views');
+      // dispatch(resetSearchedWord());
     },
     [],
   );
 
+  // ------ bookmark add, delete, notification
+  const addBookmark = (productId, bookmark) => {
+    axios({
+      method: 'POST',
+      url: '/bookmarks',
+      data: { productId },
+      loading: false,
+    }).then(() => {
+      bookmark.className = 'Product_heart_change';
+    });
+  };
+  const deleteBookmark = (productId, bookmark) => {
+    axios({
+      method: 'DELETE',
+      url: '/bookmarks',
+      data: { productId },
+      loading: false,
+    }).then(() => {
+      bookmark.className = 'Product_heart';
+    });
+  };
+
+  const handleNotification = () => {
+    const notification = document.getElementById('IsLogin_container');
+    if (!isLogin) {
+      // notification.style.right = '20px';
+      // setTimeout(() => {
+      //   notification.style.right = '-250px';
+      // }, 1500);
+      dispatch(setLoginModal(true));
+    }
+  };
+
+  const handleClickProduct = (e) => {
+    const bookmark = e.target;
+    const bookmarkClass = e.target.className;
+    const productId = e.currentTarget.id;
+
+    if (!isLogin && bookmarkClass === 'Product_heart') {
+      handleNotification();
+    } else if (isLogin && bookmarkClass === 'Product_heart') {
+      addBookmark(productId, bookmark);
+    } else if (isLogin && bookmarkClass === 'Product_heart_change') {
+      deleteBookmark(productId, bookmark);
+    } else {
+      dispatch(outMypage());
+      history.push(`/product-detail/${productId}`);
+    }
+  };
+
+  // -------- infinite scroll -------------
   const getMoreItem = async () => {
     // 조건 !searchedProductList - productList바꿀건지, searchedProductList
-    // if (!searchedProductList) {
-    //   setIsLoading(true);
-    //   return axios
-    //     .get('/products/all/items', {
-    //       params: {
-    //         order: searchOrder,
-    //         page: queryPage + 1,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log('전체 검색 무한스크롤 요청 응답 data', res.data);
-    //       // dispatch(setProductList());
-    //       setIsLoading(false);
-    //     });
-    // }
+    if (!searchedProductList) {
+      setIsLoading(true);
+      console.log('axios요청 전 리덕스페이지', searchPage);
+      await axios
+        .get('/products/all/items', {
+          params: {
+            order: searchOrder,
+            page: searchPage + 1,
+          },
+        })
+        .then((res) => {
+          const newList = productList.slice().concat(res.data.items);
+          const newPage = searchPage + 1;
+          dispatch(setSearchPage(newPage));
+          dispatch(setProductList(newList, res.data.pages.itemCount));
+          setIsLoading(false);
+          console.log('요청 성공 후 searchPage', searchPage);
+          console.log('productList', productList);
+        });
+    }
   };
+
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoading) {
       observer.unobserve(entry.target);
@@ -89,7 +153,7 @@ function Search() {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
+        threshold: 0.5,
       });
       observer.observe(target);
     }
@@ -144,6 +208,7 @@ function Search() {
   return (
     <>
       <NavChange />
+      <IsLogin />
       <div className="Search_conatiner">
         <div className="Search_in">
           <div className="Search_img" />
@@ -152,7 +217,7 @@ function Search() {
               <div>
                 {!searchedProductList
                   ? '전체 건강기능식품'
-                  : '검색된 건강기능식품'}
+                  : `"${searchedWord}" 검색 결과`}
                 <span>
                   {!searchedProductList
                     ? `(${productCount})`
@@ -188,7 +253,13 @@ function Search() {
             <div className="Search_products">
               {!searchedProductList ? (
                 productList.map((item) => (
-                  <Link to={`product-detail/${item.id}`}>
+                  <div
+                    onClick={handleClickProduct}
+                    role="link"
+                    tabIndex={0}
+                    onKeyPress={handleClickProduct}
+                    id={item.id}
+                  >
                     <Product
                       key={item.id}
                       name={item.name}
@@ -197,7 +268,7 @@ function Search() {
                       score={item.score}
                       bookmark={item.isBookmarked}
                     />
-                  </Link>
+                  </div>
                 ))
               ) : !searchedProductList.length ? (
                 <div className="noSearchList">
@@ -207,7 +278,13 @@ function Search() {
                 </div>
               ) : (
                 searchedProductList.map((item) => (
-                  <Link to={`product-detail/${item.id}`}>
+                  <div
+                    onClick={handleClickProduct}
+                    role="link"
+                    tabIndex={0}
+                    onKeyPress={handleClickProduct}
+                    id={item.id}
+                  >
                     <Product
                       key={item.id}
                       name={item.name}
@@ -216,7 +293,7 @@ function Search() {
                       score={item.score}
                       bookmark={item.isBookmarked}
                     />
-                  </Link>
+                  </div>
                 ))
               )}
               <div ref={setTarget} className="targetEl" />
