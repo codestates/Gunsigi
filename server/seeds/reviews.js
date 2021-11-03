@@ -40,16 +40,16 @@ module.exports = async () => {
     },
   ];
   // 샘플 리뷰 잔뜩 생성
-  Array(50).fill(0).forEach((n, idx) => {
-    const userId = 5 + idx;
+  for (let i = 0; i < 50; i += 1) {
+    const userId = 5 + i;
     reviews.push({
       userId,
       productId: 1,
-      content: `${idx}. 진짜 약빨이 엄청나서 어제 몸져누웠다가 한입 먹고 원기충전 제대로 했습니다. 인생 홍삼이에요 응어이 응어응어`,
+      content: `${i}. 진짜 약빨이 엄청나서 어제 몸져누웠다가 한입 먹고 원기충전 제대로 했습니다. 인생 홍삼이에요 응어이 응어응어`,
       period: '1개월 이하',
       score: 3,
     });
-  });
+  }
 
   return Review.bulkCreate(reviews);
 };

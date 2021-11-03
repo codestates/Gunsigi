@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "dev": "DEBUG=app* nodemon app.js",
-    "seed": "export SEED=true && DEBUG=app* node app.js",
-    "test": "NODE_ENV=test jest test/"
+    "start": "node index.js",
+    "dev": "DEBUG=app* nodemon index.js",
+    "seed": "SEED=true DEBUG=app* node index.js",
+    "test": "NODE_ENV=test jest --detectOpenHandles"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "dependencies": {
     "aws-sdk": "^2.1016.0",

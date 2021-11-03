@@ -1,5 +1,5 @@
 const debug = require('debug')('app:user');
-const { User, sequelize } = require('../models');
+const { User, Review, Product, sequelize } = require('../models');
 const s3 = require('../modules/image');
 
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
       delete req.body.profileImage;
     }
     Object.keys(req.body).forEach(async (key) => {
-      user[key] = req.body[key];
+      if (req.body[key]) user[key] = req.body[key];
     });
     await user.save();
     return res.json({
@@ -53,6 +53,25 @@ module.exports = {
     // 프로필 이미지 삭제 훅은 모델파일에 정의
     const transaction = await sequelize.transaction();
     try {
+      // 유저가 남긴 리뷰
+      const reviews = await Review.findAll({
+        attributes: ['id', 'userId', 'productId', 'score'],
+        where: { userId: res.locals.user.id },
+      });
+
+      // 리뷰수 감소
+      await Product.decrement('reviewsCount', {
+        by: 1,
+        where: { id: req.body.productId },
+        transaction,
+      });
+
+      // 리뷰 총점 감소
+
+      // 북마크 수 감소
+
+      // 리뷰에 좋아요 수 감소
+
       await user.destroy({ transaction });
       await transaction.commit();
     } catch (err) {
