@@ -40,15 +40,17 @@ function NavChange() {
     dispatch(setSearchedWord(event.target.value));
   };
   const searchRequest = () => {
-    if (searchedWord !== '') {
+    if (inputEl.current.value !== '') {
       axios
         .get('/products', { params: { query: `${searchedWord}` } })
         .then((res) => {
           const { items, pages } = res.data;
           dispatch(setSearchedProductList(items, pages.itemCount));
           dispatch(setSearchType('search'));
-          dispatch(resetSearchedWord());
+          // dispatch(resetSearchedWord());
           setOpenSearchModal(false);
+          inputEl.current.blur();
+          inputEl.current.value = '';
           history.push('/search');
           window.scrollTo(0, 0);
         })
@@ -100,6 +102,7 @@ function NavChange() {
             onKeyPress={(e) => handleInputPress(e)}
             type="text"
             className="search-input"
+            placeholder="검색어를 입력해 주세요"
           />
 
           <div
