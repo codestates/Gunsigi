@@ -1,0 +1,50 @@
+@import '../App';
+
+.ProductDetailStar_container {
+  position: relative;
+  top: 2px;
+  height: 30px;
+  position: relative;
+  color: red;
+  div {
+    span {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: flex-start;
+      img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        filter: $f-light-grey;
+      }
+    }
+  }
+
+  .ProductDetailStar_yellow_half {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    span {
+      img {
+        width: 15px;
+        filter: $f-star;
+        object-fit: cover;
+        object-position: left;
+      }
+    }
+  }
+
+  .ProductDetailStar_yellow {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    img {
+      filter: $f-star;
+    }
+  }
+
+  .ProductDetailStar_grey {
+    display: flex;
+  }
+}

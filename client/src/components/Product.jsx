@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Product.scss';
+import ProductStar from './ProductStar';
 
 function Product({ name, reviews, img, score, bookmark }) {
   return (
@@ -16,38 +17,12 @@ function Product({ name, reviews, img, score, bookmark }) {
         <img
           className={bookmark ? 'Product_heart_change' : 'Product_heart'}
           src="/icons/icon_bookmark.svg"
-          alt="heart"
+          alt="bookmark"
         />
       </div>
       <div className="stars">
-        <span>
-          <img
-            className={score >= 1 ? 'Product_icon_change' : 'Product_icon'}
-            src="/icons/icon_star_fill.svg"
-            alt="star"
-          />
-          <img
-            className={score >= 2 ? 'Product_icon_change' : 'Product_icon'}
-            src="/icons/icon_star_fill.svg"
-            alt="star"
-          />
-          <img
-            className={score >= 3 ? 'Product_icon_change' : 'Product_icon'}
-            src="/icons/icon_star_fill.svg"
-            alt="star"
-          />
-          <img
-            className={score >= 4 ? 'Product_icon_change' : 'Product_icon'}
-            src="/icons/icon_star_fill.svg"
-            alt="star"
-          />
-          <img
-            className={score >= 5 ? 'Product_icon_change' : 'Product_icon'}
-            src="/icons/icon_star_fill.svg"
-            alt="star"
-          />
-        </span>
-        <span>{`(${reviews})`}</span>
+        <ProductStar score={score} />
+        <span className="review">{`(${reviews})`}</span>
       </div>
     </div>
   );

@@ -67,9 +67,6 @@ function SearchModal({ setOpenSearchModal }) {
     }
   };
   const handleCategoryBtn = (categoryId) => {
-    // 아이디 따라 해당 카테고리로 서버요청,
-    // 성공시, 모달닫고
-    // 결과리스트를 서치페이지로 이동해서 보여줌
     axios
       .get('/products', {
         params: {
