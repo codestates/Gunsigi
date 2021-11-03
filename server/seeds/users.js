@@ -33,11 +33,11 @@ module.exports = async () => {
       type: 'google',
     },
   ];
-  Array(100).fill(0).forEach(() => {
+  for (let i = 0; i < 100; i += 1) {
     users.push({
       nickname: '돌돌마',
       type: 'google',
     });
-  });
+  }
   return User.bulkCreate(users);
 };

@@ -24,7 +24,7 @@ module.exports = {
   signup: async (req, res) => {
     let user;
     try {
-      user = await User.create(req.body);
+      user = await User.create({ ...req.body, type: 'email' });
     } catch (err) {
       if (err.name === 'SequelizeUniqueConstraintError') {
         return res.status(403).json({ message: '이미 사용중인 이메일입니다.' });
@@ -50,7 +50,7 @@ module.exports = {
   signin: async (req, res) => {
     let user;
     try {
-      user = await User.findOne({ where: { email: req.body.email } });
+      user = await User.findOne({ where: { email: req.body.email, type: 'email' } });
       if (!user) throw new Error('UserNotFound');
       if (!await user.isRight(req.body.password)) throw new Error('Invalid Password');
     } catch (error) {
@@ -73,16 +73,16 @@ module.exports = {
     let user;
     try {
       const userId = isAuthorized(req).id;
-      user = await User.findByPk(userId);
+      user = await User.findByPk(userId, { attributes: ['id', 'email', 'type'] });
       if (!user) throw new Error('user not found');
     } catch {
       return res.status(403).json({ message: 'Forbidden' });
     }
-    const accessToken = generateAccessToken(user.json());
+    const accessToken = generateAccessToken(user.toJSON());
     return res.json({
       message: 'Success to create access token',
       accessToken,
-      userInfo: user.json(),
+      userInfo: user.toJSON(),
     });
   },
 };

@@ -23,13 +23,12 @@ module.exports = async function Seed() {
 
     if ((await Promise.all([reviewImageSeed(), reviewLikeSeed()])).every((r) => r)) {
       debug('리뷰이미지, 리뷰좋아요 시드 데이터 삽입 완료');
+      debug('모든 시드 데이터 삽입 완료');
     }
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') debug(err);
     debug('시드 데이터 삽입에 실패했습니다.');
     return Promise.reject(err);
   }
-
-  debug('모든 시드 데이터 삽입 완료');
   return true;
 };

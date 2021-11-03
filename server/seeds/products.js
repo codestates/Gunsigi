@@ -74,42 +74,6 @@ module.exports = {
     // 연결테이블 삽입
     await ProductIngredients.bulkCreate(productIngredient);
     return true;
-
-    /*
-    return Promise.all(
-      products.map((product) => {
-        return Product.create(product).then(async (result) => {
-          return Promise.all(product.ingredients.map(async (ingredient) => {
-            const [ing] = await Ingredient.findOrCreate({
-              where: { name: ingredient },
-              default: { name: ingredient },
-            });
-            ProductIngredients.create({
-              ProductId: post.id,
-              IngredientId: ing.id,
-            }).catch(() => {});
-          }));
-        });
-      }),
-    );
-    */
-
-    /*
-    return productsJson.forEach(async (product) => {
-      const post = await Product.create(product);
-      // 성분표 매칭
-      product.ingredients.forEach(async (ingredient) => {
-        const [ing] = await Ingredient.findOrCreate({
-          where: { name: ingredient },
-          default: { name: ingredient },
-        });
-        ProductIngredients.create({
-          ProductId: post.id,
-          IngredientId: ing.id,
-        }).catch(() => {});
-      });
-    });
-    */
   },
   addFulltextIndex: async () => {
     let result;
