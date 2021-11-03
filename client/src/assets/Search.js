@@ -1,6 +1,6 @@
 export const searchHashtag = [
   { id: 1, name: '# 오메가' },
-  { id: 2, name: '# 프리바이오틱스' },
+  { id: 2, name: '# 프로바이오틱스' },
   { id: 3, name: '# 유산균' },
   { id: 4, name: '# 밀크씨슬' },
   { id: 5, name: '# 프로폴리스' },
@@ -52,9 +52,9 @@ export const categoryForRequest = [
   '면역력증진',
   '에너지',
   '혈압조절',
-  '눈 건강',
+  '눈',
   '관절',
-  '간 건강',
+  '간',
 ];
 
 export const search = [

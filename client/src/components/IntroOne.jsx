@@ -5,7 +5,11 @@ import { useDispatch } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../styles/landing/introOne.scss';
-import { setSearchedProductList, setSearchType } from '../actions/searchAction';
+import {
+  setSearchedProductList,
+  setSearchType,
+  setSearchedWord,
+} from '../actions/searchAction';
 import { categoryContents } from '../assets/Main';
 
 function IntroOne() {
@@ -13,20 +17,21 @@ function IntroOne() {
   const history = useHistory();
 
   const handleSearchCategory = (e) => {
-    // axios
-    //   .get('/products', {
-    //     params: {
-    //       query: e.target.value,
-    //       type: 'category',
-    //     },
-    //   })
-    //   .then((res) => {
-    //     const { items, pages } = res.data;
-    //     dispatch(setSearchedProductList(items, pages.itemCount));
-    //     dispatch(setSearchType('category'));
-    //     history.push('/search');
-    //     window.scrollTo(0, 0);
-    //   });
+    axios
+      .get('/products', {
+        params: {
+          query: e.target.value,
+          type: 'category',
+        },
+      })
+      .then((res) => {
+        const { items, pages } = res.data;
+        dispatch(setSearchedWord(e.target.value));
+        dispatch(setSearchedProductList(items, pages.itemCount));
+        dispatch(setSearchType('category'));
+        history.push('/search');
+        window.scrollTo(0, 0);
+      });
   };
 
   return (
