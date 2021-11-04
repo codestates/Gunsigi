@@ -16,7 +16,7 @@ import ProductDetailStar from '../components/ProductDeatailStar';
 
 function ProductDetail({ match }) {
   const [isOpenWrite, setisOpenWrite] = useState(false);
-  const [reviewPage, setReviewPage] = useState(1);
+  const [reviewPage, setReviewPage] = useState({ page: 1, total: 10 });
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -80,16 +80,16 @@ function ProductDetail({ match }) {
       })
       .catch((err) => console.log(err));
 
-    await axios({
-      url: `/reviews/${productId}?order=recent&page=1`,
-      withCredentials: true,
-      // headers: { 'Content-Type': 'application/json' },
-    })
-      .then((res) => {
-        setReviews(res.data.items);
-        setReviewPage(res.data.pages.page);
-      })
-      .catch((err) => console.log(err));
+    // await axios({
+    //   url: `/reviews/${productId}?order=recent&page=1&size=5`,
+    //   withCredentials: true,
+    //   // headers: { 'Content-Type': 'application/json' },
+    // })
+    //   .then((res) => {
+    //     setReviews(res.data.items);
+    //     setReviewPage({ page: res.data.pages.page, total: res.data.pages.total });
+    //   })
+    //   .catch((err) => console.log(err));
   }, [productId]);
 
   //! 북마크 기능
@@ -272,13 +272,13 @@ function ProductDetail({ match }) {
           </div>
         </div>
         <ReviewList
-          setReviewPage={setReviewPage}
-          reviewPage={reviewPage}
-          setReviews={setReviews}
-          reviews={reviews}
+          // setReviewPage={setReviewPage}
+          // reviewPage={reviewPage}
+          // setReviews={setReviews}
+          // reviews={reviews}
           productId={productId}
           name={ProductInfo.name}
-          reviewsCount={ProductInfo.reviewsCount}
+          // reviewsCount={ProductInfo.reviewsCount}
         />
       </div>
     </>

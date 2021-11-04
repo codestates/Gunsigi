@@ -45,17 +45,17 @@ function Search() {
   // todo: 리뷰순 클릭시, 리뷰순으로 재요청
   // todo: 100개 이후에는 무한 스크롤 구현 page,size
   // todo: 탑버튼 구현
-  useEffect(() => {
-    setSearchOrder('views');
-    axios
-      .get('/products/all/items', {
-        params: { order: 'views' },
-      })
-      .then((res) => {
-        const { items, pages } = res.data;
-        dispatch(setProductList(items, pages.itemCount));
-      });
-  }, []);
+  // useEffect(() => {
+  //   setSearchOrder('views');
+  //   axios
+  //     .get('/products/all/items', {
+  //       params: { order: 'views' },
+  //     })
+  //     .then((res) => {
+  //       const { items, pages } = res.data;
+  //       dispatch(setProductList(items, pages.itemCount));
+  //     });
+  // }, []);
 
   useEffect(
     () => () => {
@@ -65,6 +65,15 @@ function Search() {
     },
     [],
   );
+
+  let page = 0;
+  let total = 1;
+  let lock = false;
+
+  // useEffect(() => {
+  //   console.log('change productList');
+  //   lock = false;
+  // }, [productList]);
 
   // ------ bookmark add, delete, notification
   const addBookmark = (productId, bookmark) => {
@@ -119,30 +128,40 @@ function Search() {
   // -------- infinite scroll -------------
   const getMoreItem = async () => {
     // 조건 !searchedProductList - productList바꿀건지, searchedProductList
+    console.log('before ' , page, total);
+    if (page > total) return;
     if (!searchedProductList) {
       setIsLoading(true);
-      console.log('axios요청 전 리덕스페이지', searchPage);
+      console.log('axios요청 전 리덕스페이지', page);
       await axios
         .get('/products/all/items', {
           params: {
             order: searchOrder,
-            page: searchPage + 1,
+            page: page + 1,
           },
+          loading: false,
         })
         .then((res) => {
-          const newList = productList.slice().concat(res.data.items);
+          // console.log(res.data.items);
+          // const newList = productList.slice().concat(res.data.items);
+          const newList = [...productList, ...res.data.items];
           const newPage = searchPage + 1;
+          console.log('new List ', newList.length);
+          page += 1;
+          total = res.data.pages.total;
           dispatch(setSearchPage(newPage));
           dispatch(setProductList(newList, res.data.pages.itemCount));
           setIsLoading(false);
-          console.log('요청 성공 후 searchPage', searchPage);
-          console.log('productList', productList);
+          lock = false;
+          console.log('요청 성공 후 searchPage', page, total);
         });
     }
   };
 
   const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoading) {
+    console.log('get event , ', lock);
+    if (entry.isIntersecting && !isLoading && !lock) {
+      lock = true;
       observer.unobserve(entry.target);
       await getMoreItem();
       observer.observe(entry.target);
