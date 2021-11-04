@@ -19,22 +19,28 @@ const searchInit = {
   searchType: 'search',
   searchPage: 1,
 };
-
+// false, [], [....값]
 const searchReducer = (state = searchInit, action) => {
   switch (action.type) {
     case ALL_PRODUCT_LIST:
       return {
-        ...state,
-        productList: action.payload.productList,
+        productList: [...state.productList, ...action.payload.productList],
         productCount: action.payload.productCount,
       };
 
-    case SEARCHED_PRODUCT_LIST:
+    case SEARCHED_PRODUCT_LIST: {
+      let arr = state.searchedProductList;
+      if (!state.searchedProductList) {
+        arr = [];
+      } else {
+        arr = state.searchedProductList;
+      }
       return {
         ...state,
-        searchedProductList: action.payload.productList,
+        searchedProductList: [...arr, ...action.payload.productList],
         searchedProductCount: action.payload.productCount,
       };
+    }
 
     case RESET_SEARCHED_PRODUCT_LIST:
       return { ...state, searchedProductList: false };
@@ -52,7 +58,7 @@ const searchReducer = (state = searchInit, action) => {
       return { ...state, searchType: 'search' };
 
     case SET_SEARCH_PAGE:
-      return { ...state, searchPage: action.payload.page };
+      return { ...state, searchPage: state.searchPage + 1 };
 
     case RESET_SEARCH_PAGE:
       return { ...state, searchPage: 1 };
