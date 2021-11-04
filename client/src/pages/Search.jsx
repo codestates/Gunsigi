@@ -81,10 +81,6 @@ function Search() {
     [],
   );
 
-  let page = 0;
-  let total = 1;
-  let lock = false;
-
   // useEffect(() => {
   //   console.log('change productList');
   //   lock = false;

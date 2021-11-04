@@ -25,7 +25,6 @@ function ReviewList({ name, productId }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getReviews = async (order, filter, more) => {
-    console.log('page, total', page, total);
     // page 더 없으면 리턴
     if (page > total && more) {
       setIsLoaded(false);
@@ -36,6 +35,7 @@ function ReviewList({ name, productId }) {
     Object.keys(params).forEach((k) => {
       if (!params[k]) delete params[k];
     });
+
     console.log('params : ', params, more);
     const res = await axios.get(`/reviews/${productId}`, {
       params: { ...params },
@@ -44,7 +44,7 @@ function ReviewList({ name, productId }) {
 
     if (more) {
       if (res.data.items.length === 0) {
-        page += 100;
+        page += Number.MAX_SAFE_INTEGER;
         setIsLoaded(false);
         return;
       }
@@ -55,17 +55,18 @@ function ReviewList({ name, productId }) {
       setReviews(res.data.items);
     }
     total = res.data.pages.total;
-    lock = false;
-  };
+    if (page <= total) lock = false;
+    setIsLoaded(false);
+    console.log('page, total, loading', page, total, isLoaded);
+  }
 
   //! 필터링 요청 및 리뷰 요청
   useEffect(async () => {
     const monthIdx = month.indexOf(true);
-
     if (monthIdx !== -1) {
       await getReviews(sequence, monthName[monthIdx] || '');
     } else {
-      await getReviews(sequence, '');
+        await getReviews(sequence, '');
     }
   }, [sequence, month]);
 
@@ -102,7 +103,7 @@ function ReviewList({ name, productId }) {
 
   const onIntersect = async ([entry], observer) => {
     console.log('함수 안', reviews.length);
-    if (entry.isIntersecting && !isLoaded && !lock && reviews.length >= 5) {
+    if (entry.isIntersecting && !isLoaded && !lock) {
       lock = true;
       setIsLoaded(true);
       observer.unobserve(entry.target);
