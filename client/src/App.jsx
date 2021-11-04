@@ -46,7 +46,7 @@ function App() {
       Authorization: `Bearer ${token}`,
     };
   }, [token]);
-  if (token === null) return '';
+  if (token === null || isLogin === 'init') return '';
   return (
     <div className="App">
       {isLoading ? <Loading /> : null}
@@ -58,7 +58,7 @@ function App() {
         <Route path="/search" component={Search}>
           <Search />
         </Route>
-        <Route path="/mypage">
+        <Route path="/mypage" component={Mypage}>
           {isLogin ? <Mypage /> : <Redirect to="/" />}
         </Route>
         <Route path="/product-detail/:id" component={ProductDetail} />

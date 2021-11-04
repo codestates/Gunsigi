@@ -17,7 +17,7 @@ function Review({
   reviewId,
   reviews,
   reviewIdx,
-  ref
+  setReviews,
 }) {
   const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -25,8 +25,24 @@ function Review({
   const [likeCount, setLikeCount] = useState([]);
   const loginState = useSelector((state) => state.userReducer);
 
-  const openDeleteHandler = () => {
-    setIsOpenDelete(!isOpenDelete);
+  //! 리뷰삭제 모달창 열고닫는 기능 및 리뷰삭제 기능
+  const openDeleteHandler = (trueOrFalse) => {
+    console.log('리뷰');
+    setIsOpenDelete(trueOrFalse);
+    if (trueOrFalse === 'delete') {
+      axios({
+        method: 'DELETE',
+        url: '/reviews',
+        data: { reviewId },
+      }).then(() => {
+        axios({
+          url: '/reviews?page=1&size=5',
+        }).then((res) => {
+          setReviews(res.data.items);
+        });
+        setIsOpenDelete(false);
+      });
+    }
   };
 
   //! 리뷰 하트 요청
@@ -61,7 +77,6 @@ function Review({
       }
     } else {
       const isLoginModal = document.getElementById('IsLogin_container');
-
       isLoginModal.style.right = '20px';
       setTimeout(() => {
         isLoginModal.style.right = '-250px';
@@ -83,7 +98,7 @@ function Review({
   return (
     <>
       <IsLogin />
-      <div className="Reviews_container" ref={ref}>
+      <div className="Reviews_container">
         <div className="Reviews_in">
           <div className="Reviews_trashOrHeart">
             <div className="like">
@@ -103,7 +118,7 @@ function Review({
                 className="delete"
                 src="/icons/icon_bin.svg"
                 alt="review_delete"
-                onClick={openDeleteHandler}
+                onClick={() => openDeleteHandler(true)}
                 aria-hidden="true"
               />
             ) : null}
@@ -186,8 +201,8 @@ function Review({
               </div>
             </div>
             <div className="images">
-              {images.map((image) =>
-                image ? <img src={image} alt="review_img" /> : null,
+              {images.map((image, idx) =>
+                image ? <img key={idx} src={image} alt="review_img" /> : null,
               )}
             </div>
             <div className="content">{content}</div>
