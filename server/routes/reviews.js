@@ -69,7 +69,7 @@ router.post(
       ]} 중 하나의 값을 넣어주세요`,
     ),
   body('images')
-    .optional()
+    .default([])
     .isArray()
     .withMessage('images는 base64로 이루어진 배열형식입니다.'),
   validationError,
