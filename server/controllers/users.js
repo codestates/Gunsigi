@@ -48,7 +48,7 @@ module.exports = {
         user.profileImage = '';
       }
     }
-    Object.keys(req.body).forEach(async (key) => {
+    Object.keys(req.body).forEach((key) => {
       if (req.body[key]) user[key] = req.body[key];
     });
     await user.save();

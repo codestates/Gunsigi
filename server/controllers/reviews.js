@@ -93,7 +93,7 @@ module.exports = {
         delete review.reviewLikes;
         return review;
       }),
-      pages: paging({ page, size, count }),
+      pages: { ...paging({ page, size, count }), itemsCount: count },
     });
   },
   post: async (req, res) => {
