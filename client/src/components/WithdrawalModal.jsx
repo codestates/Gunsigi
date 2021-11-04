@@ -1,7 +1,23 @@
 import React from 'react';
+import axios from 'axios';
 import '../styles/Mypage/WithdrawalModal.scss';
 
 function WithdrawalModal({ openWithdrawlHandler }) {
+  // * 회원 탈퇴 요청
+  const withdrawalHandler = (event) => {
+    event.preventDefault();
+
+    axios
+      .delete('/users')
+      .then(() => {
+        window.localStorage.clear();
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div
       className="modal_wrapper"
@@ -33,7 +49,7 @@ function WithdrawalModal({ openWithdrawlHandler }) {
           <button
             className="yes"
             type="button"
-            onClick={openWithdrawlHandler}
+            onClick={withdrawalHandler}
             aria-hidden="true"
           >
             네

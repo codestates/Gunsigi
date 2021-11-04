@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import loginState from '../../actions/userAction';
-import { setLoginModal } from '../../actions/modalAction';
+import { setLoginState } from '../../actions/userAction';
+import { setLoginModal, setSignupModal } from '../../actions/modalAction';
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Login.scss';
@@ -34,8 +34,9 @@ function Login() {
     axios
       .post('/auth/signin', loginForm)
       .then(() => {
-        dispatch(loginState(true));
+        dispatch(setLoginState(true));
         dispatch(setLoginModal(false));
+        dispatch(setSignupModal(false));
         setIsLoginErr(false);
       })
       .catch((err) => {
@@ -47,7 +48,6 @@ function Login() {
             setTimeout(() => {
               setIsLoginErr(false);
             }, 800);
-            setTimeout(() => setErrorMsg(''), 5000);
           } else {
             setErrorMsg('통신에 문제가 발생했습니다');
           }
@@ -91,7 +91,9 @@ function Login() {
               onChange={handleFormChange}
               onKeyUp={handeleEnterForm}
             />
-            <div>{errorMsg}</div>
+            <div className={errorMsg ? 'login_notice' : 'login_notice dummy'}>
+              {errorMsg || '로그인 dummy notice입니다'}
+            </div>
           </div>
         </div>
         <div className="icon">

@@ -10,7 +10,7 @@ import {
   resetSearchedWord,
   setSearchType,
 } from '../actions/searchAction';
-import loginState from '../actions/userAction';
+import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
@@ -76,7 +76,7 @@ function NavChange() {
     event.preventDefault();
 
     axios.get('/auth/logout').then(() => {
-      dispatch(loginState(false));
+      dispatch(setLoginState(false));
       history.push('/');
     });
   };

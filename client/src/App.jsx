@@ -4,7 +4,7 @@ import './App.scss';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import setAxios, { updateToken } from './utils/ApiController';
-import loginState from './actions/userAction';
+import { setLoginState } from './actions/userAction';
 import Main from './pages/Main';
 import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
@@ -31,13 +31,13 @@ function App() {
     } catch (err) {
       console.log('err', err);
       // 토큰 갱신에 실패했습니다.
-      dispatch(loginState(false));
+      dispatch(setLoginState(false));
       setToken(false);
       return;
     }
     // 새로 받은 토큰상태를 변경합니다.
     setToken(newToken);
-    dispatch(loginState(true));
+    dispatch(setLoginState(true));
   }, []);
 
   useEffect(() => {

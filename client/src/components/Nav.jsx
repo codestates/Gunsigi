@@ -3,9 +3,12 @@ import '../styles/nav/nav.scss';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import loginState from '../actions/userAction';
+import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
-import { resetSearchedProductList, resetSearchedWord } from '../actions/searchAction';
+import {
+  resetSearchedProductList,
+  resetSearchedWord,
+} from '../actions/searchAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -29,7 +32,7 @@ function Nav() {
     event.preventDefault();
 
     axios.get('/auth/logout').then(() => {
-      dispatch(loginState(false));
+      dispatch(setLoginState(false));
       history.push('/');
     });
   };
