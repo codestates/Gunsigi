@@ -18,6 +18,6 @@ const rootReducer = combineReducers({
   modalReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export default persistedReducer;
+export default rootReducer;
