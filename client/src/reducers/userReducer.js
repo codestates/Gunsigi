@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 const userInit = {
-  isLogin: false,
+  isLogin: 'init',
   nickName: '',
   profileImg: '',
 };

@@ -2,13 +2,7 @@ import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
 
-function ReviewModal({
-  setisOpenWrite,
-  productImg,
-  productName,
-  productId,
-  setReviews,
-}) {
+function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
   const [reviewWrite, setReviewWrite] = useState({
@@ -82,12 +76,12 @@ function ReviewModal({
           images: imgBase64,
         },
         url: '/reviews',
-        withCredentials: true,
-      }).then(() => {
-        console.log('성공');
-        setisOpenWrite(false);
-        window.location.reload(`/product-detail/${productId}`);
-      });
+      })
+        .then(() => {
+          setisOpenWrite(false);
+          window.location.reload(`/product-detail/${productId}`);
+        })
+        .catch((err) => console.log(err));
     }
   };
 

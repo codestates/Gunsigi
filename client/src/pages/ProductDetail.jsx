@@ -16,26 +16,6 @@ import ProductDetailStar from '../components/ProductDeatailStar';
 
 function ProductDetail({ match }) {
   const [isOpenWrite, setisOpenWrite] = useState(false);
-  const [reviewPage, setReviewPage] = useState({ page: 1, total: 10 });
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      userId: 1,
-      productId: 1,
-      content: '약빨 너무 좋아요!!!! 최고',
-      score: 4,
-      likesCount: 2,
-      period: '1개월 이하',
-      createdAt: '2021-10-29T12:33:31.000Z',
-      updatedAt: '2021-10-29T12:33:31.000Z',
-      images: [],
-      userInfo: {
-        profileImage: '',
-        id: 1,
-        nickname: 'doldolma',
-      },
-    },
-  ]);
   const [ProductInfo, setProductInfo] = useState({
     id: 0,
     name: '정관장',
@@ -53,8 +33,8 @@ function ProductDetail({ match }) {
       '(1) 어린이, 임산부 및 수유부는 섭취를 피하시기 바랍니다.\n(2) 간∙신장∙심장질환, 알레르기 및 천식이 있거나 의약품 복용 시 전문가와 상담하십시오.',
     bookmarksCount: 12,
     reviewsCount: 10,
-    score: 4, // 반올림해서 소수점 x
-    isBookmarked: true, // 유저가 북마크 했는지 여부
+    score: 4,
+    isBookmarked: true,
     chemistry: {
       good: ['비타민', '비타민C', '아미노산'],
       bad: ['칼슘', '항생제', '혈액응고억제제'],
@@ -66,7 +46,7 @@ function ProductDetail({ match }) {
 
   const productId = match.params.id;
 
-  //! 제품 상세정보 요청, 리뷰요청
+  //! 제품 상세정보 요청
   useEffect(async () => {
     await axios({
       url: `/products/${productId}`,
@@ -79,17 +59,6 @@ function ProductDetail({ match }) {
         setIsBookmark(info.isBookmarked);
       })
       .catch((err) => console.log(err));
-
-    // await axios({
-    //   url: `/reviews/${productId}?order=recent&page=1&size=5`,
-    //   withCredentials: true,
-    //   // headers: { 'Content-Type': 'application/json' },
-    // })
-    //   .then((res) => {
-    //     setReviews(res.data.items);
-    //     setReviewPage({ page: res.data.pages.page, total: res.data.pages.total });
-    //   })
-    //   .catch((err) => console.log(err));
   }, [productId]);
 
   //! 북마크 기능
@@ -139,42 +108,11 @@ function ProductDetail({ match }) {
     }
   };
 
-  // //! 리뷰 더보기
-  // const moreReviewView = useCallback(async () => {
-  //   console.log('왜돼지?');
-  //   const scrollHeight = Math.max(
-  //     document.documentElement.scrollHeight,
-  //     document.body.scrollHeight,
-  //   );
-  //   const scrollTop = Math.max(
-  //     document.documentElement.scrollTop,
-  //     document.body.scrollTop,
-  //   );
-  //   const clientHeight = document.documentElement.clientHeight;
-
-  //   if (scrollTop + clientHeight === scrollHeight) {
-  //     await axios({
-  //       url: `/reviews/${productId}?size=${reviews.length + 5}`,
-  //       loading: false,
-  //     }).then((res) => {
-  //       setReviews(res.data.items);
-  //       console.log('요청완료');
-  //     });
-  //   }
-  // }, [reviews]);
-
-  // useEffect(() => {
-  //   console.log('스크롤됌?');
-  //   window.addEventListener('scroll', moreReviewView, true);
-  //   return () => window.removeEventListener('scroll', moreReviewView, true);
-  // }, [moreReviewView]);
-
   return (
     <>
       <IsLogin />
       {isOpenWrite ? (
         <ReviewModal
-          setReviews={setReviews}
           productId={ProductInfo.id}
           setisOpenWrite={setisOpenWrite}
           productImg={ProductInfo.image}
@@ -271,15 +209,7 @@ function ProductDetail({ match }) {
             </div>
           </div>
         </div>
-        <ReviewList
-          // setReviewPage={setReviewPage}
-          // reviewPage={reviewPage}
-          // setReviews={setReviews}
-          // reviews={reviews}
-          productId={productId}
-          name={ProductInfo.name}
-          // reviewsCount={ProductInfo.reviewsCount}
-        />
+        <ReviewList productId={productId} name={ProductInfo.name} />
       </div>
     </>
   );

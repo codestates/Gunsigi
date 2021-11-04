@@ -19,7 +19,7 @@ function DeleteReviewModal({ openDeleteHandler }) {
           <button
             className="no"
             type="button"
-            onClick={openDeleteHandler}
+            onClick={() => openDeleteHandler(false)}
             aria-hidden="true"
           >
             아니오
@@ -27,7 +27,7 @@ function DeleteReviewModal({ openDeleteHandler }) {
           <button
             className="yes"
             type="button"
-            onClick={openDeleteHandler}
+            onClick={() => openDeleteHandler('delete')}
             aria-hidden="true"
           >
             네
