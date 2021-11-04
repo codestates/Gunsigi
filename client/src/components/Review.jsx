@@ -17,6 +17,7 @@ function Review({
   reviewId,
   reviews,
   reviewIdx,
+  ref
 }) {
   const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -82,7 +83,7 @@ function Review({
   return (
     <>
       <IsLogin />
-      <div className="Reviews_container">
+      <div className="Reviews_container" ref={ref}>
         <div className="Reviews_in">
           <div className="Reviews_trashOrHeart">
             <div className="like">
