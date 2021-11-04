@@ -25,6 +25,10 @@ module.exports = {
         as: 'userInfo',
         attributes: ['id', 'profileImage', 'nickname'],
       },
+      {
+        model: Product,
+        attributes: ['name'],
+      },
       ],
     });
     return res.json({
@@ -32,6 +36,8 @@ module.exports = {
       items: rows.map((row) => {
         const review = row.toJSON();
         review.images = review.images.map((image) => image.image);
+        review.productName = review.Product.name;
+        delete review.Product;
         return review;
       }),
       pages: paging({ page, size, count }),
