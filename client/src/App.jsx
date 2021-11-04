@@ -47,15 +47,15 @@ function App() {
     };
   }, [token]);
   if (token === null || isLogin === 'init') return '';
+
   return (
     <div className="App">
       {isLoading ? <Loading /> : null}
-
       <Switch>
         <Route exact path="/">
           <Main />
         </Route>
-        <Route path="/search" component={Search}>
+        <Route path="/search">
           <Search />
         </Route>
         <Route path="/mypage" component={Mypage}>

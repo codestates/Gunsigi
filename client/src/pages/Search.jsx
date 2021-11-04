@@ -2,13 +2,14 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { outMypage } from '../actions/inoutMypageAction';
 import {
   resetSearchedWord,
+  resetSearchPage,
   setProductList,
   setSearchedProductList,
   setSearchPage,
@@ -18,6 +19,7 @@ import NavChange from '../components/NavChange';
 import Product from '../components/Product';
 import '../styles/Search.scss';
 import IsLogin from '../components/IsLogin';
+import IsLoadingSmall from '../components/IsLoadingSmall';
 
 function Search() {
   // const scrollArea = useRef(null);
@@ -37,30 +39,43 @@ function Search() {
     searchPage,
   } = searchState;
   // const [scrollPage, setScrollPage] = useState({ prev: 0, products: 0 });
-  const [target, setTarget] = useState(null);
+  const [queryPage, setQueryPage] = useState(0);
+  const intersectRef = useRef(null);
+  const rootRef = useRef(null);
+  const [target, setTarget] = useState(null); // 왜 되는지?
   const [isLoading, setIsLoading] = useState(false);
-  const [queryPage, setQueryPage] = useState(1);
+  const [pageTotal, setPageTotal] = useState(1);
+  // const grid = document.querySelector('.Search_products');
+  // const newTarget = grid.lastElementChild;
+  let page = 0;
+  let pageTotal2 = 1;
+  let lock = false;
   // todo: 처음 전체 제품리스트를 받아온다 - 조회순 (조회순 class명 체인지)
   // todo: 인풋창에 검색을 하면 해당 인풋대로 서버에 요청 query=
   // todo: 리뷰순 클릭시, 리뷰순으로 재요청
   // todo: 100개 이후에는 무한 스크롤 구현 page,size
   // todo: 탑버튼 구현
-  // useEffect(() => {
-  //   setSearchOrder('views');
-  //   axios
-  //     .get('/products/all/items', {
-  //       params: { order: 'views' },
-  //     })
-  //     .then((res) => {
-  //       const { items, pages } = res.data;
-  //       dispatch(setProductList(items, pages.itemCount));
-  //     });
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setSearchOrder('views');
+    // axios
+    //   .get('/products/all/items', {
+    //     params: { order: 'views' },
+    //   })
+    //   .then((res) => {
+    //     const { items, pages } = res.data;
+    //     dispatch(setProductList(items, pages.itemCount));
+    //     setPageTotal(pages.total);
+    //   });
+  }, []);
 
   useEffect(
     () => () => {
       window.scrollTo(0, 0);
       setSearchOrder('views');
+      dispatch(resetSearchPage());
+      setQueryPage(0);
+      // setQueryPage(1);
       // dispatch(resetSearchedWord());
     },
     [],
@@ -100,11 +115,11 @@ function Search() {
   const handleNotification = () => {
     const notification = document.getElementById('IsLogin_container');
     if (!isLogin) {
-      // notification.style.right = '20px';
-      // setTimeout(() => {
-      //   notification.style.right = '-250px';
-      // }, 1500);
-      dispatch(setLoginModal(true));
+      notification.style.right = '20px';
+      setTimeout(() => {
+        notification.style.right = '-250px';
+      }, 1500);
+      // dispatch(setLoginModal(true));
     }
   };
 
@@ -179,9 +194,8 @@ function Search() {
     return () => observer && observer.disconnect();
   }, [target]);
 
+  // ----- handle products order by views, reviews
   const handleOrderBtn = (e) => {
-    // 조건 1 : !searchedProductList
-    // 조건 2 : target.value
     const order = e.target.value;
     if (!searchedProductList) {
       axios
@@ -192,6 +206,7 @@ function Search() {
           const { items, pages } = res.data;
           dispatch(setProductList(items, pages.itemCount));
           setSearchOrder(order);
+          setQueryPage(0);
         });
     } else {
       axios
@@ -202,27 +217,114 @@ function Search() {
           const { items, pages } = res.data;
           dispatch(setSearchedProductList(items, pages.itemCount));
           setSearchOrder(order);
+          setQueryPage(0);
         });
     }
   };
 
-  // const handleInfiniteScroll = () => {
-  //   let scrollHeight = Math.max(
-  //     document.documentElement.scrollHeight,
-  //     document.body.scrollHeight,
-  //   );
-  //   let scrollTop = Math.max(
-  //     document.documentElement.scrollTop,
-  //     document.body.scrollTop,
-  //   );
-  //   let clientHeight = document.body.clientHeight;
-  //   if (scrollTop + clientHeight === scrollHeight) {
-  //     setScrollPage({
-  //       prev: scrollPage.products,
-  //       products: scrollPage.products + 30,
-  //     });
-  //   }
-  // };
+  // -------- infinite scroll -------------
+  // useEffect(() => {
+  //   lock = false;
+  // }, [productList, searchedProductList]);
+
+  const getMoreProducts = async () => {
+    console.log('페이지 토탈', pageTotal2);
+    if (queryPage > pageTotal2) {
+      setIsLoading(false);
+      console.log('페이지 끝');
+      return true;
+    }
+    if (!searchedProductList) {
+      const resForProductList = await axios.get('/products/all/items', {
+        params: {
+          order: searchOrder,
+          page: page + 1,
+        },
+        loading: false,
+      });
+      const newList = productList.slice().concat(resForProductList.data.items);
+      dispatch(setProductList(newList, resForProductList.data.pages.itemCount));
+      setQueryPage((prev) => prev + 1);
+      page += 1;
+      // lock = false;
+      setIsLoading(false);
+      pageTotal2 = resForProductList.data.pages.total;
+      console.log('page : ', page);
+      console.log('요청완료');
+    } else {
+      const resForSearchedProductList = await axios.get('/products', {
+        params: {
+          query: `${searchedWord}`,
+          order: searchOrder,
+          page: page + 1,
+        },
+        loading: false,
+      });
+      const newSearchedList = searchedProductList
+        .slice()
+        .concat(resForSearchedProductList.data.items);
+      dispatch(
+        setSearchedProductList(
+          newSearchedList,
+          resForSearchedProductList.data.pages.itemCount,
+        ),
+      );
+      setQueryPage((prev) => prev + 1);
+      page += 1;
+      // lock = false;
+      setIsLoading(false);
+      console.log('page : ', page);
+      console.log('요청완료');
+    }
+
+    return false;
+  };
+  // useEffect(async () => {
+  //   // await axios
+  //   //   .get('/products/all/items', {
+  //   //     params: {
+  //   //       order: searchOrder,
+  //   //       page: queryPage + 1,
+  //   //     },
+  //   //   })
+  //   //   .then((res) => {
+  //   //     const newList = productList.slice().concat(res.data.items);
+  //   //     dispatch(setProductList(newList, res.data.pages.itemCount));
+  //   //   });
+  //   await getMoreProducts();
+  // }, [queryPage]);
+
+  const handleObserver = async ([entry], observer) => {
+    console.log('------lock', lock);
+    if (entry.isIntersecting && !isLoading && !lock) {
+      lock = true;
+      observer.unobserve(entry.target);
+      setIsLoading(true);
+      const result = await getMoreProducts();
+      setIsLoading(false);
+      if (!result) {
+        lock = false;
+        observer.observe(entry.target);
+      }
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(handleObserver, {
+        // root: rootRef.current,
+        rootMargin: '10px',
+        threshold: 1.0,
+      });
+      observer.observe(target);
+    }
+    // if (newTarget) {
+    //   observer = new IntersectionObserver(handleObserver, { threshold: 0.4 });
+    //   observer.observe(newTarget);
+    // }
+    return () => observer && observer.disconnect();
+  }, [target]);
 
   return (
     <>
@@ -231,11 +333,11 @@ function Search() {
       <div className="Search_conatiner">
         <div className="Search_in">
           <div className="Search_img" />
-          <div className="Search_bottom">
+          <div className="Search_bottom" ref={rootRef}>
             <div className="Search_title">
               <div>
                 {!searchedProductList
-                  ? '전체 건강기능식품'
+                  ? `전체 건강기능식품 ${queryPage}`
                   : `"${searchedWord}" 검색 결과`}
                 <span>
                   {!searchedProductList
@@ -315,7 +417,12 @@ function Search() {
                   </div>
                 ))
               )}
-              <div ref={setTarget} className="targetEl" />
+              <div
+                ref={setTarget}
+                className={isLoading ? 'targetEl' : 'targetEl_nonVisible'}
+              >
+                {isLoading && <IsLoadingSmall />}
+              </div>
             </div>
           </div>
         </div>
