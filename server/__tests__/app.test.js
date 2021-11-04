@@ -200,5 +200,23 @@ describe('제품 및 리뷰', () => {
     });
   });
 
-  
+  describe('리뷰 API', () => {
+    test('GET /reviews 내가쓴리뷰목록', async () => {
+      await request(app)
+        .get('/reviews')
+        .set(global.header)
+        .expect(200)
+        .then((res) => {
+          expect(res.body).toHaveProperty('items');
+          expect(Array.isArray(res.body.items)).toBe(true);
+        });
+    });
+
+    test('GET /reviews/:id 제품리뷰목록', async () => {
+      await request(app)
+        .get('/reviews/1')
+        .set(global.header)
+        .expect(200);
+    });
+  });
 });
