@@ -2,10 +2,15 @@
 import axios from 'axios';
 
 const refreshInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL || '',
   withCredentials: true,
 });
-const authUrl = ['/auth/signin', '/auth/signup', '/callback/google', '/callback/kakao'];
+const authUrl = [
+  '/auth/signin',
+  '/auth/signup',
+  '/callback/google',
+  '/callback/kakao',
+];
 
 export const updateToken = async () => {
   /**

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import loginState from '../../actions/userAction';
-import { setSignupModal } from '../../actions/modalAction';
-import { emailValidator, passwordValidator } from '../../utils/validation';
+import { setLoginState } from '../../actions/userAction';
+import { setLoginModal, setSignupModal } from '../../actions/modalAction';
+import { emailValidator, nicknameValidator, passwordValidator } from '../../utils/validation';
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Signup.scss';
@@ -126,6 +126,13 @@ function Signup() {
       return;
     }
 
+    if (!nicknameValidator(signupForm.nickname)) {
+      nickname.focus();
+      handleErrorMsg('nickname', '닉네임은 2~10자리, 특수문자 제외하고 가능합니다');
+      handleShakeInput('nickname');
+      return;
+    }
+
     if (!passwordValidator(signupForm.password)) {
       password.focus();
       handleErrorMsg(
@@ -164,8 +171,9 @@ function Signup() {
     axios
       .post('/auth/signup', signupForm)
       .then(() => {
-        dispatch(loginState(true));
+        dispatch(setLoginState(true));
         dispatch(setSignupModal(false));
+        dispatch(setLoginModal(false));
       })
       .catch((err) => {
         try {
@@ -222,7 +230,13 @@ function Signup() {
               onChange={handleFormChange}
               onKeyUp={handeleEnterForm}
             />
-            <div>{errorMsg.email}</div>
+            <div
+              className={
+                errorMsg.email ? 'signup_notice' : 'signup_notice dummy'
+              }
+            >
+              {errorMsg.email || '회원 가입 dummy notice입니다'}
+            </div>
           </div>
           <div className="nickname">
             <input
@@ -238,7 +252,13 @@ function Signup() {
               onChange={handleFormChange}
               onKeyUp={handeleEnterForm}
             />
-            <div>{errorMsg.nickname}</div>
+            <div
+              className={
+                errorMsg.nickname ? 'signup_notice' : 'signup_notice dummy'
+              }
+            >
+              {errorMsg.nickname || '회원 가입 dummy notice입니다'}
+            </div>
           </div>
           <div className="password">
             <input
@@ -268,7 +288,15 @@ function Signup() {
                 onChange={handleFormChange}
                 onKeyUp={handeleEnterForm}
               />
-              <div>{errorMsg.passwordCheck}</div>
+              <div
+                className={
+                  errorMsg.passwordCheck
+                    ? 'signup_notice'
+                    : 'signup_notice dummy'
+                }
+              >
+                {errorMsg.passwordCheck || '회원 가입 dummy notice입니다'}
+              </div>
             </div>
           </div>
         </div>

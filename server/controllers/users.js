@@ -45,6 +45,7 @@ module.exports = {
       if (user.profileImage) {
         // 기존 이미지 삭제
         await s3.delete(user.profileImage);
+        user.profileImage = '';
       }
     }
     Object.keys(req.body).forEach(async (key) => {

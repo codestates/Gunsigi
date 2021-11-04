@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
-import loginState from '../actions/userAction';
+import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
 
 export default function Google() {
@@ -14,9 +14,12 @@ export default function Google() {
       .post('/callback/google', { idToken })
       .then(() => {
         // 가입 or 로그인완료
-        dispatch(loginState(true));
+        dispatch(setLoginState(true));
         dispatch(setLoginModal(false));
         dispatch(setSignupModal(false));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

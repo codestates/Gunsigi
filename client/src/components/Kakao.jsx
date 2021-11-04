@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import KakaoLoin from 'react-kakao-login';
 import { useDispatch } from 'react-redux';
-import loginState from '../actions/userAction';
+import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
 
 export default function Kakao() {
@@ -15,9 +15,12 @@ export default function Kakao() {
       .post('/callback/kakao', { accessToken })
       .then(() => {
         // 검증 및 로그인 or 회원가입 성공
-        dispatch(loginState(true));
+        dispatch(setLoginState(true));
         dispatch(setLoginModal(false));
         dispatch(setSignupModal(false));
+      })
+      .catch((err) => {
+        console.log('err : ', err);
       });
   };
 
