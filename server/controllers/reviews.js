@@ -40,7 +40,7 @@ module.exports = {
         delete review.Product;
         return review;
       }),
-      pages: paging({ page, size, count }),
+      pages: { ...paging({ page, size, count }), itemsCount: count },
     });
   },
   get: async (req, res) => {
