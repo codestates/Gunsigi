@@ -4,7 +4,10 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { outMypage } from '../actions/inoutMypageAction';
-import { setProductList } from '../actions/searchAction';
+import {
+  setProductList,
+  setSearchedProductList,
+} from '../actions/searchAction';
 import Product from './Product';
 
 function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
@@ -23,13 +26,30 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
       data: { productId },
       loading: false,
     }).then(() => {
-      // bookmark.className = 'Product_heart_change';
-      dispatch(setProductList(productList.map((product) => {
-        if (product.id === productId) product.isBookmarked = true;
-        return product;
-      })));
+      if (!searchedProductList) {
+        console.log('전체검색 북마크 추가');
+        dispatch(
+          setProductList(
+            productList.map((product) => {
+              if (product.id === productId) product.isBookmarked = true;
+              return product;
+            }),
+          ),
+        );
+      } else {
+        console.log('검색어 검색 북마크 추가');
+        dispatch(
+          setSearchedProductList(
+            searchedProductList.map((product) => {
+              if (product.id === productId) product.isBookmarked = true;
+              return product;
+            }),
+          ),
+        );
+      }
     });
   };
+
   const deleteBookmark = (productId) => {
     axios({
       method: 'DELETE',
@@ -37,11 +57,25 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
       data: { productId },
       loading: false,
     }).then(() => {
-      // bookmark.className = 'Product_heart';
-      dispatch(setProductList(productList.map((product) => {
-        if (product.id === productId) product.isBookmarked = false;
-        return product;
-      })));
+      if (!searchedProductList) {
+        dispatch(
+          setProductList(
+            productList.map((product) => {
+              if (product.id === productId) product.isBookmarked = false;
+              return product;
+            }),
+          ),
+        );
+      } else {
+        dispatch(
+          setSearchedProductList(
+            searchedProductList.map((product) => {
+              if (product.id === productId) product.isBookmarked = false;
+              return product;
+            }),
+          ),
+        );
+      }
     });
   };
 
@@ -52,7 +86,6 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
       setTimeout(() => {
         notification.style.right = '-250px';
       }, 1500);
-      // dispatch(setLoginModal(true));
     }
   };
   const handleClickProduct = (e) => {
@@ -72,24 +105,23 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
     }
   };
 
-  return (
-    <>
-      {!searchedProductList ? (
-        productList.map((item, i) => {
+  if (!searchedProductList) {
+    return (
+      <>
+        {productList.map((item, i) => {
           return i === productList.length - 1 &&
             !isLoading &&
             queryPage <= pageTotal ? (
             <div
               onClick={handleClickProduct}
+              onKeyPress={handleClickProduct}
               role="link"
               tabIndex={0}
-              onKeyPress={handleClickProduct}
               id={item.id}
-              key="theLast"
+              key={`all${i}`}
               ref={setTarget}
             >
               <Product
-                key={item.id}
                 name={item.name}
                 reviews={item.reviewsCount}
                 img={item.image}
@@ -100,13 +132,13 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
           ) : (
             <div
               onClick={handleClickProduct}
+              onKeyPress={handleClickProduct}
               role="link"
               tabIndex={0}
-              onKeyPress={handleClickProduct}
               id={item.id}
+              key={`all${i}two`}
             >
               <Product
-                key={item.id}
                 name={item.name}
                 reviews={item.reviewsCount}
                 img={item.image}
@@ -115,56 +147,61 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
               />
             </div>
           );
-        })
-      ) : !searchedProductList.length ? (
-        <div className="noSearchList">
-          <img alt="!" src="/icons/icon_warn.svg" />
-          <p>일치하는 검색 결과가 없습니다</p>
-          <p>Sorry, No Results found</p>
-        </div>
-      ) : (
-        searchedProductList.map((item, i) => {
-          return i === searchedProductList.length - 1 &&
-            !isLoading &&
-            queryPage <= pageTotal ? (
-            <div
-              onClick={handleClickProduct}
-              role="link"
-              tabIndex={0}
-              onKeyPress={handleClickProduct}
-              id={item.id}
-              key="theLast"
-              ref={setTarget}
-            >
-              <Product
-                key={item.id}
-                name={item.name}
-                reviews={item.reviewsCount}
-                img={item.image}
-                score={item.score}
-                bookmark={item.isBookmarked}
-              />
-            </div>
-          ) : (
-            <div
-              onClick={handleClickProduct}
-              role="link"
-              tabIndex={0}
-              onKeyPress={handleClickProduct}
-              id={item.id}
-            >
-              <Product
-                key={item.id}
-                name={item.name}
-                reviews={item.reviewsCount}
-                img={item.image}
-                score={item.score}
-                bookmark={item.isBookmarked}
-              />
-            </div>
-          );
-        })
-      )}
+        })}
+      </>
+    );
+  }
+  if (!searchedProductList.length) {
+    return (
+      <div className="noSearchList">
+        <img alt="!" src="/icons/icon_warn.svg" />
+        <p>일치하는 검색 결과가 없습니다</p>
+        <p>Sorry, No Results found</p>
+      </div>
+    );
+  }
+  return (
+    <>
+      {searchedProductList.map((item, i) => {
+        return i === searchedProductList.length - 1 &&
+          !isLoading &&
+          queryPage <= pageTotal ? (
+          <div
+            onClick={handleClickProduct}
+            onKeyPress={handleClickProduct}
+            role="link"
+            tabIndex={0}
+            id={item.id}
+            key={`s${i}`}
+            ref={setTarget}
+          >
+            <Product
+              name={item.name}
+              reviews={item.reviewsCount}
+              img={item.image}
+              score={item.score}
+              bookmark={item.isBookmarked}
+            />
+          </div>
+        ) : (
+          <div
+            onClick={handleClickProduct}
+            onKeyPress={handleClickProduct}
+            role="link"
+            tabIndex={0}
+            id={item.id}
+            key={`s${i}two`}
+          >
+            <Product
+              name={item.name}
+              reviews={item.reviewsCount}
+              img={item.image}
+              score={item.score}
+              bookmark={item.isBookmarked}
+            />
+          </div>
+        );
+      })}
     </>
   );
 }

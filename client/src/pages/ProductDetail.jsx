@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable object-shorthand */

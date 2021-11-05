@@ -77,8 +77,8 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    // grid-column-start: 1;
-    // grid-column-end: 7;
+    grid-column-start: 1;
+    grid-column-end: 7;
     img {
       width: 130px;
       filter: $f-light-grey;
@@ -98,7 +98,9 @@
     background-color: red;
     grid-column-start: 1;
     grid-column-end: 3;
-    // margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .targetEl_nonVisible {
     // display: none;

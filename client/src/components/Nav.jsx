@@ -12,7 +12,6 @@ import {
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
-import { inMypage } from '../actions/inoutMypageAction';
 
 function Nav() {
   const history = useHistory();
@@ -80,7 +79,7 @@ function Nav() {
             </>
           ) : (
             <>
-              <Link onClick={() => dispatch(inMypage())} to="/mypage">
+              <Link to="/mypage">
                 <button className="mypage" type="button">
                   마이페이지
                 </button>

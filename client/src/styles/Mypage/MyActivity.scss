@@ -12,15 +12,16 @@
     font-size: 1.2rem;
     border-bottom: 1px solid $light-grey;
 
-    li:nth-child(2) {
-      color: $deep-grey;
-    }
-
     .submenu {
-      padding: 10px 5px 10px 5px;
+      padding: 0px 5px 5px 5px;
       cursor: pointer;
     }
 
+    li:nth-child(2) {
+      color: $deep-grey;
+      cursor: default;
+      pointer-events: none;
+    }
     .focused {
       transition: 0.5s ease;
       font-weight: 800;
@@ -42,21 +43,19 @@
 @include laptop {
   .my-activity_container {
     margin: 0;
-    width: 80%;
+    width: calc(100vw - 390px);
     height: calc(100vh - 160px);
 
     #tab_menu {
       margin: 0;
-      height: 40px;
-      // min-height: 39px;
-      // max-height: 40px;
+      height: 25px;
       font-size: 1.5rem;
     }
 
     .my-contents {
       padding: 25px 5px 0 5px;
 
-      height: calc(100vh - 200px);
+      height: calc(100vh - 185px);
       overflow-y: scroll;
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
