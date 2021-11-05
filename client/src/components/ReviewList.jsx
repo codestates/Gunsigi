@@ -35,7 +35,6 @@ function ReviewList({ name, productId }) {
       if (!params[k]) delete params[k];
     });
 
-    console.log('params : ', params, more);
     const res = await axios.get(`/reviews/${productId}`, {
       params: { ...params },
       loading: false,
@@ -59,8 +58,6 @@ function ReviewList({ name, productId }) {
     if (page <= total) lock = false;
     setIsLoaded(false);
   };
-
-  console.log('밖 리뷰 카운트', reviewsCount);
 
   //! 필터링 요청 및 리뷰 요청
   useEffect(async () => {

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import '../styles/Review.scss';
 import DeleteReviewModal from './DeleteReviewModal';
@@ -18,7 +19,9 @@ function Review({
   reviews,
   reviewIdx,
   setReviews,
+  reviewProductId,
 }) {
+  const history = useHistory();
   const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [reviewsLike, setReviewsLike] = useState([]);
@@ -192,10 +195,23 @@ function Review({
 
           <div className="Reviews_right">
             <div className="name">
-              <div className="product_name">
-                <span>제품명</span>
-                <span>{name}</span>
-              </div>
+              {isOpenMypage ? (
+                <div
+                  aria-hidden="true"
+                  onClick={() =>
+                    history.push(`/product-detail/${reviewProductId}`)
+                  }
+                  className="product_name cursor"
+                >
+                  <span>제품명</span>
+                  <span>{name}</span>
+                </div>
+              ) : (
+                <div className="product_name">
+                  <span>제품명</span>
+                  <span>{name}</span>
+                </div>
+              )}
               <div className="period">
                 <img src="/icons/icon_take_period.svg" alt="period" />
                 <span>{period}</span>

@@ -15,7 +15,6 @@ import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
-import { inMypage } from '../actions/inoutMypageAction';
 
 function NavChange() {
   const inputEl = useRef();
@@ -135,7 +134,7 @@ function NavChange() {
             </>
           ) : (
             <>
-              <Link onClick={() => dispatch(inMypage())} to="/mypage">
+              <Link to="/mypage">
                 <button type="button" className="mypage">
                   마이페이지
                 </button>

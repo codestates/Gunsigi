@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import MyProducts from './MyProducts';
 import MyReviews from './MyReviews';
+import { inMypage } from '../actions/inoutMypageAction';
 import '../styles/Mypage/MyActivity.scss';
 
 function MyActivity() {
   const userState = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
   const { myProducts } = userState;
 
   const [currentTab, setCurrentTab] = useState(0);
-  const [reviewCount, setRieviewCount] = useState(0);
 
+  const [reviewCount, setRieviewCount] = useState(0);
   const [reviews, setReviews] = useState([]);
 
   const menuArr = [
@@ -39,7 +41,7 @@ function MyActivity() {
 
   return (
     <div className="my-activity_container">
-      <ul id="tab_menu">
+      <ul aria-hidden="true" onClick={() => dispatch(inMypage())} id="tab_menu">
         {menuArr.map((el, index) => (
           <li
             key={el.name}
