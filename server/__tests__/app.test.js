@@ -306,6 +306,7 @@ describe('제품 및 리뷰', () => {
       await request(app)
         .get('/bookmarks')
         .set(global.header)
+        .query({ page: 1, limit: '30' })
         .expect(200)
         .then((res) => {
           expect(res.body).toHaveProperty('items');
