@@ -46,6 +46,7 @@ function App() {
       Authorization: `Bearer ${token}`,
     };
   }, [token]);
+
   if (token === null || isLogin === 'init') return '';
 
   return (
@@ -58,7 +59,7 @@ function App() {
         <Route path="/search">
           <Search />
         </Route>
-        <Route path="/mypage" component={Mypage}>
+        <Route path="/mypage">
           {isLogin ? <Mypage /> : <Redirect to="/" />}
         </Route>
         <Route path="/product-detail/:id" component={ProductDetail} />
