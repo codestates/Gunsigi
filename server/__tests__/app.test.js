@@ -94,6 +94,7 @@ describe('인증 및 유저', () => {
 describe('제품 및 리뷰', () => {
   let bookmarksCount;
   let reviewsCount;
+  let reviewId;
   describe('제품 API', () => {
     test('GET /products/:id 제품상세조회', async () => {
       await request(app).get(`/products/${productId}`).set(global.header)
@@ -305,6 +306,7 @@ describe('제품 및 리뷰', () => {
       await request(app)
         .get('/bookmarks')
         .set(global.header)
+        .query({ page: 1, limit: '30' })
         .expect(200)
         .then((res) => {
           expect(res.body).toHaveProperty('items');

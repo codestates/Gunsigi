@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '',
         get() {
           const image = this.getDataValue('profileImage');
-          if (image) return path.join(process.env.CDN_SERVER, image);
+          if (image) return `${process.env.CDN_SERVER}/${image}`;
           return '';
         },
       },

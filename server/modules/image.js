@@ -51,8 +51,6 @@ module.exports = {
       } catch (e) {
         debug(e);
         throw Error('Error in save image');
-      } finally {
-        await fs.rm(`/tmp/${path}`, { recursive: true });
       }
       return `${path}/${filename}`;
     }
