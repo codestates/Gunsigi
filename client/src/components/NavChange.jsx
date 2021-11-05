@@ -28,43 +28,28 @@ function NavChange() {
   const searchState = useSelector((state) => state.searchReducer);
   const { searchedWord } = searchState;
 
-  // 인풋창에서 특정값을 입력하고 엔터를 치거나 검색아이콘을 누르면,
-  //   검색결과리스트가 있을때, 검색페이지로 이동, 검색된 목록을 보여준다
-  //   검색 리스트가 [] 거나, 서버 응답이 400대, 에러일때, 시각적 피드백
-  // 인풋창을 비운채로 엔터를 누르면, 전체 목록 조회순 (기본)이 보이도록
-  // 어느페이지에서든 스크롤이 항상 위로 오도록
-  // 다른 페이지에 갔다가 서치페이지에 오면 서치리스트는 초기화되어야하지만, 네브체인지에서 서치페이지로갈때 초기화되어서는 안됨
-  //
   const handleSearchInput = (event) => {
     dispatch(setSearchedWord(event.target.value));
   };
-  const searchRequest = () => {
+
+  const searchRequest = async () => {
     if (inputEl.current.value !== '') {
-      axios
-        .get('/products', { params: { query: `${searchedWord}` } })
-        .then((res) => {
-          const { items, pages } = res.data;
-          dispatch(setSearchedProductList(items, pages.itemCount));
-          dispatch(setSearchType('search'));
-          // dispatch(resetSearchedWord());
-          setOpenSearchModal(false);
-          inputEl.current.blur();
-          inputEl.current.value = '';
-          history.push('/search');
-          window.scrollTo(0, 0);
-        })
-        .catch(() => {
-          // alert('찾으시는 제품이 없습니다');
-        });
+      const res = await axios.get('/products', {
+        params: { query: `${searchedWord}` },
+      });
+      const { items, pages } = res.data;
+      dispatch(setSearchedProductList(items, pages.itemCount));
+      dispatch(setSearchType('search'));
+      inputEl.current.value = '';
     } else {
       dispatch(resetSearchedProductList());
-      dispatch(resetSearchedWord());
-      setOpenSearchModal(false);
-      inputEl.current.blur();
-      history.push('/search');
-      window.scrollTo(0, 0);
+      // dispatch(resetSearchedWord());
     }
+    setOpenSearchModal(false);
+    inputEl.current.blur();
+    history.push('/search');
   };
+
   const handleInputPress = (event) => {
     if (event.key === 'Enter') {
       searchRequest();
@@ -101,18 +86,16 @@ function NavChange() {
             onKeyPress={(e) => handleInputPress(e)}
             type="text"
             className="search-input"
-            placeholder="검색어를 입력해 주세요"
+            // placeholder="검색어를 입력해 주세요"
           />
 
-          <div
+          <button
             className="icon_search"
             onClick={searchRequest}
-            onKeyPress={searchRequest}
-            role="button"
-            tabIndex={0}
+            type="button"
           >
             <img src="/icons/icon_magnify.svg" alt="magnifier" />
-          </div>
+          </button>
         </div>
         <div className="nav_right">
           {!isLogin ? (
