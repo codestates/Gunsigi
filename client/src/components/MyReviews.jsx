@@ -54,26 +54,35 @@ function MyReviews({ reviews, setReviews }) {
 
   return (
     <div className="my-reviews">
-      {reviews.map((review, reviewIdx) => (
-        <Review
-          key={review.id}
-          reviews={reviews}
-          reviewIdx={reviewIdx}
-          setReviews={setReviews}
-          reviewId={review.id}
-          name={review.productName}
-          profile={review.userInfo.profileImage}
-          nickname={review.userInfo.nickname}
-          productId={review.productId}
-          content={review.content}
-          date={review.createdAt.slice(0, 10)}
-          score={review.score}
-          images={review.images}
-          period={review.period}
-        />
-      ))}
-      {/* <div ref={setTarget}>{<IsLoadingSmall />}</div> */}
-      <div ref={setTarget}>{isLoaded && <IsLoadingSmall />}</div>
+      {reviews.length !== 0 ? (
+        <div>
+          {reviews.map((review, reviewIdx) => (
+            <Review
+              key={review.id}
+              reviews={reviews}
+              reviewIdx={reviewIdx}
+              setReviews={setReviews}
+              reviewId={review.id}
+              name={review.productName}
+              profile={review.userInfo.profileImage}
+              nickname={review.userInfo.nickname}
+              productId={review.productId}
+              content={review.content}
+              date={review.createdAt.slice(0, 10)}
+              score={review.score}
+              images={review.images}
+              period={review.period}
+              reviewProductId={review.productId}
+            />
+          ))}
+          <div ref={setTarget}>{isLoaded && <IsLoadingSmall />}</div>
+        </div>
+      ) : (
+        <div className="myProducts_none">
+          <img src="/icons/icon_warn.svg" alt="warn" />
+          <span>작성하신 리뷰가 존재하지 않습니다</span>
+        </div>
+      )}
     </div>
   );
 }

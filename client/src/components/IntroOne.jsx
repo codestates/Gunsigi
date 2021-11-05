@@ -53,8 +53,10 @@ function IntroOne() {
           {categoryContents.map((el) => (
             <div className="scene" key={el.id}>
               <div className="textBox">
-                <h3>{el.title}</h3>
-                <p>{el.desc}</p>
+                <div className="text">
+                  <h3>{el.title}</h3>
+                  <p>{el.desc}</p>
+                </div>
                 <button
                   type="button"
                   className="goToSearch"

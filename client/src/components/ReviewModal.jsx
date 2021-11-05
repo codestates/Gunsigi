@@ -38,7 +38,6 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
             setImgBase64([...imgBase64, base64Sub]);
             //  setImgBase64(newObj);
             // 파일 base64 상태 업데이트
-            //  console.log(images)
           }
         };
       }
@@ -79,7 +78,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
       })
         .then(() => {
           setisOpenWrite(false);
-          window.location.reload(`/product-detail/${productId}`);
+          window.location.reload(true);
         })
         .catch((err) => console.log(err));
     }

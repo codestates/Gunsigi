@@ -1,6 +1,7 @@
 @import '../App';
 
 .Product_items {
+  background-color: white;
   width: 160px;
   height: 160px;
   display: flex;
@@ -18,6 +19,7 @@
   }
 
   .Product_img {
+    position: relative;
     width: 100%;
     height: 60%;
     margin-bottom: 20px;
@@ -28,6 +30,8 @@
       filter: none;
     }
     .img_none {
+      position: absolute;
+      top: 8px;
       width: 100%;
       height: 100%;
       display: flex;
@@ -114,7 +118,7 @@
     width: 200px;
     height: 200px;
     .title {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       .bookmark {
         width: 30px;
         display: flex;
@@ -133,6 +137,7 @@
     width: 270px;
     height: 270px;
     .title {
+      font-size: 1.6rem;
       .bookmark {
         width: 40px;
         display: flex;

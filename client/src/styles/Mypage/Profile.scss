@@ -2,6 +2,7 @@
 
 #profile_container {
   margin: 2.5rem 2.5rem 1rem 2.5rem;
+  margin-bottom: 20px;
   background-color: $light-grey;
   border-radius: 0.5rem;
   display: flex;
@@ -79,7 +80,7 @@
     justify-content: center;
     gap: 3rem;
     height: 100%;
-    width: 20%;
+    width: 300px;
 
     #profile_info {
       flex-direction: column;
@@ -100,7 +101,7 @@
 @include desktop {
   #profile_container {
     font-size: 1.5rem;
-    width: 20%;
+    margin-bottom: 0;
 
     .profile_img {
       width: 17rem;

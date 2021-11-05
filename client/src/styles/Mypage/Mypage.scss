@@ -4,6 +4,10 @@
   display: none;
 }
 
+// #mypage_container {
+//   background-color: $white;
+// }
+
 @include tablet {
   .Mypage_topButton {
     display: block;
