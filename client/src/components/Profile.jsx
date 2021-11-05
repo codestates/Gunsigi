@@ -30,7 +30,6 @@ function Profile() {
         dispatch(setProfileImg(profileImage));
         setUserEmail(email);
         setUserType(type);
-        console.log('profile');
       })
       .catch((err) => {
         console.log('err', err);

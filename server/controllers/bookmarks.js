@@ -14,7 +14,7 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
-      limit: size,
+      limit: parseInt(size, 10),
       offset: (page - 1) * size,
       include: {
         model: Bookmark,
