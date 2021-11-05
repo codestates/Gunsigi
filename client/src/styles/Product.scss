@@ -52,9 +52,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    img {
-      width: 15px;
-      height: 15px;
+    .bookmark {
+      width: 20px;
+      display: flex;
+      justify-content: flex-end;
+      img {
+        width: 18px;
+        height: 18px;
+      }
     }
   }
 
@@ -110,9 +115,14 @@
     height: 200px;
     .title {
       font-size: 1.6rem;
-      img {
-        width: 20px;
-        height: 20px;
+      .bookmark {
+        width: 30px;
+        display: flex;
+        justify-content: flex-end;
+        img {
+          width: 22px;
+          height: 22px;
+        }
       }
     }
   }
@@ -122,5 +132,16 @@
   .Product_items {
     width: 270px;
     height: 270px;
+    .title {
+      .bookmark {
+        width: 40px;
+        display: flex;
+        justify-content: flex-end;
+        img {
+          width: 26px;
+          height: 26px;
+        }
+      }
+    }
   }
 }

@@ -1,6 +1,8 @@
 import {
-  ALL_PRODUCT_LIST,
-  SEARCHED_PRODUCT_LIST,
+  ADD_ALL_PRODUCT_LIST,
+  SET_ALL_PRODUCT_LIST,
+  ADD_SEARCHED_PRODUCT_LIST,
+  SET_SEARCHED_PRODUCT_LIST,
   RESET_SEARCHED_PRODUCT_LIST,
   SET_SEARCHED_WORD,
   RESET_SEARCHED_WORD,
@@ -22,13 +24,21 @@ const searchInit = {
 // false, [], [....값]
 const searchReducer = (state = searchInit, action) => {
   switch (action.type) {
-    case ALL_PRODUCT_LIST:
+    case ADD_ALL_PRODUCT_LIST:
       return {
+        ...state,
         productList: [...state.productList, ...action.payload.productList],
         productCount: action.payload.productCount,
       };
 
-    case SEARCHED_PRODUCT_LIST: {
+    case SET_ALL_PRODUCT_LIST:
+      return {
+        ...state,
+        productList: [...action.payload.productList],
+        productCount: action.payload.productCount,
+      };
+
+    case ADD_SEARCHED_PRODUCT_LIST: {
       let arr = state.searchedProductList;
       if (!state.searchedProductList) {
         arr = [];
@@ -41,6 +51,12 @@ const searchReducer = (state = searchInit, action) => {
         searchedProductCount: action.payload.productCount,
       };
     }
+    case SET_SEARCHED_PRODUCT_LIST:
+      return {
+        ...state,
+        searchedProductList: [...action.payload.productList],
+        searchedProductCount: action.payload.productCount,
+      };
 
     case RESET_SEARCHED_PRODUCT_LIST:
       return { ...state, searchedProductList: false };

@@ -87,6 +87,7 @@ function Review({
   useEffect(() => {
     const reviewLikeCount = [];
     const reviewHeart = [];
+
     for (let i = 0; i < reviews.length; i += 1) {
       reviewLikeCount.push(reviews[i].likesCount);
       reviewHeart.push(reviews[i].isLike);
