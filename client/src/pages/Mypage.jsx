@@ -6,6 +6,7 @@ import Profile from '../components/Profile';
 import MyActivity from '../components/MyActivity';
 import NavChange from '../components/NavChange';
 import { outMypage } from '../actions/inoutMypageAction';
+import TopButton from '../components/TopButton';
 
 function Mypage() {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function Mypage() {
   return (
     <>
       <NavChange />
+      <div className="Mypage_topButton">
+        <TopButton />
+      </div>
       <div id="mypage_container">
         <Profile />
         <MyActivity />

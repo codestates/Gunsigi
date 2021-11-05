@@ -45,14 +45,6 @@
       border-radius: 15px;
       position: relative;
       padding: 0 15px;
-      // & + .navChange_searchmodal {
-      //   visibility: hidden;
-      // }
-      // &:focus {
-      //   & + .navChange_searchmodal {
-      //     visibility: visible;
-      //   }
-      // }
     }
     .icon_search {
       width: 14px;
@@ -81,16 +73,19 @@
       filter: $f-black;
     }
     .login {
+      font-size: 1.1rem;
       margin-right: 20px;
       cursor: pointer;
     }
     .mypage {
+      font-size: 1.1rem;
       margin-right: 20px;
     }
     .login,
     .mypage,
     .signup,
     .logout {
+      font-size: 1.1rem;
       background-color: transparent;
       border: none;
     }
@@ -121,10 +116,19 @@
     .nav_right {
       font-size: 1.4rem;
       .login {
+        font-size: 1.4rem;
         margin-right: 40px;
+        cursor: pointer;
       }
       .mypage {
+        font-size: 1.4rem;
         margin-right: 40px;
+      }
+      .login,
+      .mypage,
+      .signup,
+      .logout {
+        font-size: 1.4rem;
       }
     }
   }

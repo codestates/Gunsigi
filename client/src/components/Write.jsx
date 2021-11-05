@@ -18,10 +18,10 @@ function Write({ openWriteHandler }) {
 
   return (
     <div className="Write">
-      {scrollPosition > 60 ? (
+      {scrollPosition > 100 ? (
         <div
           aria-hidden="true"
-          onClick={() => scrollTo({ top: 0 })}
+          onClick={() => window.scrollTo({ top: 0 })}
           className="top_button"
         >
           <img src="/icons/icon_arrow_left.svg" alt="top" />

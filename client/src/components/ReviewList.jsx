@@ -14,7 +14,6 @@ function ReviewList({ name, productId }) {
   const [month, setMonth] = useState([false, false, false, false]);
   const [reviews, setReviews] = useState([]);
   const [reviewsCount, setReviewsCount] = useState(0);
-  const [pages, setPages] = useState({ page: 1, total: 1 });
   const [monthName] = useState([
     '1개월 이하',
     '3개월 이상',
@@ -50,15 +49,20 @@ function ReviewList({ name, productId }) {
       }
       page += 1;
       setReviews((review) => review.concat(res.data.items));
+      setReviewsCount(res.data.pages.total);
+      console.log('안 리뷰 카운트', res.data.pages.total);
     } else {
       page = res.data.pages.page;
       setReviews(res.data.items);
+      setReviewsCount(res.data.pages.total);
+      console.log('안 리뷰 카운트', res.data.pages.total);
     }
     total = res.data.pages.total;
     if (page <= total) lock = false;
     setIsLoaded(false);
-    console.log('page, total, loading', page, total, isLoaded);
-  }
+  };
+
+  console.log('밖 리뷰 카운트', reviewsCount);
 
   //! 필터링 요청 및 리뷰 요청
   useEffect(async () => {
@@ -66,7 +70,7 @@ function ReviewList({ name, productId }) {
     if (monthIdx !== -1) {
       await getReviews(sequence, monthName[monthIdx] || '');
     } else {
-        await getReviews(sequence, '');
+      await getReviews(sequence, '');
     }
   }, [sequence, month]);
 
@@ -102,7 +106,6 @@ function ReviewList({ name, productId }) {
   };
 
   const onIntersect = async ([entry], observer) => {
-    console.log('함수 안', reviews.length);
     if (entry.isIntersecting && !isLoaded && !lock) {
       lock = true;
       setIsLoaded(true);
