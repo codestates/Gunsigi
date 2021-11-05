@@ -1,6 +1,8 @@
 import {
-  ALL_PRODUCT_LIST,
-  SEARCHED_PRODUCT_LIST,
+  ADD_ALL_PRODUCT_LIST,
+  SET_ALL_PRODUCT_LIST,
+  ADD_SEARCHED_PRODUCT_LIST,
+  SET_SEARCHED_PRODUCT_LIST,
   RESET_SEARCHED_PRODUCT_LIST,
   SET_SEARCHED_WORD,
   RESET_SEARCHED_WORD,
@@ -10,8 +12,24 @@ import {
   RESET_SEARCH_PAGE,
 } from './types';
 
+export const addProductList = (productList, productCount) => ({
+  type: ADD_ALL_PRODUCT_LIST,
+  payload: {
+    productList,
+    productCount,
+  },
+});
+
 export const setProductList = (productList, productCount) => ({
-  type: ALL_PRODUCT_LIST,
+  type: SET_ALL_PRODUCT_LIST,
+  payload: {
+    productList,
+    productCount,
+  },
+});
+
+export const addSearchedProductList = (productList, productCount) => ({
+  type: ADD_SEARCHED_PRODUCT_LIST,
   payload: {
     productList,
     productCount,
@@ -19,7 +37,7 @@ export const setProductList = (productList, productCount) => ({
 });
 
 export const setSearchedProductList = (productList, productCount) => ({
-  type: SEARCHED_PRODUCT_LIST,
+  type: SET_SEARCHED_PRODUCT_LIST,
   payload: {
     productList,
     productCount,
