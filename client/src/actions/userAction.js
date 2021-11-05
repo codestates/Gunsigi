@@ -3,6 +3,7 @@ import {
   SET_NICKNAME,
   SET_PROFILE_IMG,
   SET_MY_PRODUCTS,
+  SET_MY_PRODUCTS_CNT,
 } from './types';
 
 export const setLoginState = (trueOrFalse) => ({
@@ -30,5 +31,12 @@ export const setMyProducts = (myProductsArr) => ({
   type: SET_MY_PRODUCTS,
   payload: {
     myProducts: myProductsArr,
+  },
+});
+
+export const setMyProductsCnt = (myProductsCntNum) => ({
+  type: SET_MY_PRODUCTS_CNT,
+  payload: {
+    myProductsCnt: myProductsCntNum,
   },
 });

@@ -9,7 +9,7 @@ import '../styles/Mypage/MyActivity.scss';
 function MyActivity() {
   const userState = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  const { myProducts } = userState;
+  const { myProductsCnt } = userState;
 
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -18,7 +18,7 @@ function MyActivity() {
 
   const menuArr = [
     {
-      name: `나의 건강기능식품 (${myProducts.length})`,
+      name: `나의 건강기능식품 (${myProductsCnt})`,
       content: <MyProducts />,
     },
     { name: '|' },

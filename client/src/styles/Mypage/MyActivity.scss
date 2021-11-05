@@ -12,15 +12,16 @@
     font-size: 1.2rem;
     border-bottom: 1px solid $light-grey;
 
-    li:nth-child(2) {
-      color: $deep-grey;
-    }
-
     .submenu {
       padding: 0px 5px 5px 5px;
       cursor: pointer;
     }
 
+    li:nth-child(2) {
+      color: $deep-grey;
+      cursor: default;
+      pointer-events: none;
+    }
     .focused {
       transition: 0.5s ease;
       font-weight: 800;

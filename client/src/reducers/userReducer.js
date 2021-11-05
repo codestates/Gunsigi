@@ -3,6 +3,7 @@ import {
   SET_NICKNAME,
   SET_PROFILE_IMG,
   SET_MY_PRODUCTS,
+  SET_MY_PRODUCTS_CNT,
 } from '../actions/types';
 
 const userInit = {
@@ -10,6 +11,7 @@ const userInit = {
   nickName: '',
   profileImg: '',
   myProducts: [],
+  myProductsCnt: 0,
 };
 
 const userReducer = (state = userInit, action) => {
@@ -24,10 +26,10 @@ const userReducer = (state = userInit, action) => {
       return { ...state, profileImg: action.payload.profileImg };
 
     case SET_MY_PRODUCTS:
-      return {
-        ...state,
-        myProducts: action.payload.myProducts,
-      };
+      return { ...state, myProducts: action.payload.myProducts };
+
+    case SET_MY_PRODUCTS_CNT:
+      return { ...state, myProductsCnt: action.payload.myProductsCnt };
 
     default:
       return state;

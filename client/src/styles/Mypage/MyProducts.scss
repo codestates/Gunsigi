@@ -3,13 +3,10 @@
 .my-products {
   width: 100%;
   display: grid;
+  align-items: center;
+  justify-content: space-between;
   grid-template-columns: repeat(2, auto);
   gap: 20px;
-
-  .product_wrapper {
-    width: 160px;
-    height: 160px;
-  }
 }
 
 .myProducts_none {
@@ -29,7 +26,7 @@
   }
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 550px) {
   .my-products {
     grid-template-columns: repeat(3, auto);
   }
@@ -50,21 +47,21 @@
   }
 }
 
-@media screen and (min-width: 870px) {
-  .product_wrapper {
-    width: 200px;
-    height: 200px;
-  }
-}
-
 @include laptop {
   .my-products {
-    height: 100%;
+    grid-template-columns: repeat(3, auto);
   }
   .myProducts_none {
     height: calc(100vh - 300px);
   }
 }
+
+@media screen and (min-width: 1100px) {
+  .my-products {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+
 @include desktop {
   .my-products {
     grid-template-columns: repeat(5, auto);
@@ -79,8 +76,17 @@
 }
 
 @media screen and (min-width: 1600px) {
-  .product_wrapper {
-    width: 270px;
-    height: 270px;
+  .my-products {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+@media screen and (min-width: 1800px) {
+  .my-products {
+    grid-template-columns: repeat(5, auto);
+  }
+}
+@media screen and (min-width: 2170px) {
+  .my-products {
+    grid-template-columns: repeat(6, auto);
   }
 }
