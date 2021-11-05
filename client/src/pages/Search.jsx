@@ -39,49 +39,27 @@ function Search() {
     searchPage,
   } = searchState;
 
-  // const [isSearchALL, setIsSearchALL] = useState(true);
-  // todo: 처음 전체 제품리스트를 받아온다 - 조회순 (조회순 class명 체인지)
-  // todo: 인풋창에 검색을 하면 해당 인풋대로 서버에 요청 query=
-  // todo: 리뷰순 클릭시, 리뷰순으로 재요청
-  // todo: 100개 이후에는 무한 스크롤 구현 page,size
-  // todo: 탑버튼 구현
-
+  useEffect(() => {
+    // setSearchOrder('views');
+    console.log('서치오더 변화', searchOrder);
+  }, [searchOrder]);
   // ---- 다시 무한 스크롤 관련 스테이트 만
   const [isLoading, setIsLoading] = useState(false);
   // 리덕스의 productList
-  const [queryPage, setQueryPage] = useState(1);
-  const [searchedQueryPage, setSearchedQueryPage] = useState(1);
   const [target, setTarget] = useState(null); // 왜 되는지?
+  const [queryPage, setQueryPage] = useState(1);
   const [pageTotal, setPageTotal] = useState(1);
 
   // ----- handle products order by views, reviews
-  const handleOrderBtn = (e) => {
+  const handleOrderBtn = async (e) => {
     const order = e.target.value;
-    // if (!searchedProductList) {
-    //   axios
-    //     .get('/products/all/items', {
-    //       params: { order },
-    //       loading: false,
-    //     })
-    //     .then((res) => {
-    //       const { items } = res.data;
-    //       dispatch(setProductList(items, items.length));
-    //       setSearchOrder(order);
-    //       setQueryPage(0);
-    //     });
-    // } else {
-    //   axios
-    //     .get('/products', {
-    //       params: { query: searchedWord, type: searchType, order },
-    //       loading: false,
-    //     })
-    //     .then((res) => {
-    //       const { items } = res.data;
-    //       dispatch(setSearchedProductList(items, items.length));
-    //       setSearchOrder(order);
-    //       setQueryPage(0);
-    //     });
-    // }
+    if (!searchedProductList) {
+      dispatch(setProductList([], 0));
+    } else {
+      dispatch(setSearchedProductList([], 0));
+    }
+    setSearchOrder(order);
+    setQueryPage(1);
   };
 
   // -------- infinite scroll -------------
@@ -90,31 +68,29 @@ function Search() {
       const one = entries[0];
       if (one.isIntersecting) {
         setQueryPage((prev) => prev + 1);
-        setSearchedQueryPage((prev) => prev + 1);
       }
     }),
   );
 
   const getMoreProducts = async () => {
     // 전체 vs 검색어
+    setIsLoading(true);
     if (!searchedProductList) {
-      setIsLoading(true);
       const response = await axios.get('/products/all/items', {
-        params: { page: queryPage },
+        params: { page: queryPage, order: searchOrder },
+        loading: false,
       });
       dispatch(
         addProductList(response.data.items, response.data.pages.itemCount),
       );
       setPageTotal(response.data.pages.total);
-      setIsLoading(false);
     } else {
-      console.log('이게 되나');
       setIsLoading(true);
       const response = await axios.get('/products', {
         params: {
           query: `${searchedWord}`,
           order: searchOrder,
-          page: queryPage + 1,
+          page: queryPage,
         },
         loading: false,
       });
@@ -125,20 +101,20 @@ function Search() {
         ),
       );
       setPageTotal(response.data.pages.total);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
+  // 유즈이펙트에 쿼리페이지, 서치오더를 디펜던시 에 넣으면 되는데, set & add 를 첫번째에만 구분해줘야 함
   useEffect(() => {
     if (queryPage <= pageTotal) {
       getMoreProducts();
     }
-  }, [queryPage]);
+  }, [queryPage, searchOrder]);
 
   useEffect(() => {
     const currentEl = target;
     const currentObserver = observer.current;
-
     if (currentEl) {
       currentObserver.observe(currentEl);
     }
