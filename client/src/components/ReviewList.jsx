@@ -50,12 +50,10 @@ function ReviewList({ name, productId }) {
       page += 1;
       setReviews((review) => review.concat(res.data.items));
       setReviewsCount(res.data.pages.total);
-      console.log('안 리뷰 카운트', res.data.pages.total);
     } else {
       page = res.data.pages.page;
       setReviews(res.data.items);
-      setReviewsCount(res.data.pages.total);
-      console.log('안 리뷰 카운트', res.data.pages.total);
+      setReviewsCount(res.data.pages.itemsCount);
     }
     total = res.data.pages.total;
     if (page <= total) lock = false;
