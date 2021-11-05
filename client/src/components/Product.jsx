@@ -14,11 +14,13 @@ function Product({ name, reviews, img, score, bookmark }) {
       </div>
       <div className="title">
         <span>{name}</span>
-        <img
-          className={bookmark ? 'Product_heart_change' : 'Product_heart'}
-          src="/icons/icon_bookmark.svg"
-          alt="bookmark"
-        />
+        <div className="bookmark">
+          <img
+            className={bookmark ? 'Product_heart_change' : 'Product_heart'}
+            src="/icons/icon_bookmark.svg"
+            alt="bookmark"
+          />
+        </div>
       </div>
       <div className="stars">
         <ProductStar score={score} />

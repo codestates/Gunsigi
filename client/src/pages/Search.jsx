@@ -17,10 +17,10 @@ import {
 } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
-import TopButton from '../components/TopButton';
 import IsLogin from '../components/IsLogin';
 import IsLoadingSmall from '../components/IsLoadingSmall';
 import SearchProductList from '../components/SearchProductList';
+import TopButton from '../components/TopButton';
 
 function Search() {
   const history = useHistory();
