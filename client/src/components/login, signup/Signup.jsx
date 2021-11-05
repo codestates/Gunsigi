@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLoginState } from '../../actions/userAction';
@@ -10,6 +10,11 @@ import '../../styles/LoginSignup/Signup.scss';
 
 function Signup() {
   const dispatch = useDispatch();
+
+  // * input DOM 접근
+  const inputEmail = useRef(null);
+  const inputNickname = useRef(null);
+  const inputPassword = useRef(null);
 
   const [signupForm, setSignupForm] = useState({
     email: '',
@@ -99,42 +104,37 @@ function Signup() {
   const handleSignup = async (event) => {
     event.preventDefault();
 
-    // * 해당 input DOM
-    const email = document.querySelector('.Signup_in').children[1].children[0].children[0];
-    const nickname = document.querySelector('.Signup_in').children[1].children[1].children[0];
-    const password = document.querySelector('.Signup_in').children[1].children[2].children[0];
-
     // * 유효성 검사
     if (!signupForm.email) {
-      email.focus();
+      inputEmail.current.focus();
       handleErrorMsg('email', '이메일을 입력해주세요');
       handleShakeInput('email');
       return;
     }
 
     if (!emailValidator(signupForm.email)) {
-      email.focus();
+      inputEmail.current.focus();
       handleErrorMsg('email', '잘못된 형식의 이메일입니다');
       handleShakeInput('email');
       return;
     }
 
     if (!signupForm.nickname) {
-      nickname.focus();
+      inputNickname.current.focus();
       handleErrorMsg('nickname', '닉네임을 입력해주세요');
       handleShakeInput('nickname');
       return;
     }
 
     if (!nicknameValidator(signupForm.nickname)) {
-      nickname.focus();
+      inputNickname.current.focus();
       handleErrorMsg('nickname', '닉네임은 2~10자리, 특수문자 제외하고 가능합니다');
       handleShakeInput('nickname');
       return;
     }
 
     if (!passwordValidator(signupForm.password)) {
-      password.focus();
+      inputPassword.current.focus();
       handleErrorMsg(
         'passwordCheck',
         '비밀번호는 8자이상, 영문과 숫자를 포함해야합니다',
@@ -161,7 +161,7 @@ function Signup() {
     });
 
     if (!response.data.result) {
-      email.focus();
+      inputEmail.current.focus();
       handleErrorMsg('email', '이미 가입하신 이메일입니다');
       handleShakeInput('email');
       return;
@@ -186,7 +186,7 @@ function Signup() {
 
             setTimeout(() => handleErrorMsg(''), 5000);
           } else if (status === 403) {
-            email.focus();
+            inputEmail.current.focus();
             handleErrorMsg('email', '이미 가입하신 이메일입니다');
             handleShakeInput('email');
 
@@ -229,6 +229,7 @@ function Signup() {
               value={signupForm.email}
               onChange={handleFormChange}
               onKeyUp={handeleEnterForm}
+              ref={inputEmail}
             />
             <div
               className={
@@ -251,6 +252,7 @@ function Signup() {
               value={signupForm.nickname}
               onChange={handleFormChange}
               onKeyUp={handeleEnterForm}
+              ref={inputNickname}
             />
             <div
               className={
@@ -273,6 +275,7 @@ function Signup() {
               value={signupForm.password}
               onChange={handleFormChange}
               onKeyUp={handeleEnterForm}
+              ref={inputPassword}
             />
             <div className="check">
               <input

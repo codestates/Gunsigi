@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import MyProducts from './MyProducts';
 import MyReviews from './MyReviews';
 import '../styles/Mypage/MyActivity.scss';
 
 function MyActivity() {
+  const userState = useSelector((state) => state.userReducer);
+  const { myProducts } = userState;
+
   const [currentTab, setCurrentTab] = useState(0);
   const [reviewCount, setRieviewCount] = useState(0);
   const [target, setTarget] = useState(null);
@@ -15,7 +19,10 @@ function MyActivity() {
   const [reviews, setReviews] = useState([]);
 
   const menuArr = [
-    { name: '나의 건강기능식품 (05)', content: <MyProducts /> },
+    {
+      name: `나의 건강기능식품 (${myProducts.length})`,
+      content: <MyProducts />,
+    },
     { name: '|' },
     {
       name: `내가 쓴 리뷰 (${reviewCount})`,

@@ -3,10 +3,30 @@
 .my-products {
   width: 100%;
   display: grid;
-  align-items: center;
   grid-template-columns: repeat(2, auto);
-  flex-wrap: wrap;
   gap: 20px;
+
+  .product_wrapper {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.myProducts_none {
+  height: calc(100vh - 400px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: $deep-grey;
+  img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    filter: $f-deep-grey;
+  }
 }
 
 @media screen and (min-width: 500px) {
@@ -19,15 +39,48 @@
   .my-products {
     grid-template-columns: repeat(4, auto);
   }
+
+  .myProducts_none {
+    height: calc(100vh - 500px);
+    font-size: 1.6rem;
+    img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+}
+
+@media screen and (min-width: 870px) {
+  .product_wrapper {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 @include laptop {
   .my-products {
     height: 100%;
   }
+  .myProducts_none {
+    height: calc(100vh - 300px);
+  }
 }
 @include desktop {
   .my-products {
     grid-template-columns: repeat(5, auto);
+  }
+  .myProducts_none {
+    font-size: 1.8rem;
+    img {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .product_wrapper {
+    width: 270px;
+    height: 270px;
   }
 }

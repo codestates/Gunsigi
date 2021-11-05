@@ -20,15 +20,21 @@ function Profile() {
 
   // * 처음 랜더링 될 때 회원정보를 가져온다.
   useEffect(() => {
-    axios.get('/users').then((res) => {
-      const {
-        email, nickname, profileImage, type,
-      } = res.data.userInfo;
-      dispatch(setNickname(nickname));
-      dispatch(setProfileImg(profileImage));
-      setUserEmail(email);
-      setUserType(type);
-    });
+    axios
+      .get('/users')
+      .then((res) => {
+        const {
+          email, nickname, profileImage, type,
+        } = res.data.userInfo;
+        dispatch(setNickname(nickname));
+        dispatch(setProfileImg(profileImage));
+        setUserEmail(email);
+        setUserType(type);
+        console.log('profile');
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
   }, []);
 
   return (

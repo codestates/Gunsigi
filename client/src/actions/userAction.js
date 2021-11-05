@@ -2,6 +2,7 @@ import {
   SET_LOGIN_STATE,
   SET_NICKNAME,
   SET_PROFILE_IMG,
+  SET_MY_PRODUCTS,
 } from './types';
 
 export const setLoginState = (trueOrFalse) => ({
@@ -22,5 +23,12 @@ export const setProfileImg = (imgSrc) => ({
   type: SET_PROFILE_IMG,
   payload: {
     profileImg: imgSrc,
+  },
+});
+
+export const setMyProducts = (myProductsArr) => ({
+  type: SET_MY_PRODUCTS,
+  payload: {
+    myProducts: myProductsArr,
   },
 });
