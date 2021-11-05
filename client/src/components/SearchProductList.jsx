@@ -1,8 +1,10 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { outMypage } from '../actions/inoutMypageAction';
+import { setProductList } from '../actions/searchAction';
 import Product from './Product';
 
 function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
@@ -14,24 +16,32 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
   const { isLogin } = userState;
 
   // ------ bookmark add, delete, notification
-  const addBookmark = (productId, bookmark) => {
+  const addBookmark = (productId) => {
     axios({
       method: 'POST',
       url: '/bookmarks',
       data: { productId },
       loading: false,
     }).then(() => {
-      bookmark.className = 'Product_heart_change';
+      // bookmark.className = 'Product_heart_change';
+      dispatch(setProductList(productList.map((product) => {
+        if (product.id === productId) product.isBookmarked = true;
+        return product;
+      })));
     });
   };
-  const deleteBookmark = (productId, bookmark) => {
+  const deleteBookmark = (productId) => {
     axios({
       method: 'DELETE',
       url: '/bookmarks',
       data: { productId },
       loading: false,
     }).then(() => {
-      bookmark.className = 'Product_heart';
+      // bookmark.className = 'Product_heart';
+      dispatch(setProductList(productList.map((product) => {
+        if (product.id === productId) product.isBookmarked = false;
+        return product;
+      })));
     });
   };
 
@@ -53,9 +63,9 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
     if (!isLogin && bookmarkClass === 'Product_heart') {
       handleNotification();
     } else if (isLogin && bookmarkClass === 'Product_heart') {
-      addBookmark(productId, bookmark);
+      addBookmark(parseInt(productId, 10), bookmark);
     } else if (isLogin && bookmarkClass === 'Product_heart_change') {
-      deleteBookmark(productId, bookmark);
+      deleteBookmark(parseInt(productId, 10), bookmark);
     } else {
       dispatch(outMypage());
       history.push(`/product-detail/${productId}`);

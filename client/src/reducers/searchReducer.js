@@ -31,13 +31,16 @@ const searchReducer = (state = searchInit, action) => {
         productCount: action.payload.productCount,
       };
 
-    case SET_ALL_PRODUCT_LIST:
+    case SET_ALL_PRODUCT_LIST: {
+      let productCount;
+      if (action.payload.productCount === undefined) {
+        productCount = state.productCount;
+      } else productCount = action.payload.productCount;
       return {
-        ...state,
         productList: [...action.payload.productList],
-        productCount: action.payload.productCount,
+        productCount,
       };
-
+    }
     case ADD_SEARCHED_PRODUCT_LIST: {
       let arr = state.searchedProductList;
       if (!state.searchedProductList) {
