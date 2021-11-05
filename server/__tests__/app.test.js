@@ -1,6 +1,8 @@
 const request = require('supertest');
 const app = require('../app');
 
+const productId = 1551;
+let userId;
 const sampleUser = {
   email: 'testusersample@naver.com',
   nickname: 'testUser',
@@ -21,6 +23,10 @@ beforeAll(async () => {
       global.header = {
         Authorization: `Bearer ${res.body.accessToken}`,
       };
+      expect(res.body).toHaveProperty('accessToken');
+      expect(res.body).toHaveProperty('userInfo');
+      expect(res.body.userInfo).toHaveProperty('id');
+      userId = res.body.userInfo.id;
     });
 });
 
@@ -86,12 +92,20 @@ describe('인증 및 유저', () => {
 });
 
 describe('제품 및 리뷰', () => {
+  let bookmarksCount;
+  let reviewsCount;
   describe('제품 API', () => {
-    test('GET /products/:id', async () => {
-      await request(app).get('/products/1').set(global.header)
+    test('GET /products/:id 제품상세조회', async () => {
+      await request(app).get(`/products/${productId}`).set(global.header)
         .expect(200)
         .then((res) => {
           expect(res.body).toHaveProperty('itemInfo');
+          expect(res.body.itemInfo).toHaveProperty('score');
+          expect(res.body.itemInfo).toHaveProperty('bookmarksCount');
+          expect(res.body.itemInfo).toHaveProperty('reviewsCount');
+
+          bookmarksCount = res.body.itemInfo.bookmarksCount;
+          reviewsCount = res.body.itemInfo.reviewsCount;
         });
     });
 
@@ -216,7 +230,105 @@ describe('제품 및 리뷰', () => {
       await request(app)
         .get('/reviews/1')
         .set(global.header)
+        .expect(200)
+        .then((res) => {
+          expect(res.body).toHaveProperty('items');
+          expect(Array.isArray(res.body.items)).toBe(true);
+          expect(res.body).toHaveProperty('pages');
+          expect(res.body.pages).toHaveProperty('total');
+          expect(res.body.pages).toHaveProperty('itemsCount');
+        });
+    });
+
+    test('POST /reviews 리뷰작성', async () => {
+      await request(app)
+        .post('/reviews')
+        .set(global.header)
+        .send({
+          productId, content: 'test review', period: '1개월 이하', score: 4,
+        })
+        .expect(200)
+        .then(async (res) => {
+          expect(res.body).toHaveProperty('review');
+          expect(res.body.review).toHaveProperty('id');
+          reviewId = res.body.review.id;
+        });
+      const product = await app.db.Product.findByPk(productId);
+      expect(product.reviewsCount).toBe(reviewsCount + 1);
+    });
+
+    test('POST /review/like 리뷰에 좋아요', async () => {
+      await request(app)
+        .post('/review/like')
+        .set(global.header)
+        .send({ reviewId })
         .expect(200);
+      const review = await app.db.Review.findByPk(reviewId);
+      expect(review.likesCount).toBe(1);
+    });
+
+    test('DELETE /review/like 리뷰좋아요취소', async () => {
+      await request(app)
+        .delete('/review/like')
+        .set(global.header)
+        .send({ reviewId })
+        .expect(200);
+      const review = await app.db.Review.findByPk(reviewId);
+      expect(review.likesCount).toBe(0);
+    });
+
+    test('DELETE /reviews 리뷰삭제', async () => {
+      await request(app)
+        .delete('/reviews')
+        .set(global.header)
+        .send({ reviewId })
+        .expect(200);
+      const review = await app.db.Review.findByPk(reviewId);
+      const product = await app.db.Product.findByPk(productId);
+      expect(review).toBeNull();
+      expect(product.reviewsCount).toBe(reviewsCount);
+    });
+  });
+
+  describe('북마크 API', () => {
+    test('POST /bookmarks 북마크하기', async () => {
+      await request(app)
+        .post('/bookmarks')
+        .set(global.header)
+        .send({ productId })
+        .expect(200);
+      const product = await app.db.Product.findByPk(productId);
+      expect(product.bookmarksCount).toBe(bookmarksCount + 1);
+    });
+
+    test('GET /bookmarks 북마크제품목록', async () => {
+      await request(app)
+        .get('/bookmarks')
+        .set(global.header)
+        .expect(200)
+        .then((res) => {
+          expect(res.body).toHaveProperty('items');
+          expect(Array.isArray(res.body.items)).toBe(true);
+          expect((res.body.items.filter((item) => item.id === productId)).length).toBe(1);
+        });
+    });
+
+    test('DELETE /bookmarks 북마크삭제', async () => {
+      await request(app)
+        .delete('/bookmarks')
+        .set(global.header)
+        .send({ productId })
+        .expect(200);
+      const product = await app.db.Product.findByPk(productId);
+      expect(product.bookmarksCount).toBe(bookmarksCount);
+    });
+  });
+
+  describe('회원탈퇴', () => {
+    test('DELTE /users 회원탈퇴', async () => {
+      await request(app).delete('/users').set(global.header).expect(200);
+      const user = await app.db.User.findByPk(userId);
+      expect(user).toBeNull();
     });
   });
 });
