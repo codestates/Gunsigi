@@ -2,12 +2,14 @@ import {
   SET_LOGIN_STATE,
   SET_NICKNAME,
   SET_PROFILE_IMG,
+  SET_MY_PRODUCTS,
 } from '../actions/types';
 
 const userInit = {
   isLogin: 'init',
   nickName: '',
   profileImg: '',
+  myProducts: [],
 };
 
 const userReducer = (state = userInit, action) => {
@@ -20,6 +22,12 @@ const userReducer = (state = userInit, action) => {
 
     case SET_PROFILE_IMG:
       return { ...state, profileImg: action.payload.profileImg };
+
+    case SET_MY_PRODUCTS:
+      return {
+        ...state,
+        myProducts: action.payload.myProducts,
+      };
 
     default:
       return state;
