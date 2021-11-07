@@ -23,15 +23,14 @@
 
 ### Front-end Stack
 
-<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/scss-1572B6?style=for-the-badge&logo=sass&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=black">
 <br />
 <br />
 ### Back-end Stack
 
 <img src="https://img.shields.io/badge/node.js-228B22?style=for-the-badge&logo=node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-006400?style=for-the-badge&logo=express&logoColor=white">
-<img src="https://img.shields.io/badge/json%20web%20tokens-8A2BE2?style=for-the-badge&logo=json%20web%20tokens&logoColor=white">
+<img src="https://img.shields.io/badge/json%20web%20tokens-8A2BE2?style=for-the-badge&logo=json%20web%20tokens&logoColor=white"> <img src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/python-3776AB1?style=for-the-badge&logo=python&logoColor=white"> <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white">
 <br />
 <br />
 ## 🧑🏻‍💻👩🏻‍💻🧑🏻‍💻👩🏻‍💻 Team: DOCO
