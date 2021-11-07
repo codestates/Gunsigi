@@ -24,7 +24,13 @@ function MyActivity() {
     { name: '|' },
     {
       name: `내가 쓴 리뷰 (${reviewCount})`,
-      content: <MyReviews reviews={reviews} setReviews={setReviews} />,
+      content: (
+        <MyReviews
+          setRieviewCount={setRieviewCount}
+          reviews={reviews}
+          setReviews={setReviews}
+        />
+      ),
     },
   ];
 

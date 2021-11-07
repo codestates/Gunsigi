@@ -4,6 +4,8 @@ import {
   SET_PROFILE_IMG,
   SET_MY_PRODUCTS,
   SET_MY_PRODUCTS_CNT,
+  SET_MY_REVIEWS,
+  SET_MY_REVIEWS_CNT,
 } from '../actions/types';
 
 const userInit = {
@@ -12,6 +14,8 @@ const userInit = {
   profileImg: '',
   myProducts: [],
   myProductsCnt: 0,
+  myReviews: [],
+  myReviewsCnt: 0,
 };
 
 const userReducer = (state = userInit, action) => {
@@ -30,6 +34,12 @@ const userReducer = (state = userInit, action) => {
 
     case SET_MY_PRODUCTS_CNT:
       return { ...state, myProductsCnt: action.payload.myProductsCnt };
+
+    case SET_MY_REVIEWS:
+      return { ...state, myReviews: action.payload.myReviews };
+
+    case SET_MY_REVIEWS_CNT:
+      return { ...state, myReviews: action.payload.reviewsCount };
 
     default:
       return state;
