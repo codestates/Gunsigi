@@ -14,7 +14,7 @@ import {
   categoryForRequest,
 } from '../assets/Search';
 
-function SearchModal({ setOpenSearchModal }) {
+function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
   const SearchModalCloseEl = useRef(null);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,14 +27,14 @@ function SearchModal({ setOpenSearchModal }) {
     // 키즈 어린이만 type=search요청
     const idx = e.target.value - 1;
     const tag = searchHashtag[idx].name.slice(2);
-
+    setQueryPage(1);
     if (idx === 6) {
       axios
         .get('/products', {
           params: {
             query: '키즈,어린이',
             type: 'search',
-            order: 'views',
+            order: searchOrder,
           },
         })
         .then((res) => {
@@ -42,9 +42,6 @@ function SearchModal({ setOpenSearchModal }) {
           dispatch(setSearchedProductList(items, pages.itemCount));
           dispatch(setSearchType('search'));
           dispatch(setSearchedWord('키즈,어린이'));
-          setOpenSearchModal(false);
-          history.push('/search');
-          window.scrollTo(0, 0);
         });
     } else {
       axios
@@ -52,7 +49,7 @@ function SearchModal({ setOpenSearchModal }) {
           params: {
             query: tag,
             type: 'keyword',
-            order: 'views',
+            order: searchOrder,
           },
         })
         .then((res) => {
@@ -60,19 +57,24 @@ function SearchModal({ setOpenSearchModal }) {
           dispatch(setSearchedProductList(items, pages.itemCount));
           dispatch(setSearchType('keyword'));
           dispatch(setSearchedWord(tag));
-          setOpenSearchModal(false);
-          history.push('/search');
-          window.scrollTo(0, 0);
         });
     }
+    setOpenSearchModal(false);
+    history.push({
+      pathname: '/search',
+      state: { queryPage: 2 },
+    });
+    window.scrollTo(0, 0);
   };
+
   const handleCategoryBtn = (categoryId) => {
+    setQueryPage(1);
     axios
       .get('/products', {
         params: {
           query: categoryForRequest[categoryId],
           type: 'category',
-          order: 'views',
+          order: searchOrder,
         },
       })
       .then((res) => {
@@ -81,7 +83,10 @@ function SearchModal({ setOpenSearchModal }) {
         dispatch(setSearchedWord(categoryForRequest[categoryId]));
         dispatch(setSearchType('category'));
         setOpenSearchModal(false);
-        history.push('/search');
+        history.push({
+          pathname: '/search',
+          state: { queryPage: 2 },
+        });
         window.scrollTo(0, 0);
       });
   };

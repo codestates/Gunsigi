@@ -39,16 +39,48 @@ function Search() {
     searchPage,
   } = searchState;
 
-  useEffect(() => {
-    // setSearchOrder('views');
-    console.log('서치오더 변화', searchOrder);
-  }, [searchOrder]);
   // ---- 다시 무한 스크롤 관련 스테이트 만
   const [isLoading, setIsLoading] = useState(false);
   // 리덕스의 productList
   const [target, setTarget] = useState(null); // 왜 되는지?
   const [queryPage, setQueryPage] = useState(1);
   const [pageTotal, setPageTotal] = useState(1);
+  const rootRef = useRef(null);
+  useEffect(async () => {
+    setIsLoading(true);
+    if (!searchedProductCount) {
+      const response = await axios.get('/products/all/items', {
+        params: { page: queryPage, order: searchOrder },
+        loading: false,
+      });
+      dispatch(
+        setProductList(response.data.items, response.data.pages.itemCount),
+      );
+      setPageTotal(response.data.pages.total);
+    } else {
+      const response = await axios.get('/products', {
+        params: {
+          query: `${searchedWord}`,
+          order: searchOrder,
+          page: queryPage,
+        },
+        loading: false,
+      });
+      dispatch(
+        setSearchedProductList(
+          response.data.items,
+          response.data.pages.itemCount,
+        ),
+      );
+      setPageTotal(response.data.pages.total);
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    // setSearchOrder('views');
+    console.log('서치오더 변화', searchOrder);
+  }, [searchOrder]);
 
   // ----- handle products order by views, reviews
   const handleOrderBtn = async (e) => {
@@ -64,12 +96,15 @@ function Search() {
 
   // -------- infinite scroll -------------
   const observer = useRef(
-    new IntersectionObserver((entries) => {
-      const one = entries[0];
-      if (one.isIntersecting) {
-        setQueryPage((prev) => prev + 1);
-      }
-    }),
+    new IntersectionObserver(
+      (entries) => {
+        const one = entries[0];
+        if (one.isIntersecting) {
+          setQueryPage((prev) => prev + 1);
+        }
+      },
+      { root: rootRef.current, threshold: 1 },
+    ),
   );
 
   const getMoreProducts = async () => {
@@ -107,7 +142,7 @@ function Search() {
 
   // 유즈이펙트에 쿼리페이지, 서치오더를 디펜던시 에 넣으면 되는데, set & add 를 첫번째에만 구분해줘야 함
   useEffect(() => {
-    if (queryPage <= pageTotal) {
+    if (queryPage <= pageTotal && queryPage > 1) {
       getMoreProducts();
     }
   }, [queryPage, searchOrder]);
@@ -127,7 +162,7 @@ function Search() {
 
   return (
     <>
-      <NavChange />
+      <NavChange setQueryPage={setQueryPage} searchOrder={searchOrder} />
       <IsLogin />
       <TopButton />
       <div className="Search_conatiner">
@@ -178,10 +213,8 @@ function Search() {
                 pageTotal={pageTotal}
                 setTarget={setTarget}
               />
-              <div className={isLoading ? 'targetEl' : 'targetEl_nonVisible'}>
-                {isLoading && <IsLoadingSmall />}
-              </div>
             </div>
+            <div className="targetEl">{isLoading && <IsLoadingSmall />}</div>
           </div>
         </div>
       </div>

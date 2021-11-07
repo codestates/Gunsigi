@@ -91,3 +91,42 @@ export const kickContents = [
     src: '',
   },
 ];
+
+export const dummyReviews = [
+  {
+    id: 1,
+    nickname: 'suyeon',
+    product: '레모나',
+    review:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
+    date: '2021.10.03',
+    src: '/images/suyeon.png',
+  },
+  {
+    id: 2,
+    nickname: 'sarahsea',
+    product: '프리미엄 프로폴리스',
+    review:
+      '좀 피곤할 때나 감기가 올 것 같을 때는 프로폴리스 먹고 자면 괜찮아지는 것 같더라고요, 프로폴리스가 면역력 강화에 좋다고들 하는데 개인적으로 프로폴리스가 잘 맞는 편인 것 같아서 애용하고 있습니다',
+    date: '2021.11.25',
+    src: '/images/sarah.png',
+  },
+  {
+    id: 3,
+    nickname: 'doldolma',
+    product: '레모나',
+    review:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
+    date: '2021.11.17',
+    src: '/images/doldolma.png',
+  },
+  {
+    id: 4,
+    nickname: 'Hoony',
+    product: '레모나',
+    review:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
+    date: '2021.10.31',
+    src: '/images/hoony.png',
+  },
+];

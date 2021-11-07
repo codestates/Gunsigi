@@ -154,9 +154,11 @@ function SearchProductList({ isLoading, queryPage, pageTotal, setTarget }) {
   if (!searchedProductList.length) {
     return (
       <div className="noSearchList">
-        <img alt="!" src="/icons/icon_warn.svg" />
-        <p>일치하는 검색 결과가 없습니다</p>
-        <p>Sorry, No Results found</p>
+        <div className="content">
+          <img alt="warning icon" src="/icons/icon_warn.svg" />
+          <p>일치하는 검색 결과가 없습니다</p>
+          <p>Sorry, No Results found</p>
+        </div>
       </div>
     );
   }

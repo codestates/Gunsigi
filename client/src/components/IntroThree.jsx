@@ -1,4 +1,5 @@
 import React from 'react';
+import { dummyReviews } from '../assets/Main';
 import '../styles/landing/introThree.scss';
 
 function IntroThree() {
@@ -16,7 +17,34 @@ function IntroThree() {
       </div>
       <div className="container scroll">
         <div className="row">
-          <div className="col-sm-1 col-md-2 col-lg-1">
+          {dummyReviews.map((review) => (
+            <div className="col-sm-1 col-md-2" key={review.id}>
+              <div className="review-box">
+                <div className="profile">
+                  <img src={review.src} alt="profile" />
+                  <div className="nickname">{review.nickname}</div>
+                  <div className="createdAt">{review.date}</div>
+                  <div className="stars">
+                    <img src="/icons/icon_star_fill.svg" alt="star" />
+                    <img src="/icons/icon_star_fill.svg" alt="star" />
+                    <img src="/icons/icon_star_fill.svg" alt="star" />
+                    <img src="/icons/icon_star_fill.svg" alt="star" />
+                    <img src="/icons/icon_star_fill.svg" alt="star" />
+                  </div>
+                </div>
+                <div className="content">
+                  <div className="product">
+                    <span className="desc">제품명</span>
+                    <span className="name">{review.product}</span>
+                  </div>
+                  <div className="review">
+                    {review.review}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* <div className="col-sm-1 col-md-2 col-lg-1">
             <div className="review-box">
               <div className="profile">
                 <img src="/images/suyeon.png" alt="profile" />
@@ -63,10 +91,10 @@ function IntroThree() {
                   <span className="name">프리미엄 프로폴리스</span>
                 </div>
                 <div className="review">
-                  좀 피곤할 때나 감기가 올 것 같을 때는
-                  프로폴리스 먹고 자면 괜찮아지는 것 같더라고요,
-                  프로폴리스가 면역력 강화에 좋다고들 하는데 개인적으로
-                  프로폴리스가 잘 맞는 편인 것 같아서 애용하고 있습니다
+                  좀 피곤할 때나 감기가 올 것 같을 때는 프로폴리스 먹고 자면
+                  괜찮아지는 것 같더라고요, 프로폴리스가 면역력 강화에 좋다고들
+                  하는데 개인적으로 프로폴리스가 잘 맞는 편인 것 같아서 애용하고
+                  있습니다
                 </div>
               </div>
             </div>
@@ -124,7 +152,7 @@ function IntroThree() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
