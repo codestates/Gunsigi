@@ -31,7 +31,7 @@
   .SearchModal_hashtage {
     display: flex;
     flex-wrap: wrap;
-    .tag {
+    .keyword {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -157,7 +157,7 @@
       }
     }
     .SearchModal_hashtage {
-      .tag {
+      .keyword {
         width: 150px;
         height: 30px;
         font-size: 1.6rem;
