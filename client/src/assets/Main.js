@@ -123,7 +123,7 @@ export const dummyReviews = [
   {
     id: 4,
     nickname: 'Hoony',
-    product: '레모나',
+    product: '락토핏 생유산균 골드',
     review:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
     date: '2021.10.31',
