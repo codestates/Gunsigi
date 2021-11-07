@@ -3,17 +3,14 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { outMypage } from '../actions/inoutMypageAction';
 import {
-  resetSearchPage,
   addProductList,
   setProductList,
-  addSearchedProductList,
-  setSearchedProductList,
-  setSearchPage,
+  setSearchType,
 } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
@@ -22,79 +19,99 @@ import IsLoadingSmall from '../components/IsLoadingSmall';
 import SearchProductList from '../components/SearchProductList';
 import TopButton from '../components/TopButton';
 
-function Search() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [searchOrder, setSearchOrder] = useState('views');
-  const userState = useSelector((state) => state.userReducer);
-  const { isLogin } = userState;
-  const searchState = useSelector((state) => state.searchReducer);
-  const {
-    productList,
-    productCount,
-    searchedProductList,
-    searchedProductCount,
-    searchedWord,
-    searchType,
-    searchPage,
-  } = searchState;
+const parseQuery = (queryString) => {
+  const query = {};
+  const pairs = (
+    queryString[0] === '?' ? queryString.substr(1) : queryString
+  ).split('&');
+  for (let i = 0; i < pairs.length; i += 1) {
+    const pair = pairs[i].split('=');
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  }
+  return query;
+};
 
-  // ---- 다시 무한 스크롤 관련 스테이트 만
-  const [isLoading, setIsLoading] = useState(false);
-  // 리덕스의 productList
-  const [target, setTarget] = useState(null); // 왜 되는지?
-  const [queryPage, setQueryPage] = useState(1);
-  const [pageTotal, setPageTotal] = useState(1);
+let query = '';
+let type = 'search';
+let init = false;
+
+function Search() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const rootRef = useRef(null);
-  useEffect(async () => {
-    setIsLoading(true);
-    if (!searchedProductCount) {
-      const response = await axios.get('/products/all/items', {
-        params: { page: queryPage, order: searchOrder },
-        loading: false,
-      });
-      dispatch(
-        setProductList(response.data.items, response.data.pages.itemCount),
-      );
-      setPageTotal(response.data.pages.total);
+  const searchState = useSelector((state) => state.searchReducer);
+  const { productList, productCount } = searchState;
+
+  const [searchOrder, setSearchOrder] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [target, setTarget] = useState(null); // 왜 되는지?
+  const [queryPage, setQueryPage] = useState(0);
+  const [pageTotal, setPageTotal] = useState(2);
+
+  const onObserver = (bool) => {
+    const observerTarget = document.getElementById('observer');
+    observerTarget.style.display = bool ? 'block' : 'none';
+  };
+
+  useEffect(() => {
+    // 뒤로가기 거나 아니거나
+    // location.search = url 디코딩 후 쿼리, 타입을 뽑아냄
+    console.log('서치페이지 location.search', location.search);
+    console.log('서치페이지 window.history', window.history);
+    const parsedQuery = parseQuery(location.search);
+    query = parsedQuery.query;
+    type = parsedQuery.type;
+    if (
+      window.history.state?.queryPage &&
+      productList.length &&
+      history.action === 'POP'
+    ) {
+      // 기존 제품정보가 남아있고 뒤로가기를 통해서 온것이라면 페이지, 정렬 정보를 복구한다.
+      init = true;
+      setPageTotal(window.history.state.pageTotal);
+      setQueryPage(window.history.state.queryPage);
+      setSearchOrder(window.history.state.searchOrder);
+      setSearchType(window.history.state.searchType);
     } else {
-      const response = await axios.get('/products', {
-        params: {
-          query: `${searchedWord}`,
-          order: searchOrder,
-          page: queryPage,
-        },
-        loading: false,
-      });
-      dispatch(
-        setSearchedProductList(
-          response.data.items,
-          response.data.pages.itemCount,
-        ),
-      );
-      setPageTotal(response.data.pages.total);
+      // 그게 아니라면 초기화
+      onObserver(false);
+      dispatch(setProductList([], 0));
+      setPageTotal(1);
+      setQueryPage(1);
+      setSearchOrder('views');
+      setSearchType('search');
     }
-    setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    // setSearchOrder('views');
-    console.log('서치오더 변화', searchOrder);
-  }, [searchOrder]);
-
-  // ----- handle products order by views, reviews
-  const handleOrderBtn = async (e) => {
-    const order = e.target.value;
-    if (!searchedProductList) {
+    // 같은페이지 내에서 검색 다시 했을 때
+    // 주소가 바뀌었으니 새로운 검색을 한것임. 전부 초기화
+    if (history.action === 'PUSH') {
+      // 뒤로가기가 아닐 때만 초기화
+      onObserver(false);
+      const parsedQuery = parseQuery(location.search);
+      query = parsedQuery.query;
+      type = parsedQuery.type;
       dispatch(setProductList([], 0));
-    } else {
-      dispatch(setSearchedProductList([], 0));
+      setPageTotal(1);
+      if (queryPage === 1) {
+        getMoreProducts();
+      }
+      setQueryPage(1);
     }
+  }, [location.search]);
+
+  // --------------- handle products order by view or reviews
+  const handleOrderBtn = async (e) => {
+    onObserver(false);
+    const order = e.target.value;
+    dispatch(setProductList([], 0));
     setSearchOrder(order);
     setQueryPage(1);
   };
 
-  // -------- infinite scroll -------------
+  // --------------- infinite scroll
   const observer = useRef(
     new IntersectionObserver(
       (entries) => {
@@ -103,46 +120,49 @@ function Search() {
           setQueryPage((prev) => prev + 1);
         }
       },
-      { root: rootRef.current, threshold: 1 },
+      { threshold: 1.0, root: rootRef.current },
     ),
   );
 
   const getMoreProducts = async () => {
-    // 전체 vs 검색어
     setIsLoading(true);
-    if (!searchedProductList) {
-      const response = await axios.get('/products/all/items', {
-        params: { page: queryPage, order: searchOrder },
-        loading: false,
-      });
-      dispatch(
-        addProductList(response.data.items, response.data.pages.itemCount),
-      );
-      setPageTotal(response.data.pages.total);
-    } else {
-      setIsLoading(true);
-      const response = await axios.get('/products', {
-        params: {
-          query: `${searchedWord}`,
-          order: searchOrder,
-          page: queryPage,
-        },
-        loading: false,
-      });
-      dispatch(
-        addSearchedProductList(
-          response.data.items,
-          response.data.pages.itemCount,
-        ),
-      );
-      setPageTotal(response.data.pages.total);
+    const axiosConfig = {
+      method: 'get',
+      url: '/products/all/items',
+      params: {
+        page: queryPage,
+        order: searchOrder,
+        type,
+      },
+      loading: false,
+    };
+    if (query) {
+      axiosConfig.params.query = query;
+      axiosConfig.params.type = type;
+      axiosConfig.url = '/products';
     }
+    const response = await axios(axiosConfig);
+    if (!response.data.items.length && queryPage === 1) {
+      dispatch(setProductList(false, 0));
+      setIsLoading(false);
+      return;
+    }
+    dispatch(
+      addProductList(response.data.items, response.data.pages.itemCount),
+    );
+    setPageTotal(response.data.pages.total);
+    onObserver(true);
     setIsLoading(false);
   };
 
-  // 유즈이펙트에 쿼리페이지, 서치오더를 디펜던시 에 넣으면 되는데, set & add 를 첫번째에만 구분해줘야 함
   useEffect(() => {
-    if (queryPage <= pageTotal && queryPage > 1) {
+    // 페이지, 정렬 바뀌면 히스토리에 같이 저장.
+    window.history.replaceState({ queryPage, searchOrder, pageTotal }, 'page');
+    if (queryPage <= pageTotal && queryPage && searchOrder) {
+      if (init) {
+        init = false;
+        return;
+      }
       getMoreProducts();
     }
   }, [queryPage, searchOrder]);
@@ -162,7 +182,7 @@ function Search() {
 
   return (
     <>
-      <NavChange setQueryPage={setQueryPage} searchOrder={searchOrder} />
+      <NavChange />
       <IsLogin />
       <TopButton />
       <div className="Search_conatiner">
@@ -171,14 +191,10 @@ function Search() {
           <div className="Search_bottom">
             <div className="Search_title">
               <div>
-                {!searchedProductList
+                {!query
                   ? `전체 건강기능식품 ${queryPage}`
-                  : `"${searchedWord}" 검색 결과`}
-                <span>
-                  {!searchedProductList
-                    ? `(${productCount})`
-                    : `(${searchedProductCount})`}
-                </span>
+                  : `"${query}" 검색 결과`}
+                <span>{`(${productCount})`}</span>
               </div>
               <div className="Sequence">
                 <button
@@ -206,15 +222,12 @@ function Search() {
                 </button>
               </div>
             </div>
-            <div className="Search_products">
-              <SearchProductList
-                isLoading={isLoading}
-                queryPage={queryPage}
-                pageTotal={pageTotal}
-                setTarget={setTarget}
-              />
+            <div className="Search_products" ref={rootRef}>
+              <SearchProductList />
+              <div id="observer" ref={setTarget} className="targetEl">
+                {isLoading && <IsLoadingSmall />}
+              </div>
             </div>
-            <div className="targetEl">{isLoading && <IsLoadingSmall />}</div>
           </div>
         </div>
       </div>

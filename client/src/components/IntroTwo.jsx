@@ -1,35 +1,16 @@
 import React from 'react';
-import axios from 'axios';
 import '../styles/landing/introTwo.scss';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import {
-  setSearchedProductList,
-  setSearchType,
-  setSearchedWord,
-} from '../actions/searchAction';
 import { keywordContents } from '../assets/Main';
 
 function IntroTwo() {
-  const dispatch = useDispatch();
   const history = useHistory();
   const handleSearchKeyword = (e) => {
     const keyword = e.currentTarget.value;
-    axios
-      .get('/products', {
-        params: {
-          query: keyword,
-          type: 'keyword',
-        },
-      })
-      .then((res) => {
-        const { items, pages } = res.data;
-        dispatch(setSearchedWord(keyword));
-        dispatch(setSearchedProductList(items, pages.itemCount));
-        dispatch(setSearchType('keyword'));
-        history.push('/search');
-        window.scrollTo(0, 0);
-      });
+    history.push({
+      pathname: '/search',
+      search: `?query=${keyword}&type=keyword`,
+    });
   };
 
   return (

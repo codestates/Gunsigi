@@ -21,7 +21,7 @@ const searchInit = {
   searchType: 'search',
   searchPage: 1,
 };
-// false, [], [....값]
+
 const searchReducer = (state = searchInit, action) => {
   switch (action.type) {
     case ADD_ALL_PRODUCT_LIST:
@@ -36,8 +36,12 @@ const searchReducer = (state = searchInit, action) => {
       if (action.payload.productCount === undefined) {
         productCount = state.productCount;
       } else productCount = action.payload.productCount;
+      let { productList } = action.payload;
+      if (Array.isArray(productList)) {
+        productList = [...action.payload.productList];
+      }
       return {
-        productList: [...action.payload.productList],
+        productList,
         productCount,
       };
     }
