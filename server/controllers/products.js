@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 const {
   Product, Bookmark, Ingredient, Sequelize, Tag, sequelize,
 } = require('../models');
@@ -9,10 +10,13 @@ module.exports = {
     /**
      * 검색 API
      */
-    const {
+    let {
       page, size, query, type,
     } = req.query;
     let order = req.query.order === 'reivews' ? 'reviewsCount' : 'views';
+    if (['눈', '간', '뼈', '이', '키', '위', '장'].includes(query)) {
+      type = 'category';
+    }
 
     const params = {
       attributes: [
@@ -25,6 +29,7 @@ module.exports = {
       ],
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
+      distinct: true,
       include: [
         {
           model: Bookmark,

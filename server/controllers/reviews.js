@@ -12,9 +12,11 @@ module.exports = {
      */
     const { page, size } = req.query;
     const { count, rows } = await Review.findAndCountAll({
+      distinct: true,
       where: { userId: res.locals.user.id },
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
+      order: [['id', 'DESC']],
       include: [{
         model: reviewImage,
         as: 'images',
@@ -51,6 +53,7 @@ module.exports = {
       page, size, filter, order,
     } = req.query;
     const params = {
+      distinct: true,
       where: { productId: req.params.productId },
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
