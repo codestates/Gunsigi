@@ -3,10 +3,12 @@ const { param, query } = require('express-validator');
 const products = require('../controllers/products');
 const token = require('../middlware/token');
 const validationError = require('../middlware/error');
+const cache = require('../middlware/cache');
 
 const router = express.Router();
 
 router.use(token.check);
+router.use(cache);
 
 // routes
 router.get(
@@ -24,7 +26,7 @@ router.get(
     .withMessage('type은 search, category, keyword 중에 하나를 입력해주세요.'),
   query('page')
     .default(1)
-    .isInt()
+    .isInt({ min: 1 })
     .withMessage('page는 숫자로 입력해주세요'),
   query('size')
     .default(30)
@@ -46,7 +48,7 @@ router.get(
 
 router.get(
   '/all/items',
-  query('page').default(1).isInt().withMessage('page는 숫자로 입력해주세요'),
+  query('page').default(1).isInt({ min: 1 }).withMessage('page는 숫자로 입력해주세요'),
   query('size').default(30).isInt().withMessage('size는 숫자로 입력해주세요'),
   query('order')
     .default('views')
