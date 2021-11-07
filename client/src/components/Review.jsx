@@ -20,6 +20,7 @@ function Review({
   reviewIdx,
   setReviews,
   reviewProductId,
+  setRieviewCount,
 }) {
   const history = useHistory();
   const isOpenMypage = useSelector((state) => state.inoutMypage);
@@ -42,6 +43,7 @@ function Review({
           url: '/reviews?page=1&size=5',
         }).then((res) => {
           setReviews(res.data.items);
+          setRieviewCount(res.data.pages.itemsCount);
         });
         setIsOpenDelete(false);
       });

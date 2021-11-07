@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-lonely-if */
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
@@ -5,6 +7,7 @@ import '../styles/ReviewModal.scss';
 function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
+  const [alertMSG, setAlertMSG] = useState('초기 메세지');
   const [reviewWrite, setReviewWrite] = useState({
     content: '',
     score: '',
@@ -19,9 +22,12 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     });
   };
 
-  //!이미지 업로드
+  //! 이미지 업로드
   const reviewImageHandler = (e) => {
+    console.log('file', e.target.files);
+
     setImgBase64([]);
+    const images = [];
     for (let i = 0; i < e.target.files.length; i += 1) {
       if (e.target.files[i]) {
         const reader = new FileReader();
@@ -31,13 +37,22 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           // 2. 읽기가 완료되면 아래코드가 실행됩니다.
           const base64 = reader.result;
 
-          if (base64) {
-            //  images.push(base64.toString())
-            const base64Sub = base64.toString();
+          if (
+            imgBase64.length > 4 ||
+            e.target.files.length > 4 ||
+            e.target.files.length + imgBase64.length > 4
+          ) {
+            setAlertMSG('이미지 갯수를 확인해주세요');
+            const notice = document.getElementById('review_notice');
+            notice.style.opacity = '1';
+          } else {
+            if (base64) {
+              images.push(base64.toString());
 
-            setImgBase64([...imgBase64, base64Sub]);
-            //  setImgBase64(newObj);
-            // 파일 base64 상태 업데이트
+              setImgBase64([...imgBase64, ...images]);
+              //  setImgBase64(newObj);
+              // 파일 base64 상태 업데이트
+            }
           }
         };
       }
@@ -60,6 +75,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
 
   //! 리뷰요청
   const reviewRequest = () => {
+    setAlertMSG('사진을 제외한 모든 항목을 확인해주세요');
     const notice = document.getElementById('review_notice');
     const { content, score, period } = reviewWrite;
     if (content.length === 0 || score.length === 0 || period.length === 0) {
@@ -234,7 +250,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           </div>
           <div className="review_img_in">
             <div className="loacal_img">
-              {imgBase64.length === 4 ? null : (
+              {imgBase64.length >= 4 ? null : (
                 <label htmlFor="img">
                   <span>+</span>
                   <input
@@ -263,9 +279,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 </div>
               ))}
             </div>
-            <span id="review_notice">
-              사진을 제외한 모든 항목을 입력해주세요
-            </span>
+            <span id="review_notice">{alertMSG}</span>
           </div>
         </div>
         <div className="bottom">

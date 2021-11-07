@@ -5,7 +5,7 @@ import '../styles/Mypage/MyReviews.scss';
 
 import IsLoadingSmall from './IsLoadingSmall';
 
-function MyReviews({ reviews, setReviews }) {
+function MyReviews({ reviews, setReviews, setRieviewCount }) {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   let page = 1;
@@ -73,6 +73,7 @@ function MyReviews({ reviews, setReviews }) {
               images={review.images}
               period={review.period}
               reviewProductId={review.productId}
+              setRieviewCount={setRieviewCount}
             />
           ))}
           <div ref={setTarget}>{isLoaded && <IsLoadingSmall />}</div>
