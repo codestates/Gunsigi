@@ -1,37 +1,19 @@
 import React from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../styles/landing/introOne.scss';
-import {
-  setSearchedProductList,
-  setSearchType,
-  setSearchedWord,
-} from '../actions/searchAction';
 import { categoryContents } from '../assets/Main';
 
 function IntroOne() {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const handleSearchCategory = (e) => {
-    axios
-      .get('/products', {
-        params: {
-          query: e.target.value,
-          type: 'category',
-        },
-      })
-      .then((res) => {
-        const { items, pages } = res.data;
-        dispatch(setSearchedWord(e.target.value));
-        dispatch(setSearchedProductList(items, pages.itemCount));
-        dispatch(setSearchType('category'));
-        history.push('/search');
-        window.scrollTo(0, 0);
-      });
+    const category = e.target.value;
+    history.push({
+      pathname: '/search',
+      search: `?query=${category}&type=category`,
+    });
   };
 
   return (

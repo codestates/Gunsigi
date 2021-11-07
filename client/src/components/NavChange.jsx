@@ -32,7 +32,7 @@ function NavChange({ setQueryPage, searchOrder }) {
   };
 
   const searchRequest = async () => {
-    setQueryPage(1);
+    // setQueryPage(1);
     if (inputEl.current.value !== '') {
       const res = await axios.get('/products', {
         params: { query: `${searchedWord}`, order: searchOrder },

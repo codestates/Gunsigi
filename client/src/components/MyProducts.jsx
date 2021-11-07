@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setMyProducts, setMyProductsCnt } from '../actions/userAction';
+import { setProductList } from '../actions/searchAction';
 import { outMypage } from '../actions/inoutMypageAction';
 import Product from './Product';
 import IsLoadingSmall from './IsLoadingSmall';
@@ -16,7 +17,8 @@ function MyProducts() {
   const history = useHistory();
   const userState = useSelector((state) => state.userReducer);
   const { myProducts, myProductsCnt } = userState;
-
+  const searchState = useSelector((state) => state.searchReducer);
+  const { productList } = searchState;
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNone, setIsNone] = useState(false);
@@ -26,6 +28,7 @@ function MyProducts() {
 
   // * 내 북마크 요청 30개씩 페이지네이션
   useEffect(async () => {
+    lock = true;
     if (page > total) {
       setIsLoaded(false);
       return;
@@ -33,13 +36,17 @@ function MyProducts() {
     axios
       .get('/bookmarks', { params: { page, size: 30 }, loading: false })
       .then((res) => {
-        if (page === 1 && res.data.items.length === 0) {
+        if (res.data.pages.itemCount === 0) {
           setIsNone(true);
           return;
         }
+        console.log(res.data);
         total = res.data.pages.total;
         dispatch(setMyProducts([...myProducts, ...res.data.items]));
         dispatch(setMyProductsCnt(res.data.pages.itemCount));
+        if (page === total) {
+          target.style.display = 'none';
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -64,6 +71,15 @@ function MyProducts() {
           ),
         );
         dispatch(setMyProductsCnt(myProductsCnt - 1));
+        dispatch(
+          setProductList(
+            productList.map((product) => {
+              if (product.id === parseInt(productId, 10))
+                product.isBookmarked = false;
+              return product;
+            }),
+          ),
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +104,7 @@ function MyProducts() {
       lock = true;
       setIsLoaded(true);
       observer.unobserve(entry.target);
-      setPage((page) => page + 1);
+      setPage((prevPage) => prevPage + 1);
       observer.observe(entry.target);
     }
   };
@@ -108,12 +124,12 @@ function MyProducts() {
     <>
       {!isNone ? (
         <div className="my-products">
-          {myProducts.map((item, idx) => (
+          {myProducts.map((item) => (
             <div
               className="product_wrapper"
               onClick={handleClickProduct}
               aria-hidden="true"
-              key={idx}
+              key={`key ${item.id}`}
               id={item.id}
             >
               <Product

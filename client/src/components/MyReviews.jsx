@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Review from './Review';
-import '../styles/Mypage/MyReviews.scss';
-
 import IsLoadingSmall from './IsLoadingSmall';
 
 function MyReviews({ reviews, setReviews, setRieviewCount }) {

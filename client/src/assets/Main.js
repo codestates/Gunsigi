@@ -96,10 +96,10 @@ export const dummyReviews = [
   {
     id: 1,
     nickname: 'suyeon',
-    product: '레모나',
+    product: '안국 프리미엄 루테인',
     review:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
-    date: '2021.10.03',
+      '아직은 먹은지 몇일 되지 않아서 효과를 잘 모르겠지만 다른 분들의 얘기를 들어보니 효과가 있다는 소리를 들어서 꾸준히 먹어봐야 할 것 같습니다',
+    date: '2021.11.07',
     src: '/images/suyeon.png',
   },
   {
@@ -123,7 +123,7 @@ export const dummyReviews = [
   {
     id: 4,
     nickname: 'Hoony',
-    product: '레모나',
+    product: '락토핏 생유산균 골드',
     review:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
     date: '2021.10.31',

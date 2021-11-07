@@ -42,6 +42,8 @@ function MyActivity() {
     }).then((res) => {
       setReviews(res.data.items);
       setRieviewCount(res.data.pages.itemsCount);
+      console.log('reviewCount', reviewCount);
+      console.log(res.data);
     });
   }, []);
 

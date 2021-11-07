@@ -68,13 +68,14 @@
   display: grid;
   align-items: center;
   justify-content: space-between;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
   .noSearchList {
+    width: 100%;
     min-width: 360px;
     min-height: 200px;
     height: 40vh;
@@ -104,6 +105,8 @@
   }
 }
 .targetEl {
+  width: 100%;
+  min-width: 50px;
   min-height: 30px;
   background-color: red;
   grid-column-start: 1;
@@ -117,7 +120,7 @@
 
 @media screen and (min-width: 500px) {
   .Search_products {
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, 1fr);
     .targetEl {
       grid-column-end: 4;
     }
@@ -126,7 +129,7 @@
 
 @media screen and (min-width: 650px) {
   .Search_products {
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
     .targetEl {
       grid-column-end: 5;
     }
@@ -161,7 +164,7 @@
   }
 
   .Search_products {
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .Search_title {
@@ -181,7 +184,7 @@
 
 @media screen and (min-width: 1150px) {
   .Search_products {
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(5, 1fr);
     .targetEl {
       grid-column-end: 6;
     }
@@ -198,7 +201,7 @@
   }
 
   .Search_products {
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: repeat(6, 1fr);
     .targetEl {
       grid-column-end: 7;
     }

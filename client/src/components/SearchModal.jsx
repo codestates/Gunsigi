@@ -23,72 +23,32 @@ function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
       setOpenSearchModal(false);
     }
   };
-  const handleTagBtn = (e) => {
-    // 키즈 어린이만 type=search요청
+  const handleKeywordBtn = (e) => {
+    // 키즈,어린이만 type=search요청
     const idx = e.target.value - 1;
-    const tag = searchHashtag[idx].name.slice(2);
-    setQueryPage(1);
+    const keyword = searchHashtag[idx].name.slice(2);
     if (idx === 6) {
-      axios
-        .get('/products', {
-          params: {
-            query: '키즈,어린이',
-            type: 'search',
-            order: searchOrder,
-          },
-        })
-        .then((res) => {
-          const { items, pages } = res.data;
-          dispatch(setSearchedProductList(items, pages.itemCount));
-          dispatch(setSearchType('search'));
-          dispatch(setSearchedWord('키즈,어린이'));
-        });
+      dispatch(setSearchedWord('키즈,어린이'));
+      history.push({
+        pathname: '/search',
+        search: '?query=키즈,어린이&type=search',
+      });
     } else {
-      axios
-        .get('/products', {
-          params: {
-            query: tag,
-            type: 'keyword',
-            order: searchOrder,
-          },
-        })
-        .then((res) => {
-          const { items, pages } = res.data;
-          dispatch(setSearchedProductList(items, pages.itemCount));
-          dispatch(setSearchType('keyword'));
-          dispatch(setSearchedWord(tag));
-        });
+      dispatch(setSearchedWord(keyword));
+      history.push({
+        pathname: '/search',
+        search: `?query=${keyword}&type=keyword`,
+      });
     }
     setOpenSearchModal(false);
-    history.push({
-      pathname: '/search',
-      state: { queryPage: 2 },
-    });
-    window.scrollTo(0, 0);
   };
 
   const handleCategoryBtn = (categoryId) => {
-    setQueryPage(1);
-    axios
-      .get('/products', {
-        params: {
-          query: categoryForRequest[categoryId],
-          type: 'category',
-          order: searchOrder,
-        },
-      })
-      .then((res) => {
-        const { items, pages } = res.data;
-        dispatch(setSearchedProductList(items, pages.itemCount));
-        dispatch(setSearchedWord(categoryForRequest[categoryId]));
-        dispatch(setSearchType('category'));
-        setOpenSearchModal(false);
-        history.push({
-          pathname: '/search',
-          state: { queryPage: 2 },
-        });
-        window.scrollTo(0, 0);
-      });
+    history.push({
+      pathname: '/search',
+      search: `?query=${categoryForRequest[categoryId]}&type=category`,
+    });
+    setOpenSearchModal(false);
   };
   return (
     <div className="SearchModal">
@@ -97,15 +57,15 @@ function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
           <div className="SearchModal_keyword">
             <div>추천키워드</div>
             <div className="SearchModal_hashtage">
-              {searchHashtag.map((tag) => (
+              {searchHashtag.map((keyword) => (
                 <button
-                  className="tag"
+                  className="keyword"
                   type="button"
-                  key={tag.id}
-                  value={tag.id}
-                  onClick={handleTagBtn}
+                  key={keyword.id}
+                  value={keyword.id}
+                  onClick={handleKeywordBtn}
                 >
-                  {tag.name}
+                  {keyword.name}
                 </button>
               ))}
             </div>
