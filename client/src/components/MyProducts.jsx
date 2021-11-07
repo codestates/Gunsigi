@@ -8,6 +8,9 @@ import Product from './Product';
 import IsLoadingSmall from './IsLoadingSmall';
 import '../styles/Mypage/MyProducts.scss';
 
+let total = 1;
+let lock = false;
+
 function MyProducts() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,21 +19,36 @@ function MyProducts() {
 
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isNone, setIsNone] = useState(false);
+  const [page, setPage] = useState(1);
 
-  // * 처음 랜더링 될 때 내 북마크 요청
-  useEffect(() => {
+  useEffect(() => () => dispatch(setMyProducts([])), []);
+
+  // * 내 북마크 요청 30개씩 페이지네이션
+  useEffect(async () => {
+    if (page > total) {
+      setIsLoaded(false);
+      return;
+    }
     axios
-      .get('/bookmarks?page=1&size=30', { loading: false })
+      .get('/bookmarks', { params: { page, size: 30 }, loading: false })
       .then((res) => {
-        console.log('처음');
-        // console.log(res.data.items);
-        dispatch(setMyProducts(res.data.items));
+        if (page === 1 && res.data.items.length === 0) {
+          setIsNone(true);
+          return;
+        }
+        total = res.data.pages.total;
+        dispatch(setMyProducts([...myProducts, ...res.data.items]));
         dispatch(setMyProductsCnt(res.data.pages.itemCount));
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoaded(false);
+        lock = false;
       });
-  }, []);
+  }, [page]);
 
   // * 마이페이지 내 북마크 삭제 요청
   // productId의 타입은 문자열이므로 숫자로 변환해야함
@@ -38,7 +56,6 @@ function MyProducts() {
     axios
       .delete('/bookmarks', { data: { productId }, loading: false })
       .then(() => {
-        console.log('삭제');
         dispatch(
           setMyProducts(
             myProducts.filter(
@@ -66,39 +83,13 @@ function MyProducts() {
     }
   };
 
-  let page = 1;
-  let total = 1;
-  let lock = false;
-
-  // * 무한 스크롤 구현
-  const getMoreItem = async () => {
-    if (page > total) {
-      setIsLoaded(false);
-      return true;
-    }
-
-    const res = await axios({
-      url: `/bookmarks?size=30&page=${page + 1}`,
-      loading: false,
-    });
-
-    dispatch(setMyProducts(myProducts.concat(res.data.items)));
-    console.log(res.data.items);
-    console.log('무한으로 즐겨요');
-    page += 1;
-    total = res.data.pages.total;
-    setIsLoaded(false);
-    lock = false;
-    return false;
-  };
-
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoaded && !lock) {
       lock = true;
       setIsLoaded(true);
       observer.unobserve(entry.target);
-      const result = await getMoreItem();
-      if (!result) observer.observe(entry.target);
+      setPage((page) => page + 1);
+      observer.observe(entry.target);
     }
   };
 
@@ -115,14 +106,14 @@ function MyProducts() {
 
   return (
     <>
-      {myProducts.length !== 0 ? (
+      {!isNone ? (
         <div className="my-products">
-          {myProducts.map((item) => (
+          {myProducts.map((item, idx) => (
             <div
               className="product_wrapper"
               onClick={handleClickProduct}
               aria-hidden="true"
-              key={item.id}
+              key={idx}
               id={item.id}
             >
               <Product
