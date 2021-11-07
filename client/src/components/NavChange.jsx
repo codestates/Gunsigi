@@ -3,19 +3,14 @@ import '../styles/nav/navChange.scss';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setSearchedProductList,
-  resetSearchedProductList,
-  setSearchedWord,
-  setSearchType,
-} from '../actions/searchAction';
+import { setSearchedWord } from '../actions/searchAction';
 import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
-function NavChange({ setQueryPage, searchOrder }) {
+function NavChange() {
   const inputEl = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -31,27 +26,18 @@ function NavChange({ setQueryPage, searchOrder }) {
     dispatch(setSearchedWord(event.target.value));
   };
 
-  const searchRequest = async () => {
-    // setQueryPage(1);
-    if (inputEl.current.value !== '') {
-      const res = await axios.get('/products', {
-        params: { query: `${searchedWord}`, order: searchOrder },
-      });
-      const { items, pages } = res.data;
-      dispatch(setSearchedProductList(items, pages.itemCount));
-      dispatch(setSearchType('search'));
-      inputEl.current.value = '';
-    } else {
-      dispatch(resetSearchedProductList());
-      // dispatch(resetSearchedWord());
-    }
+  const searchRequest = () => {
     setOpenSearchModal(false);
     inputEl.current.blur();
-    history.push({
-      pathname: '/search',
-      state: { queryPage: 2 },
-    });
-    window.scrollTo(0, 0);
+    if (inputEl.current.value !== '') {
+      inputEl.current.value = '';
+      history.push({
+        pathname: '/search',
+        search: `?query=${searchedWord}&type=search`,
+      });
+    } else {
+      history.push('/search');
+    }
   };
 
   const handleInputPress = (event) => {
@@ -75,11 +61,7 @@ function NavChange({ setQueryPage, searchOrder }) {
         {isOpenLogin ? <LoginModal /> : null}
         {isOpenSingup ? <SignupModal /> : null}
         {openSearchModal ? (
-          <SearchModal
-            setOpenSearchModal={setOpenSearchModal}
-            searchOrder={searchOrder}
-            setQueryPage={setQueryPage}
-          />
+          <SearchModal setOpenSearchModal={setOpenSearchModal} />
         ) : null}
         <Link to="/">
           <div className="nav_logo">
