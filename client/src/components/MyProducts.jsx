@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setMyProducts, setMyProductsCnt } from '../actions/userAction';
+import { setProductList } from '../actions/searchAction';
 import { outMypage } from '../actions/inoutMypageAction';
 import Product from './Product';
 import IsLoadingSmall from './IsLoadingSmall';
@@ -16,7 +17,8 @@ function MyProducts() {
   const history = useHistory();
   const userState = useSelector((state) => state.userReducer);
   const { myProducts, myProductsCnt } = userState;
-
+  const searchState = useSelector((state) => state.searchReducer);
+  const { productList } = searchState;
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isNone, setIsNone] = useState(false);
@@ -64,6 +66,15 @@ function MyProducts() {
           ),
         );
         dispatch(setMyProductsCnt(myProductsCnt - 1));
+        dispatch(
+          setProductList(
+            productList.map((product) => {
+              if (product.id === parseInt(productId, 10))
+                product.isBookmarked = false;
+              return product;
+            }),
+          ),
+        );
       })
       .catch((err) => {
         console.log(err);

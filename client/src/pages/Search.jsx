@@ -57,7 +57,7 @@ function Search() {
   useEffect(() => {
     // 뒤로가기 거나 아니거나
     // location.search = url 디코딩 후 쿼리, 타입을 뽑아냄
-    console.log('서치페이지 location.search', location.search);
+    console.log('서치페이지 sessionStorage', sessionStorage);
     console.log('서치페이지 window.history', window.history);
     const parsedQuery = parseQuery(location.search);
     query = parsedQuery.query;

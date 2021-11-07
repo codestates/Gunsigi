@@ -5,7 +5,7 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 import React, { useEffect, useState, memo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import NavChange from '../components/NavChange';
 import ReviewList from '../components/ReviewList';
@@ -14,8 +14,12 @@ import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
 import IsLogin from '../components/IsLogin';
 import ProductDetailStar from '../components/ProductDeatailStar';
+import { setProductList } from '../actions/searchAction';
 
 function ProductDetail({ match }) {
+  const dispatch = useDispatch();
+  const searchState = useSelector((state) => state.searchReducer);
+  const { productList } = searchState;
   const [isOpenWrite, setisOpenWrite] = useState(false);
   const [ProductInfo, setProductInfo] = useState({
     id: 0,
@@ -80,6 +84,15 @@ function ProductDetail({ match }) {
           loading: false,
         }).then(() => {
           setIsBookmark(true);
+          dispatch(
+            setProductList(
+              productList.map((product) => {
+                if (product.id === parseInt(productId, 10))
+                  product.isBookmarked = true;
+                return product;
+              }),
+            ),
+          );
         });
       }
       if (isBookmark) {
@@ -90,6 +103,15 @@ function ProductDetail({ match }) {
           loading: false,
         }).then(() => {
           setIsBookmark(false);
+          dispatch(
+            setProductList(
+              productList.map((product) => {
+                if (product.id === parseInt(productId, 10))
+                  product.isBookmarked = false;
+                return product;
+              }),
+            ),
+          );
         });
       }
     }
