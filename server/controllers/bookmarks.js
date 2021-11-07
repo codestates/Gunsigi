@@ -14,6 +14,7 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
+      distinct: true,
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
       include: {

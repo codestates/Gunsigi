@@ -16,7 +16,7 @@ router.get(
 router.get(
   '/:productId',
   param('productId').notEmpty().bail().withMessage('productId는 필수입니다.'),
-  query('page').default(1).isInt().withMessage('page에 숫자를 입력해주세요'),
+  query('page').default(1).isInt({ min: 1 }).withMessage('page에 숫자를 입력해주세요'),
   query('size').default(10).isInt().withMessage('size에 숫자를 입력해주세요'),
   query('order')
     .default('recent')

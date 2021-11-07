@@ -41,17 +41,17 @@ app.use(
 );
 
 // 커스텀 템플릿 엔진
-app.engine('html', (filepath, options, next) => {
-  fs.readFile(filepath, (err, content) => {
-    if (err) return next(err);
-    let rendered = content.toString();
-    rendered = rendered.replace('#title#', `<title>${options.title}</title>`);
-    Object.keys(options).forEach((key) => {
-      rendered = rendered.replace(`#${key}#`, `<meta>${options[key]}</meta>`);
-    });
-    return next(null, rendered);
-  });
-});
+// app.engine('html', (filepath, options, next) => {
+//   fs.readFile(filepath, (err, content) => {
+//     if (err) return next(err);
+//     let rendered = content.toString();
+//     rendered = rendered.replace('#title#', `<title>${options.title}</title>`);
+//     Object.keys(options).forEach((key) => {
+//       rendered = rendered.replace(`#${key}#`, `<meta>${options[key]}</meta>`);
+//     });
+//     return next(null, rendered);
+//   });
+// });
 
 // 라우팅
 app.use('/auth', router.auth);

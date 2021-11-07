@@ -2,7 +2,8 @@ const uuid = require('uuid').v4;
 const AWS = require('aws-sdk');
 const debug = require('debug')('app:image');
 const fs = require('fs').promises;
-const { Client } = require('node-scp');
+let Client;
+if (process.env.NODE_ENV !== 'production') Client = require('node-scp').Client;
 
 const v4 = () => uuid().replace(/-/g, '');
 

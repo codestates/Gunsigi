@@ -10,7 +10,7 @@ router.use(token.required);
 // routes
 router.get(
   '/',
-  query('page').default(1).isInt().withMessage('page는 숫자로 입력해주세요'),
+  query('page').default(1).isInt({ min: 1 }).withMessage('page는 숫자로 입력해주세요'),
   query('size').default(30).isInt().withMessage('size는 숫자로 입력해주세요'),
   validationError,
   bookmarks.get,

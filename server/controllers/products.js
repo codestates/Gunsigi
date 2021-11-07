@@ -1,17 +1,22 @@
+/* eslint-disable prefer-const */
 const {
   Product, Bookmark, Ingredient, Sequelize, Tag, sequelize,
 } = require('../models');
 const paging = require('../modules/page');
+const redisClient = require('../modules/redis');
 
 module.exports = {
   search: async (req, res) => {
     /**
      * 검색 API
      */
-    const {
+    let {
       page, size, query, type,
     } = req.query;
     let order = req.query.order === 'reivews' ? 'reviewsCount' : 'views';
+    if (['눈', '간', '뼈', '이', '키', '위', '장'].includes(query)) {
+      type = 'category';
+    }
 
     const params = {
       attributes: [
@@ -24,7 +29,7 @@ module.exports = {
       ],
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
-      // order: [[sequelize.literal('rating'), 'DESC'], [order, 'DESC']],
+      distinct: true,
       include: [
         {
           model: Bookmark,
@@ -73,7 +78,7 @@ module.exports = {
       params.include.push(ingredientsInclude);
     }
     const { count, rows } = await Product.findAndCountAll(params);
-    return res.json({
+    const returnData = {
       message: 'Success to search products list',
       items: rows.map((row) => {
         const product = row.toJSON();
@@ -93,7 +98,10 @@ module.exports = {
         ...paging({ page, size, count }),
         itemCount: count,
       },
-    });
+    };
+    // 캐시
+    if (!res.locals.user.id) redisClient.set(req.url, returnData);
+    return res.json(returnData);
   },
 
   detail: async (req, res) => {
@@ -139,7 +147,7 @@ module.exports = {
     // 조회수증가
     Product.increment('views', { by: 1, where: { id: req.params.productId } });
 
-    return res.json({
+    const returnData = {
       message: 'Success to get product info',
       itemInfo: {
         ...product,
@@ -148,7 +156,10 @@ module.exports = {
           bad: [...bads],
         },
       },
-    });
+    };
+    // 캐시
+    if (!res.locals.user.id) redisClient.set(req.url, returnData);
+    return res.json(returnData);
   },
 
   all: async (req, res) => {
@@ -174,7 +185,7 @@ module.exports = {
         },
       ],
     });
-    return res.json({
+    const returnData = {
       message: 'Success to search products list',
       items: rows.map((row) => {
         const product = row.toJSON();
@@ -192,6 +203,9 @@ module.exports = {
         ...paging({ page, size, count }),
         itemCount: count,
       },
-    });
+    };
+    // 캐시
+    if (!res.locals.user.id) redisClient.set(req.url, returnData);
+    return res.json(returnData);
   },
 };
