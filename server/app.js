@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
 dotenv.config({ path: envFile });
 
-const fs = require('fs');
+// const fs = require('fs');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');

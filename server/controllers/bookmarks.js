@@ -14,11 +14,13 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
-      distinct: true,
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
+      order: [[Bookmark, 'id', 'DESC']],
       include: {
         model: Bookmark,
+        required: true,
+        attributes: ['id'],
         where: { userId: res.locals.user.id },
       },
     });
