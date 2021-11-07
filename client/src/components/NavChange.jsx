@@ -7,7 +7,6 @@ import {
   setSearchedProductList,
   resetSearchedProductList,
   setSearchedWord,
-  resetSearchedWord,
   setSearchType,
 } from '../actions/searchAction';
 import { setLoginState } from '../actions/userAction';
@@ -16,7 +15,7 @@ import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
-function NavChange() {
+function NavChange({ setQueryPage, searchOrder }) {
   const inputEl = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -33,9 +32,10 @@ function NavChange() {
   };
 
   const searchRequest = async () => {
+    setQueryPage(1);
     if (inputEl.current.value !== '') {
       const res = await axios.get('/products', {
-        params: { query: `${searchedWord}` },
+        params: { query: `${searchedWord}`, order: searchOrder },
       });
       const { items, pages } = res.data;
       dispatch(setSearchedProductList(items, pages.itemCount));
@@ -47,7 +47,11 @@ function NavChange() {
     }
     setOpenSearchModal(false);
     inputEl.current.blur();
-    history.push('/search');
+    history.push({
+      pathname: '/search',
+      state: { queryPage: 2 },
+    });
+    window.scrollTo(0, 0);
   };
 
   const handleInputPress = (event) => {
@@ -71,7 +75,11 @@ function NavChange() {
         {isOpenLogin ? <LoginModal /> : null}
         {isOpenSingup ? <SignupModal /> : null}
         {openSearchModal ? (
-          <SearchModal setOpenSearchModal={setOpenSearchModal} />
+          <SearchModal
+            setOpenSearchModal={setOpenSearchModal}
+            searchOrder={searchOrder}
+            setQueryPage={setQueryPage}
+          />
         ) : null}
         <Link to="/">
           <div className="nav_logo">
@@ -89,11 +97,7 @@ function NavChange() {
             // placeholder="검색어를 입력해 주세요"
           />
 
-          <button
-            className="icon_search"
-            onClick={searchRequest}
-            type="button"
-          >
+          <button className="icon_search" onClick={searchRequest} type="button">
             <img src="/icons/icon_magnify.svg" alt="magnifier" />
           </button>
         </div>

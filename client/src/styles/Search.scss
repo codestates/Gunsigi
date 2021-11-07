@@ -70,41 +70,49 @@
   justify-content: space-between;
   grid-template-columns: repeat(2, auto);
   gap: 20px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .noSearchList {
     min-width: 360px;
     min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    height: 40vh;
     grid-column-start: 1;
     grid-column-end: 7;
-    img {
-      width: 130px;
-      filter: $f-light-grey;
-    }
-    p {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: $deep-grey;
-    }
-    p:last-child {
-      font-size: 1.2rem;
+    .content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 130px;
+        filter: $f-light-grey;
+      }
+      p {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: $deep-grey;
+        margin-bottom: 16px;
+      }
+      p:last-child {
+        font-size: 1.2rem;
+      }
     }
   }
-  .targetEl {
-    min-width: 100px;
-    min-height: 70px;
-    background-color: red;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .targetEl_nonVisible {
-    // display: none;
-  }
+}
+.targetEl {
+  min-height: 30px;
+  background-color: red;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  object-position: center;
 }
 
 @media screen and (min-width: 500px) {

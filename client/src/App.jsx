@@ -10,6 +10,7 @@ import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
 import Loading from './components/Loading';
+import NotFound from './components/NotFound';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -63,6 +64,7 @@ function App() {
           {isLogin ? <Mypage /> : <Redirect to="/" />}
         </Route>
         <Route path="/product-detail/:id" component={ProductDetail} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </div>
   );

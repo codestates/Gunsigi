@@ -24,7 +24,7 @@ function Write({ openWriteHandler }) {
           onClick={() => window.scrollTo({ top: 0 })}
           className="top_button"
         >
-          <img src="/icons/icon_arrow_left.svg" alt="top" />
+          <img src="/icons/icon_arrow_up.svg" alt="top" />
         </div>
       ) : null}
       <div
