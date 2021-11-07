@@ -118,7 +118,7 @@ function MyProducts() {
   return (
     <>
       {!isNone ? (
-        <div className="my-products">
+        <div id="my-products">
           {myProducts.map((item, idx) => (
             <div
               className="product_wrapper"
