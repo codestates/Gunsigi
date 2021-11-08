@@ -6,6 +6,7 @@ function TopButton() {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const scrollPositionHandler = () => {
+    console.log('들어옴');
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
 

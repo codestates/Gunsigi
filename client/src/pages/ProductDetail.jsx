@@ -1,9 +1,4 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable object-shorthand */
-/* eslint-disable operator-linebreak */
-/* eslint-disable indent */
+/* eslint-disable */
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -15,6 +10,7 @@ import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
 import ProductDetailStar from '../components/ProductDeatailStar';
 import { setProductList } from '../actions/searchAction';
+import { kakaoLinkDelivery } from '../utils/KakaoLinkDelivery';
 
 function ProductDetail({ match }) {
   const dispatch = useDispatch();
@@ -162,6 +158,18 @@ function ProductDetail({ match }) {
                 <div className="name">
                   <span>{ProductInfo.name}</span>
                   <span>{ProductInfo.validNumber}</span>
+                  <button
+                    onClick={() =>
+                      kakaoLinkDelivery(
+                        ProductInfo.name,
+                        productId,
+                        ProductInfo.image,
+                      )
+                    }
+                    type="button"
+                  >
+                    <img src="/KaKao_Logo.png" alt="kakao" />
+                  </button>
                 </div>
                 <div className="functional">{ProductInfo.functional}</div>
                 <div className="stars">

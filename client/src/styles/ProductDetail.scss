@@ -81,6 +81,15 @@
         color: $deep-grey;
       }
     }
+    button {
+      position: relative;
+      top: 2px;
+      img {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+      }
+    }
   }
   .functional {
     width: 100%;
@@ -222,6 +231,13 @@
       span {
         &:nth-child(2) {
           font-size: 1.2rem;
+        }
+      }
+      button {
+        top: 2px;
+        img {
+          width: 24px;
+          height: 24px;
         }
       }
     }
