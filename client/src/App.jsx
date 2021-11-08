@@ -12,6 +12,7 @@ import Mypage from './pages/Mypage';
 import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import IsLogin from './components/IsLogin';
+import ErrorModal from './components/ErrorModal';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -22,13 +23,22 @@ function App() {
   const { isLoginTrueOrFalse } = modalState;
   const { isLogin } = userState;
   const [isLoading, setIsLoading] = useState(true);
+  const [errorModal, setErrorModal] = useState({
+    isOpenError: false,
+    errorMsg: '',
+  });
   const [token, setToken] = useState(null);
+
   window.addEventListener('load', () => {
     setIsLoading(false);
   });
 
+  const errorModalHandler = (boolean, string) => {
+    setErrorModal({ isOpenError: boolean, errorMsg: string });
+  };
+
   useEffect(async () => {
-    await setAxios(setToken, setIsLoading);
+    await setAxios(setToken, setIsLoading, errorModalHandler);
     let newToken;
     try {
       newToken = await updateToken();
@@ -57,6 +67,12 @@ function App() {
     <div className="App">
       {isLoading ? <Loading /> : null}
       {isLoginTrueOrFalse ? <IsLogin /> : null}
+      {errorModal.isOpenError && (
+        <ErrorModal
+          errorMsg={errorModal.errorMsg}
+          errorModalHandler={errorModalHandler}
+        />
+      )}
       <Switch>
         <Route exact path="/">
           <Main />
