@@ -38,6 +38,7 @@ function NavChange() {
     } else {
       history.push('/search');
     }
+    window.scrollTo(0, 0);
   };
 
   const handleInputPress = (event) => {
