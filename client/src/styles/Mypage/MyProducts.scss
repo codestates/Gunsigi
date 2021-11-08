@@ -1,15 +1,12 @@
 @import '../../App';
 
-#my-products {
+.my-products {
   width: 100%;
   display: grid;
   align-items: center;
   justify-content: space-between;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-}
-
-.product_wrapper {
 }
 
 .myProducts_none {
@@ -30,13 +27,13 @@
 }
 
 @media screen and (min-width: 550px) {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @include tablet {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(4, 1fr);
   }
 
@@ -51,7 +48,7 @@
 }
 
 @include laptop {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(3, 1fr);
   }
   .myProducts_none {
@@ -60,13 +57,13 @@
 }
 
 @media screen and (min-width: 1250px) {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @include desktop {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(5, 1fr);
   }
   .myProducts_none {
@@ -79,17 +76,17 @@
 }
 
 @media screen and (min-width: 1600px) {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 @media screen and (min-width: 1800px) {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 @media screen and (min-width: 2170px) {
-  #my-products {
+  .my-products {
     grid-template-columns: repeat(6, 1fr);
   }
 }
