@@ -13,7 +13,6 @@ import {
 } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
-import IsLoadingSmall from '../components/IsLoadingSmall';
 import SearchProductList from '../components/SearchProductList';
 import TopButton from '../components/TopButton';
 import Skeleton from '../components/Skeleton';
