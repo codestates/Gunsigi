@@ -158,7 +158,7 @@ module.exports = {
         });
       }
       // 이미지가 있다면 s3에 저장 reviews/리뷰ID 폴더 안에 전부 집어 넣는다
-      const imageKeys = await Promise.all(images.map((image) => s3.save(`reviews/${review.id}`, image)));
+      const imageKeys = await Promise.all(images.map((image) => s3.compressAndSave(`reviews/${review.id}`, image)));
 
       await reviewImage.bulkCreate(imageKeys.map((image) => ({
         reviewId: review.id, image,

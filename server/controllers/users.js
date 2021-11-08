@@ -33,7 +33,7 @@ module.exports = {
 
     if (req.body.profileImage) {
       // 프로필 이미지저장, 이미 있으면 기존꺼 삭제, 안에 값이 비어있으면 삭제만
-      const imageName = await s3.save('profile', req.body.profileImage);
+      const imageName = await s3.thumbnailAndSave('profile', req.body.profileImage);
       if (user.profileImage) {
         // 기존 이미지 삭제
         await s3.delete(user.profileImage);

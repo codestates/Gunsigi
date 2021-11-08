@@ -26,7 +26,7 @@ module.exports = async function Seed() {
       debug('모든 시드 데이터 삽입 완료');
     }
   } catch (err) {
-    if (process.env.NODE_ENV !== 'production') debug(err);
+    debug(err);
     debug('시드 데이터 삽입에 실패했습니다.');
     return Promise.reject(err);
   }

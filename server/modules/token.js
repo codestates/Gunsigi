@@ -8,4 +8,9 @@ module.exports = {
     secure: false,
   }),
   isAuthorized: (req) => verify(req.cookies.jwt, process.env.REFRESH_SECRET),
+  emailCode: (userInfo) => {
+    /**
+     * 이메일 인증코드를 만들어서 Redis에 저장하고 인증코드를 리턴한다.
+     */
+  },
 };

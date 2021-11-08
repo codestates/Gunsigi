@@ -114,10 +114,10 @@ export const dummyReviews = [
   {
     id: 3,
     nickname: 'doldolma',
-    product: '레모나',
+    product: '헤모힘',
     review:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
-    date: '2021.11.17',
+      '면역력이 좋아지는 것 같아요. 기력회복에 좋더라고요. 부모님한테 선물해드리면 좋을 것 같습니다.',
+    date: '2021.10.25',
     src: '/images/doldolma.png',
   },
   {
