@@ -119,7 +119,7 @@ function Search() {
           setQueryPage((prev) => prev + 1);
         }
       },
-      { threshold: 1.0, root: null },
+      { threshold: 1.0, root: rootRef.current, rootMargin: '0px 0px 0px 0px' },
     ),
   );
 
@@ -179,6 +179,9 @@ function Search() {
     };
   }, [target]);
 
+  const makeDigitComma = (num) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
   return (
     <>
       <NavChange />
@@ -186,13 +189,11 @@ function Search() {
       <div className="Search_conatiner">
         <div className="Search_in">
           <div className="Search_img" />
-          <div className="Search_bottom">
+          <div className="Search_bottom" ref={rootRef}>
             <div className="Search_title">
               <div>
                 {!query ? '전체 건강기능식품' : `"${query}" 검색 결과`}
-                <span>{`${productCount
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 건`}</span>
+                <span>{`${makeDigitComma(productCount)} 건`}</span>
               </div>
               <div className="Sequence">
                 <button
@@ -220,11 +221,11 @@ function Search() {
                 </button>
               </div>
             </div>
-            <div className="Search_products" ref={rootRef}>
-              {/* <Skeleton /> */}
+            <div className="Search_products">
               <SearchProductList />
+              {queryPage <= pageTotal - 1 ? <Skeleton /> : null}
               <div id="observer" ref={setTarget} className="targetEl">
-                {isLoading && <IsLoadingSmall />}
+                {/* {isLoading && <Skeleton />} */}
               </div>
             </div>
           </div>
