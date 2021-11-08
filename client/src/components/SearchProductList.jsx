@@ -2,11 +2,10 @@
 import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { setIsLogin } from '../actions/modalAction';
 import { useHistory } from 'react-router-dom';
 import { outMypage } from '../actions/inoutMypageAction';
-import {
-  setProductList,
-} from '../actions/searchAction';
+import { setProductList } from '../actions/searchAction';
 import Product from './Product';
 
 function SearchProductList() {
@@ -55,12 +54,8 @@ function SearchProductList() {
   };
 
   const handleNotification = () => {
-    const notification = document.getElementById('IsLogin_container');
     if (!isLogin) {
-      notification.style.right = '20px';
-      setTimeout(() => {
-        notification.style.right = '-250px';
-      }, 1500);
+      dispatch(setIsLogin(true));
     }
   };
   const handleClickProduct = (e) => {

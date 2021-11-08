@@ -32,7 +32,7 @@ function Login() {
   const handleLogin = (event) => {
     event.preventDefault();
     axios
-      .post('/auth/signin', loginForm)
+      .post('/auth/signin', loginForm, { loading: false })
       .then(() => {
         dispatch(setLoginState(true));
         dispatch(setLoginModal(false));

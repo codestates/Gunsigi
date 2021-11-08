@@ -3,7 +3,11 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLoginState } from '../../actions/userAction';
 import { setLoginModal, setSignupModal } from '../../actions/modalAction';
-import { emailValidator, nicknameValidator, passwordValidator } from '../../utils/validation';
+import {
+  emailValidator,
+  nicknameValidator,
+  passwordValidator,
+} from '../../utils/validation';
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Signup.scss';
@@ -128,7 +132,10 @@ function Signup() {
 
     if (!nicknameValidator(signupForm.nickname)) {
       inputNickname.current.focus();
-      handleErrorMsg('nickname', '닉네임은 2~10자리, 특수문자 제외하고 가능합니다');
+      handleErrorMsg(
+        'nickname',
+        '닉네임은 2~10자리, 특수문자 제외하고 가능합니다',
+      );
       handleShakeInput('nickname');
       return;
     }
@@ -169,7 +176,7 @@ function Signup() {
 
     // * 회원가입 API 요청
     axios
-      .post('/auth/signup', signupForm)
+      .post('/auth/signup', signupForm, { loading: false })
       .then(() => {
         dispatch(setLoginState(true));
         dispatch(setSignupModal(false));

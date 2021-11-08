@@ -3,7 +3,7 @@
 .Login_container {
   width: 100%;
   height: 100%;
-  // padding: 60px 50px;
+  padding: 60px 50px;
 }
 
 .Login_in {
@@ -38,6 +38,7 @@
       }
     }
     .input_change {
+      position: relative;
       border: none;
       box-shadow: 0 0 0 2px rgb(184, 1, 1);
       outline: none;
@@ -46,20 +47,19 @@
         outline: none;
       }
     }
-    
 
     @keyframes shake {
       0% {
-        margin-left: 0rem;
+        left: 0rem;
       }
       25% {
-        margin-left: 0.5rem;
+        left: 0.5rem;
       }
       75% {
-        margin-left: -0.5rem;
+        left: -0.5rem;
       }
       100% {
-        margin-left: 0rem;
+        left: 0rem;
       }
     }
 

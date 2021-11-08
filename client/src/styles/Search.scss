@@ -3,13 +3,16 @@
 .Search_conatiner {
   min-width: $breakpoint-mobile;
   width: 100%;
+  // height: 100vh;
   // background-color: $white;
+  overflow-y: scroll;
 }
 
 .Search_in {
+  // height: 100%;
   .Search_img {
     width: 100%;
-    height: 40vh;
+    height: 350px;
     background-image: url(../images/search_app.png);
     background-size: cover;
     background-position: center;
@@ -18,13 +21,15 @@
 
 .Search_bottom {
   display: flex;
+  // height: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 20px 20px 0 20px;
+  padding: 20px 20px 20px 20px;
 }
 
 .Search_title {
   width: 100%;
+  height: 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,15 +70,17 @@
 
 .Search_products {
   width: 100%;
-  height: 100%;
   display: grid;
   align-items: center;
   justify-content: space-between;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto, 1fr);
   gap: 20px;
-  // overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
+  }
+  .Product_items {
+    margin: 0 auto;
   }
   .noSearchList {
     width: 100%;
@@ -106,16 +113,11 @@
   }
   .targetEl {
     width: 100%;
-    min-width: 50px;
-    min-height: 50px;
     grid-column: 1/ 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 550px) {
   .Search_products {
     grid-template-columns: repeat(3, 1fr);
     .targetEl {
@@ -124,7 +126,7 @@
   }
 }
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 740px) {
   .Search_products {
     grid-template-columns: repeat(4, 1fr);
     .targetEl {
@@ -144,10 +146,6 @@
 
   .Search_title {
     font-size: 1.8rem;
-  }
-
-  .Search_bottom {
-    padding: 30px;
   }
 }
 

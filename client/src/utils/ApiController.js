@@ -23,7 +23,11 @@ export const updateToken = async () => {
   return res.data?.accessToken;
 };
 
-export default async function setAxios(setToken, setIsLoading) {
+export default async function setAxios(
+  setToken,
+  setIsLoading,
+  errorModalHandler,
+) {
   axios.defaults.withCredentials = true;
   axios.interceptors.request.use((config) => {
     if (config.loading !== false) setIsLoading(true);
@@ -45,7 +49,9 @@ export default async function setAxios(setToken, setIsLoading) {
     },
     async (err) => {
       setIsLoading(false);
-      if (err.response?.status === 401) {
+      if (!err.response) {
+        errorModalHandler(true, '인터넷 연결이 불안정합니다');
+      } else if (err.response.status === 401) {
         /**
          * 토큰이 더 이상 유효하지 않음..
          * 토큰 갱신을 시도해서 성공하면 요청을 재전송한다.
@@ -61,6 +67,8 @@ export default async function setAxios(setToken, setIsLoading) {
           if (retry < 3) return axios.request(err.config);
           return Promise.reject(err);
         }
+      } else if (err.response.status >= 500) {
+        errorModalHandler(true, '서버 연결이 불안정합니다');
       }
       return Promise.reject(err);
     },

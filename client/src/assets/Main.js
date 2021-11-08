@@ -125,7 +125,7 @@ export const dummyReviews = [
     nickname: 'Hoony',
     product: '락토핏 생유산균 골드',
     review:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod eum impedit quasi, sequi cupiditate quidem, aspernatur nihil magnam distinctio minus',
+      '항상 속이 더부룩하거나 불편했는데 락토핏 3개월 정도 섭취해보니 엄청 큰 변화는 아니지만 장트러블이 생각보다 많이 완화됐습니다. 맛도 가루 형태의 달달한 맛이라 섭취할때 전혀 거부감 없이 잘 먹었습니다',
     date: '2021.10.31',
     src: '/images/hoony.png',
   },

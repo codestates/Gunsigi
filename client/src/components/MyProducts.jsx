@@ -38,9 +38,9 @@ function MyProducts() {
       .then((res) => {
         if (res.data.pages.itemCount === 0) {
           setIsNone(true);
+          dispatch(setMyProductsCnt(res.data.pages.itemCount));
           return;
         }
-        console.log(res.data);
         total = res.data.pages.total;
         dispatch(setMyProducts([...myProducts, ...res.data.items]));
         dispatch(setMyProductsCnt(res.data.pages.itemCount));

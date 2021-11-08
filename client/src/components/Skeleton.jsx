@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/Skeleton.scss';
 
 function Skeleton() {
-  const [items, setItems] = useState([0, 0]);
+  const items = [0, 0, 0, 0, 0, 0];
 
   return (
     <div className="skeleton-container">
       {items.map(() => (
-        <div className="item">
+        <div className="card">
           <div className="image shine" />
           <div className="text shine" />
           <div className="text " />
