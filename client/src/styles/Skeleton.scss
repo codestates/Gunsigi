@@ -1,0 +1,66 @@
+@import '../App.scss';
+
+.skeleton-container {
+  grid-column: 1 / 3;
+  display: flex;
+  justify-content: space-between;
+  .item {
+    content: '';
+    width: 160px;
+    height: 160px;
+    border: solid 1px $light-grey;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 10px;
+    position: relative;
+    .image {
+      width: 70%;
+      height: 60%;
+      border-radius: 5px;
+      background-color: $light-grey;
+      margin: 5% auto;
+    }
+    .text {
+      width: 40%;
+      height: 8%;
+      background-color: $light-grey;
+      margin: 0 0 0 10px;
+    }
+    .text:nth-child(3) {
+      width: 60%;
+    }
+    .icon {
+      width: 10%;
+      height: 12%;
+      background-color: $light-grey;
+      position: absolute;
+      bottom: 14%;
+      right: 12%;
+    }
+  }
+}
+
+.shine {
+  background-color: #e2e5e7;
+	// The shine that's going to move across the skeleton:
+	background-image:			
+			linear-gradient(
+				90deg, 
+				rgba(#fff, 0), 
+				rgba(#fff, 0.5),
+				rgba(#fff, 0)
+			);
+	background-size: 40px 100%; // width of the shine
+	background-repeat: no-repeat; // No need to repeat the shine effect
+	background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
+	animation: shine 1s ease infinite; 
+}
+
+@keyframes shine {
+  to {
+    background-position: right -40px top 0;
+  }
+}

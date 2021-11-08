@@ -5,14 +5,14 @@ import { kickContents } from '../assets/Main';
 function IntroKick() {
   const [textIdx, setTextIdx] = useState(0);
   useEffect(() => {
-    const idx = setInterval(() => {
+    const idx = setTimeout(() => {
       if (textIdx === 2) {
         setTextIdx(0);
       } else {
         setTextIdx(textIdx + 1);
       }
-    }, 5000);
-    return () => clearInterval(idx);
+    }, 7000);
+    return () => clearTimeout(idx);
   }, [textIdx]);
 
   return (
