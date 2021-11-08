@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Write.scss';
 
-function Write({ openReviewHandler }) {
+function Write({ openWriteHandler }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   //! scroll 위치 알려주는 함수
@@ -18,18 +18,18 @@ function Write({ openReviewHandler }) {
 
   return (
     <div className="Write">
-      {scrollPosition > 60 ? (
+      {scrollPosition > 100 ? (
         <div
           aria-hidden="true"
-          onClick={() => scrollTo({ top: 0 })}
+          onClick={() => window.scrollTo({ top: 0 })}
           className="top_button"
         >
-          <img src="/icons/icon_arrow_left.svg" alt="top" />
+          <img src="/icons/icon_arrow_up.svg" alt="top" />
         </div>
       ) : null}
       <div
         className="write_button"
-        onClick={openReviewHandler}
+        onClick={() => openWriteHandler(true)}
         aria-hidden="true"
       >
         <img src="/icons/icon_write.svg" alt="write" />

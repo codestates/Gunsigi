@@ -1,9 +1,24 @@
 @import '../../App';
 
+.Mypage_topButton {
+  display: none;
+}
+
+// #mypage_container {
+//   background-color: $white;
+// }
+
+@include tablet {
+  .Mypage_topButton {
+    display: block;
+  }
+}
+
 @include laptop {
   #mypage_container {
     display: flex;
     padding: 30px;
     height: calc(100vh - 100px);
+    min-height: 600px;
   }
 }

@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsLogin } from '../actions/modalAction';
 import '../styles/Review.scss';
 import DeleteReviewModal from './DeleteReviewModal';
 
@@ -6,22 +10,93 @@ function Review({
   name,
   profile,
   nickname,
-  // productId,
   content,
   date,
   score,
-  // isMine,
   images,
-  likesCount,
-  isLike,
   period,
+  reviewId,
+  reviews,
+  reviewIdx,
+  setReviews,
+  reviewProductId,
+  setRieviewCount,
 }) {
-  const [isOpenMypage, setIsOpenMypage] = useState(true);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [reviewsLike, setReviewsLike] = useState([]);
+  const [likeCount, setLikeCount] = useState([]);
+  const loginState = useSelector((state) => state.userReducer);
 
-  const openDeleteHandler = () => {
-    setIsOpenDelete(!isOpenDelete);
+  //! 리뷰삭제 모달창 열고닫는 기능 및 리뷰삭제 기능
+  const openDeleteHandler = (trueOrFalse) => {
+    console.log('리뷰');
+    setIsOpenDelete(trueOrFalse);
+    if (trueOrFalse === 'delete') {
+      axios({
+        method: 'DELETE',
+        url: '/reviews',
+        data: { reviewId },
+      }).then(() => {
+        axios({
+          url: '/reviews?page=1&size=5',
+        }).then((res) => {
+          setReviews(res.data.items);
+          setRieviewCount(res.data.pages.itemsCount);
+        });
+        setIsOpenDelete(false);
+      });
+    }
   };
+
+  //! 리뷰 하트 요청
+  const reviewLikeRequest = (e) => {
+    if (loginState.isLogin) {
+      setReviewsLike(
+        reviewsLike.map((el, idx) => (reviewIdx === idx ? !el : el)),
+      );
+      if (e.target.className === 'heart_icon_change') {
+        axios({
+          method: 'DELETE',
+          url: '/review/like',
+          data: { reviewId },
+          loading: false,
+        }).then(() => {
+          setLikeCount(
+            likeCount.map((el, idx) => (reviewIdx === idx ? el - 1 : null)),
+          );
+        });
+      }
+      if (e.target.className === 'heart_icon') {
+        axios({
+          method: 'POST',
+          url: '/review/like',
+          data: { reviewId },
+          loading: false,
+        }).then(() => {
+          setLikeCount(
+            likeCount.map((el, idx) => (reviewIdx === idx ? el + 1 : null)),
+          );
+        });
+      }
+    } else {
+      dispatch(setIsLogin(true));
+    }
+  };
+
+  useEffect(() => {
+    const reviewLikeCount = [];
+    const reviewHeart = [];
+
+    for (let i = 0; i < reviews.length; i += 1) {
+      reviewLikeCount.push(reviews[i].likesCount);
+      reviewHeart.push(reviews[i].isLike);
+    }
+    setLikeCount(reviewLikeCount);
+    setReviewsLike(reviewHeart);
+  }, [reviews]);
 
   return (
     <>
@@ -30,18 +105,22 @@ function Review({
           <div className="Reviews_trashOrHeart">
             <div className="like">
               <img
-                className={isLike ? 'heart_icon_change' : 'heart_icon'}
+                aria-hidden="true"
+                onClick={(e) => reviewLikeRequest(e)}
+                className={
+                  reviewsLike[reviewIdx] ? 'heart_icon_change' : 'heart_icon'
+                }
                 src="/icons/heart_fill.svg"
                 alt="heart"
               />
-              <span>{likesCount}</span>
+              <span>{likeCount[reviewIdx]}</span>
             </div>
             {isOpenMypage ? (
               <img
                 className="delete"
                 src="/icons/icon_bin.svg"
                 alt="review_delete"
-                onClick={openDeleteHandler}
+                onClick={() => openDeleteHandler(true)}
                 aria-hidden="true"
               />
             ) : null}
@@ -49,7 +128,15 @@ function Review({
 
           <div className="Reviews_left">
             <div className="Reviews_Profile_info">
-              <img className="profile" src={profile} alt="profile_img" />
+              {profile ? (
+                <img className="profile" src={profile} alt="profile_img" />
+              ) : (
+                <img
+                  className="profile"
+                  src="/images/profile-min.jpg"
+                  alt="profile_img"
+                />
+              )}
               <div className="nameOrDateOrstar">
                 <div className="date">{date}</div>
                 <div className="nickname">{nickname}</div>
@@ -106,18 +193,31 @@ function Review({
 
           <div className="Reviews_right">
             <div className="name">
-              <div className="product_name">
-                <span>제품명</span>
-                <span>{name}</span>
-              </div>
+              {isOpenMypage ? (
+                <div
+                  aria-hidden="true"
+                  onClick={() =>
+                    history.push(`/product-detail/${reviewProductId}`)
+                  }
+                  className="product_name cursor"
+                >
+                  <span>제품명</span>
+                  <span>{name}</span>
+                </div>
+              ) : (
+                <div className="product_name">
+                  <span>제품명</span>
+                  <span>{name}</span>
+                </div>
+              )}
               <div className="period">
                 <img src="/icons/icon_take_period.svg" alt="period" />
                 <span>{period}</span>
               </div>
             </div>
             <div className="images">
-              {images.map((image) =>
-                image ? <img src={image} alt="review_img" /> : null,
+              {images.map((image, idx) =>
+                image ? <img key={idx} src={image} alt="review_img" /> : null,
               )}
             </div>
             <div className="content">{content}</div>

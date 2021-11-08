@@ -13,4 +13,5 @@ chmod +x scripts/setup_env.sh
 # WS, WAS 실행
 sudo ln -sf /home/ubuntu/Gunsigi/server/config/nginx.conf /etc/nginx/nginx.conf
 sudo service nginx restart
-pm2 start npm --name Gunsigi -- run start -i max
+pm2 start index.js --name Gunsigi -i max
+pm2 save

@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         get() {
           const image = this.getDataValue('image');
+          // if (image) return `${process.env.CDN_SERVER}/${image}`;
           if (image) return `https://cdn.doldolma.com/${image}`;
           return '';
         },
@@ -59,6 +60,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Product',
+      updatedAt: false,
+      indexes: [
+        {
+          fields: ['views'],
+        },
+        {
+          fields: ['reviewsCount'],
+        },
+      ],
     },
   );
   return Product;

@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    input {
+    .Signup_input {
       width: 280px;
       height: 34px;
       border-radius: 20px;
@@ -34,6 +34,17 @@
         outline: 2px solid $deep-blue;
       }
     }
+    .input_change {
+      position: relative;
+      border: none;
+      box-shadow: 0 0 0 2px rgb(184, 1, 1);
+      outline: none;
+      animation: shake 0.2s ease-in-out 0s 2;
+      &:focus {
+        outline: none;
+      }
+    }
+
     .email {
       div {
         margin-top: 7px;
@@ -67,6 +78,9 @@
           font-weight: 600;
         }
       }
+    }
+    .dummy {
+      opacity: 0;
     }
   }
 

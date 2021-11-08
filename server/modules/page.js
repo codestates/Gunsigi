@@ -1,5 +1,5 @@
 /**
- * page
+ * pagination: API의 응답값 생성모듈
  */
 
 module.exports = (params) => {

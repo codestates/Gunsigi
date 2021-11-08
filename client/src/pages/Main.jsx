@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../styles/landing/landing.scss';
 import Nav from '../components/Nav';
 import IntroOne from '../components/IntroOne';
@@ -9,18 +9,6 @@ import IntroKick from '../components/IntroKick';
 import TopButton from '../components/TopButton';
 
 function Main() {
-  // 탑버튼 스크롤 관련
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const scrollPositionHandler = () => {
-    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-  };
-  useEffect(() => {
-    window.addEventListener('scroll', scrollPositionHandler);
-    return () => {
-      window.removeEventListener('scroll', scrollPositionHandler);
-    };
-  });
   // 스크롤 클래스 이벤트
   const isElementUnderBottom = (elem, triggerDiff) => {
     const { top } = elem.getBoundingClientRect();
@@ -43,16 +31,10 @@ function Main() {
   };
 
   window.addEventListener('scroll', handleScroll);
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // });
 
   return (
     <div className="main">
-      {scrollPosition > 100 ? <TopButton /> : null}
+      <TopButton />
       <section className="main_intro_zero">
         <div className="background">
           <Nav />

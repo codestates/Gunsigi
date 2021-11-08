@@ -1,0 +1,181 @@
+@import '../App.scss';
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin transform($args) {
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  -ms-transform: $args;
+  -o-transform: $args;
+  transform: $args;
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
+
+@include keyframes(scale-in-shake) {
+  0% {
+    @include transform(scale(0.95));
+  }
+  20% {
+    @include transform(scale(1));
+  }
+  40% {
+    margin-left: -10px;
+  }
+  60% {
+    margin-left: 0;
+    margin-right: -20px;
+  }
+  80% {
+    margin-right: 0;
+    margin-left: -20px;
+  }
+  100% {
+    margin: 0;
+  }
+}
+
+*:focus {
+  outline: none;
+}
+
+#error-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  #error {
+    background-color: $white;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    @include animation('scale-in-shake 0.5s');
+    @include transition(all 0.5s ease);
+
+    h2 {
+      font-size: 2rem;
+      color: $deep-grey;
+      font-weight: 800;
+      margin: 30px 0;
+      letter-spacing: 1px;
+      display: flex;
+      justify-content: center;
+
+      img {
+        filter: $f-deep-grey;
+        margin-left: 5px;
+        width: 20px;
+      }
+    }
+
+    p {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .try-again {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      height: 55px;
+      line-height: 55px;
+      background-color: rgb(184, 1, 1);
+      color: $white;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background: #ed4f3e;
+      }
+
+      img {
+        filter: $f-white;
+        margin-left: 5px;
+        width: 15px;
+        margin-bottom: 2px;
+      }
+    }
+  }
+}
+
+@include tablet {
+  #error-wrapper {
+    #error {
+      width: 380px;
+      height: 230px;
+
+      h2 {
+        margin: 35px 0;
+        font-size: 3rem;
+        img {
+          margin-left: 10px;
+          width: 30px;
+        }
+      }
+
+      p {
+        font-size: 1.8rem;
+      }
+
+      .try-again {
+        height: 60px;
+        font-size: 1.8rem;
+
+        img {
+          margin-left: 6px;
+          width: 20px;
+        }
+      }
+    }
+  }
+}

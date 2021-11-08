@@ -1,5 +1,5 @@
 const express = require('express');
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 const auth = require('../controllers/auth');
 const validationError = require('../middlware/error');
 
@@ -57,5 +57,17 @@ router.post(
 
 // 토큰갱신
 router.post('/refresh', auth.refresh);
+
+// 중복확인
+router.get(
+  '/overlap',
+  query('email')
+    .notEmpty()
+    .withMessage('email 은 필수입력값입니다.')
+    .isEmail()
+    .withMessage('이메일 형식이 아닙니다.'),
+  validationError,
+  auth.overlap,
+);
 
 module.exports = router;

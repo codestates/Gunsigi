@@ -1,13 +1,22 @@
-const debug = require('debug')('app:auth');
+const debug = require('debug')('app.auth');
 const { User } = require('../models');
 const {
   generateAccessToken,
   generateRefreshToken,
   sendToCookie,
   isAuthorized,
-} = require('./token');
+} = require('../modules/token');
 
 module.exports = {
+  overlap: async (req, res) => {
+    const { email } = req.query;
+    const user = await User.findOne({
+      attributes: ['id'],
+      where: { email },
+    });
+    if (user) return res.json({ message: '중복된 이메일입니다.', result: false });
+    return res.json({ message: '사용가능한 이메일입니다.', result: true });
+  },
   logout: (req, res) => {
     res.clearCookie('jwt');
     return res.json({ message: 'logout success' });
@@ -16,9 +25,16 @@ module.exports = {
   signup: async (req, res) => {
     let user;
     try {
-      user = await User.create(req.body);
-    } catch {
-      return res.status(400).json({ message: 'Fail to signup' });
+      user = await User.create({ ...req.body, type: 'email' });
+    } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(403).json({ message: '이미 사용중인 이메일입니다.' });
+      }
+      debug(err);
+      return res.status(400).json({
+        message: 'Fail to signup',
+        result: false,
+      });
     }
 
     // 토큰 생성
@@ -36,11 +52,10 @@ module.exports = {
   signin: async (req, res) => {
     let user;
     try {
-      user = await User.findOne({ where: { email: req.body.email } });
+      user = await User.findOne({ where: { email: req.body.email, type: 'email' } });
       if (!user) throw new Error('UserNotFound');
       if (!await user.isRight(req.body.password)) throw new Error('Invalid Password');
     } catch (error) {
-      debug(error);
       return res.status(403).json({
         message: 'Fail to login',
       });
@@ -60,17 +75,16 @@ module.exports = {
     let user;
     try {
       const userId = isAuthorized(req).id;
-      user = await User.findByPk(userId);
+      user = await User.findByPk(userId, { attributes: ['id', 'email', 'type'] });
       if (!user) throw new Error('user not found');
-    } catch (err) {
-      debug(err);
+    } catch {
       return res.status(403).json({ message: 'Forbidden' });
     }
-    const accessToken = generateAccessToken(user.json());
+    const accessToken = generateAccessToken(user.toJSON());
     return res.json({
       message: 'Success to create access token',
       accessToken,
-      userInfo: user.json(),
+      userInfo: user.toJSON(),
     });
   },
 };

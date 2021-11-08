@@ -1,14 +1,17 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import '../styles/LoginSignup/LoginModal.scss';
 import Login from './login, signup/Login';
 import Signup from './login, signup/Signup';
+import { setLoginModal } from '../actions/modalAction';
 
-function LoginModal({ setOpenLogin }) {
+function LoginModal() {
+  const dispatch = useDispatch();
   const openLoginEl = useRef(null);
 
   const closeLoginHandler = (e) => {
     if (e.target === openLoginEl.current) {
-      setOpenLogin(false);
+      dispatch(setLoginModal(false));
     }
   };
 

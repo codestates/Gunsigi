@@ -1,8 +1,18 @@
 import React from 'react';
 import '../styles/landing/introTwo.scss';
+import { useHistory } from 'react-router-dom';
 import { keywordContents } from '../assets/Main';
 
 function IntroTwo() {
+  const history = useHistory();
+  const handleSearchKeyword = (e) => {
+    const keyword = e.currentTarget.value;
+    history.push({
+      pathname: '/search',
+      search: `?query=${keyword}&type=keyword`,
+    });
+  };
+
   return (
     <div className="introTwo">
       <div className="container">
@@ -23,10 +33,15 @@ function IntroTwo() {
           </div>
           {keywordContents.map((el) => (
             <div className="col-sm-1 col-md-1 col-lg-1" key={el.id}>
-              <div className="keyword">
-                <img src={el.src} alt="keyword" />
+              <button
+                className="keyword"
+                onClick={handleSearchKeyword}
+                value={el.title}
+                type="button"
+              >
                 <p className="text">{el.title}</p>
-              </div>
+                <img src={el.src} alt="keyword" />
+              </button>
             </div>
           ))}
         </div>

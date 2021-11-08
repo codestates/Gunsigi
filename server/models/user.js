@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     json() {
       const jsonUser = this.toJSON();
       delete jsonUser.password;
+      delete jsonUser.uuid;
       return jsonUser;
     }
 
@@ -49,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '',
         get() {
           const image = this.getDataValue('profileImage');
-          if (image) return path.join(process.env.CDN_SERVER, image);
+          if (image) return `${process.env.CDN_SERVER}/${image}`;
           return '';
         },
       },
@@ -80,6 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      updatedAt: false,
       hooks: {
         afterDestroy: async (user, options) => {
           if (options.transaction) {

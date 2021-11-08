@@ -1,25 +1,47 @@
 import React, { useState } from 'react';
 import '../styles/nav/nav.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { setLoginState } from '../actions/userAction';
+import { setLoginModal, setSignupModal } from '../actions/modalAction';
+import {
+  resetSearchedProductList,
+  resetSearchedWord,
+} from '../actions/searchAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function Nav() {
-  const isLogin = false;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
+  const modalState = useSelector((state) => state.modalReducer);
+  const { isOpenLogin, isOpenSingup } = modalState;
   const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
 
   const openSearchModalHandler = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
+    dispatch(resetSearchedWord());
+    dispatch(resetSearchedProductList());
+  };
+
+  const logoutHandler = (event) => {
+    event.preventDefault();
+
+    axios.get('/auth/logout').then(() => {
+      dispatch(setLoginState(false));
+      history.push('/');
+    });
   };
 
   return (
     <>
       {isOpenSearchModal ? <SearchModal /> : null}
-      {openLogin ? <LoginModal setOpenLogin={setOpenLogin} /> : null}
-      {openSignup ? <SignupModal setOpenSignup={setOpenSignup} /> : null}
+      {isOpenLogin ? <LoginModal /> : null}
+      {isOpenSingup ? <SignupModal /> : null}
       <div className="nav">
         <Link to="/">
           <div className="nav_logo">
@@ -41,9 +63,7 @@ function Nav() {
               <button
                 type="button"
                 aria-hidden="true"
-                onClick={() => {
-                  setOpenLogin(true);
-                }}
+                onClick={() => dispatch(setLoginModal(true))}
                 className="login"
               >
                 로그인
@@ -51,7 +71,7 @@ function Nav() {
               <button
                 type="button"
                 aria-hidden="true"
-                onClick={() => setOpenSignup(true)}
+                onClick={() => dispatch(setSignupModal(true))}
                 className="signup"
               >
                 회원가입
@@ -64,7 +84,7 @@ function Nav() {
                   마이페이지
                 </button>
               </Link>
-              <button className="logout" type="button">
+              <button className="logout" type="button" onClick={logoutHandler}>
                 로그아웃
               </button>
             </>

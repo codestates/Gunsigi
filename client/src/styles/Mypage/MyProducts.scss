@@ -4,24 +4,95 @@
   width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: repeat(2, auto);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+
+  .product_wrapper {
+    .Product_items {
+      margin: 0 auto;
+    }
+  }
+}
+
+.myProducts_none {
+  height: calc(100vh - 400px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: $deep-grey;
+  img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    filter: $f-deep-grey;
+  }
+}
+
+@media screen and (min-width: 550px) {
+  .my-products {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @include tablet {
   .my-products {
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .myProducts_none {
+    height: calc(100vh - 500px);
+    font-size: 1.6rem;
+    img {
+      width: 120px;
+      height: 120px;
+    }
   }
 }
 
 @include laptop {
   .my-products {
-    height: 100%;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .myProducts_none {
+    height: calc(100vh - 300px);
   }
 }
+
+@media screen and (min-width: 1250px) {
+  .my-products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 @include desktop {
   .my-products {
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .myProducts_none {
+    font-size: 1.8rem;
+    img {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .my-products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (min-width: 1800px) {
+  .my-products {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media screen and (min-width: 2170px) {
+  .my-products {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

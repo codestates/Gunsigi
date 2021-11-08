@@ -70,12 +70,44 @@
         color: $white;
       }
     }
+
+    .ReviewList_month_change {
+      background-color: $deep-blue;
+      color: $white;
+    }
   }
 }
 
 .ReviewList_list {
   width: 100%;
   padding: 30px 30px 10px 30px;
+}
+
+.ReviewList_list_none {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .review_none {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $deep-grey;
+    margin-bottom: 40px;
+    img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+      filter: $f-deep-grey;
+    }
+  }
 }
 
 @include tablet {
@@ -119,6 +151,9 @@
   .ReviewList_list {
     width: 100%;
     padding: 40px 40px 20px 40px;
+    .review_none {
+      font-size: 1.6rem;
+    }
   }
 }
 

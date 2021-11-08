@@ -1,12 +1,23 @@
-const { Product, Bookmark, Ingredient, Sequelize, Tag } = require('../models');
+/* eslint-disable prefer-const */
+const {
+  Product, Bookmark, Ingredient, Sequelize, Tag, sequelize,
+} = require('../models');
 const paging = require('../modules/page');
+const redisClient = require('../modules/redis');
 
 module.exports = {
   search: async (req, res) => {
     /**
      * 검색 API
      */
-    const { page, size, query, type, order } = req.query;
+    let {
+      page, size, query, type,
+    } = req.query;
+    let order = req.query.order === 'reivews' ? 'reviewsCount' : 'views';
+    if (['눈', '간', '뼈', '이', '키', '위', '장'].includes(query)) {
+      type = 'category';
+    }
+
     const params = {
       attributes: [
         'id',
@@ -16,37 +27,58 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
-      limit: size,
+      limit: parseInt(size, 10),
       offset: (page - 1) * size,
-      order: [[order, 'DESC']],
+      distinct: true,
       include: [
         {
           model: Bookmark,
           where: { userId: res.locals.user.id },
           required: false,
+          duplicating: false,
         },
       ],
     };
     if (type === 'search') {
+      // 검색 가중치부여
+      let score;
+      if (order === 'views') score = 2;
+      else score = 5;
+      params.attributes.push([
+        `MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)+Product.${order}*${score}`, 'rating',
+      ]);
       params.where = Sequelize.literal(
         `MATCH (name, company, functional) AGAINST("${query}" IN BOOLEAN MODE)`,
       );
+      params.order = [
+        [sequelize.literal('rating'), 'DESC'],
+        [order, 'DESC'],
+      ];
     } else {
-      params.include.push({
+      const ingredientsInclude = {
         model: Ingredient,
         attributes: ['id'],
-      });
+      };
+      if (req.query.order === 'reviewsCount') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
+      else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
+      params.order = order;
       if (type === 'category') {
-        const tag = await Tag.findOne({ where: { name: query } });
-        params.include.where = {
+        const tag = await Tag.findOne({
+          attributes: ['ingredients'],
+          where: { name: { [Sequelize.Op.like]: `${query}%` } },
+        });
+        ingredientsInclude.where = {
           name: { [Sequelize.Op.in]: tag?.ingredients || [] },
         };
       } else {
-        params.include.where = { name: query };
+        ingredientsInclude.where = {
+          name: { [Sequelize.Op.like]: `%${query}%` },
+        };
       }
+      params.include.push(ingredientsInclude);
     }
     const { count, rows } = await Product.findAndCountAll(params);
-    return res.json({
+    const returnData = {
       message: 'Success to search products list',
       items: rows.map((row) => {
         const product = row.toJSON();
@@ -59,14 +91,19 @@ module.exports = {
         delete product.Bookmarks;
         delete product.reviewsSum;
         delete product.Ingredients;
+        delete product.rating;
         return product;
       }),
       pages: {
         ...paging({ page, size, count }),
         itemCount: count,
       },
-    });
+    };
+    // 캐시
+    if (!res.locals.user.id) redisClient.set(req.url, returnData);
+    return res.json(returnData);
   },
+
   detail: async (req, res) => {
     let product = await Product.findOne({
       where: { id: req.params.productId },
@@ -90,7 +127,7 @@ module.exports = {
 
     // 평균점수
     product = product.toJSON();
-    product.score = Math.round(product.reviewsSum / product.reviewsCount) || 0;
+    product.score = parseFloat((product.reviewsSum / product.reviewsCount).toFixed(1)) || 0;
     delete product.reviewsSum;
 
     // 북마크 한적 있는지?
@@ -110,7 +147,7 @@ module.exports = {
     // 조회수증가
     Product.increment('views', { by: 1, where: { id: req.params.productId } });
 
-    return res.json({
+    const returnData = {
       message: 'Success to get product info',
       itemInfo: {
         ...product,
@@ -119,10 +156,15 @@ module.exports = {
           bad: [...bads],
         },
       },
-    });
+    };
+    // 캐시
+    if (!res.locals.user.id) redisClient.set(req.url, returnData);
+    return res.json(returnData);
   },
+
   all: async (req, res) => {
     const { page, size } = req.query;
+    const order = req.query.order === 'reviews' ? 'reviewsCount' : 'views';
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',
@@ -132,9 +174,9 @@ module.exports = {
         'reviewsCount',
         'views',
       ],
-      limit: size,
+      limit: parseInt(size, 10),
       offset: (page - 1) * size,
-      order: [['views', 'DESC']],
+      order: [[order, 'DESC']],
       include: [
         {
           model: Bookmark,
@@ -143,7 +185,7 @@ module.exports = {
         },
       ],
     });
-    return res.json({
+    const returnData = {
       message: 'Success to search products list',
       items: rows.map((row) => {
         const product = row.toJSON();
@@ -161,6 +203,9 @@ module.exports = {
         ...paging({ page, size, count }),
         itemCount: count,
       },
-    });
+    };
+    // 캐시
+    if (!res.locals.user.id) redisClient.set(req.url, returnData);
+    return res.json(returnData);
   },
 };

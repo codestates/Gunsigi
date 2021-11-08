@@ -12,9 +12,11 @@ module.exports = {
      */
     const { page, size } = req.query;
     const { count, rows } = await Review.findAndCountAll({
+      distinct: true,
       where: { userId: res.locals.user.id },
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
+      order: [['id', 'DESC']],
       include: [{
         model: reviewImage,
         as: 'images',
@@ -25,6 +27,10 @@ module.exports = {
         as: 'userInfo',
         attributes: ['id', 'profileImage', 'nickname'],
       },
+      {
+        model: Product,
+        attributes: ['name'],
+      },
       ],
     });
     return res.json({
@@ -32,9 +38,11 @@ module.exports = {
       items: rows.map((row) => {
         const review = row.toJSON();
         review.images = review.images.map((image) => image.image);
+        review.productName = review.Product.name;
+        delete review.Product;
         return review;
       }),
-      pages: paging({ page, size, count }),
+      pages: { ...paging({ page, size, count }), itemsCount: count },
     });
   },
   get: async (req, res) => {
@@ -45,6 +53,7 @@ module.exports = {
       page, size, filter, order,
     } = req.query;
     const params = {
+      distinct: true,
       where: { productId: req.params.productId },
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
@@ -70,8 +79,8 @@ module.exports = {
       ],
     };
     if (filter) params.where.period = filter;
-    if (order === 'recent') params.order = [['createdAt', 'DESC']];
-    else params.order = [['likesCount', 'DESC']];
+    if (order === 'recent') params.order = [['createdAt', 'DESC'], ['likesCount', 'DESC']];
+    else params.order = [['likesCount', 'DESC'], ['createdAt', 'DESC']];
 
     const { count, rows } = await Review.findAndCountAll(params);
     return res.json({
@@ -87,7 +96,7 @@ module.exports = {
         delete review.reviewLikes;
         return review;
       }),
-      pages: paging({ page, size, count }),
+      pages: { ...paging({ page, size, count }), itemsCount: count },
     });
   },
   post: async (req, res) => {
@@ -125,38 +134,31 @@ module.exports = {
       }
 
       review = await Review.create({
-        ...req.body, userId: res.locals.user.id,
-      }, { include: { model: reviewImage, as: 'images' }, transaction });
+        ...req.body, userId: parseInt(res.locals.user.id, 10),
+      }, { transaction });
 
       // 리뷰카운트, 총점 증가
-      await Product.increment('reviewsCount', {
-        by: incrementCount,
-        where: { id: review.productId },
-        transaction,
-      });
-      await Product.increment('reviewsSum', {
-        by: changeScore,
-        where: { id: review.productId },
-        transaction,
-      });
-      await User.increment('reviewsCount', {
-        by: incrementCount,
-        where: { id: res.locals.user.id },
-        transaction,
-      });
+      if (incrementCount) {
+        await Product.increment('reviewsCount', {
+          by: 1,
+          where: { id: review.productId },
+          transaction,
+        });
+        await User.increment('reviewsCount', {
+          by: 1,
+          where: { id: res.locals.user.id },
+          transaction,
+        });
+      }
+      if (changeScore) {
+        await Product.increment('reviewsSum', {
+          by: changeScore,
+          where: { id: review.productId },
+          transaction,
+        });
+      }
       // 이미지가 있다면 s3에 저장 reviews/리뷰ID 폴더 안에 전부 집어 넣는다
-      const imageKeys = await Promise.all(images.map((image) => s3.save(`reviews/${review.id}`, image)));
-
-      // await review.addImages(await Promise.all(
-      //   imageKeys.map(async (image) => reviewImage.create({
-      //      reviewId: review.id, image,
-      //   }, { transaction })),
-      // ));
-
-      // reviewImages = await review.getImages({ transaction });
-      // console.log('images : ', reviewImages);
-
-      // review.save({ transaction });
+      const imageKeys = await Promise.all(images.map((image) => s3.compressAndSave(`reviews/${review.id}`, image)));
 
       await reviewImage.bulkCreate(imageKeys.map((image) => ({
         reviewId: review.id, image,
@@ -174,8 +176,8 @@ module.exports = {
     } catch (err) {
       debug(err);
       await transaction.rollback();
-      if (review.id && images) await s3.deleteFolder(`reviews/${review.id}`);
-      throw err;
+      if (review?.id && images) await s3.deleteFolder(`reviews/${review.id}`);
+      return res.status(403).json({ message: 'Invalid UserID' });
     }
     return res.json({
       message: 'Success to write review',
@@ -197,7 +199,32 @@ module.exports = {
       return res.status(403).json({ message: 'Forbidden' });
     }
 
-    await sequelize.transaction((transaction) => review.destroy({ transaction }));
+    // 리뷰 삭제 및 리뷰카운트 감소
+    const transaction = await sequelize.transaction();
+    try {
+      // 리뷰카운트, 총점 증가
+      await Product.decrement('reviewsCount', {
+        by: 1,
+        where: { id: review.productId },
+        transaction,
+      });
+      await Product.decrement('reviewsSum', {
+        by: review.score,
+        where: { id: review.productId },
+        transaction,
+      });
+      await User.decrement('reviewsCount', {
+        by: 1,
+        where: { id: res.locals.user.id },
+        transaction,
+      });
+      await review.destroy({ transaction });
+      await transaction.commit();
+    } catch (err) {
+      debug(err);
+      await transaction.rollback();
+      throw Error('delete review error');
+    }
     return res.json({
       message: 'success to delete',
     });

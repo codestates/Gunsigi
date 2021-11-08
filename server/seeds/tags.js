@@ -7,19 +7,16 @@ const { Tag } = require('../models');
 
 module.exports = async () => {
   const count = await Tag.count();
-  if (count === 0) {
-    // 없는 경우에만 데이터 넣기.
-    let tags;
-    try {
-      tags = JSON.parse(
-        await fs.readFile(path.join(__dirname, './data/tags.json'), 'utf8'),
-      );
-    } catch {
-      return false;
-    }
-
-    return Tag.bulkCreate(tags);
+  if (count > 0) return false;
+  // 없는 경우에만 데이터 넣기.
+  let tags;
+  try {
+    tags = JSON.parse(
+      await fs.readFile(path.join(__dirname, './data/tags.json'), 'utf8'),
+    );
+  } catch {
+    return false;
   }
-  // 데이터가 이미 있으면 성공처리
-  return true;
+
+  return Tag.bulkCreate(tags);
 };

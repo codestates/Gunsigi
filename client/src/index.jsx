@@ -2,20 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/style.css';
 import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+import { BrowserRouter } from 'react-router-dom';
 import store from './store/store';
 import App from './App';
-
-const persistor = persistStore(store);
+import ScrollTop from './components/ScrollTop';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
+    <BrowserRouter>
+      <Provider store={store}>
+        <ScrollTop />
         <App />
-      </PersistGate>
-    </Provider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );

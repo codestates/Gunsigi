@@ -1,24 +1,66 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../styles/nav/navChange.scss';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchedWord } from '../actions/searchAction';
+import { setLoginState } from '../actions/userAction';
+import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function NavChange() {
-  // isLogin 리덕스 상태 설정필요
-  const states = useSelector((state) => state.userReducer);
-  const { isLogin } = states;
+  const inputEl = useRef();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const { isLogin } = userState;
+  const modalState = useSelector((state) => state.modalReducer);
+  const { isOpenLogin, isOpenSingup } = modalState;
   const [openSearchModal, setOpenSearchModal] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
+  const searchState = useSelector((state) => state.searchReducer);
+  const { searchedWord } = searchState;
+
+  const handleSearchInput = (event) => {
+    dispatch(setSearchedWord(event.target.value));
+  };
+
+  const searchRequest = () => {
+    setOpenSearchModal(false);
+    inputEl.current.blur();
+    if (inputEl.current.value !== '') {
+      inputEl.current.value = '';
+      history.push({
+        pathname: '/search',
+        search: `?query=${searchedWord}&type=search`,
+      });
+    } else {
+      history.push('/search');
+    }
+    window.scrollTo(0, 0);
+  };
+
+  const handleInputPress = (event) => {
+    if (event.key === 'Enter') {
+      searchRequest();
+    }
+  };
+
+  const logoutHandler = (event) => {
+    event.preventDefault();
+
+    axios.get('/auth/logout').then(() => {
+      dispatch(setLoginState(false));
+      history.push('/');
+    });
+  };
 
   return (
     <>
       <div className="navChange">
-        {openLogin ? <LoginModal setOpenLogin={setOpenLogin} /> : null}
-        {openSignup ? <SignupModal setOpenSignup={setOpenSignup} /> : null}
+        {isOpenLogin ? <LoginModal /> : null}
+        {isOpenSingup ? <SignupModal /> : null}
         {openSearchModal ? (
           <SearchModal setOpenSearchModal={setOpenSearchModal} />
         ) : null}
@@ -29,30 +71,32 @@ function NavChange() {
         </Link>
         <div className="nav_mid">
           <input
+            ref={inputEl}
             onClick={() => setOpenSearchModal(true)}
+            onChange={(e) => handleSearchInput(e)}
+            onKeyPress={(e) => handleInputPress(e)}
             type="text"
             className="search-input"
+            // placeholder="검색어를 입력해 주세요"
           />
 
-          <div className="icon_search">
+          <button className="icon_search" onClick={searchRequest} type="button">
             <img src="/icons/icon_magnify.svg" alt="magnifier" />
-          </div>
+          </button>
         </div>
         <div className="nav_right">
           {!isLogin ? (
             <>
               <button
                 type="button"
-                onClick={() => {
-                  setOpenLogin(true);
-                }}
+                onClick={() => dispatch(setLoginModal(true))}
                 className="login"
               >
                 로그인
               </button>
               <button
                 type="button"
-                onClick={() => setOpenSignup(true)}
+                onClick={() => dispatch(setSignupModal(true))}
                 className="signup"
               >
                 회원가입
@@ -65,7 +109,7 @@ function NavChange() {
                   마이페이지
                 </button>
               </Link>
-              <button type="button" className="logout">
+              <button type="button" className="logout" onClick={logoutHandler}>
                 로그아웃
               </button>
             </>

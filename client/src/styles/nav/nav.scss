@@ -35,6 +35,9 @@
     color: $black;
     font-size: 1rem;
     font-weight: 600;
+    button {
+      font-size: 1.1rem;
+    }
     .icon_search {
       width: 14px;
       filter: $f-black;
@@ -75,6 +78,9 @@
     }
     .nav_right {
       font-size: 1.4rem;
+      button {
+        font-size: 1.4rem;
+      }
       .icon_search {
         width: 20px;
         margin-right: 40px;

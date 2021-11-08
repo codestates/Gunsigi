@@ -89,12 +89,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    animation: slide-bottom 5s;
-    animation-iteration-count: infinite;
-    -webkit-animation: slide-bottom 5s;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation: slide-bottom 5s;
-    -moz-animation-iteration-count: infinite;
+    animation: slide-bottom 7s infinite;
+    -webkit-animation: slide-bottom 7s infinite;
+    -moz-animation: slide-bottom 7s infinite;
     h3 {
       font-size: 2rem;
       margin-bottom: 30px;
@@ -155,8 +152,9 @@
     .textBox {
       width: 36%;
       height: 100%;
-      animation: slide-left 5s;
-      animation-iteration-count: infinite;
+      animation: slide-left 7s infinite;
+      -webkit-animation: slide-left 7s infinite;
+      -moz-animation: slide-left 7s infinite;
       padding: 0 10px;
       h3 {
         font-size: 2rem;
@@ -171,7 +169,8 @@
       .frameBox {
         width: 100%;
         .frame {
-          min-width: 600px;
+          min-width: 550px;
+          max-width: 850px;
           background-image: url('../../images/macbook.png');
           background-position: center;
           background-size: contain;

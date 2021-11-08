@@ -117,6 +117,9 @@
         }
       }
     }
+    .cursor {
+      cursor: pointer;
+    }
 
     .period {
       display: flex;
@@ -179,7 +182,7 @@
   }
 
   .Reviews_left {
-    width: 30%;
+    width: 300px;
     justify-content: center;
   }
 
@@ -214,7 +217,9 @@
   }
 
   .Reviews_right {
-    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     padding: 20px 30px 20px 0;
     .name {
       .product_name {
@@ -253,11 +258,9 @@
 
 @media screen and (min-width: 1024px) {
   .Reviews_left {
-    width: 20%;
     justify-content: center;
   }
   .Reviews_right {
-    width: 80%;
     .content {
       width: 75%;
     }

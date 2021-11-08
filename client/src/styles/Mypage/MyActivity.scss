@@ -1,10 +1,10 @@
 @import '../../App';
 
 .my-activity_container {
-  margin: 0 2.2rem;
+  margin: 0 22px;
 
   #tab_menu {
-    margin: 0 0.2rem;
+    margin: 0 2px;
     display: flex;
     list-style: none;
     -webkit-padding-start: 0;
@@ -12,15 +12,16 @@
     font-size: 1.2rem;
     border-bottom: 1px solid $light-grey;
 
-    li:nth-child(2) {
-      color: $deep-grey;
-    }
-
     .submenu {
-      padding: 1rem 0.5rem 1rem 0.5rem;
+      padding: 0px 5px 5px 5px;
       cursor: pointer;
     }
 
+    li:nth-child(2) {
+      color: $deep-grey;
+      cursor: default;
+      pointer-events: none;
+    }
     .focused {
       transition: 0.5s ease;
       font-weight: 800;
@@ -29,7 +30,7 @@
   }
 
   .my-contents {
-    padding-top: 2.5rem;
+    padding-top: 25px;
   }
 }
 
@@ -42,21 +43,19 @@
 @include laptop {
   .my-activity_container {
     margin: 0;
-    width: 80%;
-    height: 100%;
+    width: calc(100vw - 390px);
+    height: calc(100vh - 160px);
 
     #tab_menu {
       margin: 0;
-      height: 5%;
-      min-height: 3.9rem;
-      max-height: 4rem;
+      height: 25px;
       font-size: 1.5rem;
     }
 
     .my-contents {
-      padding: 2.5rem 0.5rem 0 0.5rem;
+      padding: 25px 5px 0 5px;
 
-      height: 95%;
+      height: calc(100vh - 185px);
       overflow-y: scroll;
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
@@ -75,7 +74,7 @@
     }
 
     .my-contents {
-      padding-top: 2rem;
+      padding-top: 20px;
     }
   }
 }

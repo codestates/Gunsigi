@@ -1,42 +1,57 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import setAxios, { updateToken } from './utils/ApiController';
+import { setLoginState } from './actions/userAction';
 import Main from './pages/Main';
 import Search from './pages/Search';
 import ProductDetail from './pages/ProductDetail';
 import Mypage from './pages/Mypage';
-import TopButton from './components/TopButton';
 import Loading from './components/Loading';
+import NotFound from './components/NotFound';
+import IsLogin from './components/IsLogin';
+import ErrorModal from './components/ErrorModal';
+
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function App() {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [token, setToken] = useState(false);
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const modalState = useSelector((state) => state.modalReducer);
+  const { isLoginTrueOrFalse } = modalState;
+  const { isLogin } = userState;
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorModal, setErrorModal] = useState({
+    isOpenError: false,
+    errorMsg: '',
+  });
+  const [token, setToken] = useState(null);
+
+  window.addEventListener('load', () => {
+    setIsLoading(false);
+  });
+
+  const errorModalHandler = (boolean, string) => {
+    setErrorModal({ isOpenError: boolean, errorMsg: string });
+  };
 
   useEffect(async () => {
-    /**
-     * 리액트가 처음 렌더링 될 때 실행됩니다.
-     * axios세팅후 토큰갱신을 시도합니다.
-     */
-    await setAxios(setToken, setIsLoading);
+    await setAxios(setToken, setIsLoading, errorModalHandler);
     let newToken;
     try {
       newToken = await updateToken();
-    } catch {
+    } catch (err) {
+      console.log('err', err);
       // 토큰 갱신에 실패했습니다.
+      dispatch(setLoginState(false));
+      setToken(false);
       return;
     }
     // 새로 받은 토큰상태를 변경합니다.
     setToken(newToken);
-
-    // 리덕스 isLogin 설정필요.
+    dispatch(setLoginState(true));
   }, []);
 
   useEffect(() => {
@@ -46,26 +61,32 @@ function App() {
     };
   }, [token]);
 
+  if (token === null || isLogin === 'init') return '';
+
   return (
     <div className="App">
       {isLoading ? <Loading /> : null}
-      {scrollPosition > 60 ? <TopButton /> : null}
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/search" component={Search}>
-            <Search />
-          </Route>
-          <Route path="/mypage">
-            <Mypage />
-          </Route>
-          <Route exact path="/product-detail/:id" component={ProductDetail} />
-        </Switch>
-      </Router>
+      {isLoginTrueOrFalse ? <IsLogin /> : null}
+      {errorModal.isOpenError && (
+        <ErrorModal
+          errorMsg={errorModal.errorMsg}
+          errorModalHandler={errorModalHandler}
+        />
+      )}
+      <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <Route path="/search">
+          <Search />
+        </Route>
+        <Route path="/mypage">
+          {isLogin ? <Mypage /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/product-detail/:id" component={ProductDetail} />
+        <Route path="*" component={NotFound} />
+      </Switch>
     </div>
   );
 }
-
 export default App;
