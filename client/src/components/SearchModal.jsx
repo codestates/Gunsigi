@@ -16,10 +16,15 @@ import {
 
 function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
   const SearchModalCloseEl = useRef(null);
+  const SearchModalCloseButtonEl = useRef(null);
   const dispatch = useDispatch();
   const history = useHistory();
+
   const SearchModalCloseButton = (e) => {
-    if (e.target === SearchModalCloseEl.current) {
+    if (
+      e.target === SearchModalCloseEl.current ||
+      e.target === SearchModalCloseButtonEl.current
+    ) {
       setOpenSearchModal(false);
     }
   };
@@ -88,12 +93,19 @@ function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
           </div>
         </div>
       </div>
-      <div className="SearchModal_close">
+      <div
+        aria-hidden="true"
+        onClick={(e) => {
+          SearchModalCloseButton(e);
+        }}
+        ref={SearchModalCloseEl}
+        className="SearchModal_close"
+      >
         <button
           onClick={(e) => {
             SearchModalCloseButton(e);
           }}
-          ref={SearchModalCloseEl}
+          ref={SearchModalCloseButtonEl}
           type="button"
         >
           x
