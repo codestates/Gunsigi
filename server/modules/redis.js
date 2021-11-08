@@ -2,9 +2,10 @@ const redis = require('redis');
 
 const TTL = 300;
 const client = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  enable_offine_queue: false,
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+  },
 });
 client.on('error', (err) => {
   client.quit();
