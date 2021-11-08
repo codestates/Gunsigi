@@ -18,6 +18,7 @@ import IsLogin from '../components/IsLogin';
 import IsLoadingSmall from '../components/IsLoadingSmall';
 import SearchProductList from '../components/SearchProductList';
 import TopButton from '../components/TopButton';
+import Skeleton from '../components/Skeleton';
 
 const parseQuery = (queryString) => {
   const query = {};
@@ -42,7 +43,7 @@ function Search() {
   const rootRef = useRef(null);
   const searchState = useSelector((state) => state.searchReducer);
   const { productList, productCount } = searchState;
-
+  // const [title, setTitle] = useState('');
   const [searchOrder, setSearchOrder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [target, setTarget] = useState(null); // 왜 되는지?
@@ -120,7 +121,7 @@ function Search() {
           setQueryPage((prev) => prev + 1);
         }
       },
-      { threshold: 1.0, root: rootRef.current },
+      { threshold: 1.0, root: null },
     ),
   );
 
@@ -191,10 +192,8 @@ function Search() {
           <div className="Search_bottom">
             <div className="Search_title">
               <div>
-                {!query
-                  ? `전체 건강기능식품 ${queryPage}`
-                  : `"${query}" 검색 결과`}
-                <span>{`(${productCount})`}</span>
+                {!query ? '전체 건강기능식품' : `"${query}" 검색 결과`}
+                <span>{`${productCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 건`}</span>
               </div>
               <div className="Sequence">
                 <button
@@ -223,6 +222,7 @@ function Search() {
               </div>
             </div>
             <div className="Search_products" ref={rootRef}>
+              {/* <Skeleton /> */}
               <SearchProductList />
               <div id="observer" ref={setTarget} className="targetEl">
                 {isLoading && <IsLoadingSmall />}
