@@ -9,7 +9,7 @@
 .Search_in {
   .Search_img {
     width: 100%;
-    height: 60vh;
+    height: 40vh;
     background-image: url(../images/search_app.png);
     background-size: cover;
     background-position: center;
@@ -65,12 +65,13 @@
 
 .Search_products {
   width: 100%;
+  height: 100%;
   display: grid;
   align-items: center;
   justify-content: space-between;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -103,26 +104,22 @@
       }
     }
   }
-}
-.targetEl {
-  width: 100%;
-  min-width: 50px;
-  min-height: 30px;
-  background-color: red;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  object-position: center;
+  .targetEl {
+    width: 100%;
+    min-width: 50px;
+    min-height: 50px;
+    grid-column: 1/ 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @media screen and (min-width: 500px) {
   .Search_products {
     grid-template-columns: repeat(3, 1fr);
     .targetEl {
-      grid-column-end: 4;
+      grid-column: 1/ 4;
     }
   }
 }
@@ -131,7 +128,7 @@
   .Search_products {
     grid-template-columns: repeat(4, 1fr);
     .targetEl {
-      grid-column-end: 5;
+      grid-column: 1 / 5;
     }
   }
 }
@@ -186,7 +183,7 @@
   .Search_products {
     grid-template-columns: repeat(5, 1fr);
     .targetEl {
-      grid-column-end: 6;
+      grid-column: 1 / 6;
     }
   }
 }
@@ -203,7 +200,7 @@
   .Search_products {
     grid-template-columns: repeat(6, 1fr);
     .targetEl {
-      grid-column-end: 7;
+      grid-column: 1 / 7;
     }
   }
 }

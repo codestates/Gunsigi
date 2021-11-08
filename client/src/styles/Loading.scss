@@ -17,8 +17,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .g {
+  .images {
     width: 15%;
+    position: relative;
+    margin-bottom: 16%;
+    .g {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      z-index: 5;
+    }
+    .g:nth-child(2) {
+      z-index: 1;
+    }
   }
   .unsigi {
     width: 30%;
@@ -95,3 +106,59 @@
     animation-timing-function: var(--EASE_OUT_QUAD);
   }
 }
+
+// fade-out animation
+.fade-out {
+  -webkit-animation: fade-out 1500ms;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation: fade-out 1500ms;
+  -moz-animation-iteration-count: infinite;
+  animation: fade-out 1500ms;
+  animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@-moz-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
