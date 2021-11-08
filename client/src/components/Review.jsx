@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsLogin } from '../actions/modalAction';
 import '../styles/Review.scss';
 import DeleteReviewModal from './DeleteReviewModal';
-import IsLogin from './IsLogin';
 
 function Review({
   name,
@@ -22,6 +22,7 @@ function Review({
   reviewProductId,
   setRieviewCount,
 }) {
+  const dispatch = useDispatch();
   const history = useHistory();
   const isOpenMypage = useSelector((state) => state.inoutMypage);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -81,11 +82,7 @@ function Review({
         });
       }
     } else {
-      const isLoginModal = document.getElementById('IsLogin_container');
-      isLoginModal.style.right = '20px';
-      setTimeout(() => {
-        isLoginModal.style.right = '-250px';
-      }, 1500);
+      dispatch(setIsLogin(true));
     }
   };
 
@@ -103,7 +100,6 @@ function Review({
 
   return (
     <>
-      <IsLogin />
       <div className="Reviews_container">
         <div className="Reviews_in">
           <div className="Reviews_trashOrHeart">

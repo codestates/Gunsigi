@@ -7,12 +7,12 @@
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { setIsLogin } from '../actions/modalAction';
 import NavChange from '../components/NavChange';
 import ReviewList from '../components/ReviewList';
 import Write from '../components/Write';
 import ReviewModal from '../components/ReviewModal';
 import '../styles/ProductDetail.scss';
-import IsLogin from '../components/IsLogin';
 import ProductDetailStar from '../components/ProductDeatailStar';
 import { setProductList } from '../actions/searchAction';
 
@@ -68,13 +68,8 @@ function ProductDetail({ match }) {
 
   //! 북마크 기능
   const isBookmarkedHandler = async () => {
-    const isLoginModal = document.getElementById('IsLogin_container');
-
     if (!loginState.isLogin) {
-      isLoginModal.style.right = '20px';
-      setTimeout(() => {
-        isLoginModal.style.right = '-250px';
-      }, 1500);
+      dispatch(setIsLogin(true));
     } else {
       if (!isBookmark) {
         await axios({
@@ -119,13 +114,8 @@ function ProductDetail({ match }) {
 
   //! ReviewModal 창 키고 끄는 함수
   const openWriteHandler = (trueOrFalse) => {
-    const isLoginModal = document.getElementById('IsLogin_container');
-
     if (!loginState.isLogin) {
-      isLoginModal.style.right = '20px';
-      setTimeout(() => {
-        isLoginModal.style.right = '-250px';
-      }, 1500);
+      dispatch(setIsLogin(true));
     } else {
       setisOpenWrite(trueOrFalse);
     }
@@ -133,7 +123,6 @@ function ProductDetail({ match }) {
 
   return (
     <>
-      <IsLogin />
       {isOpenWrite ? (
         <ReviewModal
           productId={ProductInfo.id}

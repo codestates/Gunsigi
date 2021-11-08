@@ -6,7 +6,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { outMypage } from '../actions/inoutMypageAction';
 import {
   addProductList,
   setProductList,
@@ -14,7 +13,6 @@ import {
 } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
-import IsLogin from '../components/IsLogin';
 import IsLoadingSmall from '../components/IsLoadingSmall';
 import SearchProductList from '../components/SearchProductList';
 import TopButton from '../components/TopButton';
@@ -184,7 +182,6 @@ function Search() {
   return (
     <>
       <NavChange />
-      <IsLogin />
       <TopButton />
       <div className="Search_conatiner">
         <div className="Search_in">
@@ -193,7 +190,9 @@ function Search() {
             <div className="Search_title">
               <div>
                 {!query ? '전체 건강기능식품' : `"${query}" 검색 결과`}
-                <span>{`${productCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 건`}</span>
+                <span>{`${productCount
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 건`}</span>
               </div>
               <div className="Sequence">
                 <button
