@@ -7,6 +7,12 @@
   justify-content: space-between;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+
+  .product_wrapper {
+    .Product_items {
+      margin: 0 auto;
+    }
+  }
 }
 
 .myProducts_none {
