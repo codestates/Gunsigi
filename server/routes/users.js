@@ -26,4 +26,13 @@ router.patch(
 );
 router.delete('/', users.delete);
 
+router.post('/test', async (req, res) => {
+  const s3 = require('../modules/image');
+  // 이미지 테스트
+  const { image } = req.body;
+  await s3.thumbnail('test', image);
+
+  return res.json({ message: 'suc' });
+});
+
 module.exports = router;

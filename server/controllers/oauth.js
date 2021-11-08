@@ -6,7 +6,7 @@ const {
   generateAccessToken,
   generateRefreshToken,
   sendToCookie,
-} = require('./token');
+} = require('../modules/token');
 
 module.exports = {
   kakao: async (req, res) => {

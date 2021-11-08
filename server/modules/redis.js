@@ -28,7 +28,7 @@ module.exports = {
       return result;
     }
   },
-  set: async (key, value) => {
+  set: async (key, value, EX = TTL) => {
     try {
       await client.connect();
     } catch {
@@ -37,7 +37,7 @@ module.exports = {
     if (typeof (value) === 'object') {
       await client.set(key, JSON.stringify(value));
     } else {
-      await client.set(key, value, { EX: TTL });
+      await client.set(key, value, { EX });
     }
     await client.quit();
     return true;

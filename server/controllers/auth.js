@@ -5,7 +5,7 @@ const {
   generateRefreshToken,
   sendToCookie,
   isAuthorized,
-} = require('./token');
+} = require('../modules/token');
 
 module.exports = {
   overlap: async (req, res) => {

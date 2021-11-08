@@ -11,9 +11,12 @@ const cors = require('cors');
 const db = require('./models');
 const router = require('./routes');
 
+const mailer = require('./modules/email');
+
 const app = express();
 app.enable('trust proxy');
 app.db = db;
+app.mail = mailer;
 
 if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
 else app.use(logger('dev'));
@@ -63,7 +66,7 @@ app.use('/review/like', router.reviewLikes);
 app.use('/bookmarks', router.bookmarks);
 
 // 로드밸런서 Health Check
-app.get('/healthcheck', (_, res) => res.send('hi'));
+app.get('/healthcheck', (_, res) => res.send(''));
 
 app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
 

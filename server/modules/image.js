@@ -1,7 +1,9 @@
 const uuid = require('uuid').v4;
 const AWS = require('aws-sdk');
+const sharp = require('sharp');
 const debug = require('debug')('app:image');
 const fs = require('fs').promises;
+
 let Client;
 if (process.env.NODE_ENV !== 'production') Client = require('node-scp').Client;
 
@@ -97,5 +99,34 @@ module.exports = {
 
     // Object가 남아있으면 재귀호출로 전부 제거
     if (listObjects.IsTruncated) await deleteObjects(dir);
+  },
+  async compressAndSave(path, image) {
+    // 이미지 압축해서 저장
+    const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+    if (matches.length !== 3) return new Error('Invalid Base64 Image String');
+    const decodedImage = Buffer.from(matches[2], 'base64');
+    const compressedImage = (await sharp(decodedImage)
+      .webp()
+      .toBuffer()).toString('base64');
+    const result = await this.save(path, `data:image/webp;base64,${compressedImage}`);
+    return result;
+  },
+  async thumbnailAndSave(path, image) {
+    // 이미지 사이즈조절 및 압축
+    // 이미지 압축해서 저장
+    const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+    if (matches.length !== 3) return new Error('Invalid Base64 Image String');
+    if (matches[1].includes('gif')) {
+      // GIF는 제외
+      const result = await this.save(path, image);
+      return result;
+    }
+    const decodedImage = Buffer.from(matches[2], 'base64');
+    const compressedImage = (await sharp(decodedImage)
+      .resize(150, 150)
+      .webp()
+      .toBuffer()).toString('base64');
+    const result = await this.save(path, `data:image/webp;base64,${compressedImage}`);
+    return result;
   },
 };
