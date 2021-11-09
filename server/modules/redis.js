@@ -42,4 +42,14 @@ module.exports = {
     await client.quit();
     return true;
   },
+  delete: async (key) => {
+    try {
+      await client.connect();
+    } catch {
+      return false;
+    }
+    await client.del(key);
+    await client.quit();
+    return true;
+  },
 };

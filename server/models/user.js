@@ -1,7 +1,6 @@
 const { Model } = require('sequelize');
 const debug = require('debug')('app:db');
-const bcrypt = require('bcrypt');
-const path = require('path');
+const { createHash } = require('crypto');
 const s3 = require('../modules/image');
 
 module.exports = (sequelize, DataTypes) => {
@@ -28,9 +27,19 @@ module.exports = (sequelize, DataTypes) => {
       return jsonUser;
     }
 
-    async isRight(password) {
-      const check = await bcrypt.compare(password, this.password);
-      return check;
+    summary() {
+      return {
+        id: this.id,
+        email: this.email,
+        verified: this.verified,
+        createdAt: this.createdAt,
+      };
+    }
+
+    isRight(password) {
+      const password2 = createHash('sha512')
+        .update(password + process.env.SECRET_SALT).digest('base64');
+      return this.password === password2;
     }
   }
   User.init(
@@ -61,9 +70,13 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         set(value) {
-          this.setDataValue('password', bcrypt.hashSync(value, 10));
+          this.setDataValue('password', createHash('sha512').update(value + process.env.SECRET_SALT).digest('base64'));
         },
         defaultValue: '',
+      },
+      verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       type: {
         type: DataTypes.ENUM,

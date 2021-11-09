@@ -14,6 +14,7 @@ module.exports = async () => {
       password: '123123',
       type: 'email',
       reviewsCount: 3,
+      verified: true,
     },
     {
       nickname: 'doldolme',
@@ -21,22 +22,26 @@ module.exports = async () => {
       password: '123123',
       type: 'email',
       reviewsCount: 1,
+      verified: true,
     },
     {
       nickname: 'doldolme',
       password: '123123',
       type: 'google',
+      verified: true,
     },
     {
       nickname: 'doldolme',
       password: '123123',
       type: 'google',
+      verified: true,
     },
   ];
   for (let i = 0; i < 100; i += 1) {
     users.push({
       nickname: '돌돌마',
       type: 'google',
+      verified: true,
     });
   }
   return User.bulkCreate(users);

@@ -11,12 +11,12 @@ const transport = mailer.createTransport({
 });
 
 module.exports = {
-  send: async (to, text) => {
+  send: async (to, subject, text) => {
     const result = await transport.sendMail({
-      from: '"건식이" <help@gunsigi.com>',
+      from: `"건식이" <${process.env.SMTP_SENDMAIL}>`,
       to,
-      subject: 'hello',
-      html: `<b>${text}</b>`,
+      subject,
+      html: text,
     });
     return result;
   },
