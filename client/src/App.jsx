@@ -13,6 +13,7 @@ import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import IsLogin from './components/IsLogin';
 import ErrorModal from './components/ErrorModal';
+import EmailCheckModal from './components/EmailCheckModal';
 import Reset from './pages/Reset';
 import PasswordSetting from './components/PasswordSetting';
 import SucessEmailSend from './components/SucessEmailSend';
@@ -23,8 +24,12 @@ function App() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const modalState = useSelector((state) => state.modalReducer);
-  const { isLoginTrueOrFalse, isOpenforgotPassword, isSuccessSendEmail } =
-    modalState;
+  const {
+    isLoginTrueOrFalse,
+    isOpenforgotPassword,
+    isSuccessSendEmail,
+    isOpenEmailCheck,
+  } = modalState;
   const { isLogin } = userState;
   const [isLoading, setIsLoading] = useState(true);
   const [errorModal, setErrorModal] = useState({
@@ -79,6 +84,7 @@ function App() {
       )}
       {isOpenforgotPassword ? <PasswordSetting /> : null}
       {isSuccessSendEmail ? <SucessEmailSend /> : null}
+      {isOpenEmailCheck && <EmailCheckModal />}
       <Switch>
         <Route exact path="/">
           <Main />

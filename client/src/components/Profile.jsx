@@ -13,6 +13,7 @@ function Profile() {
   const [isOpenMyInfo, setIsOpenMyInfo] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [userType, setUserType] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
 
   const openModalHandler = () => {
     setIsOpenMyInfo(!isOpenMyInfo);
@@ -24,12 +25,13 @@ function Profile() {
       .get('/users')
       .then((res) => {
         const {
-          email, nickname, profileImage, type,
+          email, nickname, profileImage, type, verified,
         } = res.data.userInfo;
         dispatch(setNickname(nickname));
         dispatch(setProfileImg(profileImage));
         setUserEmail(email);
         setUserType(type);
+        setIsVerified(verified);
       })
       .catch((err) => {
         console.log('err', err);
@@ -47,7 +49,11 @@ function Profile() {
           />
           <div id="nickname-email_container">
             <span className="profile_nickname">{nickName}</span>
-            <span id="profile_email">{userEmail}</span>
+            <span id="profile_email">
+              {isVerified && <img src="/icons/icon_shield.svg" alt="shield" />}
+              {!isVerified && <span>인증하기</span>}
+              {userEmail}
+            </span>
           </div>
         </div>
         <img

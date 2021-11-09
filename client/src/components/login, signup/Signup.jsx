@@ -2,7 +2,11 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLoginState } from '../../actions/userAction';
-import { setLoginModal, setSignupModal } from '../../actions/modalAction';
+import {
+  setLoginModal,
+  setSignupModal,
+  setEmailCheckModal,
+} from '../../actions/modalAction';
 import {
   emailValidator,
   nicknameValidator,
@@ -181,6 +185,7 @@ function Signup() {
         dispatch(setLoginState(true));
         dispatch(setSignupModal(false));
         dispatch(setLoginModal(false));
+        dispatch(setEmailCheckModal(true));
       })
       .catch((err) => {
         try {

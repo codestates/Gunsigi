@@ -33,6 +33,17 @@
         font-weight: 800;
         margin-bottom: 0.5rem;
       }
+
+      #profile_email {
+        display: flex;
+        img {
+          width: 1.2rem;
+          height: 1.2rem;
+          margin-right: 0.2rem;
+          filter: invert(73%) sepia(19%) saturate(1633%) hue-rotate(89deg)
+            brightness(89%) contrast(85%);
+        }
+      }
     }
   }
 
@@ -62,6 +73,13 @@
         margin-left: 3.5rem;
         .profile_nickname {
           font-size: 1.8rem;
+        }
+
+        #profile_email {
+          img {
+            width: 1.4rem;
+            height: 1.4rem;
+          }
         }
       }
     }
@@ -104,14 +122,25 @@
     font-size: 1.5rem;
     margin-bottom: 0;
 
-    .profile_img {
-      width: 17rem;
-      height: 17rem;
-      border-radius: 10rem;
-    }
+    #profile_info {
+      .profile_img {
+        width: 13rem;
+        height: 13rem;
+        border-radius: 15rem;
+      }
 
-    .profile_nickname {
-      font-size: 2rem;
+      #nickname-email_container {
+        .profile_nickname {
+          font-size: 2rem;
+        }
+
+        #profile_email {
+          img {
+            width: 1.7rem;
+            height: 1.7rem;
+          }
+        }
+      }
     }
 
     #profile_set {
