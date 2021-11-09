@@ -114,7 +114,7 @@ export const dummyReviews = [
   {
     id: 3,
     nickname: 'doldolma',
-    product: '헤모힘',
+    product: '애터미헤모힘',
     review:
       '면역력이 좋아지는 것 같아요. 기력회복에 좋더라고요. 부모님한테 선물해드리면 좋을 것 같습니다.',
     date: '2021.10.25',
