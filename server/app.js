@@ -9,14 +9,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const router = require('./routes');
+const db = require('./models');
 
 const app = express();
 app.enable('trust proxy');
-
+app.db = db;
 if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
 else {
   app.use(logger('dev'));
-  app.db = require('./models');
   app.aes = require('./modules/aes');
   app.redis = require('./modules/redis');
 }

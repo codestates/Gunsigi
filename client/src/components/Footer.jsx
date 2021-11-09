@@ -27,7 +27,7 @@ function Footer() {
             </a>
             <a className="github" href="https://github.com/iidd0101" target="_blank" rel="noreferrer">
               <img alt="github" src="/icons/icon_github.svg" />
-              <div className="member-name">Do Yeong</div>
+              <div className="member-name">Do Young</div>
             </a>
           </div>
         </div>
