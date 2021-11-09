@@ -40,10 +40,9 @@ function Search() {
   const rootRef = useRef(null);
   const searchState = useSelector((state) => state.searchReducer);
   const { productList, productCount } = searchState;
-  // const [title, setTitle] = useState('');
   const [searchOrder, setSearchOrder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [target, setTarget] = useState(null); // 왜 되는지?
+  const [target, setTarget] = useState(null);
   const [queryPage, setQueryPage] = useState(0);
   const [pageTotal, setPageTotal] = useState(2);
 

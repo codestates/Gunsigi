@@ -13,6 +13,7 @@ import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import IsLogin from './components/IsLogin';
 import ErrorModal from './components/ErrorModal';
+import Reset from './pages/Reset';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -84,6 +85,9 @@ function App() {
           {isLogin ? <Mypage /> : <Redirect to="/" />}
         </Route>
         <Route path="/product-detail/:id" component={ProductDetail} />
+        <Route path="/reset">
+          <Reset />
+        </Route>
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
