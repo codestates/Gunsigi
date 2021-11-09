@@ -163,4 +163,17 @@ module.exports = {
       message: 'Success to set password',
     });
   },
+  // 이메일 재전송
+  email: async (req, res) => {
+    const user = await User.findByPk(res.locals.user.id, { attributes: ['verified', 'email'] });
+    if (!user || user.verified) return res.status(403).json({ message: 'Invalid request' });
+
+    // 이메일 재전송
+    const mailToken = createEmailToken(user.summary());
+    res.render('authMail.html', { options: { url: `${process.env.URL}/auth/email/${encodeURIComponent(mailToken)}` } },
+      async (err, output) => {
+        await mailer.send(user.email, '[Gunsigi] 건식이 이메일 인증을 완료해주세요.', output);
+        return res.json({ message: 'Success' });
+      });
+  },
 };

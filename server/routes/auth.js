@@ -2,6 +2,7 @@ const express = require('express');
 const { body, query } = require('express-validator');
 const auth = require('../controllers/auth');
 const validationError = require('../middlware/error');
+const token = require('../middlware/token');
 
 const router = express.Router();
 
@@ -97,6 +98,13 @@ router.post(
   body('code').notEmpty().withMessage('code 는 필수 입력값 입니다.'),
   validationError,
   auth.resetPassword,
+);
+
+// 이메일 인증 재요청
+router.get(
+  '/email',
+  token.required,
+  auth.email,
 );
 
 module.exports = router;
