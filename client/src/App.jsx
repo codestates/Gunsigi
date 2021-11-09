@@ -14,6 +14,8 @@ import NotFound from './components/NotFound';
 import IsLogin from './components/IsLogin';
 import ErrorModal from './components/ErrorModal';
 import Reset from './pages/Reset';
+import PasswordSetting from './components/PasswordSetting';
+import SucessEmailSend from './components/SucessEmailSend';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -21,7 +23,8 @@ function App() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const modalState = useSelector((state) => state.modalReducer);
-  const { isLoginTrueOrFalse } = modalState;
+  const { isLoginTrueOrFalse, isOpenforgotPassword, isSuccessSendEmail } =
+    modalState;
   const { isLogin } = userState;
   const [isLoading, setIsLoading] = useState(true);
   const [errorModal, setErrorModal] = useState({
@@ -74,6 +77,8 @@ function App() {
           errorModalHandler={errorModalHandler}
         />
       )}
+      {isOpenforgotPassword ? <PasswordSetting /> : null}
+      {isSuccessSendEmail ? <SucessEmailSend /> : null}
       <Switch>
         <Route exact path="/">
           <Main />

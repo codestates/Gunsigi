@@ -3,19 +3,23 @@
 .Search_conatiner {
   min-width: $breakpoint-mobile;
   width: 100%;
-  // height: 100vh;
-  // background-color: $white;
   overflow-y: scroll;
 }
 
 .Search_in {
-  // height: 100%;
   .Search_img {
     width: 100%;
     height: 350px;
-    background-image: url(../images/search_app.png);
+    background-image: url(../images/search_background.png);
     background-size: cover;
-    background-position: center;
+    background-position: left;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    img {
+      height: 300px;
+    }
   }
 }
 
@@ -138,26 +142,27 @@
 @include tablet {
   .Search_in {
     .Search_img {
+      width: 100%;
       height: 270px;
-      background-image: url(../images/search_tablet.png);
-      // background-position: bottom;
+      background-image: url(../images/search_background.png);
+      background-position: right;
+      justify-content: flex-start;
+      align-items: flex-end;
+
+      img {
+        height: 220px;
+        margin-left: 50px;
+      }
     }
   }
 
   .Search_title {
     font-size: 1.8rem;
+    padding: 0 15px 0 5px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .Search_in {
-    .Search_img {
-      height: 260px;
-      background-image: url(../images/search_web.png);
-      // background-position: top;
-    }
-  }
-
   .Search_products {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -189,9 +194,18 @@
 @include desktop {
   .Search_in {
     .Search_img {
-      height: 45vh;
-      background-image: url(../images/search_web.png);
-      // background-position: top;
+      width: 100%;
+      height: 350px;
+      background-image: url(../images/search_background.png);
+      background-position: right;
+      background-size: cover;
+      justify-content: flex-start;
+      align-items: flex-end;
+
+      img {
+        height: 300px;
+        margin-left: 70px;
+      }
     }
   }
 
@@ -206,7 +220,18 @@
 @media screen and (min-width: 1600px) {
   .Search_in {
     .Search_img {
-      height: 50vh;
+      width: 100%;
+      height: 45vh;
+      background-image: url(../images/search_background.png);
+      background-position: right;
+      background-size: cover;
+      justify-content: flex-start;
+      align-items: flex-end;
+
+      img {
+        height: 38vh;
+        margin-left: 100px;
+      }
     }
   }
 }

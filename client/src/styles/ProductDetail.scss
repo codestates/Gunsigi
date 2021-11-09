@@ -83,11 +83,12 @@
     }
     button {
       position: relative;
-      top: 2px;
+      top: 5px;
       img {
-        width: 20px;
-        height: 20px;
+        width: 26px;
+        height: 26px;
         margin-left: 10px;
+        border-radius: 20px;
       }
     }
   }
@@ -234,10 +235,10 @@
         }
       }
       button {
-        top: 2px;
+        top: 5px;
         img {
-          width: 24px;
-          height: 24px;
+          width: 28px;
+          height: 28px;
         }
       }
     }
