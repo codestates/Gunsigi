@@ -44,7 +44,12 @@ module.exports = {
     const mailToken = createEmailToken(user.summary());
     res.render('authMail.html', { options: { url: `${process.env.URL}/auth/email/${encodeURIComponent(mailToken)}` } },
       async (err, output) => {
-        await mailer.send(user.email, '[Gunsigi] 건식이 이메일 인증을 완료해주세요.', output);
+        try {
+          await mailer.send(user.email, '[Gunsigi] 건식이 이메일 인증을 완료해주세요.', output);
+        } catch (error) {
+          await user.destroy();
+          throw error;
+        }
         // 토큰 생성
         const accessToken = generateAccessToken(user.json());
         sendToCookie(res, generateRefreshToken(user.json()));
@@ -123,13 +128,12 @@ module.exports = {
     if (!user) return res.status(400).json({ message: 'invalid Email address' });
     const mailToken = createEmailToken(user.summary());
 
-    debug(mailToken);
     // redis 저장
     const result = await redisClient.set(mailToken, '1', 10800);
     if (!result) throw Error('Redis Connection Error');
 
     // 이메일 전송하기
-    res.render('resetPassword.html',
+    return res.render('resetPassword.html',
       { options: { url: `${process.env.URL}/reset?code=${encodeURIComponent(mailToken)}` } },
       async (err, output) => {
         await mailer.send(user.email, '[Gunsigi] 건식이 비밀번호를 재설정해주세요.', output);
@@ -144,7 +148,6 @@ module.exports = {
     if (!result) return res.status(403).json({ message: 'Invalid code' });
 
     const userInfo = decodeToken(code);
-    debug(userInfo);
     if (!userInfo) return res.status(403).json({ message: 'Invalid code' });
 
     const user = await User.findOne({ where: { email: userInfo.email, type: 'email' } });
