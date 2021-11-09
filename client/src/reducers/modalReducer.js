@@ -4,6 +4,7 @@ import {
   SET_ISLOGIN_FALSE_OR_TRUE,
   SET_FORGOT_PASSWORD,
   SET_SUCCESS_SEND_EMAIL,
+  SET_EMAIL_CHECK_MODAL,
 } from '../actions/types';
 
 const modalInit = {
@@ -12,6 +13,7 @@ const modalInit = {
   isLoginTrueOrFalse: false,
   isOpenforgotPassword: false,
   isSuccessSendEmail: false,
+  isOpenEmailCheck: false,
 };
 
 const modalReducer = (state = modalInit, action) => {
@@ -38,6 +40,12 @@ const modalReducer = (state = modalInit, action) => {
       return {
         ...state,
         isSuccessSendEmail: action.payload.successSendEmail,
+      };
+
+    case SET_EMAIL_CHECK_MODAL:
+      return {
+        ...state,
+        isOpenEmailCheck: action.payload.isOpenEmailCheck,
       };
 
     default:

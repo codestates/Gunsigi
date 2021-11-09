@@ -44,7 +44,7 @@ module.exports = {
     const mailToken = createEmailToken(user.summary());
     res.render('authMail.html', { options: { url: `${process.env.URL}/auth/email/${encodeURIComponent(mailToken)}` } },
       async (err, output) => {
-        await mailer.send(user.email, '건식이 이메일 주소 인증을 해주세요.', output);
+        await mailer.send(user.email, '[Gunsigi] 건식이 이메일 인증을 완료해주세요.', output);
         // 토큰 생성
         const accessToken = generateAccessToken(user.json());
         sendToCookie(res, generateRefreshToken(user.json()));
@@ -132,7 +132,7 @@ module.exports = {
     res.render('resetPassword.html',
       { options: { url: `${process.env.URL}/reset?code=${encodeURIComponent(mailToken)}` } },
       async (err, output) => {
-        await mailer.send(user.email, '건식이 비밀번호를 재설정해주세요.', output);
+        await mailer.send(user.email, '[Gunsigi] 건식이 비밀번호를 재설정해주세요.', output);
         return res.json({ message: 'success' });
       });
   },
