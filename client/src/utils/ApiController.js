@@ -59,10 +59,10 @@ export default async function setAxios(
         const newToken = await updateToken();
         if (newToken) {
           setToken(newToken);
+          err.config.headers.Authorization = `Beaer ${newToken}`;
           // 토큰갱신에 성공했으므로 다시 시도해본다.
           // 3번까지만 재시도해본다.
           const retry = err.config.retry || 0;
-          // eslint-disable-next-line no-param-reassign
           err.config.retry = retry + 1;
           if (retry < 3) return axios.request(err.config);
           return Promise.reject(err);
