@@ -1,17 +1,22 @@
 import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import '../styles/Reset.scss';
+import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { passwordValidator } from '../utils/validation';
+import { setLoginModal } from '../actions/modalAction';
 
 function Reset() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const location = useLocation();
   const msg = [
     '',
     '비밀번호는 영문,숫자를 포함하여\n8자 이상 20자 이내여야 합니다',
     '비밀번호가 일치하지 않습니다',
     '모든 요소는 필수 요소입니다,\n입력창을 확인해 주세요',
   ];
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(0);
   const [shakeOn, setShakeOn] = useState(false);
   const [inputValues, setInputValues] = useState({ password: '', confirm: '' });
   const [msgIdx, setMsgIdx] = useState({ password: 0, confirm: 0 });
@@ -34,7 +39,7 @@ function Reset() {
     setMsgIdx({ ...msgIdx, [name]: 0 });
   };
 
-  const handleResetPasswordBtn = () => {
+  const handleResetPasswordBtn = async () => {
     console.log('버튼 실행');
     if (
       !inputValues.password ||
@@ -52,8 +57,21 @@ function Reset() {
     }
     confirmRef.current.blur();
     console.log('서버 요청');
-    // 서버에 요청 보내고, 성공시 setSuccess(true)
-    setSuccess(true);
+    // 서버에 요청 보내고(바디에 비밀번호, 코드 (디코딩)넣어서), 성공시 setSuccess(true),
+    // 403 다시 시도해 주세요,
+    const code = decodeURIComponent(location.search.slice().split('=')[1]);
+    axios
+      .post('/auth/resetPassword', {
+        password: inputValues.confirm,
+        code,
+      })
+      .then(() => {
+        setSuccess(1);
+      })
+      .catch(() => {
+        console.log('여기');
+        setSuccess(2);
+      });
   };
 
   const handleFocusForNext = (e) => {
@@ -66,7 +84,12 @@ function Reset() {
     }
   };
 
-  const goBackToHome = () => history.push('/');
+  const goBackToHome = () => {
+    if (success) {
+      dispatch(setLoginModal(true));
+    }
+    history.push('/');
+  };
 
   return (
     <div className="reset">
@@ -117,15 +140,33 @@ function Reset() {
         ) : (
           <div className="success">
             <div className="check">
-              <div className="success-checkmark">
-                <div className="check-icon">
-                  <span className="icon-line line-tip" />
-                  <span className="icon-line line-long" />
-                  <div className="icon-circle" />
-                  <div className="icon-fix" />
-                </div>
-              </div>
-              <p>SUCCESS</p>
+              {success === 1 ? (
+                <>
+                  <div className="success-checkmark">
+                    <div className="check-icon">
+                      <span className="icon-line line-tip" />
+                      <span className="icon-line line-long" />
+                      <div className="icon-circle" />
+                      <div className="icon-fix" />
+                    </div>
+                  </div>
+                  <p className="success-message">SUCCESS</p>
+                </>
+              ) : (
+                <>
+                  <div className="fail-text">토큰이 만료되었습니다, 다시 시도해 주세요</div>
+                  <div className="success-checkmark">
+                    <div className="check-icon-x">
+                      {/* <span className="icon-line line-tip" /> */}
+                      <span className="icon-line line-one" />
+                      <span className="icon-line line-one line-second" />
+                      <div className="icon-circle" />
+                      <div className="icon-fix" />
+                    </div>
+                  </div>
+                  <p className="fail-message">FAILURE</p>
+                </>
+              )}
             </div>
             <button
               className="lastBtn"
