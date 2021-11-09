@@ -37,6 +37,9 @@ module.exports = {
         },
       });
     } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(403).json({ message: 'This email is already in use' });
+      }
       return res.status(400).json({ message: 'Fail to kakao login' });
     }
 
@@ -79,7 +82,10 @@ module.exports = {
           email: googleUser.email, nickname: googleUser.name, type: 'google', uuid: googleUser.sub, verified: true,
         },
       });
-    } catch {
+    } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(403).json({ message: 'This email is already in use' });
+      }
       return res.status(400).json({ message: 'invalid id token' });
     }
     if (created && googleUser.picture) {
