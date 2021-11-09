@@ -30,5 +30,4 @@ module.exports = async function Seed() {
     debug('시드 데이터 삽입에 실패했습니다.');
     return Promise.reject(err);
   }
-  return true;
 };

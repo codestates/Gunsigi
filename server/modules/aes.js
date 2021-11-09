@@ -1,8 +1,12 @@
 const crypto = require('crypto');
 
 const algorithm = 'aes-256-cbc';
-const ENC_KEY = crypto.scryptSync(process.env.ACCESS_SECRET, process.env.SECRET_SALT, 16).toString('hex');
+let ENC_KEY;
 const IV = '677309994c59e6db';
+crypto.scrypt(process.env.ACCESS_SECRET, process.env.SECRET_SALT, 16, (err, key) => {
+  if (err) throw err;
+  ENC_KEY = key.toString('hex');
+});
 
 module.exports = {
   encrypt: (val) => {

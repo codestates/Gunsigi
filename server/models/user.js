@@ -37,9 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     isRight(password) {
-      const password2 = createHash('sha512')
+      const comparePassword = createHash('sha512')
         .update(password + process.env.SECRET_SALT).digest('base64');
-      return this.password === password2;
+      return this.password === comparePassword;
     }
   }
   User.init(
@@ -70,7 +70,8 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         set(value) {
-          this.setDataValue('password', createHash('sha512').update(value + process.env.SECRET_SALT).digest('base64'));
+          this.setDataValue('password', createHash('sha512')
+            .update(value + process.env.SECRET_SALT).digest('base64'));
         },
         defaultValue: '',
       },

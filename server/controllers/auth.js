@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const debug = require('debug')('app.auth');
 const { User } = require('../models');
 const mailer = require('../modules/email');
@@ -165,7 +166,7 @@ module.exports = {
   },
   // 이메일 재전송
   email: async (req, res) => {
-    const user = await User.findByPk(res.locals.user.id, { attributes: ['verified', 'email'] });
+    const user = await User.findByPk(res.locals.user.id);
     if (!user || user.verified) return res.status(403).json({ message: 'Invalid request' });
 
     // 이메일 재전송
