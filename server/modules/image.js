@@ -11,7 +11,7 @@ const v4 = () => uuid().replace(/-/g, '');
 
 const {
   ACCESS_KEY_ID,
-  ACCESS_SECRET,
+  SECERT_ACCESS_KEY,
   AWS_REGION,
   BUCKET,
 } = process.env;
@@ -21,7 +21,7 @@ const {
 
 AWS.config.update({
   accessKeyId: ACCESS_KEY_ID,
-  secretAccessKey: ACCESS_SECRET,
+  secretAccessKey: SECERT_ACCESS_KEY,
   region: AWS_REGION,
 });
 const s3 = new AWS.S3();

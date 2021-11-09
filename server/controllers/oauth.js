@@ -33,6 +33,7 @@ module.exports = {
           nickname: userInfo.kakao_account.profile.nickname,
           type: 'kakao',
           uuid: userInfo.id,
+          verified: true,
         },
       });
     } catch (err) {
@@ -75,7 +76,7 @@ module.exports = {
       [user, created] = await User.findOrCreate({
         where: { uuid: googleUser.sub },
         defaults: {
-          email: googleUser.email, nickname: googleUser.name, type: 'google', uuid: googleUser.sub,
+          email: googleUser.email, nickname: googleUser.name, type: 'google', uuid: googleUser.sub, verified: true,
         },
       });
     } catch {
