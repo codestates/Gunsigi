@@ -1,13 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import '../styles/LoginSignup/SignupModal.scss';
 import { useDispatch } from 'react-redux';
 import Login from './login, signup/Login';
 import Signup from './login, signup/Signup';
 import { setSignupModal } from '../actions/modalAction';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function SignupModal() {
   const dispatch = useDispatch();
   const closeSignupEl = useRef(null);
+
+  // 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
   const closeSignupHandler = (e) => {
     if (e.target === closeSignupEl.current) {

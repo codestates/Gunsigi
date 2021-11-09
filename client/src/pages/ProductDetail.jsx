@@ -168,7 +168,7 @@ function ProductDetail({ match }) {
                     }
                     type="button"
                   >
-                    <img src="/Kakao_Logo.png" alt="kakao" />
+                    <img src="/kakao_Logo.jpeg" alt="kakao" />
                   </button>
                 </div>
                 <div className="functional">{ProductInfo.functional}</div>

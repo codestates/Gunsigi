@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setLoginState } from '../../actions/userAction';
-import { setLoginModal, setSignupModal } from '../../actions/modalAction';
+import {
+  setLoginModal,
+  setSignupModal,
+  setforgotPassword,
+} from '../../actions/modalAction';
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Login.scss';
@@ -65,6 +69,11 @@ function Login() {
     }
   };
 
+  const forgotPassword = () => {
+    dispatch(setLoginModal(false));
+    dispatch(setforgotPassword(true));
+  };
+
   return (
     <div className="Login_container">
       <div className="Login_in">
@@ -96,13 +105,23 @@ function Login() {
             </div>
           </div>
         </div>
+
         <div className="icon">
           <Google />
           <Kakao />
         </div>
-        <button type="button" onClick={handleLogin}>
-          로그인
-        </button>
+
+        <div className="button-password">
+          <button type="button" onClick={handleLogin}>
+            로그인
+          </button>
+
+          <div className="password-setting">
+            <span aria-hidden="true" onClick={() => forgotPassword()}>
+              비밀번호를 잊으셨나요?
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

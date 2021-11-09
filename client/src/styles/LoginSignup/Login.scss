@@ -95,22 +95,40 @@
       }
     }
   }
-
-  button {
-    width: 260px;
-    height: 34px;
-    border-radius: 20px;
-    border: none;
-    background-color: $light-blue;
-    font-size: 1.6rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    &:hover {
-      background-color: $deep-blue;
-      color: $white;
+  .button-password {
+    position: relative;
+    top: 5px;
+    .password-setting {
+      position: relative;
+      top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+      font-size: 1.2rem;
+      span {
+        cursor: pointer;
+        color: $deep-grey;
+        font-weight: 600;
+      }
     }
-    &:active {
-      transform: scale(0.98);
+
+    button {
+      width: 260px;
+      height: 34px;
+      border-radius: 20px;
+      border: none;
+      background-color: $light-blue;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      &:hover {
+        background-color: $deep-blue;
+        color: $white;
+      }
+      &:active {
+        transform: scale(0.98);
+      }
     }
   }
 }

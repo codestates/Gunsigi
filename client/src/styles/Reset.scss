@@ -4,23 +4,18 @@
   width: 100vw;
   height: 100vh;
   background: #ebf0f78c;
+  background: -webkit-linear-gradient(
+    335deg,
+    rgba(174, 216, 232, 1) 2%,
+    rgba(156, 196, 255, 1) 62%,
+    rgba(193, 202, 245, 1) 96%
+  );
   background: linear-gradient(
     335deg,
     rgba(174, 216, 232, 1) 2%,
     rgba(156, 196, 255, 1) 62%,
     rgba(193, 202, 245, 1) 96%
   );
-  // background: #6190e8; /* fallback for old browsers */
-  // // background: -webkit-linear-gradient(
-  // //   to right,
-  // //   #a7bfe8,
-  // //   #6190e8
-  // // ); /* Chrome 10-25, Safari 5.1-6 */
-  // // background: linear-gradient(
-  // //   to right,
-  // //   #a7bfe8,
-  // //   #6190e8
-  // // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   .top-area {
     width: 100%;
@@ -74,18 +69,20 @@
         border: solid 1px $deep-grey;
         border-radius: 17px;
         padding-left: 14px;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         &::placeholder {
           font-size: 1.1rem;
         }
         &:focus {
-          outline: solid 2px #4a51b8;
+          outline: solid 2px $deep-blue;
+          // outline: solid 2px #3749b1;
           border: none;
         }
       }
       .shake {
         position: relative;
-        outline: solid 2px #4a51b8;
+        outline: solid 2px $red;
+        // outline: solid 2px #3749b1;
         border: none;
         animation: shake 0.2s ease-in-out 0s 2;
         &:focus {
@@ -98,7 +95,9 @@
         height: 30px;
         font-size: 1rem;
         font-weight: 600;
-        color: #440794;
+        line-height: 1.4rem;
+        color: $red;
+        // color: #3749b1;
         white-space: pre-wrap;
       }
     }
@@ -111,8 +110,8 @@
       .submitBtn {
         width: 140px;
         height: 34px;
-        background-color: #a5d0f1;
-        // background-color: #a2c7fd;
+        background-color: #c7e8fd;
+        background-color: #a2c7fd;
         font-size: 1.2rem;
         font-weight: 600;
         color: #191922;
@@ -120,7 +119,8 @@
         letter-spacing: 1px;
         &:hover {
           cursor: pointer;
-          background-color: #4a51b8;
+          background-color: $deep-blue;
+          background-color: #4858ad;
           color: $white;
         }
       }
@@ -242,11 +242,105 @@
           background-color: #ffffff;
         }
       }
+      .check-icon-x {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        border-radius: 50%;
+        box-sizing: content-box;
+        border: 4px solid #a8271e;
+
+        &::before {
+          top: 3px;
+          left: -2px;
+          width: 30px;
+          transform-origin: 100% 50%;
+          border-radius: 100px 0 0 100px;
+        }
+
+        &::after {
+          top: 0;
+          left: 30px;
+          width: 60px;
+          transform-origin: 0 50%;
+          border-radius: 0 100px 100px 0;
+          animation: rotate-circle 4.25s ease-in;
+        }
+
+        &::before,
+        &::after {
+          content: '';
+          height: 100px;
+          position: absolute;
+          background: #ffffff;
+          transform: rotate(-45deg);
+        }
+
+        .icon-line {
+          height: 5px;
+          background-color: #a8271e;
+          display: block;
+          border-radius: 2px;
+          position: absolute;
+          z-index: 10;
+
+          &.line-tip {
+            top: 46px;
+            left: 14px;
+            width: 25px;
+            transform: rotate(45deg);
+            animation: icon-line-tip 0.75s;
+          }
+
+          &.line-one {
+            top: 38px;
+            right: 16px;
+            width: 47px;
+            transform: rotate(-45deg);
+            animation: icon-line-fail 0.75s;
+          }
+          &.line-second {
+            transform: rotate(-135deg);
+          }
+        }
+        .icon-circle {
+          top: -4px;
+          left: -4px;
+          z-index: 10;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          position: absolute;
+          box-sizing: content-box;
+          border: 4px solid rgba(207, 92, 77, 0.63);
+        }
+
+        .icon-fix {
+          top: 8px;
+          width: 5px;
+          left: 26px;
+          z-index: 1;
+          height: 85px;
+          position: absolute;
+          transform: rotate(-45deg);
+          background-color: #ffffff;
+        }
+      }
     }
-    p {
+    .success-message {
       font-size: 2rem;
       font-weight: 600;
       color: #35239b;
+    }
+    .fail-message {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #a8271e;
+    }
+    .fail-text {
+      font-size: 1.4rem;
+      position: absolute;
+      top: 35%;
     }
   }
   .lastBtn {
@@ -330,6 +424,29 @@
   100% {
     width: 47px;
     right: 8px;
+    top: 38px;
+  }
+}
+
+@keyframes icon-line-fail {
+  0% {
+    width: 0px;
+    right: 16px;
+    top: 40px;
+  }
+  65% {
+    width: 0px;
+    right: 20px;
+    top: 40px;
+  }
+  84% {
+    width: 55px;
+    right: 16px;
+    top: 35px;
+  }
+  100% {
+    width: 47px;
+    right: 16px;
     top: 38px;
   }
 }

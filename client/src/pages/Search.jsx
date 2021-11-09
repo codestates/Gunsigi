@@ -54,8 +54,6 @@ function Search() {
   useEffect(() => {
     // 뒤로가기 거나 아니거나
     // location.search = url 디코딩 후 쿼리, 타입을 뽑아냄
-    console.log('서치페이지 sessionStorage', sessionStorage);
-    console.log('서치페이지 window.history', window.history);
     const parsedQuery = parseQuery(location.search);
     query = parsedQuery.query;
     type = parsedQuery.type;
@@ -117,12 +115,12 @@ function Search() {
           setQueryPage((prev) => prev + 1);
         }
       },
-      { threshold: 1.0, root: rootRef.current, rootMargin: '0px 0px 0px 0px' },
+      { threshold: 1, root: rootRef.current, rootMargin: '0px 0px 0px 0px' },
     ),
   );
 
   const getMoreProducts = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const axiosConfig = {
       method: 'get',
       url: '/products/all/items',
@@ -160,6 +158,7 @@ function Search() {
         init = false;
         return;
       }
+      setIsLoading(true);
       getMoreProducts();
     }
   }, [queryPage, searchOrder]);
@@ -186,7 +185,9 @@ function Search() {
       <TopButton />
       <div className="Search_conatiner">
         <div className="Search_in">
-          <div className="Search_img" />
+          <div className="Search_img">
+            <img src="/images/search_man.png" alt="man" />
+          </div>
           <div className="Search_bottom" ref={rootRef}>
             <div className="Search_title">
               <div>
@@ -221,10 +222,8 @@ function Search() {
             </div>
             <div className="Search_products">
               <SearchProductList />
-              {queryPage <= pageTotal - 1 ? <Skeleton /> : null}
-              <div id="observer" ref={setTarget} className="targetEl">
-                {/* {isLoading && <Skeleton />} */}
-              </div>
+              {isLoading && <Skeleton />}
+              <div id="observer" ref={setTarget} className="targetEl" />
             </div>
           </div>
         </div>
