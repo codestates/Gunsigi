@@ -164,7 +164,9 @@ module.exports = {
 
   all: async (req, res) => {
     const { page, size } = req.query;
-    const order = req.query.order === 'reviews' ? 'reviewsCount' : 'views';
+    let order;
+    if (req.query.order === 'reviews') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
+    else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',
@@ -176,7 +178,7 @@ module.exports = {
       ],
       limit: parseInt(size, 10),
       offset: (page - 1) * size,
-      order: [[order, 'DESC']],
+      order,
       include: [
         {
           model: Bookmark,
