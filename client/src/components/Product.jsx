@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import '../styles/Product.scss';
 import ProductStar from './ProductStar';

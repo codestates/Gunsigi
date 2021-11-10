@@ -57,7 +57,6 @@ function Login() {
           }
         } catch (error) {
           setErrorMsg('통신에 문제가 발생했습니다');
-          console.log(error);
         }
       });
   };

@@ -16,15 +16,10 @@ function WithdrawalModal({ openWithdrawlHandler }) {
   const withdrawalHandler = (event) => {
     event.preventDefault();
 
-    axios
-      .delete('/users')
-      .then(() => {
-        window.localStorage.clear();
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.delete('/users').then(() => {
+      window.localStorage.clear();
+      window.location.reload();
+    });
   };
 
   return (

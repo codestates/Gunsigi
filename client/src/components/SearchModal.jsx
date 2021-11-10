@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef } from 'react';
 import '../styles/SearchModal.scss';
 import { useHistory } from 'react-router-dom';
