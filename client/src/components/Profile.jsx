@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setNickname, setProfileImg } from '../actions/userAction';
+import { setEmailCheckModal } from '../actions/modalAction';
 import MyInfoModal from './MyInfoModal';
 import '../styles/Mypage/Profile.scss';
 
@@ -25,7 +26,11 @@ function Profile() {
       .get('/users')
       .then((res) => {
         const {
-          email, nickname, profileImage, type, verified,
+          email,
+          nickname,
+          profileImage,
+          type,
+          verified,
         } = res.data.userInfo;
         dispatch(setNickname(nickname));
         dispatch(setProfileImg(profileImage));
@@ -37,6 +42,18 @@ function Profile() {
         console.log('err', err);
       });
   }, []);
+
+  // * 이메일 인증 재요청
+  const emailCheckHandler = () => {
+    axios
+      .get('/auth/email')
+      .then(() => {
+        dispatch(setEmailCheckModal(true));
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  };
 
   return (
     <>
@@ -51,9 +68,13 @@ function Profile() {
             <span className="profile_nickname">{nickName}</span>
             <span id="profile_email">
               {isVerified && <img src="/icons/icon_shield.svg" alt="shield" />}
-              {!isVerified && <span>인증하기</span>}
               {userEmail}
             </span>
+            {!isVerified && (
+              <button type="button" onClick={emailCheckHandler}>
+                이메일 인증
+              </button>
+            )}
           </div>
         </div>
         <img
