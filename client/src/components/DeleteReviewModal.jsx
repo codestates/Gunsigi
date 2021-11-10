@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/DeleteReviewModal.scss';
 
 function DeleteReviewModal({ openDeleteHandler }) {
+  // * 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
+
   return (
     <div
       className="modal_wrapper"

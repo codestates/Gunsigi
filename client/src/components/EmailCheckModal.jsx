@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setEmailCheckModal } from '../actions/modalAction';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/EmailCheckModal.scss';
 
 function EmailCheckModal() {
   const dispatch = useDispatch();
+
+  // * 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
   return (
     <div

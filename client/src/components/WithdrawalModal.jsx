@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/WithdrawalModal.scss';
 
 function WithdrawalModal({ openWithdrawlHandler }) {
+  // * 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
+
   // * 회원 탈퇴 요청
   const withdrawalHandler = (event) => {
     event.preventDefault();

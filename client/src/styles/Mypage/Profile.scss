@@ -27,21 +27,40 @@
       margin-left: 1.5rem;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      font-size: 1rem;
+      gap: 5px;
 
       .profile_nickname {
         font-size: 1.5rem;
         font-weight: 800;
-        margin-bottom: 0.5rem;
       }
 
       #profile_email {
         display: flex;
+        align-items: center;
         img {
-          width: 1.2rem;
-          height: 1.2rem;
+          width: 1.3rem;
+          height: 1.3rem;
           margin-right: 0.2rem;
           filter: invert(73%) sepia(19%) saturate(1633%) hue-rotate(89deg)
             brightness(89%) contrast(85%);
+        }
+      }
+
+      button {
+        font-size: 1rem;
+        margin-left: -3px;
+        width: 65px;
+        height: 20px;
+        border-radius: 50px;
+        background-color: $light-blue;
+        font-weight: 600;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: $deep-blue;
+          color: $white;
         }
       }
     }
@@ -58,7 +77,7 @@
 @include tablet {
   #profile_container {
     padding: 0 65px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     min-height: 20rem;
     gap: 250px;
 
@@ -71,15 +90,25 @@
 
       #nickname-email_container {
         margin-left: 3.5rem;
+        font-size: 1.4rem;
+        gap: 7px;
+
         .profile_nickname {
           font-size: 1.8rem;
         }
 
         #profile_email {
           img {
-            width: 1.4rem;
-            height: 1.4rem;
+            width: 1.6rem;
+            height: 1.6rem;
           }
+        }
+
+        button {
+          width: 90px;
+          height: 30px;
+          border-radius: 100px;
+          font-size: 1.4rem;
         }
       }
     }
@@ -108,6 +137,11 @@
         margin-top: 2rem;
         margin-left: 0;
         align-items: center;
+        gap: 8px;
+
+        button {
+          margin-left: 0;
+        }
       }
     }
 
@@ -124,21 +158,31 @@
 
     #profile_info {
       .profile_img {
-        width: 13rem;
-        height: 13rem;
-        border-radius: 15rem;
+        width: 12rem;
+        height: 12rem;
+        border-radius: 8rem;
       }
 
       #nickname-email_container {
+        gap: 9px;
         .profile_nickname {
           font-size: 2rem;
         }
 
         #profile_email {
+          font-size: 1.6rem;
+
           img {
             width: 1.7rem;
             height: 1.7rem;
           }
+        }
+
+        button {
+          width: 110px;
+          height: 40px;
+          border-radius: 200px;
+          font-size: 1.6rem;
         }
       }
     }
