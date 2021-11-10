@@ -24,13 +24,6 @@ module.exports = {
     } catch {
       return Promise.reject(new Error('Fail to load file'));
     }
-    // 리뷰갯수
-    productsJson[0].reviewsCount = 1;
-    productsJson[0].reviewsSum = 4;
-    productsJson[1].reviewsCount = 1;
-    productsJson[1].reviewsSum = 5;
-    productsJson[2].reviewsCount = 2;
-    productsJson[2].reviewsSum = 10;
 
     // 이미지가 있으면 조회수 +10
     productsJson = productsJson.map((product) => {

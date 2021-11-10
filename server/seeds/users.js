@@ -37,12 +37,5 @@ module.exports = async () => {
       verified: true,
     },
   ];
-  for (let i = 0; i < 100; i += 1) {
-    users.push({
-      nickname: '돌돌마',
-      type: 'google',
-      verified: true,
-    });
-  }
   return User.bulkCreate(users);
 };

@@ -1,4 +1,8 @@
 #! /bin/bash
+
+export PATH=/home/ubuntu/.nvm/versions/node/v16.13.0/bin:$PATH
+export PM2_HOME=/root/.pm2
+export NODE_ENV=production
 cd /home/ubuntu
 rm -rf Gunsigi
 git clone $(aws ssm get-parameter --name /Gunsigi/SOURCE --query Parameter.Value | sed 's/"//g')
