@@ -35,9 +35,9 @@ module.exports = {
       return false;
     }
     if (typeof (value) === 'object') {
-      await client.set(key, JSON.stringify(value));
+      await client.setEx(key, EX, JSON.stringify(value));
     } else {
-      await client.set(key, value, { EX });
+      await client.setEx(key, EX, value);
     }
     await client.quit();
     return true;
