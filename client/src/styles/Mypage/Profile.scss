@@ -25,12 +25,12 @@
 
     #nickname-email_container {
       margin-left: 1.5rem;
+      height: 60px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      font-size: 1rem;
-      gap: 5px;
-
+      align-items: space-between;
+      margin-left: 20px;
       .profile_nickname {
         font-size: 1.5rem;
         font-weight: 800;
@@ -38,13 +38,27 @@
 
       #profile_email {
         display: flex;
-        align-items: center;
+        margin-top: 8px;
+        letter-spacing: 1.2px;
         img {
-          width: 1.3rem;
-          height: 1.3rem;
-          margin-right: 0.2rem;
-          filter: invert(73%) sepia(19%) saturate(1633%) hue-rotate(89deg)
-            brightness(89%) contrast(85%);
+          width: 1.2rem;
+          height: 1.2rem;
+          margin-right: 6px;
+          filter: invert(58%) sepia(68%) saturate(4375%) hue-rotate(116deg) brightness(100%) contrast(102%);
+        }
+      }
+      .verifyBtn {
+        width: 88px;
+        height: 20px;
+        font-size: 1rem;
+        color: #4d4d4d;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        .icon-send {
+          width: 16px;
+          filter: $f-deep-grey;
         }
       }
 
@@ -53,15 +67,7 @@
         margin-left: -3px;
         width: 65px;
         height: 20px;
-        border-radius: 50px;
-        background-color: $light-blue;
         font-weight: 600;
-        transition: 0.2s;
-
-        &:hover {
-          background-color: $deep-blue;
-          color: $white;
-        }
       }
     }
   }
@@ -86,6 +92,7 @@
         width: 10rem;
         height: 10rem;
         border-radius: 6rem;
+        margin-bottom: 10px;
       }
 
       #nickname-email_container {
@@ -96,11 +103,18 @@
         .profile_nickname {
           font-size: 1.8rem;
         }
-
+        
         #profile_email {
+          letter-spacing: 1px;
+          display: flex;
+          justify-content: space-between;
           img {
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 1.4rem;
+            height: 1.4rem;
+            margin-right: 0;
+          }
+          #user-email {
+            margin-left: 6px;
           }
         }
 

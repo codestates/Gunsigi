@@ -6,7 +6,6 @@ import axios from 'axios';
 import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
 import {
-  resetSearchedProductList,
   resetSearchedWord,
 } from '../actions/searchAction';
 import SearchModal from './SearchModal';
@@ -25,7 +24,6 @@ function Nav() {
   const openSearchModalHandler = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
     dispatch(resetSearchedWord());
-    dispatch(resetSearchedProductList());
   };
 
   const logoutHandler = (event) => {

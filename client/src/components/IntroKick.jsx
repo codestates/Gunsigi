@@ -24,7 +24,7 @@ function IntroKick() {
       <div className="imageBox">
         <div className="frameBox">
           <div className="frame">
-            <img className="app" alt="site demo" src="/images/test2.gif" />
+            <img className="app" alt="site demo" src="/images/mobile_mypage.gif" />
             <img className="web" alt="site demo" src="/images/test_web.gif" />
           </div>
         </div>
