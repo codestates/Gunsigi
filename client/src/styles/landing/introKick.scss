@@ -181,8 +181,16 @@
           }
           .web {
             display: block;
-            width: 78%;
-            margin-bottom: 27px;
+            min-width: 423px;
+            min-height: 259px;
+            max-width: 654px;
+            max-height: 410px;
+            width: 77%;
+            height: auto;
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 3%;
+            z-index: 1;
           }
         }
       }

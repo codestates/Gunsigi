@@ -52,7 +52,7 @@ function NavChange() {
 
     axios.get('/auth/logout').then(() => {
       dispatch(setLoginState(false));
-      history.push('/');
+      window.location.replace('/');
     });
   };
 
