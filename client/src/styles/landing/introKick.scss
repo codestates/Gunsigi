@@ -71,6 +71,39 @@
   }
 }
 
+@-webkit-keyframes slide-left {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  20%,
+  85% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(10%);
+  }
+}
+
+@-moz-keyframes slide-left {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  20%,
+  85% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(10%);
+  }
+}
 // introKick css
 
 .introKick {

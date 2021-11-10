@@ -67,9 +67,23 @@
   background-repeat: no-repeat; // No need to repeat the shine effect
   background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
   animation: shine 500ms ease infinite;
+  -webkit-animation: shine 500ms ease infinite;
+  -moz-animation: shine 500ms ease infinite;
 }
 
 @keyframes shine {
+  to {
+    background-position: right -40px top 0;
+  }
+}
+
+@-webkit-keyframes shine {
+  to {
+    background-position: right -40px top 0;
+  }
+}
+
+@-moz-keyframes shine {
   to {
     background-position: right -40px top 0;
   }
