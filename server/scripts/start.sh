@@ -4,6 +4,7 @@
 sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 sudo /sbin/sysctl -w net.core.somaxconn=1024
 
+cd /home/ubuntu/Gunsigi/server
 npm install
 
 # 환경변수파일생성
