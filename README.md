@@ -21,7 +21,7 @@
 
 ## 🧰 Development
 
-![stack](https://user-images.githubusercontent.com/81850352/141072101-62453c62-3af9-4b77-9543-bcd859fb5ea8.png)
+![stack](https://user-images.githubusercontent.com/81850352/141074094-18ae0c2d-c2c2-4ebe-8ebd-f29bed9ffa73.png)
 
 ### Front-end Stack
 
