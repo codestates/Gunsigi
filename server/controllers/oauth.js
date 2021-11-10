@@ -33,9 +33,13 @@ module.exports = {
           nickname: userInfo.kakao_account.profile.nickname,
           type: 'kakao',
           uuid: userInfo.id,
+          verified: true,
         },
       });
     } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(403).json({ message: 'This email is already in use' });
+      }
       return res.status(400).json({ message: 'Fail to kakao login' });
     }
 
@@ -75,10 +79,13 @@ module.exports = {
       [user, created] = await User.findOrCreate({
         where: { uuid: googleUser.sub },
         defaults: {
-          email: googleUser.email, nickname: googleUser.name, type: 'google', uuid: googleUser.sub,
+          email: googleUser.email, nickname: googleUser.name, type: 'google', uuid: googleUser.sub, verified: true,
         },
       });
-    } catch {
+    } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return res.status(403).json({ message: 'This email is already in use' });
+      }
       return res.status(400).json({ message: 'invalid id token' });
     }
     if (created && googleUser.picture) {

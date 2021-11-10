@@ -39,6 +39,8 @@
       border: none;
       box-shadow: 0 0 0 2px rgb(184, 1, 1);
       outline: none;
+      -webkit-animation: shake 0.2s ease-in-out 0s 2;
+      -moz-animation: shake 0.2s ease-in-out 0s 2;
       animation: shake 0.2s ease-in-out 0s 2;
       &:focus {
         outline: none;
@@ -85,7 +87,7 @@
   }
 
   .icon {
-    width: 100;
+    width: 100%;
     display: flex;
     justify-content: center;
     img {

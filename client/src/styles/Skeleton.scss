@@ -7,6 +7,7 @@
   justify-content: space-between;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  z-index: 10;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -20,12 +21,12 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
-    padding: 20px 25px;
+    padding: 15px 20px;
     position: relative;
     margin: 0 auto;
     .image {
-      width: 70%;
-      height: 60%;
+      width: 76%;
+      height: 65%;
       border-radius: 5px;
       background-color: $light-grey;
       margin: 5% auto;
@@ -40,36 +41,49 @@
       width: 60%;
     }
     .icon {
-      width: 10%;
-      height: 12%;
+      width: 8%;
+      height: 10%;
       background-color: $light-grey;
       position: absolute;
-      bottom: 18%;
+      bottom: 16%;
       right: 12%;
     }
   }
-  .card:nth-child(n+3) {
+  .card:nth-child(n + 3) {
     display: none;
   }
 }
 
 .shine {
   background-color: #e2e5e7;
-	// The shine that's going to move across the skeleton:
-	background-image:			
-			linear-gradient(
-				90deg, 
-				rgba(#fff, 0), 
-				rgba(#fff, 0.5),
-				rgba(#fff, 0)
-			);
-	background-size: 40px 100%; // width of the shine
-	background-repeat: no-repeat; // No need to repeat the shine effect
-	background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
-	animation: shine 1s ease infinite; 
+  // The shine that's going to move across the skeleton:
+  background-image: linear-gradient(
+    90deg,
+    rgba(#fff, 0),
+    rgba(#fff, 0.5),
+    rgba(#fff, 0)
+  );
+  background-size: 40px 100%; // width of the shine
+  background-repeat: no-repeat; // No need to repeat the shine effect
+  background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
+  animation: shine 500ms ease infinite;
+  -webkit-animation: shine 500ms ease infinite;
+  -moz-animation: shine 500ms ease infinite;
 }
 
 @keyframes shine {
+  to {
+    background-position: right -40px top 0;
+  }
+}
+
+@-webkit-keyframes shine {
+  to {
+    background-position: right -40px top 0;
+  }
+}
+
+@-moz-keyframes shine {
   to {
     background-position: right -40px top 0;
   }
@@ -95,15 +109,23 @@
   }
 }
 
-// @media screen and (min-width: 1024px) {
-//   .skeleton-container {
-//     grid-template-columns: repeat(4, 1fr);
-//     grid-column: 1 / 5;
-//     .card:nth-child(4) {
-//       display: flex;
-//     }
-//   }
-// }
+@media screen and (min-width: 870px) {
+  .skeleton-container {
+    .card {
+      width: 180px;
+      height: 180px;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .skeleton-container {
+    .card {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}
 
 @media screen and (min-width: 1150px) {
   .skeleton-container {
@@ -121,6 +143,15 @@
     grid-column: 1 / 7;
     .card:nth-child(6) {
       display: flex;
+    }
+  }
+}
+
+@media screen and (min-width: 1740px) {
+  .skeleton-container {
+    .card {
+      width: 270px;
+      height: 270px;
     }
   }
 }

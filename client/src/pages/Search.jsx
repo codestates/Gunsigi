@@ -1,16 +1,8 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable indent */
-/* eslint-disable react/jsx-indent */
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addProductList,
-  setProductList,
-  setSearchType,
-} from '../actions/searchAction';
+import { addProductList, setProductList } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
 import SearchProductList from '../components/SearchProductList';
@@ -40,12 +32,11 @@ function Search() {
   const rootRef = useRef(null);
   const searchState = useSelector((state) => state.searchReducer);
   const { productList, productCount } = searchState;
-  // const [title, setTitle] = useState('');
   const [searchOrder, setSearchOrder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [target, setTarget] = useState(null); // 왜 되는지?
   const [queryPage, setQueryPage] = useState(0);
   const [pageTotal, setPageTotal] = useState(2);
+  const [observeTarget, setObserveTarget] = useState(null);
 
   const onObserver = (bool) => {
     const observerTarget = document.getElementById('observer');
@@ -55,22 +46,19 @@ function Search() {
   useEffect(() => {
     // 뒤로가기 거나 아니거나
     // location.search = url 디코딩 후 쿼리, 타입을 뽑아냄
-    console.log('서치페이지 sessionStorage', sessionStorage);
-    console.log('서치페이지 window.history', window.history);
     const parsedQuery = parseQuery(location.search);
     query = parsedQuery.query;
     type = parsedQuery.type;
     if (
-      window.history.state?.queryPage &&
-      productList.length &&
-      history.action === 'POP'
+      window.history.state?.queryPage
+      && productList.length
+      && history.action === 'POP'
     ) {
       // 기존 제품정보가 남아있고 뒤로가기를 통해서 온것이라면 페이지, 정렬 정보를 복구한다.
       init = true;
       setPageTotal(window.history.state.pageTotal);
       setQueryPage(window.history.state.queryPage);
       setSearchOrder(window.history.state.searchOrder);
-      setSearchType(window.history.state.searchType);
     } else {
       // 그게 아니라면 초기화
       onObserver(false);
@@ -78,7 +66,6 @@ function Search() {
       setPageTotal(1);
       setQueryPage(1);
       setSearchOrder('views');
-      setSearchType('search');
     }
   }, []);
 
@@ -94,20 +81,12 @@ function Search() {
       dispatch(setProductList([], 0));
       setPageTotal(1);
       if (queryPage === 1) {
+        // eslint-disable-next-line no-use-before-define
         getMoreProducts();
       }
       setQueryPage(1);
     }
   }, [location.search]);
-
-  // --------------- handle products order by view or reviews
-  const handleOrderBtn = async (e) => {
-    onObserver(false);
-    const order = e.target.value;
-    dispatch(setProductList([], 0));
-    setSearchOrder(order);
-    setQueryPage(1);
-  };
 
   // --------------- infinite scroll
   const observer = useRef(
@@ -118,7 +97,7 @@ function Search() {
           setQueryPage((prev) => prev + 1);
         }
       },
-      { threshold: 1.0, root: rootRef.current, rootMargin: '0px 0px 0px 0px' },
+      { threshold: 1, root: rootRef.current, rootMargin: '0px 0px 0px 0px' },
     ),
   );
 
@@ -166,7 +145,7 @@ function Search() {
   }, [queryPage, searchOrder]);
 
   useEffect(() => {
-    const currentEl = target;
+    const currentEl = observeTarget;
     const currentObserver = observer.current;
     if (currentEl) {
       currentObserver.observe(currentEl);
@@ -176,9 +155,19 @@ function Search() {
         currentObserver.unobserve(currentEl);
       }
     };
-  }, [target]);
+  }, [observeTarget]);
+
+  // 조회순, 리뷰순 정렬 버튼 핸들러
+  const handleOrderBtn = async (e) => {
+    onObserver(false);
+    const order = e.target.value;
+    dispatch(setProductList([], 0));
+    setSearchOrder(order);
+    setQueryPage(1);
+  };
 
   const makeDigitComma = (num) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (
@@ -187,7 +176,9 @@ function Search() {
       <TopButton />
       <div className="Search_conatiner">
         <div className="Search_in">
-          <div className="Search_img" />
+          <div className="Search_img">
+            <img src="/images/search_man.png" alt="man" />
+          </div>
           <div className="Search_bottom" ref={rootRef}>
             <div className="Search_title">
               <div>
@@ -222,10 +213,8 @@ function Search() {
             </div>
             <div className="Search_products">
               <SearchProductList />
-              {queryPage <= pageTotal - 1 ? <Skeleton /> : null}
-              <div id="observer" ref={setTarget} className="targetEl">
-                {/* {isLoading && <Skeleton />} */}
-              </div>
+              {isLoading && <Skeleton />}
+              <div id="observer" ref={setObserveTarget} className="targetEl" />
             </div>
           </div>
         </div>

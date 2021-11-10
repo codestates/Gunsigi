@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -32,7 +33,6 @@ function Review({
 
   //! 리뷰삭제 모달창 열고닫는 기능 및 리뷰삭제 기능
   const openDeleteHandler = (trueOrFalse) => {
-    console.log('리뷰');
     setIsOpenDelete(trueOrFalse);
     if (trueOrFalse === 'delete') {
       axios({

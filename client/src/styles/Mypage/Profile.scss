@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 8%;
   min-width: 32rem;
   min-height: 12rem;
 
@@ -25,13 +25,43 @@
 
     #nickname-email_container {
       margin-left: 1.5rem;
+      height: 100%;
       display: flex;
       flex-direction: column;
-
+      justify-content: center;
+      align-items: space-between;
+      margin-left: 22px;
       .profile_nickname {
         font-size: 1.5rem;
         font-weight: 800;
-        margin-bottom: 0.5rem;
+      }
+
+      #profile_email {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+        letter-spacing: 1.2px;
+        img {
+          width: 12px;
+          filter: invert(58%) sepia(68%) saturate(4375%) hue-rotate(116deg)
+            brightness(100%) contrast(102%);
+          margin-right: 6px;
+        }
+      }
+      .verifyBtn {
+        width: 88px;
+        height: 20px;
+        font-size: 9px;
+        color: #4d4d4d;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 6px;
+        .icon-send {
+          width: 15px;
+          filter: $f-deep-grey;
+        }
       }
     }
   }
@@ -46,8 +76,8 @@
 
 @include tablet {
   #profile_container {
-    padding: 0 65px;
-    font-size: 1.2rem;
+    padding: 0 60px;
+    font-size: 1.4rem;
     min-height: 20rem;
     gap: 250px;
 
@@ -60,8 +90,22 @@
 
       #nickname-email_container {
         margin-left: 3.5rem;
+        font-size: 1.4rem;
+        gap: 7px;
+
         .profile_nickname {
           font-size: 1.8rem;
+        }
+
+        #profile_email {
+          display: flex;
+          justify-content: space-between;
+          img {
+            width: 16px;
+          }
+          #user-email {
+            letter-spacing: 1.6px;
+          }
         }
       }
     }
@@ -82,14 +126,39 @@
     gap: 3rem;
     height: 100%;
     width: 300px;
+    padding: 0 25px;
 
     #profile_info {
+      width: 100%;
       flex-direction: column;
 
       #nickname-email_container {
+        width: 100%;
         margin-top: 2rem;
         margin-left: 0;
         align-items: center;
+        gap: 8px;
+        #profile_email {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          img {
+            margin-right: 0;
+          }
+          #user-email {
+            text-align: center;
+          }
+        }
+        .verifyBtn {
+          width: 120px;
+          font-size: 1.4rem;
+          color: #4d4d4d;
+          margin-top: 10px;
+          .icon-send {
+            width: 18px;
+          }
+        }
       }
     }
 
@@ -104,14 +173,27 @@
     font-size: 1.5rem;
     margin-bottom: 0;
 
-    .profile_img {
-      width: 17rem;
-      height: 17rem;
-      border-radius: 10rem;
-    }
+    #profile_info {
+      .profile_img {
+        width: 12rem;
+        height: 12rem;
+        border-radius: 8rem;
+      }
 
-    .profile_nickname {
-      font-size: 2rem;
+      #nickname-email_container {
+        margin-top: 30px;
+        .profile_nickname {
+          font-size: 2rem;
+        }
+
+        #profile_email {
+          font-size: 1.6rem;
+
+          img {
+            width: 18px;
+          }
+        }
+      }
     }
 
     #profile_set {

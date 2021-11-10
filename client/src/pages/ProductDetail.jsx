@@ -35,7 +35,7 @@ function ProductDetail({ match }) {
     bookmarksCount: 12,
     reviewsCount: 10,
     score: 4,
-    isBookmarked: true,
+    isBookmarked: false,
     chemistry: {
       good: ['비타민', '비타민C', '아미노산'],
       bad: ['칼슘', '항생제', '혈액응고억제제'],
@@ -53,13 +53,11 @@ function ProductDetail({ match }) {
       url: `/products/${productId}`,
       withCredentials: true,
       loading: false,
-    })
-      .then((res) => {
-        const info = res.data.itemInfo;
-        setProductInfo(info);
-        setIsBookmark(info.isBookmarked);
-      })
-      .catch((err) => console.log(err));
+    }).then((res) => {
+      const info = res.data.itemInfo;
+      setProductInfo(info);
+      setIsBookmark(info.isBookmarked);
+    });
   }, [productId]);
 
   //! 북마크 기능
@@ -168,7 +166,7 @@ function ProductDetail({ match }) {
                     }
                     type="button"
                   >
-                    <img src="/KaKao_Logo.png" alt="kakao" />
+                    <img src="/kakao_Logo.jpeg" alt="kakao" />
                   </button>
                 </div>
                 <div className="functional">{ProductInfo.functional}</div>

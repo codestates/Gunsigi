@@ -1,9 +1,9 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable */
 import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLogin } from '../actions/modalAction';
 import { useHistory } from 'react-router-dom';
+import { setIsLogin } from '../actions/modalAction';
 import { outMypage } from '../actions/inoutMypageAction';
 import { setProductList } from '../actions/searchAction';
 import Product from './Product';

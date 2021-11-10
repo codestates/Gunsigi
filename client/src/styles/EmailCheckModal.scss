@@ -1,0 +1,90 @@
+@import '../App';
+
+.email-check_container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0, 0, 0, 0.6);
+
+  .email-check_inside {
+    width: 300px;
+    height: 180px;
+    padding: 25px 0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $white;
+    align-items: center;
+    font-weight: 800;
+    font-size: 1.4rem;
+
+    img {
+      width: 60px;
+    }
+
+    .text {
+      width: 100%;
+      text-align: center;
+      h3 {
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      span {
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+    }
+
+    button {
+      width: 100px;
+      height: 28px;
+      font-weight: 600;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      background-color: $light-blue;
+
+      &:hover {
+        background-color: $deep-blue;
+        color: $white;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .email-check_container {
+    .email-check_inside {
+      width: 400px;
+      height: 230px;
+      padding: 30px 0;
+      font-size: 1.8rem;
+      .text {
+        h3 {
+          letter-spacing: 2px;
+          margin-bottom: 8px;
+        }
+
+        span {
+          font-size: 1.4rem;
+        }
+      }
+      img {
+        width: 90px;
+      }
+
+      button {
+        width: 120px;
+        height: 30px;
+        font-size: 1.4rem;
+      }
+    }
+  }
+}

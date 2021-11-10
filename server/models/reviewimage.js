@@ -1,5 +1,4 @@
 const { Model } = require('sequelize');
-const path = require('path');
 
 module.exports = (sequelize, DataTypes) => {
   class reviewImage extends Model {

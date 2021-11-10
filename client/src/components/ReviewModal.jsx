@@ -1,10 +1,15 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-lonely-if */
+/* eslint-disable */
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
-function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
+function ReviewModal({
+  setisOpenWrite,
+  productImg,
+  productName,
+  productId,
+}) {
   const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
   const [alertMSG, setAlertMSG] = useState('초기 메세지');
@@ -13,6 +18,14 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     score: '',
     period: '',
   });
+
+  //! 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
   const reviewWirteHandler = (e) => {
     const { value, name } = e.target;
@@ -24,8 +37,6 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
 
   //! 이미지 업로드
   const reviewImageHandler = (e) => {
-    console.log('file', e.target.files);
-
     setImgBase64([]);
     const images = [];
     for (let i = 0; i < e.target.files.length; i += 1) {
@@ -91,12 +102,10 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           images: imgBase64,
         },
         url: '/reviews',
-      })
-        .then(() => {
-          setisOpenWrite(false);
-          window.location.reload(true);
-        })
-        .catch((err) => console.log(err));
+      }).then(() => {
+        setisOpenWrite(false);
+        window.location.reload(true);
+      });
     }
   };
 

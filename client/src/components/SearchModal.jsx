@@ -1,20 +1,15 @@
 import React, { useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import '../styles/SearchModal.scss';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {
-  setSearchedProductList,
-  setSearchedWord,
-  setSearchType,
-} from '../actions/searchAction';
+import { setSearchedWord } from '../actions/searchAction';
 import {
   searchHashtag,
   searchCategory,
   categoryForRequest,
 } from '../assets/Search';
 
-function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
+function SearchModal({ setOpenSearchModal }) {
   const SearchModalCloseEl = useRef(null);
   const SearchModalCloseButtonEl = useRef(null);
   const dispatch = useDispatch();
@@ -22,8 +17,8 @@ function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
 
   const SearchModalCloseButton = (e) => {
     if (
-      e.target === SearchModalCloseEl.current ||
-      e.target === SearchModalCloseButtonEl.current
+      e.target === SearchModalCloseEl.current
+      || e.target === SearchModalCloseButtonEl.current
     ) {
       setOpenSearchModal(false);
     }
@@ -55,6 +50,7 @@ function SearchModal({ setOpenSearchModal, searchOrder, setQueryPage }) {
     });
     setOpenSearchModal(false);
   };
+
   return (
     <div className="SearchModal">
       <div className="SearchModal_container">

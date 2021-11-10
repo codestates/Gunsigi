@@ -52,7 +52,7 @@ function NavChange() {
 
     axios.get('/auth/logout').then(() => {
       dispatch(setLoginState(false));
-      history.push('/');
+      window.location.replace('/');
     });
   };
 
@@ -77,7 +77,6 @@ function NavChange() {
             onKeyPress={(e) => handleInputPress(e)}
             type="text"
             className="search-input"
-            // placeholder="검색어를 입력해 주세요"
           />
 
           <button className="icon_search" onClick={searchRequest} type="button">

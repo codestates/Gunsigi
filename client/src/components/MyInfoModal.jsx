@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { setNickname, setProfileImg } from '../actions/userAction';
 import WithdrawalModal from './WithdrawalModal';
 import { nicknameValidator, passwordValidator } from '../utils/validation';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/MyInfoModal.scss';
 
 function MyInfoModal({ openModalHandler, userType }) {
@@ -23,6 +24,14 @@ function MyInfoModal({ openModalHandler, userType }) {
   });
 
   const [errorMsg, setErrorMsg] = useState('');
+
+  // * 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
   const openWithdrawlHandler = () => {
     setIsOpenWithdrawl(!isOpenWithdrawl);
@@ -65,10 +74,12 @@ function MyInfoModal({ openModalHandler, userType }) {
     event.preventDefault();
     const { nickname, password, passwordCheck } = modifyForm;
 
-    if (modifyForm.profileImg === profileImg
+    if (
+      modifyForm.profileImg === profileImg
       && nickname === ''
       && password === ''
-      && passwordCheck === '') {
+      && passwordCheck === ''
+    ) {
       setErrorMsg('수정을 원하시면 최소 하나는 변경하셔야 됩니다');
       return;
     }
@@ -104,18 +115,13 @@ function MyInfoModal({ openModalHandler, userType }) {
     // 똑같은 이미지면 업데이트 되지 않게 키값 삭제
     if (modifyForm.profileImg === profileImg) delete data.profileImage;
 
-    axios
-      .patch('/users/', data)
-      .then((res) => {
-        const { profileImage } = res.data.userInfo;
-        dispatch(setNickname(res.data.userInfo.nickname));
-        dispatch(setProfileImg(profileImage));
-        openModalHandler();
-        history.push('/mypage');
-      })
-      .catch((err) => {
-        console.log(err.response?.data);
-      });
+    axios.patch('/users/', data).then((res) => {
+      const { profileImage } = res.data.userInfo;
+      dispatch(setNickname(res.data.userInfo.nickname));
+      dispatch(setProfileImg(profileImage));
+      openModalHandler();
+      history.push('/mypage');
+    });
   };
 
   // * input 엔터키 누르면 요청해주는 핸들러
@@ -185,7 +191,9 @@ function MyInfoModal({ openModalHandler, userType }) {
                 id="password"
                 type="password"
                 placeholder={
-                  userType === 'email' ? '비밀번호' : '소셜 로그인은 해당 정책상'
+                  userType === 'email'
+                    ? '비밀번호'
+                    : '소셜 로그인은 해당 정책상'
                 }
                 name="password"
                 onChange={handleFormChange}
@@ -197,7 +205,9 @@ function MyInfoModal({ openModalHandler, userType }) {
             <input
               type="password"
               placeholder={
-                userType === 'email' ? '비밀번호 확인' : '비밀번호 수정이 불가합니다'
+                userType === 'email'
+                  ? '비밀번호 확인'
+                  : '비밀번호 수정이 불가합니다'
               }
               name="passwordCheck"
               onChange={handleFormChange}

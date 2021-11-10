@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import '../styles/Mypage/Mypage.scss';
@@ -11,11 +10,7 @@ import TopButton from '../components/TopButton';
 function Mypage() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    return () => {
-      dispatch(outMypage());
-    };
-  }, []);
+  useEffect(() => () => dispatch(outMypage()), []);
 
   return (
     <>

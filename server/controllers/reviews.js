@@ -23,6 +23,14 @@ module.exports = {
         attributes: ['image'],
       },
       {
+        attributes: ['reviewId'],
+        model: reviewLike,
+        required: false,
+        where: {
+          userId: res.locals.user.id,
+        },
+      },
+      {
         model: User,
         as: 'userInfo',
         attributes: ['id', 'profileImage', 'nickname'],
@@ -40,6 +48,12 @@ module.exports = {
         review.images = review.images.map((image) => image.image);
         review.productName = review.Product.name;
         delete review.Product;
+
+        // 리뷰에 좋아요 눌렀나?
+        if (review.reviewLikes.length !== 0) review.isLike = true;
+        else review.isLike = false;
+        delete review.reviewLikes;
+
         return review;
       }),
       pages: { ...paging({ page, size, count }), itemsCount: count },

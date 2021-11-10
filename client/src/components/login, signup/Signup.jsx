@@ -2,7 +2,11 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLoginState } from '../../actions/userAction';
-import { setLoginModal, setSignupModal } from '../../actions/modalAction';
+import {
+  setLoginModal,
+  setSignupModal,
+  setEmailCheckModal,
+} from '../../actions/modalAction';
 import {
   emailValidator,
   nicknameValidator,
@@ -181,6 +185,7 @@ function Signup() {
         dispatch(setLoginState(true));
         dispatch(setSignupModal(false));
         dispatch(setLoginModal(false));
+        dispatch(setEmailCheckModal(true));
       })
       .catch((err) => {
         try {
@@ -206,7 +211,6 @@ function Signup() {
           }
         } catch (error) {
           handleErrorMsg('passwordCheck', '통신에 문제가 발생했습니다');
-          console.log(error);
         }
       });
   };
@@ -216,6 +220,49 @@ function Signup() {
     if (event.key === 'Enter') {
       handleSignup(event);
     }
+  };
+
+  // * 구글 소셜 로그인 요청 핸들러
+  const responseGoogle = (response) => {
+    const idToken = response.tokenObj.id_token;
+    axios
+      .post('/callback/google', { idToken })
+      .then(() => {
+        // 가입 or 로그인완료
+        dispatch(setLoginState(true));
+        dispatch(setLoginModal(false));
+        dispatch(setSignupModal(false));
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          handleErrorMsg(
+            'passwordCheck',
+            '이미 해당 계정의 gmail로 가입하셨습니다',
+          );
+        }
+      });
+  };
+
+  // * 카카오 소셜 로그인 요청 핸들러
+  const responseKakao = async (response) => {
+    const accessToken = response.response.access_token;
+    // 서버에 카카오에서 받은 토큰 검증요청
+    axios
+      .post('/callback/kakao', { accessToken })
+      .then(() => {
+        // 검증 및 로그인 or 회원가입 성공
+        dispatch(setLoginState(true));
+        dispatch(setLoginModal(false));
+        dispatch(setSignupModal(false));
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          handleErrorMsg(
+            'passwordCheck',
+            '이미 해당 계정의 이메일로 가입하셨습니다',
+          );
+        }
+      });
   };
 
   return (
@@ -311,8 +358,8 @@ function Signup() {
           </div>
         </div>
         <div className="icon">
-          <Google />
-          <Kakao />
+          <Google responseGoogle={responseGoogle} />
+          <Kakao responseKakao={responseKakao} />
         </div>
         <button type="button" onClick={handleSignup}>
           회원가입

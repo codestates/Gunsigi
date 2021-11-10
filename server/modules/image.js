@@ -11,7 +11,7 @@ const v4 = () => uuid().replace(/-/g, '');
 
 const {
   ACCESS_KEY_ID,
-  ACCESS_SECRET,
+  SECERT_ACCESS_KEY,
   AWS_REGION,
   BUCKET,
 } = process.env;
@@ -21,7 +21,7 @@ const {
 
 AWS.config.update({
   accessKeyId: ACCESS_KEY_ID,
-  secretAccessKey: ACCESS_SECRET,
+  secretAccessKey: SECERT_ACCESS_KEY,
   region: AWS_REGION,
 });
 const s3 = new AWS.S3();
@@ -101,7 +101,7 @@ module.exports = {
     if (listObjects.IsTruncated) await deleteObjects(dir);
   },
   async compressAndSave(path, image) {
-    // 이미지 압축해서 저장
+    // 이미지 webp 변환해서 저장
     const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
     if (matches.length !== 3) return new Error('Invalid Base64 Image String');
     const decodedImage = Buffer.from(matches[2], 'base64');
