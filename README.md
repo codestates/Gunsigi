@@ -21,7 +21,7 @@
 
 ## 🧰 Development
 
-![Group 1812](https://user-images.githubusercontent.com/81850352/141042993-306bfc59-e91f-4684-9eb5-f4a28d75e9b1.png)
+![stack](https://user-images.githubusercontent.com/81850352/141072101-62453c62-3af9-4b77-9543-bcd859fb5ea8.png)
 
 ### Front-end Stack
 
