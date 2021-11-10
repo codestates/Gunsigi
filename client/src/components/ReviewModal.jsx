@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-lonely-if */
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   const reviewModalEl = useRef(null);
@@ -13,6 +14,14 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     score: '',
     period: '',
   });
+
+  //! 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
   const reviewWirteHandler = (e) => {
     const { value, name } = e.target;

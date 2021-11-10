@@ -69,7 +69,9 @@ function Login() {
     }
   };
 
+  //! 비밀번호를 잊으셨나요?
   const forgotPassword = () => {
+    dispatch(setSignupModal(false));
     dispatch(setLoginModal(false));
     dispatch(setforgotPassword(true));
   };

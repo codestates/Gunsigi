@@ -14,8 +14,8 @@
 
   .email-check_inside {
     width: 300px;
-    height: 250px;
-    padding: 30px 0;
+    height: 180px;
+    padding: 25px 0;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -24,18 +24,28 @@
     align-items: center;
     font-weight: 800;
     font-size: 1.4rem;
-    
+
     img {
-      width: 80px;
+      width: 60px;
     }
 
-    span {
-      color: $deep-grey;
+    .text {
+      width: 100%;
+      text-align: center;
+      h3 {
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      span {
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
     }
 
     button {
       width: 100px;
-      height: 30px;
+      height: 28px;
       font-weight: 600;
       border-radius: 20px;
       font-size: 1.2rem;
@@ -49,21 +59,30 @@
   }
 }
 
-@include laptop {
+@include tablet {
   .email-check_container {
     .email-check_inside {
       width: 400px;
-      height: 300px;
-      padding: 40px 0;
-      font-size: 1.6rem;
-      
-      img {
-        width: 100px;
+      height: 230px;
+      padding: 30px 0;
+      font-size: 1.8rem;
+      .text {
+        h3 {
+          letter-spacing: 2px;
+          margin-bottom: 8px;
+        }
+
+        span {
+          font-size: 1.4rem;
+        }
       }
-  
+      img {
+        width: 90px;
+      }
+
       button {
         width: 120px;
-        height: 40px;
+        height: 30px;
         font-size: 1.4rem;
       }
     }
