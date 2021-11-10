@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 8%;
   min-width: 32rem;
   min-height: 12rem;
 
@@ -25,12 +25,12 @@
 
     #nickname-email_container {
       margin-left: 1.5rem;
-      height: 60px;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: space-between;
-      margin-left: 20px;
+      margin-left: 22px;
       .profile_nickname {
         font-size: 1.5rem;
         font-weight: 800;
@@ -38,36 +38,30 @@
 
       #profile_email {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-top: 8px;
         letter-spacing: 1.2px;
         img {
-          width: 1.2rem;
-          height: 1.2rem;
+          width: 12px;
+          filter: invert(58%) sepia(68%) saturate(4375%) hue-rotate(116deg)
+            brightness(100%) contrast(102%);
           margin-right: 6px;
-          filter: invert(58%) sepia(68%) saturate(4375%) hue-rotate(116deg) brightness(100%) contrast(102%);
         }
       }
       .verifyBtn {
         width: 88px;
         height: 20px;
-        font-size: 1rem;
+        font-size: 9px;
         color: #4d4d4d;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 10px;
+        margin-top: 6px;
         .icon-send {
-          width: 16px;
+          width: 15px;
           filter: $f-deep-grey;
         }
-      }
-
-      button {
-        font-size: 1rem;
-        margin-left: -3px;
-        width: 65px;
-        height: 20px;
-        font-weight: 600;
       }
     }
   }
@@ -82,7 +76,7 @@
 
 @include tablet {
   #profile_container {
-    padding: 0 65px;
+    padding: 0 60px;
     font-size: 1.4rem;
     min-height: 20rem;
     gap: 250px;
@@ -92,7 +86,6 @@
         width: 10rem;
         height: 10rem;
         border-radius: 6rem;
-        margin-bottom: 10px;
       }
 
       #nickname-email_container {
@@ -103,26 +96,16 @@
         .profile_nickname {
           font-size: 1.8rem;
         }
-        
+
         #profile_email {
-          letter-spacing: 1px;
           display: flex;
           justify-content: space-between;
           img {
-            width: 1.4rem;
-            height: 1.4rem;
-            margin-right: 0;
+            width: 16px;
           }
           #user-email {
-            margin-left: 6px;
+            letter-spacing: 1.6px;
           }
-        }
-
-        button {
-          width: 90px;
-          height: 30px;
-          border-radius: 100px;
-          font-size: 1.4rem;
         }
       }
     }
@@ -143,18 +126,38 @@
     gap: 3rem;
     height: 100%;
     width: 300px;
+    padding: 0 25px;
 
     #profile_info {
+      width: 100%;
       flex-direction: column;
 
       #nickname-email_container {
+        width: 100%;
         margin-top: 2rem;
         margin-left: 0;
         align-items: center;
         gap: 8px;
-
-        button {
-          margin-left: 0;
+        #profile_email {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          img {
+            margin-right: 0;
+          }
+          #user-email {
+            text-align: center;
+          }
+        }
+        .verifyBtn {
+          width: 120px;
+          font-size: 1.4rem;
+          color: #4d4d4d;
+          margin-top: 10px;
+          .icon-send {
+            width: 18px;
+          }
         }
       }
     }
@@ -178,7 +181,7 @@
       }
 
       #nickname-email_container {
-        gap: 9px;
+        margin-top: 30px;
         .profile_nickname {
           font-size: 2rem;
         }
@@ -187,16 +190,8 @@
           font-size: 1.6rem;
 
           img {
-            width: 1.7rem;
-            height: 1.7rem;
+            width: 18px;
           }
-        }
-
-        button {
-          width: 110px;
-          height: 40px;
-          border-radius: 200px;
-          font-size: 1.6rem;
         }
       }
     }
