@@ -101,7 +101,7 @@ module.exports = {
     if (listObjects.IsTruncated) await deleteObjects(dir);
   },
   async compressAndSave(path, image) {
-    // 이미지 압축해서 저장
+    // 이미지 webp 변환해서 저장
     const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
     if (matches.length !== 3) return new Error('Invalid Base64 Image String');
     const decodedImage = Buffer.from(matches[2], 'base64');

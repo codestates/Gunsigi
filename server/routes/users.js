@@ -26,8 +26,4 @@ router.patch(
 );
 router.delete('/', users.delete);
 
-router.post('/test', async (req, res) => {
-  return res.json({ message: 'suc' });
-});
-
 module.exports = router;

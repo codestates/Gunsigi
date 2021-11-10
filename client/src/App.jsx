@@ -52,7 +52,6 @@ function App() {
     try {
       newToken = await updateToken();
     } catch (err) {
-      console.log('err', err);
       // 토큰 갱신에 실패했습니다.
       dispatch(setLoginState(false));
       setToken(false);
@@ -62,13 +61,6 @@ function App() {
     setToken(newToken);
     dispatch(setLoginState(true));
   }, []);
-
-  useEffect(() => {
-    // token 상태 변경 시 axios에서 설정해놓은 헤더를 새로운 토큰값으로 변경합니다.
-    axios.defaults.headers.common = {
-      Authorization: `Bearer ${token}`,
-    };
-  }, [token]);
 
   if (token === null || isLogin === 'init') return '';
 

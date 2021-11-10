@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const dotenv = require('dotenv');
 
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
@@ -8,18 +9,15 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const debug = require('debug')('app');
 const router = require('./routes');
-const db = require('./models');
 
 const app = express();
 app.enable('trust proxy');
-app.db = db;
+
 if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
-else {
-  app.use(logger('dev'));
-  app.aes = require('./modules/aes');
-  app.redis = require('./modules/redis');
-}
+else app.use(logger('dev'));
+
 app.use(
   express.json({
     limit: '100mb',
@@ -42,10 +40,6 @@ app.use(
     credentials: true,
   }),
 );
-
-app.get('/test', (req, res) => {
-  res.render('failAuth', { url: process.env.URL });
-});
 
 // 커스텀 템플릿 엔진
 app.engine('html', (filepath, options, next) => {
@@ -74,5 +68,22 @@ app.use('/bookmarks', router.bookmarks);
 app.get('/healthcheck', (_, res) => res.send(''));
 
 app.get('/*', (_, res) => res.sendFile(`${__dirname}/public/index.html`));
+
+// 테이블생성 및 시드 데이터 넣기
+if (process.env.SEED) {
+  const Seed = require('./seeds');
+  const db = require('./models');
+  db.sequelize
+    .sync({ force: true })
+    .then(() => Seed())
+    .catch((err) => debug(err))
+    .finally(() => process.exit());
+}
+
+if (process.env.NODE_ENV !== 'test') {
+  debug(`NODE_ENV : ${process.env.NODE_ENV || 'development'}`);
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => debug(`listening : ${PORT}`));
+} else app.db = require('./models');
 
 module.exports = app;
