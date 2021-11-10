@@ -1,0 +1,13 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/Gunsigi
+
+hooks:
+  ApplicationStop:
+    - location: server/scripts/stop.sh
+      runas: root
+  ApplicationStart:
+    - location: server/scripts/start.sh
+      runas: root
