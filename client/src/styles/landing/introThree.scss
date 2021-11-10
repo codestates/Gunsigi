@@ -88,6 +88,7 @@
       }
     }
   }
+
   @include responsive(T) {
     min-height: 800px;
     padding: $mid-margin * 2;
@@ -127,6 +128,7 @@
       }
     }
   }
+
   @include responsive(D) {
     min-height: 800px;
     padding: $mid-margin $mid-margin * 2;

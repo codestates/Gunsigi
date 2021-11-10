@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -76,10 +75,10 @@ function MyInfoModal({ openModalHandler, userType }) {
     const { nickname, password, passwordCheck } = modifyForm;
 
     if (
-      modifyForm.profileImg === profileImg &&
-      nickname === '' &&
-      password === '' &&
-      passwordCheck === ''
+      modifyForm.profileImg === profileImg
+      && nickname === ''
+      && password === ''
+      && passwordCheck === ''
     ) {
       setErrorMsg('수정을 원하시면 최소 하나는 변경하셔야 됩니다');
       return;

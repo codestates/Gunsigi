@@ -8,6 +8,25 @@
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
+
+@-moz-keyframes ldio-77otxw8ob1n {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@-webkit-keyframes ldio-77otxw8ob1n {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 .ldio-77otxw8ob1n div {
   position: relative;
   width: 30px;
@@ -18,6 +37,8 @@
 }
 .ldio-77otxw8ob1n div {
   animation: ldio-77otxw8ob1n 1s linear infinite;
+  -webkit-animation: ldio-77otxw8ob1n 1s linear infinite;
+  -moz-animation: ldio-77otxw8ob1n 1s linear infinite;
   top: 20px;
 }
 .loadingio-spinner-rolling-knr6hlgjhvk {

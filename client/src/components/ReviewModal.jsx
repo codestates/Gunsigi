@@ -4,7 +4,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
 import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
-function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
+function ReviewModal({
+  setisOpenWrite,
+  productImg,
+  productName,
+  productId,
+}) {
   const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
   const [alertMSG, setAlertMSG] = useState('초기 메세지');

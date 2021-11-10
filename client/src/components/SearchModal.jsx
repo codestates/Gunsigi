@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useRef } from 'react';
 import '../styles/SearchModal.scss';
 import { useHistory } from 'react-router-dom';
@@ -18,8 +17,8 @@ function SearchModal({ setOpenSearchModal }) {
 
   const SearchModalCloseButton = (e) => {
     if (
-      e.target === SearchModalCloseEl.current ||
-      e.target === SearchModalCloseButtonEl.current
+      e.target === SearchModalCloseEl.current
+      || e.target === SearchModalCloseButtonEl.current
     ) {
       setOpenSearchModal(false);
     }
