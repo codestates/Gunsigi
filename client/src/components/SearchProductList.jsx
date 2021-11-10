@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable */
 import React from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';

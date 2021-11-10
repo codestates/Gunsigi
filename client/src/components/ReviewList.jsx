@@ -1,4 +1,4 @@
-/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import IsLoadingSmall from './IsLoadingSmall';
@@ -35,7 +35,6 @@ function ReviewList({ name, productId }) {
       if (!params[k]) delete params[k];
     });
 
-    console.log('params : ', params, more);
     const res = await axios.get(`/reviews/${productId}`, {
       params: { ...params },
       loading: false,

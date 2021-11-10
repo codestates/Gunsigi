@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef, useState } from 'react';
 import '../styles/Reset.scss';
 import { useDispatch } from 'react-redux';
@@ -40,7 +41,6 @@ function Reset() {
   };
 
   const handleResetPasswordBtn = async () => {
-    console.log('버튼 실행');
     if (
       !inputValues.password ||
       !inputValues.confirm ||
@@ -56,7 +56,6 @@ function Reset() {
       return;
     }
     confirmRef.current.blur();
-    console.log('서버 요청');
     // 서버에 요청 보내고(바디에 비밀번호, 코드 (디코딩)넣어서), 성공시 setSuccess(true),
     // 403 다시 시도해 주세요,
     const code = decodeURIComponent(location.search.slice().split('=')[1]);
@@ -69,7 +68,6 @@ function Reset() {
         setSuccess(1);
       })
       .catch(() => {
-        console.log('여기');
         setSuccess(2);
       });
   };
@@ -154,10 +152,11 @@ function Reset() {
                 </>
               ) : (
                 <>
-                  <div className="fail-text">토큰이 만료되었습니다, 다시 시도해 주세요</div>
+                  <div className="fail-text">
+                    토큰이 만료되었습니다, 다시 시도해 주세요
+                  </div>
                   <div className="success-checkmark">
                     <div className="check-icon-x">
-                      {/* <span className="icon-line line-tip" /> */}
                       <span className="icon-line line-one" />
                       <span className="icon-line line-one line-second" />
                       <div className="icon-circle" />

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -48,9 +49,7 @@ function MyProducts() {
           target.style.display = 'none';
         }
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch(() => {})
       .finally(() => {
         setIsLoaded(false);
         lock = false;
@@ -80,9 +79,6 @@ function MyProducts() {
             }),
           ),
         );
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 

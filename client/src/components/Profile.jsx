@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,25 +30,15 @@ function Profile() {
 
   // * 처음 랜더링 될 때 회원정보를 가져온다.
   useEffect(() => {
-    axios
-      .get('/users')
-      .then((res) => {
-        const {
-          email,
-          nickname,
-          profileImage,
-          type,
-          verified,
-        } = res.data.userInfo;
-        dispatch(setNickname(nickname));
-        dispatch(setProfileImg(profileImage));
-        setUserEmail(email);
-        setUserType(type);
-        setIsVerified(verified);
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
+    axios.get('/users').then((res) => {
+      const { email, nickname, profileImage, type, verified } =
+        res.data.userInfo;
+      dispatch(setNickname(nickname));
+      dispatch(setProfileImg(profileImage));
+      setUserEmail(email);
+      setUserType(type);
+      setIsVerified(verified);
+    });
   }, []);
 
   return (

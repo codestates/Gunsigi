@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-lonely-if */
+/* eslint-disable */
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
@@ -33,8 +32,6 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
 
   //! 이미지 업로드
   const reviewImageHandler = (e) => {
-    console.log('file', e.target.files);
-
     setImgBase64([]);
     const images = [];
     for (let i = 0; i < e.target.files.length; i += 1) {
@@ -100,12 +97,10 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           images: imgBase64,
         },
         url: '/reviews',
-      })
-        .then(() => {
-          setisOpenWrite(false);
-          window.location.reload(true);
-        })
-        .catch((err) => console.log(err));
+      }).then(() => {
+        setisOpenWrite(false);
+        window.location.reload(true);
+      });
     }
   };
 

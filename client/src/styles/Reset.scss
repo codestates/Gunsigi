@@ -75,14 +75,12 @@
         }
         &:focus {
           outline: solid 2px $deep-blue;
-          // outline: solid 2px #3749b1;
           border: none;
         }
       }
       .shake {
         position: relative;
         outline: solid 2px $red;
-        // outline: solid 2px #3749b1;
         border: none;
         animation: shake 0.2s ease-in-out 0s 2;
         &:focus {
@@ -97,7 +95,6 @@
         font-weight: 600;
         line-height: 1.4rem;
         color: $red;
-        // color: #3749b1;
         white-space: pre-wrap;
       }
     }

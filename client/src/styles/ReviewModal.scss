@@ -163,11 +163,9 @@
       .photo {
         display: flex;
         align-items: center;
-        // flex-direction: column;
         font-weight: 800;
         span {
           &:nth-child(2) {
-            // margin-top: 10px;
             margin-left: 10px;
             font-weight: 400;
             color: $deep-grey;

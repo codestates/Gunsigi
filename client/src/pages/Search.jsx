@@ -1,15 +1,9 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable indent */
-/* eslint-disable react/jsx-indent */
+/* eslint-disable */
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addProductList,
-  setProductList,
-} from '../actions/searchAction';
+import { addProductList, setProductList } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
 import SearchProductList from '../components/SearchProductList';
@@ -163,16 +157,16 @@ function Search() {
     };
   }, [observeTarget]);
 
-    // 조회순, 리뷰순 정렬 버튼 핸들러
-    const handleOrderBtn = async (e) => {
-      onObserver(false);
-      const order = e.target.value;
-      dispatch(setProductList([], 0));
-      setSearchOrder(order);
-      setQueryPage(1);
-    };
+  // 조회순, 리뷰순 정렬 버튼 핸들러
+  const handleOrderBtn = async (e) => {
+    onObserver(false);
+    const order = e.target.value;
+    dispatch(setProductList([], 0));
+    setSearchOrder(order);
+    setQueryPage(1);
+  };
 
-    const makeDigitComma = (num) =>
+  const makeDigitComma = (num) =>
     num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (

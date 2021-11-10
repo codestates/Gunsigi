@@ -53,13 +53,11 @@ function ProductDetail({ match }) {
       url: `/products/${productId}`,
       withCredentials: true,
       loading: false,
-    })
-      .then((res) => {
-        const info = res.data.itemInfo;
-        setProductInfo(info);
-        setIsBookmark(info.isBookmarked);
-      })
-      .catch((err) => console.log(err));
+    }).then((res) => {
+      const info = res.data.itemInfo;
+      setProductInfo(info);
+      setIsBookmark(info.isBookmarked);
+    });
   }, [productId]);
 
   //! 북마크 기능
