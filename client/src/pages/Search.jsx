@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -51,9 +50,9 @@ function Search() {
     query = parsedQuery.query;
     type = parsedQuery.type;
     if (
-      window.history.state?.queryPage &&
-      productList.length &&
-      history.action === 'POP'
+      window.history.state?.queryPage
+      && productList.length
+      && history.action === 'POP'
     ) {
       // 기존 제품정보가 남아있고 뒤로가기를 통해서 온것이라면 페이지, 정렬 정보를 복구한다.
       init = true;
@@ -82,6 +81,7 @@ function Search() {
       dispatch(setProductList([], 0));
       setPageTotal(1);
       if (queryPage === 1) {
+        // eslint-disable-next-line no-use-before-define
         getMoreProducts();
       }
       setQueryPage(1);
@@ -167,6 +167,7 @@ function Search() {
   };
 
   const makeDigitComma = (num) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import IsLoadingSmall from './IsLoadingSmall';
@@ -30,7 +29,12 @@ function ReviewList({ name, productId }) {
       return;
     }
 
-    const params = { order, filter, size: 5, page: more ? page + 1 : 1 };
+    const params = {
+      order,
+      filter,
+      size: 5,
+      page: more ? page + 1 : 1,
+    };
     Object.keys(params).forEach((k) => {
       if (!params[k]) delete params[k];
     });

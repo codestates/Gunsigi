@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/nav/nav.scss';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setLoginState } from '../actions/userAction';
@@ -11,7 +11,6 @@ import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 function Nav() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;

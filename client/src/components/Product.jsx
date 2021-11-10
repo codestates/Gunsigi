@@ -1,9 +1,14 @@
-/* eslint-disable */
 import React from 'react';
 import '../styles/Product.scss';
 import ProductStar from './ProductStar';
 
-function Product({ name, reviews, img, score, bookmark }) {
+function Product({
+  name,
+  reviews,
+  img,
+  score,
+  bookmark,
+}) {
   return (
     <div className="Product_items">
       <div className="Product_img">

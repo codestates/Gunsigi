@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useRef, useState } from 'react';
 import '../styles/Reset.scss';
 import { useDispatch } from 'react-redux';
@@ -42,10 +41,10 @@ function Reset() {
 
   const handleResetPasswordBtn = async () => {
     if (
-      !inputValues.password ||
-      !inputValues.confirm ||
-      msgIdx.password ||
-      msgIdx.confirm
+      !inputValues.password
+      || !inputValues.confirm
+      || msgIdx.password
+      || msgIdx.confirm
     ) {
       // 인풋값이 다 안들어와 있으면 에러메세지, 흔들림효과
       setMsgIdx({ ...msgIdx, confirm: 3 });
@@ -171,6 +170,7 @@ function Reset() {
               className="lastBtn"
               type="button"
               onClick={goBackToHome}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             >
               확인
