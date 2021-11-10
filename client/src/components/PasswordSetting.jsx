@@ -58,7 +58,7 @@ function PasswordSetting() {
             <div className="title">비밀번호를 잊으셨나요?</div>
             <div className="text">
               <div>가입하신 이메일로 비밀번호를</div>
-              <div>재설정할 수 있는 링크를 보내드립니다.</div>
+              <div>재설정 할 수 있는 링크를 보내드립니다</div>
             </div>
             <div className="input-email">
               <input
@@ -69,7 +69,7 @@ function PasswordSetting() {
                 placeholder="이메일"
               />
               <div className={notEmail ? 'none-email-change' : 'none-email'}>
-                가입되지 않은 이메일입니다 다시 확인해주세요
+                가입되지 않은 이메일입니다, 다시 확인해 주세요
               </div>
             </div>
           </div>
