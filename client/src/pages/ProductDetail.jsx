@@ -35,7 +35,7 @@ function ProductDetail({ match }) {
     bookmarksCount: 12,
     reviewsCount: 10,
     score: 4,
-    isBookmarked: true,
+    isBookmarked: false,
     chemistry: {
       good: ['비타민', '비타민C', '아미노산'],
       bad: ['칼슘', '항생제', '혈액응고억제제'],

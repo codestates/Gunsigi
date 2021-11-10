@@ -5,10 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setLoginState } from '../actions/userAction';
 import { setLoginModal, setSignupModal } from '../actions/modalAction';
-import {
-  resetSearchedProductList,
-  resetSearchedWord,
-} from '../actions/searchAction';
+import { resetSearchedWord } from '../actions/searchAction';
 import SearchModal from './SearchModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -25,7 +22,6 @@ function Nav() {
   const openSearchModalHandler = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
     dispatch(resetSearchedWord());
-    dispatch(resetSearchedProductList());
   };
 
   const logoutHandler = (event) => {
@@ -33,7 +29,7 @@ function Nav() {
 
     axios.get('/auth/logout').then(() => {
       dispatch(setLoginState(false));
-      history.push('/');
+      window.location.replace();
     });
   };
 
@@ -49,15 +45,15 @@ function Nav() {
           </div>
         </Link>
         <div className="nav_right">
-          <Link to="/search">
-            <div
-              onClick={() => openSearchModalHandler()}
-              aria-hidden="true"
-              className="icon_search"
-            >
+          <div
+            onClick={() => openSearchModalHandler()}
+            aria-hidden="true"
+            className="icon_search"
+          >
+            <Link to="/search">
               <img src="/icons/icon_magnify.svg" alt="magnifier" />
-            </div>
-          </Link>
+            </Link>
+          </div>
           {!isLogin ? (
             <>
               <button

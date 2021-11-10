@@ -66,16 +66,16 @@ function App() {
 
   return (
     <div className="App">
-      {isLoading ? <Loading /> : null}
-      {isLoginTrueOrFalse ? <IsLogin /> : null}
+      {isLoading && <Loading />}
+      {isLoginTrueOrFalse && <IsLogin />}
       {errorModal.isOpenError && (
         <ErrorModal
           errorMsg={errorModal.errorMsg}
           errorModalHandler={errorModalHandler}
         />
       )}
-      {isOpenforgotPassword ? <PasswordSetting /> : null}
-      {isSuccessSendEmail ? <SucessEmailSend /> : null}
+      {isOpenforgotPassword && <PasswordSetting />}
+      {isSuccessSendEmail && <SucessEmailSend />}
       {isOpenEmailCheck && <EmailCheckModal />}
       <Switch>
         <Route exact path="/">

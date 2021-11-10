@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   setLoginModal,
@@ -6,6 +6,7 @@ import {
   setIsLogin,
 } from '../actions/modalAction';
 import '../styles/IsLogin.scss';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function IsLogin() {
   const isLoginBackgroundEl = useRef(null);
@@ -24,6 +25,14 @@ function IsLogin() {
       dispatch(setSignupModal(true));
     }
   };
+
+  // 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
   return (
     <div

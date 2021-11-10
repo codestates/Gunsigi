@@ -2,6 +2,7 @@
 
 .my-activity_container {
   margin: 0 22px;
+  padding: 4px 0;
 
   #tab_menu {
     margin: 0 2px;
@@ -43,19 +44,21 @@
 @include laptop {
   .my-activity_container {
     margin: 0;
+    justify-content: space-between;
     width: calc(100vw - 390px);
     height: calc(100vh - 160px);
 
     #tab_menu {
-      margin: 0;
+      height: 30px;
+      margin-bottom: 10px;
       height: 25px;
       font-size: 1.5rem;
     }
 
     .my-contents {
-      padding: 25px 5px 0 5px;
+      padding: 0px 5px 0 5px;
 
-      height: calc(100vh - 185px);
+      height: calc(100vh - 195px);
       overflow-y: scroll;
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */

@@ -3,13 +3,12 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addProductList,
   setProductList,
-  setSearchType,
 } from '../actions/searchAction';
 import '../styles/Search.scss';
 import NavChange from '../components/NavChange';
@@ -42,9 +41,9 @@ function Search() {
   const { productList, productCount } = searchState;
   const [searchOrder, setSearchOrder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [target, setTarget] = useState(null);
   const [queryPage, setQueryPage] = useState(0);
   const [pageTotal, setPageTotal] = useState(2);
+  const [observeTarget, setObserveTarget] = useState(null);
 
   const onObserver = (bool) => {
     const observerTarget = document.getElementById('observer');
@@ -67,7 +66,6 @@ function Search() {
       setPageTotal(window.history.state.pageTotal);
       setQueryPage(window.history.state.queryPage);
       setSearchOrder(window.history.state.searchOrder);
-      setSearchType(window.history.state.searchType);
     } else {
       // 그게 아니라면 초기화
       onObserver(false);
@@ -75,7 +73,6 @@ function Search() {
       setPageTotal(1);
       setQueryPage(1);
       setSearchOrder('views');
-      setSearchType('search');
     }
   }, []);
 
@@ -97,15 +94,6 @@ function Search() {
     }
   }, [location.search]);
 
-  // --------------- handle products order by view or reviews
-  const handleOrderBtn = async (e) => {
-    onObserver(false);
-    const order = e.target.value;
-    dispatch(setProductList([], 0));
-    setSearchOrder(order);
-    setQueryPage(1);
-  };
-
   // --------------- infinite scroll
   const observer = useRef(
     new IntersectionObserver(
@@ -120,7 +108,7 @@ function Search() {
   );
 
   const getMoreProducts = async () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     const axiosConfig = {
       method: 'get',
       url: '/products/all/items',
@@ -158,13 +146,12 @@ function Search() {
         init = false;
         return;
       }
-      setIsLoading(true);
       getMoreProducts();
     }
   }, [queryPage, searchOrder]);
 
   useEffect(() => {
-    const currentEl = target;
+    const currentEl = observeTarget;
     const currentObserver = observer.current;
     if (currentEl) {
       currentObserver.observe(currentEl);
@@ -174,9 +161,18 @@ function Search() {
         currentObserver.unobserve(currentEl);
       }
     };
-  }, [target]);
+  }, [observeTarget]);
 
-  const makeDigitComma = (num) =>
+    // 조회순, 리뷰순 정렬 버튼 핸들러
+    const handleOrderBtn = async (e) => {
+      onObserver(false);
+      const order = e.target.value;
+      dispatch(setProductList([], 0));
+      setSearchOrder(order);
+      setQueryPage(1);
+    };
+
+    const makeDigitComma = (num) =>
     num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return (
@@ -223,7 +219,7 @@ function Search() {
             <div className="Search_products">
               <SearchProductList />
               {isLoading && <Skeleton />}
-              <div id="observer" ref={setTarget} className="targetEl" />
+              <div id="observer" ref={setObserveTarget} className="targetEl" />
             </div>
           </div>
         </div>

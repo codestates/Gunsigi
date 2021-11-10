@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/PasswordSetting.scss';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setforgotPassword, successSendEmail } from '../actions/modalAction';
-import axios from 'axios';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function PasswordSetting() {
   const dispatch = useDispatch();
@@ -10,18 +11,26 @@ function PasswordSetting() {
   const [email, setEmail] = useState('');
   const [notEmail, setNotEmail] = useState(false);
 
-  console.log(email);
+  //! 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
+  //! 바깥창 누르면 꺼지는 함수
   const closeModalHandler = (e) => {
     if (e.target === backgroundEl.current) {
       dispatch(setforgotPassword(false));
     }
   };
 
+  //! 비밀번호 재요청 이메일 전송
   const emailDeliveryRequest = () => {
     axios({
       method: 'POST',
-      data: { email: email },
+      data: { email },
       url: '/auth/forget',
       loading: false,
     })
@@ -37,6 +46,7 @@ function PasswordSetting() {
 
   return (
     <div
+      aria-hidden="true"
       onClick={(e) => closeModalHandler(e)}
       ref={backgroundEl}
       className="PasswordSetting_container"
@@ -48,7 +58,7 @@ function PasswordSetting() {
             <div className="title">비밀번호를 잊으셨나요?</div>
             <div className="text">
               <div>가입하신 이메일로 비밀번호를</div>
-              <div>재설정할 수 있는 링크를 보내드립니다.</div>
+              <div>재설정 할 수 있는 링크를 보내드립니다</div>
             </div>
             <div className="input-email">
               <input
@@ -59,7 +69,7 @@ function PasswordSetting() {
                 placeholder="이메일"
               />
               <div className={notEmail ? 'none-email-change' : 'none-email'}>
-                가입되지 않은 이메일입니다 다시 확인해주세요
+                가입되지 않은 이메일입니다, 다시 확인해 주세요
               </div>
             </div>
           </div>

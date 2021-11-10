@@ -6,8 +6,8 @@ function Skeleton() {
 
   return (
     <div className="skeleton-container">
-      {items.map(() => (
-        <div className="card">
+      {items.map((_, idx) => (
+        <div className="card" key={idx}>
           <div className="image shine" />
           <div className="text shine" />
           <div className="text " />

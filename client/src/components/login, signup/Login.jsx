@@ -69,9 +69,48 @@ function Login() {
     }
   };
 
+  //! 비밀번호를 잊으셨나요?
   const forgotPassword = () => {
+    dispatch(setSignupModal(false));
     dispatch(setLoginModal(false));
     dispatch(setforgotPassword(true));
+  };
+
+  // * 구글 소셜 로그인 요청 핸들러
+  const responseGoogle = (response) => {
+    const idToken = response.tokenObj.id_token;
+    axios
+      .post('/callback/google', { idToken })
+      .then(() => {
+        // 가입 or 로그인완료
+        dispatch(setLoginState(true));
+        dispatch(setLoginModal(false));
+        dispatch(setSignupModal(false));
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          setErrorMsg('이미 해당 계정의 gmail로 가입하셨습니다');
+        }
+      });
+  };
+
+  // * 카카오 소셜 로그인 요청 핸들러
+  const responseKakao = async (response) => {
+    const accessToken = response.response.access_token;
+    // 서버에 카카오에서 받은 토큰 검증요청
+    axios
+      .post('/callback/kakao', { accessToken })
+      .then(() => {
+        // 검증 및 로그인 or 회원가입 성공
+        dispatch(setLoginState(true));
+        dispatch(setLoginModal(false));
+        dispatch(setSignupModal(false));
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          setErrorMsg('이미 해당 계정의 이메일로 가입하셨습니다');
+        }
+      });
   };
 
   return (
@@ -107,8 +146,8 @@ function Login() {
         </div>
 
         <div className="icon">
-          <Google />
-          <Kakao />
+          <Google responseGoogle={responseGoogle} />
+          <Kakao responseKakao={responseKakao} />
         </div>
 
         <div className="button-password">

@@ -10,6 +10,17 @@ function MyReviews({ reviews, setReviews, setRieviewCount }) {
   let total = 1;
   let lock = false;
 
+  //! 내가 쓴 리뷰요청
+  useEffect(async () => {
+    await axios({
+      url: '/reviews?page=1&size=5',
+      loading: false,
+    }).then((res) => {
+      setReviews(res.data.items);
+      setRieviewCount(res.data.pages.itemsCount);
+    });
+  }, []);
+
   //! 리뷰 더보기
   const getMoreItem = async () => {
     if (page > total) {

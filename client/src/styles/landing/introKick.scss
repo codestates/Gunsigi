@@ -130,8 +130,9 @@
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        z-index: 5;
         .app {
-          width: 240px;
+          width: 242px;
           height: 354px;
           object-fit: cover;
           object-position: top;
@@ -180,8 +181,16 @@
           }
           .web {
             display: block;
+            min-width: 423px;
+            min-height: 259px;
+            max-width: 654px;
+            max-height: 410px;
             width: 77%;
-            margin-bottom: 33px;
+            height: auto;
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 3%;
+            z-index: 1;
           }
         }
       }
