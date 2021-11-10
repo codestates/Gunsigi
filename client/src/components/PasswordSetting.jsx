@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/PasswordSetting.scss';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setforgotPassword, successSendEmail } from '../actions/modalAction';
-import axios from 'axios';
+import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function PasswordSetting() {
   const dispatch = useDispatch();
@@ -10,18 +11,26 @@ function PasswordSetting() {
   const [email, setEmail] = useState('');
   const [notEmail, setNotEmail] = useState(false);
 
-  console.log(email);
+  //! 스크롤 방지
+  useEffect(() => {
+    stopScroll();
+    return () => {
+      clearStopScroll();
+    };
+  }, []);
 
+  //! 바깥창 누르면 꺼지는 함수
   const closeModalHandler = (e) => {
     if (e.target === backgroundEl.current) {
       dispatch(setforgotPassword(false));
     }
   };
 
+  //! 비밀번호 재요청 이메일 전송
   const emailDeliveryRequest = () => {
     axios({
       method: 'POST',
-      data: { email: email },
+      data: { email },
       url: '/auth/forget',
       loading: false,
     })
@@ -37,6 +46,7 @@ function PasswordSetting() {
 
   return (
     <div
+      aria-hidden="true"
       onClick={(e) => closeModalHandler(e)}
       ref={backgroundEl}
       className="PasswordSetting_container"

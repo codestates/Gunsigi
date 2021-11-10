@@ -18,8 +18,10 @@ function EmailCheckModal() {
         aria-hidden="true"
       >
         <img src="/logo_gunsigi.png" alt="logo" />
-        <h3>인증 메일이 발송되었습니다</h3>
-        <span>가입하신 이메일에서 인증을 진행해주세요</span>
+        <div className="text">
+          <h3>인증 메일이 발송되었습니다</h3>
+          <span>가입하신 이메일에서 인증을 진행해주세요</span>
+        </div>
         <button
           type="button"
           onClick={() => dispatch(setEmailCheckModal(false))}
