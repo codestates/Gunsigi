@@ -21,6 +21,8 @@
 
 ## 🧰 Development
 
+![Group 1812](https://user-images.githubusercontent.com/81850352/141042993-306bfc59-e91f-4684-9eb5-f4a28d75e9b1.png)
+
 ### Front-end Stack
 
 <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/scss-c66493?style=for-the-badge&logo=sass&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
