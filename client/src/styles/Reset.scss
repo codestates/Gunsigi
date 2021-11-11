@@ -30,15 +30,15 @@
     }
   }
   .container {
-    height: 50%; /* Set your own height: percents, ems, whatever! */
-    width: 50%; /* Set your own width: percents, ems, whatever! */
+    height: 50%; 
+    width: 50%; 
     min-width: 340px;
     max-width: 600px;
     min-height: 500px;
     background-color: rgba(255, 255, 255, 0.981);
-    overflow-y: visible; /* Recommended in case content is larger than the container */
-    margin: auto; /* Center the item vertically & horizontally */
-    position: absolute; /* Break it out of the regular flow */
+    overflow-y: visible; 
+    margin: auto; 
+    position: absolute; 
     top: 0;
     left: 0;
     bottom: 0;

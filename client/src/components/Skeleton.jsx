@@ -7,6 +7,7 @@ function Skeleton() {
   return (
     <div className="skeleton-container">
       {items.map((_, idx) => (
+        // eslint-disable-next-line react/no-array-index-key
         <div className="card" key={idx}>
           <div className="image shine" />
           <div className="text shine" />
