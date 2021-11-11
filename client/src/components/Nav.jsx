@@ -28,7 +28,7 @@ function Nav() {
 
     axios.get('/auth/logout').then(() => {
       dispatch(setLoginState(false));
-      window.location.replace();
+      window.location.replace('/');
     });
   };
 
