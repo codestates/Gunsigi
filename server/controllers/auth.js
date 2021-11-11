@@ -93,11 +93,12 @@ module.exports = {
       user = await User.findByPk(userId, { attributes: ['id', 'email', 'type'] });
       if (!user) throw new Error('user not found');
     } catch {
-      return res.status(403).json({ message: 'Forbidden' });
+      return res.json({ result: false, message: 'Forbidden' });
     }
     const accessToken = generateAccessToken(user.toJSON());
     return res.json({
       message: 'Success to create access token',
+      result: true,
       accessToken,
       userInfo: user.toJSON(),
     });

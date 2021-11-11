@@ -51,7 +51,8 @@ function App() {
     let newToken;
     try {
       newToken = await updateToken();
-    } catch (err) {
+      if (!newToken.result) throw Error('Fail to login');
+    } catch {
       // 토큰 갱신에 실패했습니다.
       dispatch(setLoginState(false));
       setToken(false);
