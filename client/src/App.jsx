@@ -59,9 +59,15 @@ function App() {
       return;
     }
     // 새로 받은 토큰상태를 변경합니다.
-    setToken(newToken);
+    setToken(newToken.accessToken);
     dispatch(setLoginState(true));
   }, []);
+
+  useEffect(() => {
+    axios.defaults.headers.common = {
+      Authorization: `Bearer ${token}`,
+    };
+  }, [token]);
 
   if (token === null || isLogin === 'init') return '';
 

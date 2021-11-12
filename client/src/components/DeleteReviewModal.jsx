@@ -14,7 +14,7 @@ function DeleteReviewModal({ openDeleteHandler }) {
   return (
     <div
       className="modal_wrapper"
-      onClick={openDeleteHandler}
+      onClick={() => openDeleteHandler(false)}
       aria-hidden="true"
     >
       <div

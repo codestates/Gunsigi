@@ -31,6 +31,7 @@ function IntroOne() {
           infiniteLoop
           autoPlay
           transitionTime="600"
+          preventMovementUntilSwipeScrollTolerance
         >
           {categoryContents.map((el) => (
             <div className="scene" key={el.id}>
