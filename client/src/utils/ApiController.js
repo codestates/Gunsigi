@@ -20,7 +20,7 @@ export const updateToken = async () => {
   axios.defaults.headers.common = {
     Authorization: `Bearer ${res.data?.accessToken}`,
   };
-  return res.data?.accessToken;
+  return res.data;
 };
 
 export default async function setAxios(
