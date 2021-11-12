@@ -177,7 +177,7 @@ function Search() {
       <div className="Search_conatiner">
         <div className="Search_in">
           <div className="Search_img">
-            <img src="/images/search_man.png" alt="man" />
+            <img src="/images/search_man.webp" alt="man" />
           </div>
           <div className="Search_bottom" ref={rootRef}>
             <div className="Search_title">
