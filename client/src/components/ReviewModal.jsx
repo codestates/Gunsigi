@@ -4,12 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
 import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
-function ReviewModal({
-  setisOpenWrite,
-  productImg,
-  productName,
-  productId,
-}) {
+function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
   const [alertMSG, setAlertMSG] = useState('초기 메세지');
@@ -58,6 +53,7 @@ function ReviewModal({
             notice.style.opacity = '1';
           } else {
             if (base64) {
+              
               images.push(base64.toString());
 
               setImgBase64([...imgBase64, ...images]);
@@ -92,6 +88,7 @@ function ReviewModal({
     if (content.length === 0 || score.length === 0 || period.length === 0) {
       notice.style.opacity = '1';
     } else {
+      setisOpenWrite(false);
       axios({
         method: 'POST',
         data: {
@@ -103,7 +100,6 @@ function ReviewModal({
         },
         url: '/reviews',
       }).then(() => {
-        setisOpenWrite(false);
         window.location.reload(true);
       });
     }
