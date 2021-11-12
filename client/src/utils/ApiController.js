@@ -56,10 +56,10 @@ export default async function setAxios(
          * 토큰이 더 이상 유효하지 않음..
          * 토큰 갱신을 시도해서 성공하면 요청을 재전송한다.
          */
-        const newToken = await updateToken();
-        if (newToken) {
-          setToken(newToken);
-          err.config.headers.Authorization = `Beaer ${newToken}`;
+        const res = await updateToken();
+        if (res.accessToken) {
+          setToken(res.accessToken);
+          err.config.headers.Authorization = `Beaer ${res.accessToken}`;
           // 토큰갱신에 성공했으므로 다시 시도해본다.
           // 3번까지만 재시도해본다.
           const retry = err.config.retry || 0;
