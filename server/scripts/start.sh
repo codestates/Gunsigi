@@ -14,8 +14,10 @@ npm install
 chmod +x scripts/setup_env.sh
 ./scripts/setup_env.sh
 
-# WS, WAS 실행
+# WS, WAS, log agent 실행
 sudo ln -sf /home/ubuntu/Gunsigi/server/config/nginx.conf /etc/nginx/nginx.conf
+sudo ln -sf /home/ubuntu/Gunsigi/server/config/awslogs.conf /var/awslogs/etc/awslogs.conf
 sudo service nginx restart
+sudo service awslogs restart
 pm2 start app.js --name Gunsigi -i max
 pm2 save
