@@ -7,21 +7,17 @@ const client = redis.createClient({
     port: process.env.REDIS_PORT,
   },
 });
+
+client.connect();
+
 client.on('error', (err) => {
-  client.quit();
-  throw (err);
+  console.log(err);
+  process.exit(-1);
 });
 
 module.exports = {
   get: async (key) => {
-    let result;
-    try {
-      await client.connect();
-      result = await client.get(key);
-    } catch {
-      return null;
-    }
-    await client.quit();
+    const result = await client.get(key);
     try {
       return JSON.parse(result);
     } catch {
@@ -29,27 +25,18 @@ module.exports = {
     }
   },
   set: async (key, value, EX = TTL) => {
-    try {
-      await client.connect();
-    } catch {
-      return false;
-    }
     if (typeof (value) === 'object') {
       await client.setEx(key, EX, JSON.stringify(value));
     } else {
       await client.setEx(key, EX, value);
     }
-    await client.quit();
     return true;
   },
   delete: async (key) => {
-    try {
-      await client.connect();
-    } catch {
-      return false;
-    }
     await client.del(key);
-    await client.quit();
     return true;
+  },
+  quit: async () => {
+    await client.quit();
   },
 };

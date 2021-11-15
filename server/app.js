@@ -84,6 +84,9 @@ if (process.env.NODE_ENV !== 'test') {
   debug(`NODE_ENV : ${process.env.NODE_ENV || 'development'}`);
   const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => console.log(`listening : ${PORT}`));
-} else app.db = require('./models');
+} else {
+  app.db = require('./models');
+  app.redis = require('./modules/redis');
+}
 
 module.exports = app;
