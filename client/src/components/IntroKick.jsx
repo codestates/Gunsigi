@@ -11,7 +11,7 @@ function IntroKick() {
       } else {
         setTextIdx(textIdx + 1);
       }
-    }, 7000);
+    }, 5000);
     return () => clearTimeout(idx);
   }, [textIdx]);
 
