@@ -177,6 +177,7 @@ module.exports = {
         'views',
       ],
       limit: parseInt(size, 10),
+      distinct: true,
       offset: (page - 1) * size,
       order,
       include: [
