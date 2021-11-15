@@ -1,15 +1,5 @@
 @import '../../App';
 
-.Mypage_topButton {
-  display: none;
-}
-
-@include tablet {
-  .Mypage_topButton {
-    display: block;
-  }
-}
-
 @include laptop {
   #mypage_container {
     display: flex;
