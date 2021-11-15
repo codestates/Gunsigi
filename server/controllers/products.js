@@ -59,8 +59,8 @@ module.exports = {
         model: Ingredient,
         attributes: ['id'],
       };
-      if (req.query.order === 'reviewsCount') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
-      else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
+      if (req.query.order === 'reviewsCount') order = [['reviewsCount', 'DESC'], ['views', 'DESC'], ['id', 'DESC']];
+      else order = [['views', 'DESC'], ['reviewsCount', 'DESC'], ['id', 'DESC']];
       params.order = order;
       if (type === 'category') {
         const tag = await Tag.findOne({
@@ -165,8 +165,8 @@ module.exports = {
   all: async (req, res) => {
     const { page, size } = req.query;
     let order;
-    if (req.query.order === 'reviews') order = [['reviewsCount', 'DESC'], ['views', 'DESC']];
-    else order = [['views', 'DESC'], ['reviewsCount', 'DESC']];
+    if (req.query.order === 'reviews') order = [['reviewsCount', 'DESC'], ['views', 'DESC'], ['id', 'DESC']];
+    else order = [['views', 'DESC'], ['reviewsCount', 'DESC'], ['id', 'DESC']];
     const { count, rows } = await Product.findAndCountAll({
       attributes: [
         'id',
