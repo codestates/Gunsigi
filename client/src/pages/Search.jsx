@@ -63,7 +63,7 @@ function Search() {
       // 그게 아니라면 초기화
       onObserver(false);
       dispatch(setProductList([], 0));
-      setPageTotal(1);
+      setPageTotal(2);
       setQueryPage(1);
       setSearchOrder('views');
     }
@@ -79,7 +79,7 @@ function Search() {
       query = parsedQuery.query;
       type = parsedQuery.type;
       dispatch(setProductList([], 0));
-      setPageTotal(1);
+      setPageTotal(2);
       if (queryPage === 1) {
         // eslint-disable-next-line no-use-before-define
         getMoreProducts();
