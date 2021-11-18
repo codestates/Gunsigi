@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       updatedAt: false,
       indexes: [
         {
-          fields: ['views', 'reviewCount', 'id'],
+          fields: ['views', 'reviewsCount', 'id'],
         },
         {
           fields: ['reviewsCount', 'views', 'id'],
