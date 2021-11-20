@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "touch src/css/style.css && node-sass src/App.scss src/css/style.css && react-scripts start",
-    "build": "touch src/css/style.css && node-sass src/App.scss src/css/style.css && react-scripts build",
+    "build": "touch src/css/style.css && node-sass src/App.scss src/css/style.css && GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sass": "node-sass -wr --source-map true src/styles/Main.scss src/style.css"

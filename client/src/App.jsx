@@ -69,7 +69,7 @@ function App() {
     };
   }, [token]);
 
-  if (token === null || isLogin === 'init') return '';
+  if (token === null || isLogin === 'init') return <Loading />;
 
   return (
     <div className="App">
