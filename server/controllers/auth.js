@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 const debug = require('debug')('app.auth');
+const path = require('path');
 const { User } = require('../models');
 const mailer = require('../modules/email');
 const redisClient = require('../modules/redis');
@@ -120,6 +121,10 @@ module.exports = {
 
     return res.redirect(process.env.URL);
   },
+  getResetPage: (_, res) => {
+    res.clearCookie('jwt');
+    return res.sendFile(path.resolve(`${__dirname}/../public/index.html`));
+  },
   // 비밀번호 찾기 메일 전송
   forgetPassword: async (req, res) => {
     /**
@@ -136,7 +141,7 @@ module.exports = {
 
     // 이메일 전송하기
     return res.render('resetPassword.html',
-      { options: { url: `${process.env.URL}/reset?code=${encodeURIComponent(mailToken)}` } },
+      { options: { url: `${process.env.URL}/auth/reset?code=${encodeURIComponent(mailToken)}` } },
       async (err, output) => {
         await mailer.send(user.email, '[Gunsigi] 건식이 비밀번호를 재설정해주세요.', output);
         return res.json({ message: 'success' });
