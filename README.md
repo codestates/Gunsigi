@@ -43,5 +43,5 @@
 | ------------- | --------- | --------------------------------------- |
 | 진수연 (팀장) | Front-end | [진수연](https://github.com/Jin-suyeon) |
 | 김설아        | Front-end | [김설아](https://github.com/seola25)    |
-| 김정훈        | Front-end | [김정훈](https://github.com/hoony0802)  |
+| 김정훈        | Front-end | [김정훈](https://github.com/junghoonme)  |
 | 허도영        | Back-end  | [허도영](https://github.com/iidd0101)   |

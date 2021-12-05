@@ -23,7 +23,7 @@ function Nav() {
     dispatch(resetSearchedWord());
   };
 
-  const logoutHandler = (event) => {
+  const handleLogout = (event) => {
     event.preventDefault();
 
     axios.get('/auth/logout').then(() => {
@@ -79,7 +79,7 @@ function Nav() {
                   마이페이지
                 </button>
               </Link>
-              <button className="logout" type="button" onClick={logoutHandler}>
+              <button className="logout" type="button" onClick={handleLogout}>
                 로그아웃
               </button>
             </>

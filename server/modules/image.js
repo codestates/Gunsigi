@@ -49,7 +49,7 @@ module.exports = {
           username: process.env.TEST_SSH_USERNAME,
           password: process.env.TEST_SSH_PASSWORD,
         });
-        await client.uploadDir(`/tmp/${path}`, `/web/gunsigi_data/images/${path}`);
+        await client.uploadDir(`/tmp/${path}`, `/web/gunsigi_cdn/${path}`);
         client.close();
       } catch (e) {
         debug(e);
