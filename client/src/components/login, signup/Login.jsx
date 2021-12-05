@@ -62,7 +62,7 @@ function Login() {
   };
 
   // * input 엔터키 누르면 요청해주는 핸들러
-  const handeleEnterForm = (event) => {
+  const handleEnterForm = (event) => {
     if (event.key === 'Enter') {
       handleLogin(event);
     }
@@ -106,7 +106,7 @@ function Login() {
         dispatch(setSignupModal(false));
       })
       .catch((err) => {
-        if (err.response.status === 403) {
+        if (err.response?.status === 403) {
           setErrorMsg('이미 해당 계정의 이메일로 가입하셨습니다');
         }
       });
@@ -124,7 +124,7 @@ function Login() {
             name="email"
             value={loginForm.email}
             onChange={handleFormChange}
-            onKeyUp={handeleEnterForm}
+            onKeyUp={handleEnterForm}
           />
           <div className="password">
             <input
@@ -136,7 +136,7 @@ function Login() {
               name="password"
               value={loginForm.password}
               onChange={handleFormChange}
-              onKeyUp={handeleEnterForm}
+              onKeyUp={handleEnterForm}
             />
             <div className={errorMsg ? 'login_notice' : 'login_notice dummy'}>
               {errorMsg || '로그인 dummy notice입니다'}
