@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
+import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/WithdrawalModal.scss';
 
 function WithdrawalModal({ openWithdrawlHandler }) {
   // * 스크롤 방지
   useEffect(() => {
-    stopScroll();
+    stopScrollMypage();
     return () => {
       clearStopScroll();
     };
   }, []);
 
   // * 회원 탈퇴 요청
-  const withdrawalHandler = (event) => {
+  const handleWithdrawal = (event) => {
     event.preventDefault();
 
     axios.delete('/users').then(() => {
@@ -53,7 +53,7 @@ function WithdrawalModal({ openWithdrawlHandler }) {
           <button
             className="yes"
             type="button"
-            onClick={withdrawalHandler}
+            onClick={handleWithdrawal}
             aria-hidden="true"
           >
             네

@@ -47,7 +47,7 @@ function NavChange() {
     }
   };
 
-  const logoutHandler = (event) => {
+  const handleLogout = (event) => {
     event.preventDefault();
 
     axios.get('/auth/logout').then(() => {
@@ -108,7 +108,7 @@ function NavChange() {
                   마이페이지
                 </button>
               </Link>
-              <button type="button" className="logout" onClick={logoutHandler}>
+              <button type="button" className="logout" onClick={handleLogout}>
                 로그아웃
               </button>
             </>

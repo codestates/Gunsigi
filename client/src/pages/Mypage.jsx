@@ -15,9 +15,7 @@ function Mypage() {
   return (
     <>
       <NavChange />
-      <div className="Mypage_topButton">
-        <TopButton />
-      </div>
+      <TopButton />
       <div id="mypage_container">
         <Profile />
         <MyActivity />

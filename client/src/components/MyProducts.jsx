@@ -58,7 +58,7 @@ function MyProducts() {
 
   // * 마이페이지 내 북마크 삭제 요청
   // productId의 타입은 문자열이므로 숫자로 변환해야함
-  const deleteBookmark = (productId) => {
+  const handleDeleteBookmark = (productId) => {
     axios
       .delete('/bookmarks', { data: { productId }, loading: false })
       .then(() => {
@@ -88,7 +88,7 @@ function MyProducts() {
     const productId = e.currentTarget.id;
 
     if (bookmarkClass === 'Product_heart_change') {
-      deleteBookmark(productId);
+      handleDeleteBookmark(productId);
     } else {
       dispatch(outMypage());
       history.push(`/product-detail/${productId}`);

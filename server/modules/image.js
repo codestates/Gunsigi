@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const uuid = require('uuid').v4;
 const AWS = require('aws-sdk');
 const sharp = require('sharp');
@@ -5,6 +6,7 @@ const debug = require('debug')('app:image');
 const fs = require('fs').promises;
 
 let Client;
+// eslint-disable-next-line global-require
 if (process.env.NODE_ENV !== 'production') Client = require('node-scp').Client;
 
 const v4 = () => uuid().replace(/-/g, '');
@@ -49,7 +51,7 @@ module.exports = {
           username: process.env.TEST_SSH_USERNAME,
           password: process.env.TEST_SSH_PASSWORD,
         });
-        await client.uploadDir(`/tmp/${path}`, `/web/gunsigi_data/images/${path}`);
+        await client.uploadDir(`/tmp/${path}`, `/web/gunsigi_cdn/${path}`);
         client.close();
       } catch (e) {
         debug(e);
