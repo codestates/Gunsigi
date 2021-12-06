@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
+import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/DeleteReviewModal.scss';
 
 function DeleteReviewModal({ openDeleteHandler }) {
   // * 스크롤 방지
   useEffect(() => {
-    stopScroll();
+    stopScrollMypage();
     return () => {
       clearStopScroll();
     };
