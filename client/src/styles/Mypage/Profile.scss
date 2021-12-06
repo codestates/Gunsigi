@@ -1,36 +1,36 @@
 @import '../../App';
 
 #profile_container {
-  margin: 2.5rem 2.5rem 1rem 2.5rem;
+  margin: 25px 25px 10px 25px;
   margin-bottom: 20px;
   background-color: $light-grey;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 8%;
-  min-width: 32rem;
-  min-height: 12rem;
+  min-width: 320px;
+  min-height: 120px;
 
   #profile_info {
     display: flex;
     align-items: center;
 
     .profile_img {
-      width: 7rem;
-      height: 7rem;
+      width: 70px;
+      height: 70px;
       object-fit: cover;
-      border-radius: 5rem;
+      border-radius: 50px;
     }
 
     #nickname-email_container {
-      margin-left: 1.5rem;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: space-between;
       margin-left: 22px;
+
       .profile_nickname {
         font-size: 1.5rem;
         font-weight: 800;
@@ -42,17 +42,25 @@
         align-items: center;
         margin-top: 8px;
         letter-spacing: 1.2px;
+
         img {
           width: 12px;
           filter: invert(58%) sepia(68%) saturate(4375%) hue-rotate(116deg)
             brightness(100%) contrast(102%);
           margin-right: 6px;
         }
+
+        #user-email {
+          width: 150px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       .verifyBtn {
         width: 88px;
         height: 20px;
-        font-size: 9px;
+        font-size: 0.9rem;
         color: #4d4d4d;
         display: flex;
         justify-content: space-between;
@@ -67,7 +75,7 @@
   }
 
   #profile_set {
-    width: 2rem;
+    width: 20px;
     &:hover {
       cursor: pointer;
     }
@@ -78,18 +86,18 @@
   #profile_container {
     padding: 0 60px;
     font-size: 1.4rem;
-    min-height: 20rem;
+    min-height: 200px;
     gap: 250px;
 
     #profile_info {
       .profile_img {
-        width: 10rem;
-        min-height: 10rem;
-        border-radius: 6rem;
+        width: 100px;
+        min-height: 100px;
+        border-radius: 60px;
       }
 
       #nickname-email_container {
-        margin-left: 3.5rem;
+        margin-left: 35px;
         font-size: 1.4rem;
         gap: 7px;
 
@@ -98,20 +106,20 @@
         }
 
         #profile_email {
-          display: flex;
-          justify-content: space-between;
           img {
             width: 16px;
           }
           #user-email {
             letter-spacing: 1.6px;
+            white-space: wrap;
+            overflow: visible;
           }
         }
       }
     }
 
     #profile_set {
-      width: 3rem;
+      width: 30px;
     }
   }
 }
@@ -119,11 +127,11 @@
 @include laptop {
   #profile_container {
     min-width: 0;
-    margin: 0 2.5rem 0 0;
+    margin: 0 25px 0 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 3rem;
+    gap: 30px;
     height: 100%;
     width: 300px;
     padding: 0 25px;
@@ -134,7 +142,7 @@
 
       #nickname-email_container {
         width: 100%;
-        margin-top: 2rem;
+        margin-top: 20px;
         margin-left: 0;
         align-items: center;
         gap: 8px;
@@ -147,7 +155,10 @@
             margin-right: 0;
           }
           #user-email {
-            text-align: center;
+            width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
         .verifyBtn {
@@ -163,7 +174,7 @@
     }
 
     #profile_set {
-      margin-top: 2rem;
+      margin-top: 20px;
     }
   }
 }
@@ -175,9 +186,9 @@
 
     #profile_info {
       .profile_img {
-        width: 12rem;
-        min-height: 12rem;
-        border-radius: 8rem;
+        width: 120px;
+        min-height: 120px;
+        border-radius: 80px;
       }
 
       #nickname-email_container {
@@ -197,7 +208,7 @@
     }
 
     #profile_set {
-      width: 4rem;
+      width: 40px;
     }
   }
 }
