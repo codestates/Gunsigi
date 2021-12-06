@@ -95,7 +95,7 @@ function App() {
           {isLogin ? <Mypage /> : <Redirect to="/" />}
         </Route>
         <Route path="/product-detail/:id" component={ProductDetail} />
-        <Route path="/reset">
+        <Route path="/auth/reset">
           <Reset />
         </Route>
         <Route path="*" component={NotFound} />

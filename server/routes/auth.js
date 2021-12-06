@@ -107,4 +107,10 @@ router.get(
   auth.email,
 );
 
+// 비밀번호 재설정 페이지
+router.get(
+  '/reset',
+  auth.getResetPage,
+);
+
 module.exports = router;

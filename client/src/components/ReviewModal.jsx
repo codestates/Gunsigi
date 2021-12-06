@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/ReviewModal.scss';
 import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
+import imageCompression from 'browser-image-compression';
 
 function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   const reviewModalEl = useRef(null);
@@ -30,40 +31,49 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     });
   };
 
+  const compressOptions = {
+    maxSizeMB: 2,
+    maxWidthOrHeight: 1920,
+  };
+
   //! 이미지 업로드
-  const reviewImageHandler = (e) => {
-    setImgBase64([]);
-    const images = [];
-    for (let i = 0; i < e.target.files.length; i += 1) {
-      if (e.target.files[i]) {
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[i]); // 1. 파일을 읽어 버퍼에 저장합니다.
-        // 파일 상태 업데이트
-        reader.onloadend = () => {
-          // 2. 읽기가 완료되면 아래코드가 실행됩니다.
-          const base64 = reader.result;
+  const reviewImageHandler = async (e) => {
+    const newImages = await Promise.all([...e.target.files].map(async (file) => 
+      imageCompression.getDataUrlFromFile(await imageCompression(file, compressOptions))));
+    setImgBase64([...imgBase64, ...newImages.filter((image) => !(image in imgBase64))].slice(-4));
 
-          if (
-            imgBase64.length > 4 ||
-            e.target.files.length > 4 ||
-            e.target.files.length + imgBase64.length > 4
-          ) {
-            setAlertMSG('이미지 갯수를 확인해주세요');
-            const notice = document.getElementById('review_notice');
-            notice.style.opacity = '1';
-          } else {
-            if (base64) {
+    // setImgBase64([]);
+    // const images = [];
+    // for (let i = 0; i < e.target.files.length; i += 1) {
+    //   if (e.target.files[i]) {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(e.target.files[i]); // 1. 파일을 읽어 버퍼에 저장합니다.
+    //     // 파일 상태 업데이트
+    //     reader.onloadend = () => {
+    //       // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+    //       const base64 = reader.result;
+
+    //       if (
+    //         imgBase64.length > 4 ||
+    //         e.target.files.length > 4 ||
+    //         e.target.files.length + imgBase64.length > 4
+    //       ) {
+    //         setAlertMSG('이미지 갯수를 확인해주세요');
+    //         const notice = document.getElementById('review_notice');
+    //         notice.style.opacity = '1';
+    //       } else {
+    //         if (base64) {
               
-              images.push(base64.toString());
+    //           images.push(base64.toString());
 
-              setImgBase64([...imgBase64, ...images]);
-              //  setImgBase64(newObj);
-              // 파일 base64 상태 업데이트
-            }
-          }
-        };
-      }
-    }
+    //           setImgBase64([...imgBase64, ...images]);
+    //           //  setImgBase64(newObj);
+    //           // 파일 base64 상태 업데이트
+    //         }
+    //       }
+    //     };
+    //   }
+    // }
   };
 
   //! 이미지 삭제
