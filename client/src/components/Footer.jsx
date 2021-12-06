@@ -17,15 +17,15 @@ function Footer() {
               <img alt="github" src="/icons/icon_github.svg" />
               <div className="member-name">Su Yeon</div>
             </a>
-            <a className="github" href="https://github.com/seola25" target="_blank" rel="noreferrer">
+            <a className="github" href="https://github.com/sarahsea" target="_blank" rel="noreferrer">
               <img alt="github" src="/icons/icon_github.svg" />
               <div className="member-name">Seol A</div>
             </a>
-            <a className="github" href="https://github.com/hoony0802" target="_blank" rel="noreferrer">
+            <a className="github" href="https://github.com/junghoonme" target="_blank" rel="noreferrer">
               <img alt="github" src="/icons/icon_github.svg" />
               <div className="member-name">Jung Hoon</div>
             </a>
-            <a className="github" href="https://github.com/iidd0101" target="_blank" rel="noreferrer">
+            <a className="github" href="https://github.com/doldolma" target="_blank" rel="noreferrer">
               <img alt="github" src="/icons/icon_github.svg" />
               <div className="member-name">Do Young</div>
             </a>
