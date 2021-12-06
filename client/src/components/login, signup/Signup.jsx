@@ -167,11 +167,11 @@ function Signup() {
     }
 
     // * 이메일 중복 체크
-    const response = await axios.get('/auth/overlap', {
+    const emailOverlapCheckResponse = await axios.get('/auth/overlap', {
       params: { email: signupForm.email },
     });
 
-    if (!response.data.result) {
+    if (!emailOverlapCheckResponse.data.result) {
       inputEmail.current.focus();
       handleErrorMsg('email', '이미 가입하신 이메일입니다');
       handleShakeInput('email');
@@ -216,7 +216,7 @@ function Signup() {
   };
 
   // * input 엔터키 누르면 요청해주는 핸들러
-  const handeleEnterForm = (event) => {
+  const handleEnterForm = (event) => {
     if (event.key === 'Enter') {
       handleSignup(event);
     }
@@ -256,7 +256,7 @@ function Signup() {
         dispatch(setSignupModal(false));
       })
       .catch((err) => {
-        if (err.response.status === 403) {
+        if (err.response?.status === 403) {
           handleErrorMsg(
             'passwordCheck',
             '이미 해당 계정의 이메일로 가입하셨습니다',
@@ -282,7 +282,7 @@ function Signup() {
               name="email"
               value={signupForm.email}
               onChange={handleFormChange}
-              onKeyUp={handeleEnterForm}
+              onKeyUp={handleEnterForm}
               ref={inputEmail}
             />
             <div
@@ -305,7 +305,7 @@ function Signup() {
               name="nickname"
               value={signupForm.nickname}
               onChange={handleFormChange}
-              onKeyUp={handeleEnterForm}
+              onKeyUp={handleEnterForm}
               ref={inputNickname}
             />
             <div
@@ -328,7 +328,7 @@ function Signup() {
               name="password"
               value={signupForm.password}
               onChange={handleFormChange}
-              onKeyUp={handeleEnterForm}
+              onKeyUp={handleEnterForm}
               ref={inputPassword}
             />
             <div className="check">
@@ -343,7 +343,7 @@ function Signup() {
                 name="passwordCheck"
                 value={signupForm.passwordCheck}
                 onChange={handleFormChange}
-                onKeyUp={handeleEnterForm}
+                onKeyUp={handleEnterForm}
               />
               <div
                 className={

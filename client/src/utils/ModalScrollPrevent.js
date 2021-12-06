@@ -6,6 +6,13 @@ export const stopScroll = () => {
     width: 100%;`;
 };
 
+export const stopScrollMypage = () => {
+  document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    width: 100%;`;
+};
+
 export const clearStopScroll = () => {
   const scrollY = document.body.style.top;
   document.body.style.cssText = '';
