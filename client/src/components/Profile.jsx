@@ -58,7 +58,7 @@ function Profile() {
             <span className="profile_nickname">{nickName}</span>
             <div id="profile_email">
               {isVerified && <img src="/icons/icon_shield.svg" alt="shield" />}
-              <span id="user-email">{userEmail}</span>
+              <span id="user-email" title={userEmail}>{userEmail}</span>
             </div>
             {!isVerified && (
               <button
