@@ -18,7 +18,7 @@ function SignupModal() {
     };
   }, []);
 
-  const closeSignupHandler = (e) => {
+  const handleCloseSignupModal = (e) => {
     if (e.target === closeSignupEl.current) {
       dispatch(setSignupModal(false));
     }
@@ -48,7 +48,7 @@ function SignupModal() {
   return (
     <div
       aria-hidden="true"
-      onClick={(e) => closeSignupHandler(e)}
+      onClick={(e) => handleCloseSignupModal(e)}
       ref={closeSignupEl}
       className="SignupModal_container"
     >

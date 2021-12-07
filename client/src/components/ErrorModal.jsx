@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/ErrorModal.scss';
 
-function ErrorModal({ errorMsg, errorModalHandler }) {
+function ErrorModal({ errorMsg, handleErrorModalClick }) {
   // * 스크롤 방지
   useEffect(() => {
     stopScroll();
@@ -14,7 +14,7 @@ function ErrorModal({ errorMsg, errorModalHandler }) {
   return (
     <div
       id="error-wrapper"
-      onClick={() => errorModalHandler(false, '')}
+      onClick={() => handleErrorModalClick(false, '')}
       aria-hidden="true"
     >
       <div
@@ -30,7 +30,7 @@ function ErrorModal({ errorMsg, errorModalHandler }) {
         <p>{errorMsg}</p>
         <div
           className="try-again"
-          onClick={() => errorModalHandler(false, '')}
+          onClick={() => handleErrorModalClick(false, '')}
           aria-hidden="true"
         >
           다시 시도해 주세요

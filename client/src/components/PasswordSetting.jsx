@@ -20,7 +20,7 @@ function PasswordSetting() {
   }, []);
 
   //! 바깥창 누르면 꺼지는 함수
-  const closeModalHandler = (e) => {
+  const handleCloseModalClick = (e) => {
     if (e.target === backgroundEl.current) {
       dispatch(setforgotPassword(false));
     }
@@ -47,7 +47,7 @@ function PasswordSetting() {
   return (
     <div
       aria-hidden="true"
-      onClick={(e) => closeModalHandler(e)}
+      onClick={(e) => handleCloseModalClick(e)}
       ref={backgroundEl}
       className="PasswordSetting_container"
     >

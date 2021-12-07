@@ -3,7 +3,7 @@ import axios from 'axios';
 import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/WithdrawalModal.scss';
 
-function WithdrawalModal({ openWithdrawlHandler }) {
+function WithdrawalModal({ handleWithdrawlModal }) {
   // * 스크롤 방지
   useEffect(() => {
     stopScrollMypage();
@@ -13,7 +13,7 @@ function WithdrawalModal({ openWithdrawlHandler }) {
   }, []);
 
   // * 회원 탈퇴 요청
-  const handleWithdrawal = (event) => {
+  const handleWithdrawalRequest = (event) => {
     event.preventDefault();
 
     axios.delete('/users').then(() => {
@@ -25,7 +25,7 @@ function WithdrawalModal({ openWithdrawlHandler }) {
   return (
     <div
       className="modal_wrapper"
-      onClick={openWithdrawlHandler}
+      onClick={handleWithdrawlModal}
       aria-hidden="true"
     >
       <div
@@ -45,7 +45,7 @@ function WithdrawalModal({ openWithdrawlHandler }) {
           <button
             className="no"
             type="button"
-            onClick={openWithdrawlHandler}
+            onClick={handleWithdrawlModal}
             aria-hidden="true"
           >
             아니오
@@ -53,7 +53,7 @@ function WithdrawalModal({ openWithdrawlHandler }) {
           <button
             className="yes"
             type="button"
-            onClick={handleWithdrawal}
+            onClick={handleWithdrawalRequest}
             aria-hidden="true"
           >
             네

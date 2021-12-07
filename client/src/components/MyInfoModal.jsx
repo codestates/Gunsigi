@@ -8,7 +8,7 @@ import { nicknameValidator, passwordValidator } from '../utils/validation';
 import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/MyInfoModal.scss';
 
-function MyInfoModal({ openModalHandler, userType }) {
+function MyInfoModal({ handleMyInfoModalClick, userType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const userState = useSelector((state) => state.userReducer);
@@ -33,7 +33,7 @@ function MyInfoModal({ openModalHandler, userType }) {
     };
   }, []);
 
-  const openWithdrawlHandler = () => {
+  const handleWithdrawlModal = () => {
     setIsOpenWithdrawl(!isOpenWithdrawl);
   };
 
@@ -120,7 +120,7 @@ function MyInfoModal({ openModalHandler, userType }) {
       const { profileImage } = res.data.userInfo;
       dispatch(setNickname(res.data.userInfo.nickname));
       dispatch(setProfileImg(profileImage));
-      openModalHandler();
+      handleMyInfoModalClick();
       history.push('/mypage');
     });
   };
@@ -136,7 +136,7 @@ function MyInfoModal({ openModalHandler, userType }) {
     <>
       <div
         className="modal_container"
-        onClick={openModalHandler}
+        onClick={handleMyInfoModalClick}
         aria-hidden="true"
       >
         <form
@@ -234,7 +234,7 @@ function MyInfoModal({ openModalHandler, userType }) {
             <button
               className="withdrawal_btn"
               type="button"
-              onClick={openWithdrawlHandler}
+              onClick={handleWithdrawlModal}
             >
               회원 탈퇴
             </button>
@@ -245,7 +245,7 @@ function MyInfoModal({ openModalHandler, userType }) {
         </div>
       </div>
       {isOpenWithdrawl && (
-        <WithdrawalModal openWithdrawlHandler={openWithdrawlHandler} />
+        <WithdrawalModal handleWithdrawlModal={handleWithdrawlModal} />
       )}
     </>
   );

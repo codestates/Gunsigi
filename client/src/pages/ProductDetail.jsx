@@ -61,7 +61,7 @@ function ProductDetail({ match }) {
   }, [productId]);
 
   //! 북마크 기능
-  const isBookmarkedHandler = async () => {
+  const handleBookmarkClick = async () => {
     if (!loginState.isLogin) {
       dispatch(setIsLogin(true));
     } else {
@@ -107,7 +107,7 @@ function ProductDetail({ match }) {
   };
 
   //! ReviewModal 창 키고 끄는 함수
-  const openWriteHandler = (trueOrFalse) => {
+  const handleWriteModal = (trueOrFalse) => {
     if (!loginState.isLogin) {
       dispatch(setIsLogin(true));
     } else {
@@ -125,7 +125,7 @@ function ProductDetail({ match }) {
           productName={ProductInfo.name}
         />
       ) : null}
-      <Write openWriteHandler={openWriteHandler} />
+      <Write handleWriteModal={handleWriteModal} />
       <div className="ProductDetail">
         <NavChange />
 
@@ -134,7 +134,7 @@ function ProductDetail({ match }) {
             <div className="ProductDetail_img">
               <img
                 aria-hidden="true"
-                onClick={() => isBookmarkedHandler()}
+                onClick={() => handleBookmarkClick()}
                 className={
                   isBookmark
                     ? 'ProductDetail_heart_change heart'

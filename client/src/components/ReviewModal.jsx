@@ -23,7 +23,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     };
   }, []);
 
-  const reviewWirteHandler = (e) => {
+  const handleReviewWrite = (e) => {
     const { value, name } = e.target;
     setReviewWrite({
       ...reviewWrite,
@@ -37,7 +37,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   };
 
   //! 이미지 업로드
-  const reviewImageHandler = async (e) => {
+  const handleReviewImage = async (e) => {
     const newImages = await Promise.all([...e.target.files].map(async (file) => 
       imageCompression.getDataUrlFromFile(await imageCompression(file, compressOptions))));
     setImgBase64([...imgBase64, ...newImages.filter((image) => !(imgBase64.includes(image)))].slice(-4));
@@ -77,7 +77,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   };
 
   //! 이미지 삭제
-  const deleteReviewImageHandler = (img) => {
+  const handleReviewImageDelete = (img) => {
     const idx = imgBase64.indexOf(img);
     const copyArr = [];
     for (let i = 0; i < imgBase64.length; i += 1) {
@@ -115,7 +115,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     }
   };
 
-  const closeHandler = (e) => {
+  const handleCloseReviewModal = (e) => {
     if (e.target === reviewModalEl.current) {
       setisOpenWrite(false);
     }
@@ -124,7 +124,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   return (
     <div
       className="modal_outside"
-      onClick={(e) => closeHandler(e)}
+      onClick={(e) => handleCloseReviewModal(e)}
       ref={reviewModalEl}
       aria-hidden="true"
     >
@@ -146,7 +146,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
             )}
             <span className="rating-group">
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 type="radio"
                 id="star5"
                 name="score"
@@ -156,7 +156,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 <img src="/icons/icon_star_fill.svg" alt="star" />
               </label>
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 type="radio"
                 id="star4"
                 name="score"
@@ -166,7 +166,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 <img src="/icons/icon_star_fill.svg" alt="star" />
               </label>
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 type="radio"
                 id="star3"
                 name="score"
@@ -176,7 +176,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 <img src="/icons/icon_star_fill.svg" alt="star" />
               </label>
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 type="radio"
                 id="star2"
                 name="score"
@@ -186,7 +186,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                 <img src="/icons/icon_star_fill.svg" alt="star" />
               </label>
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 type="radio"
                 id="star1"
                 name="score"
@@ -203,7 +203,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           <div>
             <label htmlFor="1month">
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 id="1month"
                 type="radio"
                 name="period"
@@ -213,7 +213,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
             </label>
             <label htmlFor="3month">
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 id="3month"
                 type="radio"
                 name="period"
@@ -223,7 +223,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
             </label>
             <label htmlFor="6month">
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 id="6month"
                 type="radio"
                 name="period"
@@ -233,7 +233,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
             </label>
             <label htmlFor="year">
               <input
-                onClick={(e) => reviewWirteHandler(e)}
+                onClick={(e) => handleReviewWrite(e)}
                 id="year"
                 type="radio"
                 name="period"
@@ -249,7 +249,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
             <span>200자 이내</span>
           </div>
           <textarea
-            onChange={(e) => reviewWirteHandler(e)}
+            onChange={(e) => handleReviewWrite(e)}
             name="content"
             id="review"
             cols="30"
@@ -270,7 +270,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
                   <span>+</span>
                   <input
                     onChange={(e) => {
-                      reviewImageHandler(e);
+                      handleReviewImage(e);
                     }}
                     multiple="multiple"
                     name="images"
@@ -283,7 +283,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
               {imgBase64.map((img) => (
                 <div
                   aria-hidden="true"
-                  onClick={() => deleteReviewImageHandler(img)}
+                  onClick={() => handleReviewImageDelete(img)}
                   key={img}
                   className="imgBase64"
                 >

@@ -18,7 +18,7 @@ function Nav() {
   const { isOpenLogin, isOpenSingup } = modalState;
   const [isOpenSearchModal, setIsOpenSearchModal] = useState(false);
 
-  const openSearchModalHandler = () => {
+  const handleSearchModalClick = () => {
     setIsOpenSearchModal(!isOpenSearchModal);
     dispatch(resetSearchedWord());
   };
@@ -45,7 +45,7 @@ function Nav() {
         </Link>
         <div className="nav_right">
           <div
-            onClick={() => openSearchModalHandler()}
+            onClick={() => handleSearchModalClick()}
             aria-hidden="true"
             className="icon_search"
           >
