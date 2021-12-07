@@ -40,7 +40,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
   const reviewImageHandler = async (e) => {
     const newImages = await Promise.all([...e.target.files].map(async (file) => 
       imageCompression.getDataUrlFromFile(await imageCompression(file, compressOptions))));
-    setImgBase64([...imgBase64, ...newImages.filter((image) => !(image in imgBase64))].slice(-4));
+    setImgBase64([...imgBase64, ...newImages.filter((image) => !(imgBase64.includes(image)))].slice(-4));
 
     // setImgBase64([]);
     // const images = [];
