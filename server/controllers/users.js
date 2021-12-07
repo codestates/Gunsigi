@@ -1,5 +1,3 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
 const debug = require('debug')('app:user');
 const {
   User,
@@ -73,35 +71,31 @@ module.exports = {
     // 프로필 이미지 삭제 훅은 모델파일에 정의
     const transaction = await sequelize.transaction();
     try {
-      // 리뷰수 감소
-      await Product.decrement('reviewsCount', {
-        by: 1,
-        where: { id: { [Sequelize.Op.in]: user.Reviews.map((r) => r.productId) } },
-        transaction,
-      });
-
-      // 북마크 수 감소
-      await Product.decrement('bookmarksCount', {
-        by: 1,
-        where: { id: { [Sequelize.Op.in]: user.Bookmarks.map((r) => r.productId) } },
-        transaction,
-      });
-
-      // 리뷰에 좋아요 수 감소
-      await Review.decrement('likesCount', {
-        by: 1,
-        where: { id: { [Sequelize.Op.in]: user.reviewLikes.map((r) => r.reviewId) } },
-        transaction,
-      });
-
-      // 리뷰 총점 감소
-      for (const review of user.Reviews) {
-        await Product.decrement('reviewsSum', {
-          by: review.score,
-          where: { id: review.productId },
+      await Promise.all([
+        // 리뷰수 감소
+        Product.decrement('reviewsCount', {
+          by: 1,
+          where: { id: { [Sequelize.Op.in]: user.Reviews.map((r) => r.productId) } },
           transaction,
-        });
-      }
+        }),
+        // 북마크 감소
+        Product.decrement('bookmarksCount', {
+          by: 1,
+          where: { id: { [Sequelize.Op.in]: user.Bookmarks.map((r) => r.productId) } },
+          transaction,
+        }),
+        // 리뷰에 좋아요 수 감소
+        Review.decrement('likesCount', {
+          by: 1,
+          where: { id: { [Sequelize.Op.in]: user.reviewLikes.map((r) => r.reviewId) } },
+          transaction,
+        }),
+        // 리뷰 점수 감소
+      ].concat(Promise.all(user.Reviews.map((review) => Product.decrement('reviewsSum', {
+        by: review.score,
+        where: { id: review.productId },
+        transaction,
+      })))));
 
       await user.destroy({ transaction });
       await transaction.commit();
