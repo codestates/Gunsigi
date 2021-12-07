@@ -17,7 +17,7 @@ function LoginModal() {
     };
   }, []);
 
-  const closeLoginHandler = (e) => {
+  const handleCloseLogin = (e) => {
     if (e.target === openLoginEl.current) {
       dispatch(setLoginModal(false));
     }
@@ -48,7 +48,7 @@ function LoginModal() {
     <div
       aria-hidden="true"
       onClick={(e) => {
-        closeLoginHandler(e);
+        handleCloseLogin(e);
       }}
       ref={openLoginEl}
       className="LoginModal_container"

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { setNickname, setProfileImg } from '../actions/userAction';
 import WithdrawalModal from './WithdrawalModal';
 import { nicknameValidator, passwordValidator } from '../utils/validation';
-import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
+import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/MyInfoModal.scss';
 
 function MyInfoModal({ openModalHandler, userType }) {
@@ -27,7 +27,7 @@ function MyInfoModal({ openModalHandler, userType }) {
 
   // * 스크롤 방지
   useEffect(() => {
-    stopScroll();
+    stopScrollMypage();
     return () => {
       clearStopScroll();
     };
@@ -47,7 +47,7 @@ function MyInfoModal({ openModalHandler, userType }) {
   };
 
   // * 로컬 이미지 업로드 base64 인코딩
-  const profileImageHandler = (e) => {
+  const encodeProfileImage = (e) => {
     const reader = new FileReader();
     // 1. 파일을 읽어 버퍼에 저장합니다.
     reader.readAsDataURL(e.target.files[0]);
@@ -65,15 +65,16 @@ function MyInfoModal({ openModalHandler, userType }) {
     };
   };
 
-  const deleteProfileImageHandler = () => {
+  const handleDeleteProfileImage = () => {
     setModifyForm({ ...modifyForm, profileImg: '' });
   };
 
   // * 회원 정보 수정 요청
-  const modifyMyInfoHandler = (event) => {
+  const handleModifyMyInfo = (event) => {
     event.preventDefault();
     const { nickname, password, passwordCheck } = modifyForm;
 
+    // * 유효성 검사
     if (
       modifyForm.profileImg === profileImg
       && nickname === ''
@@ -127,7 +128,7 @@ function MyInfoModal({ openModalHandler, userType }) {
   // * input 엔터키 누르면 요청해주는 핸들러
   const handeleEnterForm = (event) => {
     if (event.key === 'Enter') {
-      modifyMyInfoHandler(event);
+      handleModifyMyInfo(event);
     }
   };
 
@@ -145,7 +146,7 @@ function MyInfoModal({ openModalHandler, userType }) {
         >
           <span className="title">회원정보 수정</span>
           <div className="img_info">
-            <div onClick={deleteProfileImageHandler} aria-hidden="true">
+            <div onClick={handleDeleteProfileImage} aria-hidden="true">
               <span>x</span>
               <img
                 className="profile_img"
@@ -164,7 +165,7 @@ function MyInfoModal({ openModalHandler, userType }) {
                 type="file"
                 id="clip"
                 accept="image/*"
-                onChange={profileImageHandler}
+                onChange={encodeProfileImage}
                 onKeyUp={handeleEnterForm}
                 name="profileImg"
               />
@@ -226,7 +227,7 @@ function MyInfoModal({ openModalHandler, userType }) {
             <button
               className="modify_btn"
               type="submit"
-              onClick={modifyMyInfoHandler}
+              onClick={handleModifyMyInfo}
             >
               회원 정보 수정
             </button>
