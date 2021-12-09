@@ -11,11 +11,16 @@
   align-items: center;
   justify-content: center;
   padding: 20px 25px;
+  // [Refactoring] hover animation 때문에 북마크 아이콘 누르기가 불편함
   &:hover {
     box-shadow: 0px 3px 8px rgb(0, 0, 0, 0.2);
     cursor: pointer;
-    transform: translateY(-15px);
-    transition: all 0.5s;
+    transition: all 0.1s;
+  }
+  // 기존 translateY 제거, 이미지 크기 변경 효과 추가
+  &:hover > .Product_img {
+    transform: scale(1.09);
+    transition: all 0.1s;
   }
 
   .Product_img {
@@ -43,14 +48,14 @@
   }
 
   .title {
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 800;
     span {
-      width: 70%;
+      width: 80%;
       display: block;
       white-space: nowrap;
       overflow: hidden;
@@ -68,7 +73,7 @@
   }
 
   .stars {
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -109,6 +114,9 @@
       .img_none {
         font-size: 1.2rem;
       }
+    }
+    .title {
+      font-size: 1.2rem;
     }
   }
 }
