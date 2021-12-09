@@ -145,7 +145,7 @@
       }
     }
 
-    button {
+    .login_btn {
       width: 260px;
       height: 34px;
       border-radius: 20px;
@@ -162,12 +162,29 @@
         transform: scale(0.98);
       }
     }
+
+    .back_btn_area {
+      position: relative;
+      top: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      .back_btn {
+        width: 40px;
+        img {
+          filter: $f-deep-grey;
+        }
+      }
+    }
   }
 }
 
 @include tablet {
   .Login_container {
     padding: 60px 50px;
+  }
+  .back_btn {
+    display: none;
   }
 }
 

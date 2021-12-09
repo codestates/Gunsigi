@@ -11,7 +11,7 @@ import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Login.scss';
 
-function Login() {
+function Login({ handleCloseLogin }) {
   const dispatch = useDispatch();
 
   const [loginForm, setLoginForm] = useState({
@@ -150,7 +150,7 @@ function Login() {
         </div>
 
         <div className="button-password">
-          <button type="button" onClick={handleLogin}>
+          <button type="button" onClick={handleLogin} className="login_btn">
             로그인
           </button>
 
@@ -158,6 +158,16 @@ function Login() {
             <span aria-hidden="true" onClick={() => forgotPassword()}>
               비밀번호를 잊으셨나요?
             </span>
+          </div>
+
+          <div className="back_btn_area">
+            <button
+              className="back_btn"
+              type="button"
+              onClick={handleCloseLogin}
+            >
+              <img src="/icons/icon_arrow_left.svg" alt="back" />
+            </button>
           </div>
         </div>
       </div>
