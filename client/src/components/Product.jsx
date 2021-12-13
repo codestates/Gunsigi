@@ -19,7 +19,7 @@ function Product({
         )}
       </div>
       <div className="title">
-        <span>{name}</span>
+        <span title={name}>{name}</span>
         <div className="bookmark">
           <img
             className={bookmark ? 'Product_heart_change' : 'Product_heart'}
