@@ -1,6 +1,8 @@
 const axios = require('axios');
 const debug = require('debug')('app:oauth');
-const { User } = require('../models');
+const {
+  User, sequelize, Review, Bookmark, reviewLike, Sequelize, Product,
+} = require('../models');
 const s3 = require('../modules/image');
 const {
   generateAccessToken,
@@ -108,15 +110,60 @@ module.exports = {
   kakaoDelete: async (req, res) => {
     // 헤더 KAKAO_ADMIN_KEY 확인
     try {
-      const adminKey = req.headers.Authorization.split(' ')[1];
+      const adminKey = req.headers.authorization.split(' ')[1];
       if (adminKey !== process.env.KAKAO_ADMIN_KEY) throw Error('not match kakao admin key');
     } catch {
       return res.status(403).send('invalid admin key');
     }
-    const userId = req.query.user_id;
+
+    const user = await User.findOne({
+      where: { uuid: req.query.user_id },
+      include: [{ model: Review }, { model: Bookmark }, { model: reviewLike }],
+    });
+    if (!user) {
+      return res.status(401).json({
+        message: 'Invalid Token',
+      });
+    }
+
+    // 삭제 커밋이 확실하게 수행되고 나서 프로필 이미지를 삭제하기 위해 트랜잭션생성
+    // 프로필 이미지 삭제 훅은 모델파일에 정의
+    const transaction = await sequelize.transaction();
     try {
-      await User.destroy({ where: { uuid: userId, type: 'kakao' } });
-    } catch (err) { debug(err); }
+      await Promise.all([
+        // 리뷰수 감소
+        Product.decrement('reviewsCount', {
+          by: 1,
+          where: { id: { [Sequelize.Op.in]: user.Reviews.map((r) => r.productId) } },
+          transaction,
+        }),
+        // 북마크 감소
+        Product.decrement('bookmarksCount', {
+          by: 1,
+          where: { id: { [Sequelize.Op.in]: user.Bookmarks.map((r) => r.productId) } },
+          transaction,
+        }),
+        // 리뷰에 좋아요 수 감소
+        Review.decrement('likesCount', {
+          by: 1,
+          where: { id: { [Sequelize.Op.in]: user.reviewLikes.map((r) => r.reviewId) } },
+          transaction,
+        }),
+        // 리뷰 점수 감소
+      ].concat(Promise.all(user.Reviews.map((review) => Product.decrement('reviewsSum', {
+        by: review.score,
+        where: { id: review.productId },
+        transaction,
+      })))));
+
+      await user.destroy({ transaction });
+      await transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+      debug(err);
+      throw err;
+    }
+
     return res.send('success');
   },
 };

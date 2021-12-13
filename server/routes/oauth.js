@@ -16,7 +16,6 @@ router.post('/google',
   oauth.google);
 
 router.get('/kakao/delete',
-  query('app_id').notEmpty(),
   query('user_id').notEmpty(),
   query('referrer_type').notEmpty(),
   validationError,
