@@ -11,12 +11,7 @@ if (process.env.NODE_ENV !== 'production') Client = require('node-scp').Client;
 
 const v4 = () => uuid().replace(/-/g, '');
 
-const {
-  ACCESS_KEY_ID,
-  SECERT_ACCESS_KEY,
-  AWS_REGION,
-  BUCKET,
-} = process.env;
+const { ACCESS_KEY_ID, SECERT_ACCESS_KEY, AWS_REGION, BUCKET } = process.env;
 
 // Configure AWS to use promise
 // AWS.config.setPromisesDependency(require('bluebird'));
@@ -107,10 +102,13 @@ module.exports = {
     const matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
     if (matches.length !== 3) return new Error('Invalid Base64 Image String');
     const decodedImage = Buffer.from(matches[2], 'base64');
-    const compressedImage = (await sharp(decodedImage)
-      .webp()
-      .toBuffer()).toString('base64');
-    const result = await this.save(path, `data:image/webp;base64,${compressedImage}`);
+    const compressedImage = (
+      await sharp(decodedImage).webp().toBuffer()
+    ).toString('base64');
+    const result = await this.save(
+      path,
+      `data:image/webp;base64,${compressedImage}`,
+    );
     return result;
   },
   async thumbnailAndSave(path, image) {
@@ -124,11 +122,13 @@ module.exports = {
       return result;
     }
     const decodedImage = Buffer.from(matches[2], 'base64');
-    const compressedImage = (await sharp(decodedImage)
-      .resize(150, 150)
-      .webp()
-      .toBuffer()).toString('base64');
-    const result = await this.save(path, `data:image/webp;base64,${compressedImage}`);
+    const compressedImage = (
+      await sharp(decodedImage).resize(150, 150).webp().toBuffer()
+    ).toString('base64');
+    const result = await this.save(
+      path,
+      `data:image/webp;base64,${compressedImage}`,
+    );
     return result;
   },
 };
