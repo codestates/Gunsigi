@@ -8,6 +8,7 @@ import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function LoginModal() {
   const dispatch = useDispatch();
+
   // 스크롤 방지
   useEffect(() => {
     stopScroll();
@@ -44,17 +45,13 @@ function LoginModal() {
   return (
     <div
       aria-hidden="true"
-      onClick={(e) => {
-        handleCloseLogin(e);
-      }}
+      onClick={handleCloseLogin}
       className="LoginModal_container"
     >
       <div
         className="LoginModal"
         aria-hidden="true"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="LoginModal_in">
           <div id="LoginModal_img_Login_Signup">

@@ -43,7 +43,11 @@ function DeleteReviewModal({ handleDeleteReviewModal }) {
           </button>
         </div>
       </div>
-      <div className="delete_img_container" />
+      <div
+        className="delete_img_container"
+        onClick={(e) => e.stopPropagation()}
+        aria-hidden="true"
+      />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Login.scss';
+import CloseButton from '../CloseButton';
 
 function Login({ handleCloseLogin }) {
   const dispatch = useDispatch();
@@ -115,6 +116,7 @@ function Login({ handleCloseLogin }) {
   return (
     <div className="Login_container">
       <div className="Login_in">
+        <CloseButton onClick={handleCloseLogin} />
         <div className="title">로그인</div>
         <div className="input">
           <input
@@ -158,16 +160,6 @@ function Login({ handleCloseLogin }) {
             <span aria-hidden="true" onClick={() => forgotPassword()}>
               비밀번호를 잊으셨나요?
             </span>
-          </div>
-
-          <div className="back_btn_area">
-            <button
-              className="back_btn"
-              type="button"
-              onClick={handleCloseLogin}
-            >
-              <img src="/icons/icon_arrow_left.svg" alt="back" />
-            </button>
           </div>
         </div>
       </div>

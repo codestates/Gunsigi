@@ -1,12 +1,12 @@
 /* eslint-disable */
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/ReviewModal.scss';
 import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 import imageCompression from 'browser-image-compression';
+import CloseButton from './CloseButton';
 
 function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
-  const reviewModalEl = useRef(null);
   const [imgBase64, setImgBase64] = useState([]);
   const [alertMSG, setAlertMSG] = useState('초기 메세지');
   const [reviewWrite, setReviewWrite] = useState({
@@ -38,9 +38,19 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
 
   //! 이미지 업로드
   const handleReviewImage = async (e) => {
-    const newImages = await Promise.all([...e.target.files].map(async (file) => 
-      imageCompression.getDataUrlFromFile(await imageCompression(file, compressOptions))));
-    setImgBase64([...imgBase64, ...newImages.filter((image) => !(imgBase64.includes(image)))].slice(-4));
+    const newImages = await Promise.all(
+      [...e.target.files].map(async (file) =>
+        imageCompression.getDataUrlFromFile(
+          await imageCompression(file, compressOptions),
+        ),
+      ),
+    );
+    setImgBase64(
+      [
+        ...imgBase64,
+        ...newImages.filter((image) => !imgBase64.includes(image)),
+      ].slice(-4),
+    );
 
     // setImgBase64([]);
     // const images = [];
@@ -63,7 +73,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     //         notice.style.opacity = '1';
     //       } else {
     //         if (base64) {
-              
+
     //           images.push(base64.toString());
 
     //           setImgBase64([...imgBase64, ...images]);
@@ -115,17 +125,14 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
     }
   };
 
-  const handleCloseReviewModal = (e) => {
-    if (e.target === reviewModalEl.current) {
-      setisOpenWrite(false);
-    }
+  const handleCloseReviewModal = () => {
+    setisOpenWrite(false);
   };
 
   return (
     <div
       className="modal_outside"
-      onClick={(e) => handleCloseReviewModal(e)}
-      ref={reviewModalEl}
+      onClick={handleCloseReviewModal}
       aria-hidden="true"
     >
       <form
@@ -133,6 +140,7 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
         onClick={(e) => e.stopPropagation()}
         aria-hidden="true"
       >
+        <CloseButton onClick={handleCloseReviewModal} />
         <div className="review_top">
           <div className="review_title">
             <span>제품명</span>
@@ -298,7 +306,11 @@ function ReviewModal({ setisOpenWrite, productImg, productName, productId }) {
           </div>
         </div>
         <div className="bottom">
-          <button onClick={() => reviewRequest()} type="button">
+          <button
+            onClick={() => reviewRequest()}
+            type="button"
+            className="submit_btn"
+          >
             작성 완료
           </button>
         </div>

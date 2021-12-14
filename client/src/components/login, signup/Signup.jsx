@@ -15,8 +15,9 @@ import {
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Signup.scss';
+import CloseButton from '../CloseButton';
 
-function Signup() {
+function Signup({ handleCloseSignupModal }) {
   const dispatch = useDispatch();
 
   // * input DOM 접근
@@ -268,6 +269,7 @@ function Signup() {
   return (
     <div className="Signup_container">
       <div className="Signup_in">
+        <CloseButton onClick={handleCloseSignupModal} />
         <div className="title">회원가입</div>
         <div className="input">
           <div className="email">
@@ -361,7 +363,7 @@ function Signup() {
           <Google responseGoogle={responseGoogle} />
           <Kakao responseKakao={responseKakao} />
         </div>
-        <button type="button" onClick={handleSignup}>
+        <button type="button" onClick={handleSignup} className="signup_btn">
           회원가입
         </button>
       </div>

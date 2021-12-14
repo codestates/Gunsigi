@@ -1,0 +1,17 @@
+@import '../App';
+
+.close_btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  img {
+    filter: $f-deep-grey;
+  }
+}
+
+@include tablet {
+  .close_btn {
+    display: none;
+  }
+}

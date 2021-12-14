@@ -60,7 +60,11 @@ function WithdrawalModal({ handleWithdrawlModal }) {
           </button>
         </div>
       </div>
-      <div className="withdrawl_img_container">
+      <div
+        className="withdrawl_img_container"
+        onClick={(e) => e.stopPropagation()}
+        aria-hidden="true"
+      >
         <img src="logo_gunsigi.png" alt="logo" />
       </div>
     </div>
