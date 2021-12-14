@@ -5,18 +5,18 @@ function TopButton() {
   // 탑버튼 스크롤 관련
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  const scrollPositionHandler = () => {
+  const handleScrollPosition = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollPositionHandler);
+    window.addEventListener('scroll', handleScrollPosition);
     return () => {
-      window.removeEventListener('scroll', scrollPositionHandler);
+      window.removeEventListener('scroll', handleScrollPosition);
     };
   });
 
-  const handlerTopButton = () => window.scrollTo({ top: 0 });
+  const handleTopButton = () => window.scrollTo({ top: 0 });
 
   return (
     <>
@@ -24,8 +24,8 @@ function TopButton() {
         <button
           className="topButton"
           type="button"
-          onClick={handlerTopButton}
-          onKeyPress={handlerTopButton}
+          onClick={handleTopButton}
+          onKeyPress={handleTopButton}
         >
           <img alt="Top Button" src="/icons/icon_arrow_up.svg" />
         </button>

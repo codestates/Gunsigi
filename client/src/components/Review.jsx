@@ -32,9 +32,9 @@ function Review({
   const loginState = useSelector((state) => state.userReducer);
 
   //! 리뷰삭제 모달창 열고닫는 기능 및 리뷰삭제 기능
-  const openDeleteHandler = (trueOrFalse) => {
-    setIsOpenDelete(trueOrFalse);
-    if (trueOrFalse === 'delete') {
+  const handleDeleteReviewModal = (booleanOrString) => {
+    setIsOpenDelete(booleanOrString);
+    if (booleanOrString === 'delete') {
       axios({
         method: 'DELETE',
         url: '/reviews',
@@ -120,7 +120,7 @@ function Review({
                 className="delete"
                 src="/icons/icon_bin.svg"
                 alt="review_delete"
-                onClick={() => openDeleteHandler(true)}
+                onClick={() => handleDeleteReviewModal(true)}
                 aria-hidden="true"
               />
             ) : null}
@@ -225,7 +225,7 @@ function Review({
         </div>
       </div>
       {isOpenDelete && (
-        <DeleteReviewModal openDeleteHandler={openDeleteHandler} />
+        <DeleteReviewModal handleDeleteReviewModal={handleDeleteReviewModal} />
       )}
     </>
   );

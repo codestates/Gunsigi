@@ -15,7 +15,7 @@ function SearchModal({ setOpenSearchModal }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const SearchModalCloseButton = (e) => {
+  const handleSearchModalCloseButton = (e) => {
     if (
       e.target === SearchModalCloseEl.current
       || e.target === SearchModalCloseButtonEl.current
@@ -92,14 +92,14 @@ function SearchModal({ setOpenSearchModal }) {
       <div
         aria-hidden="true"
         onClick={(e) => {
-          SearchModalCloseButton(e);
+          handleSearchModalCloseButton(e);
         }}
         ref={SearchModalCloseEl}
         className="SearchModal_close"
       >
         <button
           onClick={(e) => {
-            SearchModalCloseButton(e);
+            handleSearchModalCloseButton(e);
           }}
           ref={SearchModalCloseButtonEl}
           type="button"

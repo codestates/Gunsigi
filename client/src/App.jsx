@@ -42,12 +42,12 @@ function App() {
     setIsLoading(false);
   });
 
-  const errorModalHandler = (boolean, string) => {
+  const handleErrorModalClick = (boolean, string) => {
     setErrorModal({ isOpenError: boolean, errorMsg: string });
   };
 
   useEffect(async () => {
-    await setAxios(setToken, setIsLoading, errorModalHandler);
+    await setAxios(setToken, setIsLoading, handleErrorModalClick);
     let newToken;
     try {
       newToken = await updateToken();
@@ -78,7 +78,7 @@ function App() {
       {errorModal.isOpenError && (
         <ErrorModal
           errorMsg={errorModal.errorMsg}
-          errorModalHandler={errorModalHandler}
+          handleErrorModalClick={handleErrorModalClick}
         />
       )}
       {isOpenforgotPassword && <PasswordSetting />}

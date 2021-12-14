@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import '../styles/LoginSignup/LoginModal.scss';
 import Login from './login, signup/Login';
@@ -8,7 +8,7 @@ import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
 
 function LoginModal() {
   const dispatch = useDispatch();
-  const openLoginEl = useRef(null);
+
   // 스크롤 방지
   useEffect(() => {
     stopScroll();
@@ -17,10 +17,8 @@ function LoginModal() {
     };
   }, []);
 
-  const handleCloseLogin = (e) => {
-    if (e.target === openLoginEl.current) {
-      dispatch(setLoginModal(false));
-    }
+  const handleCloseLogin = () => {
+    dispatch(setLoginModal(false));
   };
 
   const LoginSignupChange = (e) => {
@@ -47,13 +45,14 @@ function LoginModal() {
   return (
     <div
       aria-hidden="true"
-      onClick={(e) => {
-        handleCloseLogin(e);
-      }}
-      ref={openLoginEl}
+      onClick={handleCloseLogin}
       className="LoginModal_container"
     >
-      <div className="LoginModal">
+      <div
+        className="LoginModal"
+        aria-hidden="true"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="LoginModal_in">
           <div id="LoginModal_img_Login_Signup">
             <div className="img">
@@ -73,7 +72,7 @@ function LoginModal() {
           </div>
 
           <div className="LoginModal_Login">
-            <Login />
+            <Login handleCloseLogin={handleCloseLogin} />
           </div>
           <div className="LoginModal_Signup">
             <Signup />
