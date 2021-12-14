@@ -16,12 +16,12 @@ function Profile() {
   const [userType, setUserType] = useState('');
   const [isVerified, setIsVerified] = useState(true);
 
-  const openModalHandler = () => {
+  const handleMyInfoModalClick = () => {
     setIsOpenMyInfo(!isOpenMyInfo);
   };
 
   // * 이메일 인증 재요청
-  const verifyBtnHandler = () => {
+  const handleEmailVerifyBtnClick = () => {
     axios.get('/auth/email').then(() => {
       dispatch(setEmailCheckModal(true));
     });
@@ -64,7 +64,7 @@ function Profile() {
               <button
                 type="button"
                 className="verifyBtn"
-                onClick={verifyBtnHandler}
+                onClick={handleEmailVerifyBtnClick}
               >
                 <img
                   alt="send icon"
@@ -80,12 +80,12 @@ function Profile() {
           id="profile_set"
           src="/icons/icon_gear.svg"
           alt="gear"
-          onClick={openModalHandler}
+          onClick={handleMyInfoModalClick}
           aria-hidden="true"
         />
       </div>
       {isOpenMyInfo && (
-        <MyInfoModal openModalHandler={openModalHandler} userType={userType} />
+        <MyInfoModal handleMyInfoModalClick={handleMyInfoModalClick} userType={userType} />
       )}
     </>
   );

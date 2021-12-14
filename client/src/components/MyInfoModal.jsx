@@ -7,8 +7,9 @@ import WithdrawalModal from './WithdrawalModal';
 import { nicknameValidator, passwordValidator } from '../utils/validation';
 import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/MyInfoModal.scss';
+import CloseButton from './CloseButton';
 
-function MyInfoModal({ openModalHandler, userType }) {
+function MyInfoModal({ handleMyInfoModalClick, userType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const userState = useSelector((state) => state.userReducer);
@@ -33,7 +34,7 @@ function MyInfoModal({ openModalHandler, userType }) {
     };
   }, []);
 
-  const openWithdrawlHandler = () => {
+  const handleWithdrawlModal = () => {
     setIsOpenWithdrawl(!isOpenWithdrawl);
   };
 
@@ -120,7 +121,7 @@ function MyInfoModal({ openModalHandler, userType }) {
       const { profileImage } = res.data.userInfo;
       dispatch(setNickname(res.data.userInfo.nickname));
       dispatch(setProfileImg(profileImage));
-      openModalHandler();
+      handleMyInfoModalClick();
       history.push('/mypage');
     });
   };
@@ -136,7 +137,7 @@ function MyInfoModal({ openModalHandler, userType }) {
     <>
       <div
         className="modal_container"
-        onClick={openModalHandler}
+        onClick={handleMyInfoModalClick}
         aria-hidden="true"
       >
         <form
@@ -144,6 +145,7 @@ function MyInfoModal({ openModalHandler, userType }) {
           onClick={(e) => e.stopPropagation()}
           aria-hidden="true"
         >
+          <CloseButton onClick={handleMyInfoModalClick} />
           <span className="title">회원정보 수정</span>
           <div className="img_info">
             <div onClick={handleDeleteProfileImage} aria-hidden="true">
@@ -234,18 +236,22 @@ function MyInfoModal({ openModalHandler, userType }) {
             <button
               className="withdrawal_btn"
               type="button"
-              onClick={openWithdrawlHandler}
+              onClick={handleWithdrawlModal}
             >
               회원 탈퇴
             </button>
           </div>
         </form>
-        <div className="modify_img_container">
+        <div
+          className="modify_img_container"
+          onClick={(e) => e.stopPropagation()}
+          aria-hidden="true"
+        >
           <img src="logo_gunsigi.png" alt="logo" />
         </div>
       </div>
       {isOpenWithdrawl && (
-        <WithdrawalModal openWithdrawlHandler={openWithdrawlHandler} />
+        <WithdrawalModal handleWithdrawlModal={handleWithdrawlModal} />
       )}
     </>
   );

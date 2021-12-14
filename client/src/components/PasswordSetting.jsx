@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/PasswordSetting.scss';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setforgotPassword, successSendEmail } from '../actions/modalAction';
 import { stopScroll, clearStopScroll } from '../utils/ModalScrollPrevent';
+import CloseButton from './CloseButton';
 
 function PasswordSetting() {
   const dispatch = useDispatch();
-  const backgroundEl = useRef(null);
   const [email, setEmail] = useState('');
   const [notEmail, setNotEmail] = useState(false);
 
@@ -19,11 +19,9 @@ function PasswordSetting() {
     };
   }, []);
 
-  //! 바깥창 누르면 꺼지는 함수
-  const closeModalHandler = (e) => {
-    if (e.target === backgroundEl.current) {
-      dispatch(setforgotPassword(false));
-    }
+  //! 모달 닫는 핸들러
+  const handleCloseModalClick = () => {
+    dispatch(setforgotPassword(false));
   };
 
   //! 비밀번호 재요청 이메일 전송
@@ -47,11 +45,15 @@ function PasswordSetting() {
   return (
     <div
       aria-hidden="true"
-      onClick={(e) => closeModalHandler(e)}
-      ref={backgroundEl}
+      onClick={handleCloseModalClick}
       className="PasswordSetting_container"
     >
-      <div className="PasswordSetting_in">
+      <div
+        className="PasswordSetting_in"
+        aria-hidden="true"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <CloseButton onClick={handleCloseModalClick} />
         <div className="PasswordSetting">
           <img src="/images/lock.png" alt="lock" />
           <div className="forgot">
@@ -73,7 +75,11 @@ function PasswordSetting() {
               </div>
             </div>
           </div>
-          <button onClick={() => emailDeliveryRequest()} type="button">
+          <button
+            onClick={() => emailDeliveryRequest()}
+            type="button"
+            className="link_btn"
+          >
             링크 보내기
           </button>
         </div>

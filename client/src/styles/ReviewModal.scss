@@ -35,9 +35,9 @@
 
         :first-child {
           font-weight: 800;
+          width: 70px;
         }
         span {
-          width: 70px;
           text-overflow: ellipsis;
         }
       }
@@ -145,7 +145,7 @@
         width: 100%;
         max-height: 150px;
         padding: 10px;
-        line-height: 20px;
+        line-height: 2rem;
         letter-spacing: 1px;
 
         &:focus {
@@ -249,7 +249,7 @@
       display: flex;
       justify-content: center;
 
-      button[type='button'] {
+      .submit_btn {
         background-color: $light-blue;
         border-radius: 30px;
         height: 40px;

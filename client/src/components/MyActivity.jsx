@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import MyProducts from './MyProducts';
@@ -15,6 +15,9 @@ function MyActivity() {
 
   const [reviewCount, setRieviewCount] = useState(0);
   const [reviews, setReviews] = useState([]);
+
+  const myContentsEl = useRef(null);
+  const [myContentsScrollY, setMyContentsScrollY] = useState(0);
 
   const menuArr = [
     {
@@ -34,7 +37,12 @@ function MyActivity() {
     },
   ];
 
-  //! 내가 쓴 리뷰요청
+  // * topbutton 스크롤 위치 감지
+  const handleScrollY = () => {
+    setMyContentsScrollY(myContentsEl.current.scrollTop);
+  };
+
+  // * 내가 쓴 리뷰요청, 스크롤 위치 함수 연결
   useEffect(async () => {
     await axios({
       url: '/reviews?page=1&size=5',
@@ -43,7 +51,15 @@ function MyActivity() {
       setReviews(res.data.items);
       setRieviewCount(res.data.pages.itemsCount);
     });
+
+    myContentsEl.current.addEventListener('scroll', handleScrollY);
+    return () => {
+      myContentsEl.current.removeEventListener('scroll', handleScrollY);
+    };
   }, []);
+
+  // * topbutton 스크롤 최상단 이벤트
+  const handleTopButton = () => myContentsEl.current.scrollTo({ top: 0 });
 
   return (
     <div className="my-activity_container">
@@ -60,7 +76,19 @@ function MyActivity() {
         ))}
       </ul>
 
-      <ul className="my-contents">{menuArr[currentTab].content}</ul>
+      <ul className="my-contents" ref={myContentsEl}>
+        {menuArr[currentTab].content}
+        {myContentsScrollY > 100 && (
+          <button
+            className="topButton"
+            type="button"
+            onClick={handleTopButton}
+            onKeyPress={handleTopButton}
+          >
+            <img alt="Top Button" src="/icons/icon_arrow_up.svg" />
+          </button>
+        )}
+      </ul>
     </div>
   );
 }

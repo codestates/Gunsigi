@@ -10,8 +10,9 @@ import {
 import Google from '../Google';
 import Kakao from '../Kakao';
 import '../../styles/LoginSignup/Login.scss';
+import CloseButton from '../CloseButton';
 
-function Login() {
+function Login({ handleCloseLogin }) {
   const dispatch = useDispatch();
 
   const [loginForm, setLoginForm] = useState({
@@ -115,6 +116,7 @@ function Login() {
   return (
     <div className="Login_container">
       <div className="Login_in">
+        <CloseButton onClick={handleCloseLogin} />
         <div className="title">로그인</div>
         <div className="input">
           <input
@@ -150,7 +152,7 @@ function Login() {
         </div>
 
         <div className="button-password">
-          <button type="button" onClick={handleLogin}>
+          <button type="button" onClick={handleLogin} className="login_btn">
             로그인
           </button>
 

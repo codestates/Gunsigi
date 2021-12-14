@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { stopScrollMypage, clearStopScroll } from '../utils/ModalScrollPrevent';
 import '../styles/Mypage/DeleteReviewModal.scss';
 
-function DeleteReviewModal({ openDeleteHandler }) {
+function DeleteReviewModal({ handleDeleteReviewModal }) {
   // * 스크롤 방지
   useEffect(() => {
     stopScrollMypage();
@@ -14,7 +14,7 @@ function DeleteReviewModal({ openDeleteHandler }) {
   return (
     <div
       className="modal_wrapper"
-      onClick={() => openDeleteHandler(false)}
+      onClick={() => handleDeleteReviewModal(false)}
       aria-hidden="true"
     >
       <div
@@ -28,7 +28,7 @@ function DeleteReviewModal({ openDeleteHandler }) {
           <button
             className="no"
             type="button"
-            onClick={() => openDeleteHandler(false)}
+            onClick={() => handleDeleteReviewModal(false)}
             aria-hidden="true"
           >
             아니오
@@ -36,14 +36,18 @@ function DeleteReviewModal({ openDeleteHandler }) {
           <button
             className="yes"
             type="button"
-            onClick={() => openDeleteHandler('delete')}
+            onClick={() => handleDeleteReviewModal('delete')}
             aria-hidden="true"
           >
             네
           </button>
         </div>
       </div>
-      <div className="delete_img_container" />
+      <div
+        className="delete_img_container"
+        onClick={(e) => e.stopPropagation()}
+        aria-hidden="true"
+      />
     </div>
   );
 }
