@@ -10,9 +10,11 @@ const sampleUser = {
   type: 'email',
 };
 
-afterAll(async () => {
-  await app.db.User.destroy({ where: { email: sampleUser.email } });
-  await app.redis.quit();
+afterAll(() => {
+  app.db.User.destroy({ where: { email: sampleUser.email } })
+    .then(async () => {
+      await Promise.all([app.redis.quit(), app.db.sequelize.close()]);
+    });
 });
 
 beforeAll(async () => {
