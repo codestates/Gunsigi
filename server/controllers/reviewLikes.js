@@ -5,13 +5,15 @@ module.exports = {
   post: async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-      await reviewLike.create({
-        userId: res.locals.user.id,
-        reviewId: req.body.reviewId,
-      }, {
-        transaction,
-      });
-      await Review.increment('likesCount', { by: 1, where: { id: req.body.reviewId }, transaction });
+      await Promise.all([
+        reviewLike.create({
+          userId: res.locals.user.id,
+          reviewId: req.body.reviewId,
+        }, {
+          transaction,
+        }),
+        Review.increment('likesCount', { by: 1, where: { id: req.body.reviewId }, transaction }),
+      ]);
       await transaction.commit();
     } catch (err) {
       await transaction.rollback();
@@ -27,19 +29,21 @@ module.exports = {
   delete: async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-      await reviewLike.destroy({
-        where: {
-          userId: res.locals.user.id,
-          reviewId: req.body.reviewId,
-        },
-        transaction,
-      });
-      // 숫자 감소
-      await Review.decrement('likesCount', {
-        by: 1,
-        where: { id: req.body.reviewId },
-        transaction,
-      });
+      await Promise.all([
+        reviewLike.destroy({
+          where: {
+            userId: res.locals.user.id,
+            reviewId: req.body.reviewId,
+          },
+          transaction,
+        }),
+        // 숫자 감소
+        Review.decrement('likesCount', {
+          by: 1,
+          where: { id: req.body.reviewId },
+          transaction,
+        }),
+      ]);
       await transaction.commit();
     } catch {
       await transaction.rollback();
