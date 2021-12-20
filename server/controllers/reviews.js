@@ -153,16 +153,18 @@ module.exports = {
 
       // 리뷰카운트, 총점 증가
       if (incrementCount) {
-        await Product.increment('reviewsCount', {
-          by: 1,
-          where: { id: review.productId },
-          transaction,
-        });
-        await User.increment('reviewsCount', {
-          by: 1,
-          where: { id: res.locals.user.id },
-          transaction,
-        });
+        await Promise.all([
+          Product.increment('reviewsCount', {
+            by: 1,
+            where: { id: review.productId },
+            transaction,
+          }),
+          User.increment('reviewsCount', {
+            by: 1,
+            where: { id: res.locals.user.id },
+            transaction,
+          }),
+        ]);
       }
       if (changeScore) {
         await Product.increment('reviewsSum', {
@@ -216,23 +218,25 @@ module.exports = {
     // 리뷰 삭제 및 리뷰카운트 감소
     const transaction = await sequelize.transaction();
     try {
-      // 리뷰카운트, 총점 증가
-      await Product.decrement('reviewsCount', {
-        by: 1,
-        where: { id: review.productId },
-        transaction,
-      });
-      await Product.decrement('reviewsSum', {
-        by: review.score,
-        where: { id: review.productId },
-        transaction,
-      });
-      await User.decrement('reviewsCount', {
-        by: 1,
-        where: { id: res.locals.user.id },
-        transaction,
-      });
-      await review.destroy({ transaction });
+      await Promise.all([
+        // 리뷰카운트, 총점 감소
+        Product.decrement('reviewsCount', {
+          by: 1,
+          where: { id: review.productId },
+          transaction,
+        }),
+        Product.decrement('reviewsSum', {
+          by: review.score,
+          where: { id: review.productId },
+          transaction,
+        }),
+        User.decrement('reviewsCount', {
+          by: 1,
+          where: { id: res.locals.user.id },
+          transaction,
+        }),
+        review.destroy({ transaction }),
+      ]);
       await transaction.commit();
     } catch (err) {
       debug(err);
