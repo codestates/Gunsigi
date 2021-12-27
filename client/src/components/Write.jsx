@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Write.scss';
 
-function Write({ handleWriteModal }) {
+function Write({ onWriteModal }) {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   //! scroll 위치 알려주는 함수
@@ -29,7 +29,7 @@ function Write({ handleWriteModal }) {
       ) : null}
       <div
         className="write_button"
-        onClick={() => handleWriteModal(true)}
+        onClick={() => onWriteModal(true)}
         aria-hidden="true"
       >
         <img src="/icons/icon_write.svg" alt="write" />

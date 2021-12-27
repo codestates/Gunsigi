@@ -54,6 +54,7 @@
     display: grid;
     grid-template-columns: repeat(4, auto);
     gap: 8px;
+
     span {
       display: flex;
       align-items: center;
@@ -115,22 +116,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 10px 0 40px 0;
   font-size: 1.4rem;
 
-  .arrow {
-    font-size: 2rem;
-    margin: 0 10px;
-    font-weight: 800;
-    color: $deep-blue;
+  .arrowButton {
+    position: relative;
+    top: -1px;
+    margin: 0 20px;
+    transform: rotate(90deg);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    filter: $f-deep-blue;
   }
 
-  .arrow_none {
-    font-size: 2rem;
-    margin: 0 10px;
-    font-weight: 800;
-    color: $deep-blue;
-    opacity: 0;
+  .arrowButton_change {
+    position: relative;
+    top: -1px;
+    margin: 0 20px;
+    transform: rotate(90deg);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    filter: $f-deep-grey;
+    pointer-events: none;
+  }
+
+  .trans {
+    position: relative;
+    top: 1px;
+    transform: rotate(-90deg);
   }
 
   .pagenation {
