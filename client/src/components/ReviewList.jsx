@@ -124,7 +124,10 @@ function ReviewList({ name, productId }) {
         filter: month[monthIdx],
       },
       loading: false,
-    }).then((res) => setReviews(res.data.items));
+    }).then((res) => {
+      setReviews(res.data.items);
+      window.scrollTo({ top: 500 });
+    });
   };
 
   //! 리뷰페이지 전체 번호 변경
@@ -136,8 +139,10 @@ function ReviewList({ name, productId }) {
     axios({
       url: `/reviews/${productId}`,
       params: { order: sequence, size: 5, page: page[0] + (num + 1) },
+      loading: false,
     }).then((res) => {
       setReviews(res.data.items);
+      window.scrollTo({ top: 500 });
     });
   };
 
@@ -219,15 +224,18 @@ function ReviewList({ name, productId }) {
 
       {pageButton.length !== 0 && (
         <div className="ReviewList_pagenation">
-          {pageButton[0] !== 1 ? (
-            <button
-              onClick={() => handleAllChangePageNums(-5)}
-              type="button"
-              className="arrow"
-            >
-              ←
-            </button>
-          ) : null}
+          <img
+            onClick={() => handleAllChangePageNums(-5)}
+            aria-hidden="true"
+            className={
+              pageButton[0] !== 1
+                ? 'arrowButton trans'
+                : 'arrowButton_change trans'
+            }
+            src="/icons/icon_arrow_up.svg"
+            alt="arrow"
+          />
+
           <div className="pagenation">
             {pageButton.map((nums, idx) => (
               <button
@@ -243,15 +251,18 @@ function ReviewList({ name, productId }) {
               </button>
             ))}
           </div>
-          {pageButton[pageButton.length - 1] !== pageNums.length && (
-            <button
-              onClick={() => handleAllChangePageNums(5)}
-              type="button"
-              className="arrow"
-            >
-              →
-            </button>
-          )}
+
+          <img
+            onClick={() => handleAllChangePageNums(5)}
+            aria-hidden="true"
+            className={
+              pageButton[pageButton.length - 1] !== pageNums.length
+                ? 'arrowButton'
+                : 'arrowButton_change'
+            }
+            src="/icons/icon_arrow_up.svg"
+            alt="arrow"
+          />
         </div>
       )}
     </div>

@@ -107,7 +107,7 @@ function ProductDetail({ match }) {
   };
 
   //! ReviewModal 창 키고 끄는 함수
-  const handleWriteModal = (trueOrFalse) => {
+  const onWriteModal = (trueOrFalse) => {
     if (!loginState.isLogin) {
       dispatch(setIsLogin(true));
     } else {
@@ -125,7 +125,7 @@ function ProductDetail({ match }) {
           productName={ProductInfo.name}
         />
       ) : null}
-      <Write handleWriteModal={handleWriteModal} />
+      <Write onWriteModal={onWriteModal} />
       <div className="ProductDetail">
         <NavChange />
 
