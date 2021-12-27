@@ -44,12 +44,14 @@ function ReviewList({ name, productId }) {
     });
   }, []);
 
-  //! 리뷰 필터링
-  useEffect(() => {
+  //! sequence state 변경 및 요청
+  const handleSequenceFilter = (text) => {
+    setSequence(text);
+
     axios({
       url: `/reviews/${productId}`,
       params: {
-        order: sequence,
+        order: text,
         size: 5,
         page: 1,
       },
@@ -58,17 +60,35 @@ function ReviewList({ name, productId }) {
       setReviews(res.data.items);
       setPageButton([1, 2, 3, 4, 5]);
     });
-  }, [sequence]);
+  };
 
-  useEffect(() => {
+  //! month state 변경 및 요청
+  const handleMonthFilter = (e, num) => {
     const monthIdx = month.indexOf(true);
+
+    if (monthIdx === num) {
+      const monthDummy = [false, false, false, false];
+      monthDummy[num] = false;
+      // eslint-disable-next-line no-param-reassign
+      num = '';
+      setMonth(monthDummy);
+    }
+
+    if (monthIdx !== num || monthIdx === -1) {
+      const monthDummy = [false, false, false, false];
+      monthDummy[num] = true;
+      // eslint-disable-next-line no-param-reassign
+      num = monthName[num];
+      setMonth(monthDummy);
+    }
+
     axios({
       url: `/reviews/${productId}`,
       params: {
         order: sequence,
         size: 5,
         page: 1,
-        filter: monthName[monthIdx],
+        filter: num,
       },
       loading: false,
     }).then((res) => {
@@ -86,31 +106,6 @@ function ReviewList({ name, productId }) {
       setPageButton(pageList.slice(0, 5));
       setPageButtonClassChange([true, false, false, false, false]);
     });
-  }, [month]);
-
-  //! state 변경
-  const handleReviewFilter = (e, num) => {
-    const monthIdx = month.indexOf(true);
-
-    if (monthIdx === num) {
-      const monthDummy = [false, false, false, false];
-      monthDummy[num] = false;
-      setMonth(monthDummy);
-    }
-
-    if (monthIdx !== num || monthIdx === -1) {
-      const monthDummy = [false, false, false, false];
-      monthDummy[num] = true;
-      setMonth(monthDummy);
-    }
-
-    if (e.target.innerText === '최신순') {
-      setSequence('recent');
-    }
-
-    if (e.target.innerText === '좋아요순') {
-      setSequence('like');
-    }
   };
 
   //! 리뷰 페이지 번호 변경
@@ -129,7 +124,10 @@ function ReviewList({ name, productId }) {
         filter: month[monthIdx],
       },
       loading: false,
-    }).then((res) => setReviews(res.data.items));
+    }).then((res) => {
+      setReviews(res.data.items);
+      window.scrollTo({ top: 500 });
+    });
   };
 
   //! 리뷰페이지 전체 번호 변경
@@ -141,8 +139,10 @@ function ReviewList({ name, productId }) {
     axios({
       url: `/reviews/${productId}`,
       params: { order: sequence, size: 5, page: page[0] + (num + 1) },
+      loading: false,
     }).then((res) => {
       setReviews(res.data.items);
+      window.scrollTo({ top: 500 });
     });
   };
 
@@ -155,7 +155,7 @@ function ReviewList({ name, productId }) {
             <div className="sequence">
               <span
                 aria-hidden="true"
-                onClick={(e) => handleReviewFilter(e)}
+                onClick={() => handleSequenceFilter('recent')}
                 className={
                   sequence === 'recent' ? 'color_change button' : 'color button'
                 }
@@ -165,7 +165,7 @@ function ReviewList({ name, productId }) {
               <span className="color_change">|</span>
               <span
                 aria-hidden="true"
-                onClick={(e) => handleReviewFilter(e)}
+                onClick={() => handleSequenceFilter('like')}
                 className={
                   sequence === 'like' ? 'color_change button' : 'color button'
                 }
@@ -175,42 +175,19 @@ function ReviewList({ name, productId }) {
             </div>
           </div>
           <div className="ReviewList_tag">
-            <span
-              aria-hidden="true"
-              onClick={(e) => {
-                handleReviewFilter(e, 0);
-              }}
-              className={month[0] ? 'ReviewList_month_change' : ''}
-            >
-              1개월 이하
-            </span>
-            <span
-              aria-hidden="true"
-              onClick={(e) => {
-                handleReviewFilter(e, 1);
-              }}
-              className={month[1] ? 'ReviewList_month_change' : ''}
-            >
-              3개월 이상
-            </span>
-            <span
-              aria-hidden="true"
-              onClick={(e) => {
-                handleReviewFilter(e, 2);
-              }}
-              className={month[2] ? 'ReviewList_month_change' : ''}
-            >
-              6개월 이상
-            </span>
-            <span
-              aria-hidden="true"
-              onClick={(e) => {
-                handleReviewFilter(e, 3);
-              }}
-              className={month[3] ? 'ReviewList_month_change' : ''}
-            >
-              1년 이상
-            </span>
+            {monthName.map((el, idx) => (
+              <span
+                aria-hidden="true"
+                onClick={(e) => {
+                  handleMonthFilter(e, idx);
+                }}
+                // eslint-disable-next-line react/no-array-index-key
+                key={idx}
+                className={month[idx] ? 'ReviewList_month_change' : ''}
+              >
+                {el}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -247,15 +224,18 @@ function ReviewList({ name, productId }) {
 
       {pageButton.length !== 0 && (
         <div className="ReviewList_pagenation">
-          {pageButton[0] !== 1 ? (
-            <button
-              onClick={() => handleAllChangePageNums(-5)}
-              type="button"
-              className="arrow"
-            >
-              ←
-            </button>
-          ) : null}
+          <img
+            onClick={() => handleAllChangePageNums(-5)}
+            aria-hidden="true"
+            className={
+              pageButton[0] !== 1
+                ? 'arrowButton trans'
+                : 'arrowButton_change trans'
+            }
+            src="/icons/icon_arrow_up.svg"
+            alt="arrow"
+          />
+
           <div className="pagenation">
             {pageButton.map((nums, idx) => (
               <button
@@ -271,15 +251,18 @@ function ReviewList({ name, productId }) {
               </button>
             ))}
           </div>
-          {pageButton[pageButton.length - 1] !== pageNums.length && (
-            <button
-              onClick={() => handleAllChangePageNums(5)}
-              type="button"
-              className="arrow"
-            >
-              →
-            </button>
-          )}
+
+          <img
+            onClick={() => handleAllChangePageNums(5)}
+            aria-hidden="true"
+            className={
+              pageButton[pageButton.length - 1] !== pageNums.length
+                ? 'arrowButton'
+                : 'arrowButton_change'
+            }
+            src="/icons/icon_arrow_up.svg"
+            alt="arrow"
+          />
         </div>
       )}
     </div>

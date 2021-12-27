@@ -45,11 +45,13 @@ module.exports = {
   post: async (req, res) => {
     const transaction = await sequelize.transaction();
     try {
-      await Bookmark.create({
-        userId: res.locals.user.id,
-        productId: req.body.productId,
-      }, { transaction });
-      await Product.increment('bookmarksCount', { by: 1, where: { id: req.body.productId }, transaction });
+      await Promise.all([
+        Bookmark.create({
+          userId: res.locals.user.id,
+          productId: req.body.productId,
+        }, { transaction }),
+        Product.increment('bookmarksCount', { by: 1, where: { id: req.body.productId }, transaction }),
+      ]);
       await transaction.commit();
     } catch (err) {
       transaction.rollback();
