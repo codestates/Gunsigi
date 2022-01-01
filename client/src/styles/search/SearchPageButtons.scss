@@ -1,0 +1,88 @@
+@import '../../App.scss';
+
+.pageBtnContainer {
+  // min-width: 375px;
+  width: 86%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 0px 50px 5px;
+  .pageBtn,
+  .selected {
+    width: 45px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .pageNum {
+      width: 100%;
+      font-size: 1.4rem;
+      color: $black;
+    }
+    .prev,
+    .next {
+      width: 80%;
+      display: flex;
+      align-items: center;
+      img {
+        width: 60%;
+        object-position: center;
+        filter: $f-deep-grey;
+      }
+    }
+    #firstBtn {
+      transform: scaleX(-1);
+    }
+    .currentPage {
+      width: 100%;
+      color: $white;
+      background-color: $deep-blue;
+      border-radius: 4px;
+      padding: 4px;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+  }
+  .none {
+    display: none;
+  }
+}
+
+@include tablet {
+  .pageBtnContainer {
+    width: 70%;
+    .none {
+      display: block;
+      width: 45px;
+      height: 40px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .pageBtn,
+    .selected {
+      .prev,
+      .next {
+        width: 60%;
+      }
+    }
+  }
+}
+
+@include desktop {
+  .pageBtnContainer {
+    .pageBtn,
+    .selected,
+    .none {
+      .pageNum,
+      .currentPage {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}

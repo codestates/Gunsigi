@@ -2,12 +2,17 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProductList, setProductList } from '../actions/searchAction';
-import '../styles/Search.scss';
+import {
+  addProductList,
+  setCurrentPage,
+  setProductList,
+} from '../actions/searchAction';
+import '../styles/search/Search.scss';
 import NavChange from '../components/NavChange';
 import SearchProductList from '../components/SearchProductList';
 import TopButton from '../components/TopButton';
 import Skeleton from '../components/Skeleton';
+import SearchPageButtons from '../components/SearchPageButtons';
 
 const parseQuery = (queryString) => {
   const query = {};
@@ -31,83 +36,35 @@ function Search() {
   const location = useLocation();
   const rootRef = useRef(null);
   const searchState = useSelector((state) => state.searchReducer);
-  const { productList, productCount } = searchState;
-  const [searchOrder, setSearchOrder] = useState('');
+  const { productList, productCount, totalPage, currentPage } = searchState;
+  const [searchOrder, setSearchOrder] = useState('views');
   const [isLoading, setIsLoading] = useState(false);
-  const [queryPage, setQueryPage] = useState(0);
-  const [pageTotal, setPageTotal] = useState(2);
-  const [observeTarget, setObserveTarget] = useState(null);
-
-  const onObserver = (bool) => {
-    const observerTarget = document.getElementById('observer');
-    observerTarget.style.display = bool ? 'block' : 'none';
-  };
-
-  useEffect(() => {
-    // 뒤로가기 거나 아니거나
-    // location.search = url 디코딩 후 쿼리, 타입을 뽑아냄
-    const parsedQuery = parseQuery(location.search);
-    query = parsedQuery.query;
-    type = parsedQuery.type;
-    if (
-      window.history.state?.queryPage
-      && productList.length
-      && history.action === 'POP'
-    ) {
-      // 기존 제품정보가 남아있고 뒤로가기를 통해서 온것이라면 페이지, 정렬 정보를 복구한다.
-      init = true;
-      setPageTotal(window.history.state.pageTotal);
-      setQueryPage(window.history.state.queryPage);
-      setSearchOrder(window.history.state.searchOrder);
-    } else {
-      // 그게 아니라면 초기화
-      onObserver(false);
-      dispatch(setProductList([], 0));
-      setPageTotal(2);
-      setQueryPage(1);
-      setSearchOrder('views');
-    }
-  }, []);
+  const [queryPage, setQueryPage] = useState(1);
 
   useEffect(() => {
     // 같은페이지 내에서 검색 다시 했을 때
     // 주소가 바뀌었으니 새로운 검색을 한것임. 전부 초기화
     if (history.action === 'PUSH') {
       // 뒤로가기가 아닐 때만 초기화
-      onObserver(false);
       const parsedQuery = parseQuery(location.search);
       query = parsedQuery.query;
       type = parsedQuery.type;
-      dispatch(setProductList([], 0));
-      setPageTotal(2);
+      dispatch(setProductList([], 0, totalPage));
       if (queryPage === 1) {
         // eslint-disable-next-line no-use-before-define
         getMoreProducts();
       }
-      setQueryPage(1);
+      dispatch(setCurrentPage(1, totalPage));
     }
   }, [location.search]);
 
-  // --------------- infinite scroll
-  const observer = useRef(
-    new IntersectionObserver(
-      (entries) => {
-        const one = entries[0];
-        if (one.isIntersecting) {
-          setQueryPage((prev) => prev + 1);
-        }
-      },
-      { threshold: 1, root: rootRef.current, rootMargin: '0px 0px 0px 0px' },
-    ),
-  );
-
+  // pagination - 우선 전체 제품 30개씩 보여주기
   const getMoreProducts = async () => {
-    setIsLoading(true);
     const axiosConfig = {
       method: 'get',
       url: '/products/all/items',
       params: {
-        page: queryPage,
+        page: currentPage,
         order: searchOrder,
         type,
       },
@@ -119,51 +76,28 @@ function Search() {
       axiosConfig.url = '/products';
     }
     const response = await axios(axiosConfig);
-    if (!response.data.items.length && queryPage === 1) {
-      dispatch(setProductList(false, 0));
-      setIsLoading(false);
-      return;
-    }
+    // if (!response.data.items.length)
     dispatch(
-      addProductList(response.data.items, response.data.pages.itemCount),
+      addProductList(
+        response.data.items,
+        response.data.pages.itemCount,
+        response.data.pages.total,
+      ),
     );
-    setPageTotal(response.data.pages.total);
-    onObserver(true);
-    setIsLoading(false);
   };
 
-  useEffect(() => {
-    // 페이지, 정렬 바뀌면 히스토리에 같이 저장.
-    window.history.replaceState({ queryPage, searchOrder, pageTotal }, 'page');
-    if (queryPage <= pageTotal && queryPage && searchOrder) {
-      if (init) {
-        init = false;
-        return;
-      }
-      getMoreProducts();
-    }
-  }, [queryPage, searchOrder]);
-
-  useEffect(() => {
-    const currentEl = observeTarget;
-    const currentObserver = observer.current;
-    if (currentEl) {
-      currentObserver.observe(currentEl);
-    }
-    return () => {
-      if (currentEl) {
-        currentObserver.unobserve(currentEl);
-      }
-    };
-  }, [observeTarget]);
+  useEffect(async () => {
+    getMoreProducts();
+  }, [searchOrder, currentPage]);
 
   // 조회순, 리뷰순 정렬 버튼 핸들러
   const handleOrderBtn = async (e) => {
-    onObserver(false);
+    // onObserver(false);
     const order = e.target.value;
     dispatch(setProductList([], 0));
     setSearchOrder(order);
     setQueryPage(1);
+    dispatch(setCurrentPage(1, totalPage));
   };
 
   const makeDigitComma = (num) =>
@@ -173,7 +107,7 @@ function Search() {
   return (
     <>
       <NavChange />
-      <TopButton />
+      {/* <TopButton /> */}
       <div className="Search_conatiner">
         <div className="Search_in">
           <div className="Search_img">
@@ -213,9 +147,10 @@ function Search() {
             </div>
             <div className="Search_products">
               <SearchProductList />
-              {isLoading && <Skeleton />}
-              <div id="observer" ref={setObserveTarget} className="targetEl" />
+              {/* {isLoading && <Skeleton />}
+              <div id="observer" ref={setObserveTarget} className="targetEl" /> */}
             </div>
+            <SearchPageButtons />
           </div>
         </div>
       </div>
