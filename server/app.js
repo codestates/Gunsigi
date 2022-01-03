@@ -1,8 +1,10 @@
 /* eslint-disable global-require */
 const dotenv = require('dotenv');
 
-const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.dev';
-dotenv.config({ path: envFile });
+if (process.env.NODE_ENV === 'production') {
+  require('newrelic');
+  dotenv.config({ path: '.env.production' });
+} else dotenv.config({ path: '.env.dev' });
 
 const fs = require('fs');
 const express = require('express');
@@ -14,7 +16,6 @@ const router = require('./routes');
 
 const app = express();
 app.enable('trust proxy');
-
 if (process.env.NODE_ENV === 'production') app.use(logger('combined'));
 else app.use(logger('dev'));
 
