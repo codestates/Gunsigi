@@ -3,12 +3,17 @@ import {
   SET_ALL_PRODUCT_LIST,
   SET_SEARCHED_WORD,
   RESET_SEARCHED_WORD,
+  SET_CURRENT_PAGE,
 } from '../actions/types';
 
 const searchInit = {
   productList: [],
   productCount: 0,
   searchedWord: '',
+  totalPage: 1,
+  startPage: 0,
+  endPage: 9,
+  currentPage: 1,
 };
 
 const searchReducer = (state = searchInit, action) => {
@@ -16,8 +21,9 @@ const searchReducer = (state = searchInit, action) => {
     case ADD_ALL_PRODUCT_LIST:
       return {
         ...state,
-        productList: [...state.productList, ...action.payload.productList],
+        productList: action.payload.productList,
         productCount: action.payload.productCount,
+        totalPage: action.payload.totalPage,
       };
 
     case SET_ALL_PRODUCT_LIST: {
@@ -40,6 +46,14 @@ const searchReducer = (state = searchInit, action) => {
 
     case RESET_SEARCHED_WORD:
       return { ...state, searchedWord: '' };
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.currentPage,
+        startPage: action.payload.startPage,
+        endPage: action.payload.endPage,
+      };
 
     default:
       return state;
