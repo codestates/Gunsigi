@@ -2,11 +2,12 @@
 
 .pageBtnContainer {
   // min-width: 375px;
-  width: 86%;
+  width: 88%;
+  max-width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 0px 50px 5px;
+  padding: 50px 0px 20px 5px;
   .pageBtn,
   .selected {
     width: 45px;
@@ -24,9 +25,11 @@
     }
     .prev,
     .next {
-      width: 80%;
+      width: 50%;
       display: flex;
+      justify-content: center;
       align-items: center;
+      text-align: center;
       img {
         width: 60%;
         object-position: center;
@@ -38,12 +41,12 @@
     }
     .currentPage {
       width: 100%;
-      color: $white;
-      background-color: $deep-blue;
+      color: $deep-blue;
+      // background-color: $deep-blue;
       border-radius: 4px;
-      padding: 4px;
-      font-size: 1.4rem;
-      font-weight: 600;
+      // padding: 4px;
+      font-size: 2rem;
+      font-weight: 800;
     }
   }
   .none {
@@ -54,6 +57,7 @@
 @include tablet {
   .pageBtnContainer {
     width: 70%;
+    max-width: none;
     .none {
       display: block;
       width: 45px;
@@ -69,6 +73,14 @@
       .prev,
       .next {
         width: 60%;
+      }
+      .currentPage {
+        color: $white;
+        background-color: $deep-blue;
+        border-radius: 4px;
+        padding: 4px;
+        font-size: 1.4rem;
+        font-weight: 600;
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage } from '../actions/searchAction';
 import '../styles/search/SearchPageButtons.scss';
@@ -6,41 +6,19 @@ import '../styles/search/SearchPageButtons.scss';
 function SearchPageButtons() {
   const dispatch = useDispatch();
   const searchState = useSelector((state) => state.searchReducer);
-  const { productCount, totalPage, startPage, endPage, currentPage } =
+  const { totalPage, startPage, endPage, currentPage } =
     searchState;
   const buttonArr = Array.from({ length: totalPage }, (n, i) => i + 1);
   const showButtons = buttonArr.slice(startPage, endPage);
-  //const [currentPage, setCurrentPage] = useState(1);
-  // First는 1페이지일때는 안뜨고 2부터?
-  // 현재 페이지는 글자 진하게
 
   const handleClickPageNum = (e) => {
     dispatch(setCurrentPage(e.target.value * 1, totalPage));
   };
   const handlePrevButton = () => {
-    // if (currentPage === 1) {
-    //   // 예외처리
-    //   return;
-    // }
-    // if (currentPage % 10 === 1) {
-    //   const changedStart = startPage - 10;
-    //   const changedEnd = endPage - 10;
-    //   dispatch(setStartEndPage(changedStart, changedEnd));
-    // }
     dispatch(setCurrentPage(currentPage - 1, totalPage));
   };
 
   const handleNextButton = () => {
-    // if (currentPage === totalPage) {
-    //   // 예외처리
-    //   return;
-    // }
-    // if (currentPage % 10 === 0) {
-    //   console.log('next안 현재페이지', currentPage)
-    //   const changedStart = startPage + 10;
-    //   const changedEnd = endPage + 10;
-    //   dispatch(setStartEndPage(changedStart, changedEnd));
-    // }
     dispatch(setCurrentPage(currentPage + 1, totalPage));
   };
 
