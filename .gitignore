@@ -29,6 +29,7 @@ yarn-error.log*
 node_modules
 server/.env.production
 server/seeds/data
+*.log
 
 
 # css 컴파일링
