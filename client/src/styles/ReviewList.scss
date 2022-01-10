@@ -120,10 +120,7 @@
   font-size: 1.4rem;
 
   .arrowButton {
-    position: relative;
-    top: -1px;
     margin: 0 20px;
-    transform: rotate(90deg);
     width: 15px;
     height: 15px;
     cursor: pointer;
@@ -131,21 +128,12 @@
   }
 
   .arrowButton_change {
-    position: relative;
-    top: -1px;
     margin: 0 20px;
-    transform: rotate(90deg);
     width: 15px;
     height: 15px;
     cursor: pointer;
     filter: $f-deep-grey;
     pointer-events: none;
-  }
-
-  .trans {
-    position: relative;
-    top: 1px;
-    transform: rotate(-90deg);
   }
 
   .pagenation {
@@ -159,7 +147,7 @@
       justify-content: center;
       align-items: center;
       font-weight: 600;
-      background-color: $light-blue;
+      // background-color: $light-blue;
       color: $deep-blue;
     }
 
@@ -167,7 +155,7 @@
       margin: 0 10px;
       width: 25px;
       height: 25px;
-      border-radius: 15px;
+      border-radius: 4px;
       display: flex;
       justify-content: center;
       align-items: center;

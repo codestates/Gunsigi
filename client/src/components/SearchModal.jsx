@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import '../styles/SearchModal.scss';
+import '../styles/search/SearchModal.scss';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setSearchedWord } from '../actions/searchAction';
