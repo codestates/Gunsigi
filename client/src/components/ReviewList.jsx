@@ -47,10 +47,12 @@ function ReviewList({ name, productId }) {
   //! sequence state 변경 및 요청
   const handleSequenceFilter = (text) => {
     setSequence(text);
+    const monthIdx = month.indexOf(true);
 
     axios({
       url: `/reviews/${productId}`,
       params: {
+        filter: monthName[monthIdx],
         order: text,
         size: 5,
         page: 1,
@@ -58,7 +60,15 @@ function ReviewList({ name, productId }) {
       loading: false,
     }).then((res) => {
       setReviews(res.data.items);
-      setPageButton([1, 2, 3, 4, 5]);
+      const itemsLength = res.data.pages.total;
+      const pagenation = [];
+
+      // eslint-disable-next-line no-plusplus
+      for (let i = 1; i <= itemsLength; i++) {
+        pagenation.push(i);
+      }
+      setPageNums(pagenation);
+      setPageButton(pagenation.slice(0, 5));
     });
   };
 
@@ -86,9 +96,9 @@ function ReviewList({ name, productId }) {
       url: `/reviews/${productId}`,
       params: {
         order: sequence,
+        filter: num,
         size: 5,
         page: 1,
-        filter: num,
       },
       loading: false,
     }).then((res) => {
@@ -121,7 +131,7 @@ function ReviewList({ name, productId }) {
         order: sequence,
         size: 5,
         page: e.target.innerText,
-        filter: month[monthIdx],
+        filter: monthName[monthIdx],
       },
       loading: false,
     }).then((res) => {
@@ -228,11 +238,9 @@ function ReviewList({ name, productId }) {
             onClick={() => handleAllChangePageNums(-5)}
             aria-hidden="true"
             className={
-              pageButton[0] !== 1
-                ? 'arrowButton trans'
-                : 'arrowButton_change trans'
+              pageButton[0] !== 1 ? 'arrowButton' : 'arrowButton_change'
             }
-            src="/icons/icon_arrow_up.svg"
+            src="/icons/icon_arrow_left.svg"
             alt="arrow"
           />
 
@@ -260,7 +268,7 @@ function ReviewList({ name, productId }) {
                 ? 'arrowButton'
                 : 'arrowButton_change'
             }
-            src="/icons/icon_arrow_up.svg"
+            src="/icons/icon_arrow_right.svg"
             alt="arrow"
           />
         </div>
