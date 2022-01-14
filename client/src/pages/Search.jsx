@@ -6,6 +6,7 @@ import {
   addProductList,
   setCurrentPage,
   setProductList,
+  setSearchOrder,
 } from '../actions/searchAction';
 import '../styles/search/Search.scss';
 import NavChange from '../components/NavChange';
@@ -36,8 +37,8 @@ function Search() {
   const location = useLocation();
   const rootRef = useRef(null);
   const searchState = useSelector((state) => state.searchReducer);
-  const { productCount, totalPage, currentPage } = searchState;
-  const [searchOrder, setSearchOrder] = useState('views');
+  const { productCount, totalPage, searchOrder, currentPage } = searchState;
+  // const [searchOrder, setSearchOrder] = useState('views');
 
   useEffect(() => {
     // 같은페이지 내에서 검색 다시 했을 때
@@ -91,7 +92,7 @@ function Search() {
   const handleOrderBtn = async (e) => {
     const order = e.target.value;
     dispatch(setProductList([], 1, 1));
-    setSearchOrder(order);
+    dispatch(setSearchOrder(order));
     dispatch(setCurrentPage(1, totalPage));
   };
 
