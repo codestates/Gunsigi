@@ -12,7 +12,7 @@ function SearchProductList() {
   const dispatch = useDispatch();
   const history = useHistory();
   const searchState = useSelector((state) => state.searchReducer);
-  const { productList } = searchState;
+  const { productList, productCount, totalPage } = searchState;
   const userState = useSelector((state) => state.userReducer);
   const { isLogin } = userState;
 
@@ -30,6 +30,8 @@ function SearchProductList() {
             if (product.id === productId) product.isBookmarked = true;
             return product;
           }),
+          productCount,
+          totalPage,
         ),
       );
     });
@@ -48,6 +50,8 @@ function SearchProductList() {
             if (product.id === productId) product.isBookmarked = false;
             return product;
           }),
+          productCount,
+          totalPage,
         ),
       );
     });

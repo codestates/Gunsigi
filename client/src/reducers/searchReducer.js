@@ -4,12 +4,14 @@ import {
   SET_SEARCHED_WORD,
   RESET_SEARCHED_WORD,
   SET_CURRENT_PAGE,
+  SET_SEARCH_ORDER,
 } from '../actions/types';
 
 const searchInit = {
   productList: [],
   productCount: 0,
   searchedWord: '',
+  searchOrder: 'views',
   totalPage: 1,
   startPage: 0,
   endPage: 9,
@@ -36,6 +38,7 @@ const searchReducer = (state = searchInit, action) => {
         productList = [...action.payload.productList];
       }
       return {
+        ...state,
         productList,
         productCount,
       };
@@ -46,6 +49,9 @@ const searchReducer = (state = searchInit, action) => {
 
     case RESET_SEARCHED_WORD:
       return { ...state, searchedWord: '' };
+
+    case SET_SEARCH_ORDER:
+      return { ...state, searchOrder: action.payload.order };
 
     case SET_CURRENT_PAGE:
       return {

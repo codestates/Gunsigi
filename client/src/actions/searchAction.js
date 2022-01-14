@@ -4,6 +4,7 @@ import {
   SET_SEARCHED_WORD,
   RESET_SEARCHED_WORD,
   SET_CURRENT_PAGE,
+  SET_SEARCH_ORDER,
 } from './types';
 
 export const addProductList = (productList, productCount, totalPage) => ({
@@ -28,6 +29,13 @@ export const setSearchedWord = (word) => ({
   type: SET_SEARCHED_WORD,
   payload: {
     word,
+  },
+});
+
+export const setSearchOrder = (order) => ({
+  type: SET_SEARCH_ORDER,
+  payload: {
+    order,
   },
 });
 
