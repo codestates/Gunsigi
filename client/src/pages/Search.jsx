@@ -36,10 +36,8 @@ function Search() {
   const location = useLocation();
   const rootRef = useRef(null);
   const searchState = useSelector((state) => state.searchReducer);
-  const { productList, productCount, totalPage, currentPage } = searchState;
+  const { productCount, totalPage, currentPage } = searchState;
   const [searchOrder, setSearchOrder] = useState('views');
-  const [isLoading, setIsLoading] = useState(false);
-  const [queryPage, setQueryPage] = useState(1);
 
   useEffect(() => {
     // 같은페이지 내에서 검색 다시 했을 때
@@ -49,8 +47,8 @@ function Search() {
       const parsedQuery = parseQuery(location.search);
       query = parsedQuery.query;
       type = parsedQuery.type;
-      dispatch(setProductList([], 0, totalPage));
-      if (queryPage === 1) {
+      dispatch(setProductList([], 1, 1));
+      if (currentPage === 1) {
         // eslint-disable-next-line no-use-before-define
         getMoreProducts();
       }
@@ -76,7 +74,6 @@ function Search() {
       axiosConfig.url = '/products';
     }
     const response = await axios(axiosConfig);
-    // if (!response.data.items.length)
     dispatch(
       addProductList(
         response.data.items,
@@ -92,11 +89,9 @@ function Search() {
 
   // 조회순, 리뷰순 정렬 버튼 핸들러
   const handleOrderBtn = async (e) => {
-    // onObserver(false);
     const order = e.target.value;
-    dispatch(setProductList([], 0));
+    dispatch(setProductList([], 1, 1));
     setSearchOrder(order);
-    setQueryPage(1);
     dispatch(setCurrentPage(1, totalPage));
   };
 
@@ -147,8 +142,6 @@ function Search() {
             </div>
             <div className="Search_products">
               <SearchProductList />
-              {/* {isLoading && <Skeleton />}
-              <div id="observer" ref={setObserveTarget} className="targetEl" /> */}
             </div>
             <SearchPageButtons />
           </div>
