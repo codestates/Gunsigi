@@ -36,6 +36,7 @@ const searchReducer = (state = searchInit, action) => {
         productList = [...action.payload.productList];
       }
       return {
+        ...state,
         productList,
         productCount,
       };
