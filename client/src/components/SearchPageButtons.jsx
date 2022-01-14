@@ -6,8 +6,7 @@ import '../styles/search/SearchPageButtons.scss';
 function SearchPageButtons() {
   const dispatch = useDispatch();
   const searchState = useSelector((state) => state.searchReducer);
-  const { totalPage, startPage, endPage, currentPage } =
-    searchState;
+  const { totalPage, startPage, endPage, currentPage } = searchState;
   const buttonArr = Array.from({ length: totalPage }, (n, i) => i + 1);
   const showButtons = buttonArr.slice(startPage, endPage);
 
