@@ -79,7 +79,7 @@ function Search() {
       addProductList(
         response.data.items,
         response.data.pages.itemCount,
-        response.data.pages.total,
+        response.data.pages.total === 0 ? 1 : response.data.pages.total,
       ),
     );
   };

@@ -1,9 +1,7 @@
 @import '../../App.scss';
 
 .pageBtnContainer {
-  // min-width: 375px;
-  width: 88%;
-  max-width: 300px;
+  min-width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,6 +15,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative;
 
     .pageNum {
       width: 100%;
@@ -42,9 +41,7 @@
     .currentPage {
       width: 100%;
       color: $deep-blue;
-      // background-color: $deep-blue;
       border-radius: 4px;
-      // padding: 4px;
       font-size: 2rem;
       font-weight: 800;
     }
@@ -56,23 +53,24 @@
 
 @include tablet {
   .pageBtnContainer {
-    width: 70%;
-    max-width: none;
     .none {
       display: block;
-      width: 45px;
+      width: 55px;
       height: 40px;
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
+      .pageNum {
+        width: 100%;
+      }
     }
     .pageBtn,
     .selected {
       .prev,
       .next {
-        width: 60%;
+        width: 40%;
       }
       .currentPage {
         color: $white;
@@ -91,6 +89,7 @@
     .pageBtn,
     .selected,
     .none {
+      width: 60px;
       .pageNum,
       .currentPage {
         font-size: 1.6rem;
