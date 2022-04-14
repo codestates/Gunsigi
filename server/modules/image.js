@@ -5,9 +5,18 @@ const sharp = require('sharp');
 const debug = require('debug')('app:image');
 const fs = require('fs').promises;
 
-let Client;
 // eslint-disable-next-line global-require
-if (process.env.NODE_ENV !== 'production') Client = require('node-scp').Client;
+const { Client } = require('node-scp');
+
+let client;
+Client({
+  host: process.env.TEST_SSH_HOST,
+  port: parseInt(process.env.TEST_SSH_PORT, 10),
+  username: process.env.TEST_SSH_USERNAME,
+  password: process.env.TEST_SSH_PASSWORD,
+}).then((result) => {
+  client = result;
+});
 
 const v4 = () => uuid().replace(/-/g, '');
 
@@ -34,26 +43,20 @@ module.exports = {
     const uid = v4();
 
     // 개발모드일 경우 테스트서버에 저장
-    if (process.env.NODE_ENV !== 'production') {
-      const filename = `${uid}.${type.split('/')[1]}`;
-      await fs.mkdir(`/tmp/${path}`, { recursive: true });
-      await fs.writeFile(`/tmp/${path}/${filename}`, base64Data);
-      // SCP로 전송
-      try {
-        const client = await Client({
-          host: process.env.TEST_SSH_HOST,
-          port: parseInt(process.env.TEST_SSH_PORT, 10),
-          username: process.env.TEST_SSH_USERNAME,
-          password: process.env.TEST_SSH_PASSWORD,
-        });
-        await client.uploadDir(`/tmp/${path}`, `/web/gunsigi_cdn/${path}`);
-        client.close();
-      } catch (e) {
-        debug(e);
-        throw Error('Error in save image');
-      }
-      return `${path}/${filename}`;
+    // if (process.env.NODE_ENV !== 'production') {
+    const filename = `${uid}.${type.split('/')[1]}`;
+    await fs.mkdir(`/tmp/${path}`, { recursive: true });
+    await fs.writeFile(`/tmp/${path}/${filename}`, base64Data);
+    // SCP로 전송
+    try {
+      await client.uploadDir(`/tmp/${path}`, `/web/gunsigi_cdn/${path}`);
+      client.close();
+    } catch (e) {
+      debug(e);
+      throw Error('Error in save image');
     }
+    return `${path}/${filename}`;
+    // }
 
     // S3저장
     const params = {
@@ -74,12 +77,12 @@ module.exports = {
     return key;
   },
   delete: async (Key) => {
-    if (process.env.NODE_ENV !== 'production') return;
-    // CDN서버에 있는 이미지를 삭제한다.
-    await s3.deleteObject({ Bucket: BUCKET, Key }).promise();
+    // aws에 있는 이미지를 삭제한다.
+    // await s3.deleteObject({ Bucket: BUCKET, Key }).promise();
   },
   deleteFolder: async function deleteObjects(dir) {
-    if (process.env.NODE_ENV !== 'production') return;
+    return;
+    // if (process.env.NODE_ENV !== 'production') return;
     // Objects 조회
     const listParams = { Bucket: BUCKET, Prefix: dir };
     const listObjects = await s3.listObjectsV2(listParams).promise();
