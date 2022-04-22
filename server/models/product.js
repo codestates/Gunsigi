@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
           return '';
         },
       },
-      validNumber: DataTypes.STRING,
+      validNumber: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
       functional: DataTypes.TEXT,
       expiration: DataTypes.STRING,
       howToEat: DataTypes.TEXT,
