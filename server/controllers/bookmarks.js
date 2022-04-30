@@ -34,6 +34,9 @@ module.exports = {
         product.isBookmarked = true;
         delete product.Bookmarks;
         delete product.reviewsSum;
+
+        product.image = row.getThumbnail();
+
         return product;
       }),
       pages: {

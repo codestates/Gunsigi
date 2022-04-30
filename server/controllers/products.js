@@ -92,6 +92,8 @@ module.exports = {
         delete product.reviewsSum;
         delete product.Ingredients;
         delete product.rating;
+
+        product.image = row.getThumbnail();
         return product;
       }),
       pages: {
@@ -105,7 +107,7 @@ module.exports = {
   },
 
   detail: async (req, res) => {
-    let product = await Product.findOne({
+    let result = await Product.findOne({
       where: { id: req.params.productId },
       include: [
         {
@@ -119,14 +121,14 @@ module.exports = {
         },
       ],
     });
-    if (!product) {
+    if (!result) {
       return res.status(404).json({
         message: 'not found',
       });
     }
 
     // 평균점수
-    product = product.toJSON();
+    const product = result.toJSON();
     product.score = parseFloat((product.reviewsSum / product.reviewsCount).toFixed(1)) || 0;
     delete product.reviewsSum;
 
@@ -134,6 +136,9 @@ module.exports = {
     if (product.Bookmarks.length === 0) product.isBookmarked = false;
     else product.isBookmarked = true;
     delete product.Bookmarks;
+
+    // 이미지
+    product.image = result.getImage();
 
     // 궁합표
     const goods = new Set();
@@ -200,6 +205,9 @@ module.exports = {
         else product.isBookmarked = true;
         delete product.Bookmarks;
         delete product.reviewsSum;
+
+        product.image = row.getThumbnail();
+
         return product;
       }),
       pages: {

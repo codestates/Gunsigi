@@ -15,19 +15,26 @@ module.exports = (sequelize, DataTypes) => {
         through: models.ProductIngredients,
       });
     }
+
+    getImage() {
+      if (this.image) {
+        return process.env.CDN_SERVER + '/' + this.image;
+      }
+      return '';
+    }
+
+    getThumbnail() {
+      if (this.image) {
+        return process.env.CDN_SERVER + '/thumbnail/' + this.image;
+      }
+      return '';
+    }
   }
   Product.init(
     {
       name: DataTypes.STRING,
       company: DataTypes.STRING,
-      image: {
-        type: DataTypes.STRING,
-        get() {
-          const image = this.getDataValue('image');
-          if (image) return `${process.env.CDN_SERVER}/${image}`;
-          return '';
-        },
-      },
+      image: DataTypes.STRING,
       validNumber: {
         type: DataTypes.STRING,
         unique: true,
